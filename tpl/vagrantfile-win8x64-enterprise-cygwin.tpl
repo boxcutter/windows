@@ -1,0 +1,56 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.vm.define "vagrant-win8x64-enterprise-cygwin"
+    config.vm.box = "win8x64-enterprise-cygwin"
+ 
+    # You should be using the vagrant-windows Vagrant Plugin!
+    # Admin user name and password
+    config.winrm.username = "vagrant"
+    config.winrm.password = "vagrant"
+  
+    config.vm.guest = :windows  
+    config.windows.halt_timeout = 15
+
+    # Port forward WinRM and RDP
+    config.vm.network :forwarded_port, guest: 3389, host: 3389
+    config.vm.network :forwarded_port, guest: 5985, host: 5985
+  
+    # Berkshelf
+    # config.berkshelf.enabled = true
+  
+    # Shell - Hello World
+    # config.vm.provision :shell, :inline => "C:\\vagrant\\scripts\\HelloWorld.bat"
+  
+    config.vm.provider :virtualbox do |v, override|
+        v.gui = true
+        v.customize ["modifyvm", :id, "--memory", 768]
+        v.customize ["modifyvm", :id, "--cpus", 1]
+        v.customize ["modifyvm", :id, "--vram", "256"]
+        v.customize ["setextradata", "global", "GUI/MaxGuestResolution", "any"]
+        v.customize ["setextradata", :id, "CustomVideoMode1", "1024x768x32"]
+    end
+
+    config.vm.provider :vmware_fusion do |v, override|
+        v.gui = true
+        v.vmx["memsize"] = "768"
+        v.vmx["numvcpus"] = "1"
+        v.vmx["cpuid.coresPerSocket"] = "1"
+        v.vmx["ethernet0.virtualDev"] = "vmxnet3"
+        v.vmx["RemoteDisplay.vnc.enabled"] = "false"
+        v.vmx["RemoteDisplay.vnc.port"] = "5900"
+        v.vmx["scsi0.virtualDev"] = "lsilogic"
+    end
+
+    config.vm.provider :vmware_workstation do |v, override|
+        v.gui = true
+        v.vmx["memsize"] = "768"
+        v.vmx["numvcpus"] = "1"
+        v.vmx["cpuid.coresPerSocket"] = "1"
+        v.vmx["ethernet0.virtualDev"] = "vmxnet3"
+        v.vmx["RemoteDisplay.vnc.enabled"] = "false"
+        v.vmx["RemoteDisplay.vnc.port"] = "5900"
+        v.vmx["scsi0.virtualDev"] = "lsilogic"
+    end
+end

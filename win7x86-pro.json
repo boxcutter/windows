@@ -1,0 +1,107 @@
+{
+  "variables": {
+    "cm": "chef",
+    "cm_version": "latest",
+    "iso_url": "iso/en_windows_7_professional_with_sp1_vl_build_x86_dvd_u_677896.iso",
+    "iso_checksum": "d5bd65e1b326d728f4fd146878ee0d9a3da85075",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'"
+  },
+  "builders": [
+    {
+      "vm_name": "win7x86-pro",
+      "type": "vmware-iso",
+      "guest_os_type": "windows7",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "floppy_files": [
+        "floppy/win7x86-pro/Autounattend.xml",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/install-winrm.cmd",
+        "floppy/fixnetwork.ps1",
+        "floppy/powerconfig.bat",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/networkprompt.bat",
+        "floppy/openssh.bat",
+        "floppy/zz-start-sshd.cmd"
+      ],
+      "tools_upload_flavor": "windows",
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "disk_size": 40960,
+      "vmx_data": {
+        "memsize": "768",
+        "numvcpus": "1",
+        "cpuid.coresPerSocket": "1"
+      }
+    },
+    {
+      "vm_name": "win7x86-pro",
+      "type": "virtualbox-iso",
+      "guest_os_type": "Windows7",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "floppy_files": [
+        "floppy/win7x86-pro/Autounattend.xml",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/install-winrm.cmd",
+        "floppy/fixnetwork.ps1",
+        "floppy/powerconfig.bat",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/networkprompt.bat",
+        "floppy/openssh.bat",
+        "floppy/zz-start-sshd.cmd",
+        "floppy/oracle-cert.cer"
+      ],
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "disk_size": 40960,
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "768"],
+        ["modifyvm", "{{.Name}}", "--cpus", "1"]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "remote_path": "/tmp/script.bat",
+      "environment_vars": [
+        "CM={{user `cm`}}",
+        "CM_VERSION={{user `cm_version`}}"
+      ],
+      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "scripts": [
+        "script/vagrant.bat",
+        "script/cmtool.bat",
+        "script/vmtool.bat",
+        "script/clean.bat",
+        "script/ultradefrag.bat",
+        "script/uninstall-7zip.bat",
+        "script/sdelete.bat"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": ["rm -f /tmp/script.bat"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "keep_input_artifact": false,
+    "compression_level": 1,
+    "vagrantfile_template": "tpl/vagrantfile-win7x86-pro.tpl",
+    "output": "box/{{.Provider}}/win7x86-pro-{{user `cm`}}{{user `cm_version`}}.box"
+  }]
+}

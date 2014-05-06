@@ -1,0 +1,16 @@
+# Detect text files automatically
+* text=auto
+
+# Force Unix-style line endings on these files
+*.sh eol=lf
+ks.cfg eol=lf
+preseed.cfg eol=lf
+
+# Force CRLF line endings on these files
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+Autounattend.xml text eol=crlf
+
+# These files are binary
+*.cer binary
