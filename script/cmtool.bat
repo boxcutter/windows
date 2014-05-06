@@ -36,7 +36,7 @@ del /F /Q "%LOCAL_DESTINATION_MSI_PATH%"
 
 goto :eof
 
-:cm
+:nocm
 
 echo ==^> Building box without a configuration management tool.
 
