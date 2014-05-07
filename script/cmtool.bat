@@ -14,7 +14,7 @@ goto :eof
 
 :chef
 
-set REMOTE_SOURCE_MSI_URL=https://www.opscode.com/chef/install.msi
+set REMOTE_SOURCE_MSI_URL=https://www.getchef.com/chef/install.msi
 set LOCAL_DESTINATION_MSI_PATH=%TEMP%\chef-client-latest.msi
 set FALLBACK_QUERY_STRING=?DownloadContext=PowerShell
 
