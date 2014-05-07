@@ -23,7 +23,7 @@ cleanup()
 pushd ${DIR}/..
 
 #for t in win2012-datacenter-cygwin win2012-datacenter win2012-standard-cygwin win2012-standard
-for t in win2012-datacenter
+for t in win2012-datacenter-cygwin win2012-datacenter
 do
     cleanup
     packer build -only=$BUILDER_TYPE -var "iso_url=$WIN2012_X64" -var "cm=$CM" -var "cm_version=$CM_VERSION" $t.json
