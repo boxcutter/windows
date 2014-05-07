@@ -36,7 +36,7 @@ echo ==^> Unzipping UltraDefrag from "%ULTRADEFRAG_ZIP_LOCAL_PATH%"
 echo ==^> Running UltraDefrag on %SystemDrive%
 "%ULTRADEFRAG_DIR%\udefrag.exe" --optimize --repeat %SystemDrive%
 
-echo ==^> Removing "%%ULTRADEFRAG_DIR%%"
-del /F /S /Q "%%ULTRADEFRAG_DIR%%"
+echo ==^> Removing "%ULTRADEFRAG_DIR%"
+del /F /S /Q "%ULTRADEFRAG_DIR%"
 
 exit 0
