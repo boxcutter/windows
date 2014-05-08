@@ -22,8 +22,7 @@ cleanup()
 
 pushd ${DIR}/..
 
-#for t in win2008r2-datacenter-cygwin win2008r2-datacenter win2008r2-enterprise-cygwin win2008r2-enterprise win2008r2-standard-cygwin win2008r2-standard win2008r2-web-cygwin win2008r2-web
-for t in win2008r2-datacenter
+for t in win2008r2-datacenter-cygwin win2008r2-datacenter win2008r2-enterprise-cygwin win2008r2-enterprise win2008r2-standard-cygwin win2008r2-standard win2008r2-web-cygwin win2008r2-web
 do
     cleanup
     packer build -only=$BUILDER_TYPE -var "iso_url=$WIN2008R2_X64" -var "cm=$CM" -var "cm_version=$CM_VERSION" $t.json
