@@ -30,7 +30,7 @@ echo ==^> Installing "%OPENSSH_EXE%"
 cmd /c "%OPENSSH_EXE%" /S /port=22 /privsep=1 /password=D@rj33l1ng
 
 echo ==^> Stopping opensshd
-net stop opensshd
+sc stop opensshd
 
 echo ==^> Setting temp location
 rd /S /Q "%ProgramFiles%\OpenSSH\tmp"
