@@ -4,24 +4,14 @@
 Vagrant.configure("2") do |config|
     config.vm.define "vagrant-win8x64-pro-cygwin"
     config.vm.box = "win8x64-pro-cygwin"
- 
-    # You should be using the vagrant-windows Vagrant Plugin!
-    # Admin user name and password
-    config.winrm.username = "vagrant"
-    config.winrm.password = "vagrant"
-  
-    config.vm.guest = :windows  
-    config.windows.halt_timeout = 15
 
     # Port forward WinRM and RDP
-    config.vm.network :forwarded_port, guest: 3389, host: 3389
-    config.vm.network :forwarded_port, guest: 5985, host: 5985
-  
+    config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct:true
+    config.vm.communicator = "winrm"
+    config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct:true
+ 
     # Berkshelf
     # config.berkshelf.enabled = true
-  
-    # Shell - Hello World
-    # config.vm.provision :shell, :inline => "C:\\vagrant\\scripts\\HelloWorld.bat"
   
     config.vm.provider :virtualbox do |v, override|
         v.gui = true
