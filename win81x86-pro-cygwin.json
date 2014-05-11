@@ -1,7 +1,7 @@
 {
   "variables": {
     "cm": "chef",
-    "cm_version": "latest",
+    "cm_version": "",
     "iso_url": "iso/en_windows_8.1_professional_vl_with_update_x86_dvd_4065201.iso",
     "iso_checksum": "c2d6f5d06362b7cb17dfdaadfb848c760963b254"
   },

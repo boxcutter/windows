@@ -1,7 +1,7 @@
 {
   "variables": {
     "cm": "chef",
-    "cm_version": "latest",
+    "cm_version": "",
     "iso_url": "iso/en_windows_8_x86_dvd_915417.iso",
     "iso_checksum": "22d680ec53336bee8a5b276a972ceba104787f62"
   },

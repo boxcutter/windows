@@ -1,7 +1,7 @@
 {
   "variables": {
     "cm": "chef",
-    "cm_version": "latest",
+    "cm_version": "",
     "iso_url": "iso/en_windows_7_professional_with_sp1_vl_build_x64_dvd_u_677791.iso",
     "iso_checksum": "708e0338d4e2f094dfeb860347c84a6ed9e91d0c",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'"
