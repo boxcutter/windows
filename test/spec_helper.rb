@@ -1,4 +1,6 @@
 require 'serverspec'
+require 'pathname'
+require 'net/ssh'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
+include SpecInfra::Helper::Ssh
+include SpecInfra::Helper::DetectOS
