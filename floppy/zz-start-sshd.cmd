@@ -14,3 +14,4 @@ sc query opensshd >nul 2>nul && set SSH_SERVICE=opensshd
 
 echo ==^> Starting the %SSH_SERVICE% service
 sc start %SSH_SERVICE%
+timeout 10

@@ -25,8 +25,8 @@
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
         "floppy/passwordchange.bat",
-        "floppy/zz-start-sshd.cmd",
-        "floppy/openssh.bat"
+        "floppy/openssh.bat",
+        "floppy/zz-start-sshd.cmd"
       ],
       "tools_upload_flavor": "windows",
       "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
