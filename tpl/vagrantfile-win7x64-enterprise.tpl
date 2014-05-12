@@ -9,6 +9,10 @@ Vagrant.configure("2") do |config|
     config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct:true
     config.vm.communicator = "winrm"
     config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct:true
+
+    config.vm.guest = :windows
+    config.windows.halt_timeout = 15
+    config.windows.set_work_network = true
  
     # Berkshelf
     # config.berkshelf.enabled = true

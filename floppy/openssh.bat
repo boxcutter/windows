@@ -8,16 +8,13 @@ if not defined TEMP set TEMP=%USERPROFILE%\AppData\Local\Temp
 if exist "%SystemDrive%\Program Files (x86)" (
   set OPENSSH_URL="http://www.mls-software.com/files/setupssh-6.6p1-1-v1(x64).exe"
 ) else (
-:: Does not seem to work on 32-bit Windows 8.1 with Update, using
-:: pre-heartbleed patch (for now)
-::  set OPENSSH_URL="http://www.mls-software.com/files/setupssh-6.6p1-1-v1.exe"
   set OPENSSH_URL="http://www.mls-software.com/files/setupssh-6.4p1-1.exe"
 )
 
 for %%i in (%OPENSSH_URL%) do SET OPENSSH_EXE="%TEMP%\%%~nxi"
 
 :: setup openssh
-echo ==^> Downloadng %OPENSSH_URL% to %OPENSSH_EXE%
+echo ==^> Downloading %OPENSSH_URL% to %OPENSSH_EXE%
 
 PATH=%PATH%;~dp0
 for %%i in (_download.cmd) do set _download=%%~$PATH:i
@@ -34,7 +31,6 @@ cmd /c "%OPENSSH_EXE%" /S /port=22 /privsep=1 /password=D@rj33l1ng
 
 echo ==^> Stopping opensshd
 sc stop opensshd
-timeout 10
 
 echo ==^> Setting temp location
 rd /S /Q "%ProgramFiles%\OpenSSH\tmp"
