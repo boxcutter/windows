@@ -78,3 +78,5 @@ For Windows, the ISO path variables are:
 * `WIN81_X64_ENTERPRISE`
 * `WIN81_X64_PRO`
 
+You can also override these setting, such as with
+`WIN81_X64_PRO := file:///Volumes/MSDN/en_windows_8.1_professional_vl_with_update_x64_dvd_4065194.iso`
