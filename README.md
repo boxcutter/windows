@@ -61,3 +61,20 @@ such as `CM_VERSION := 11.12.4`
 
 Another use for `Makefile.local` is to override the default locations
 for the Windows install ISO files.
+
+For Windows, the ISO path variables are:
+
+* WIN2008R2_X64
+* WIN2012_X64
+* WIN2012R@_X64
+* WIN7_X64_ENTERPRISE
+* WIN7_X64_PRO
+* WIN7_X86_ENTERPRISE
+* WIN7_X86_PRO
+* WIN8_X64_ENTERPRISE
+* WIN8_X86_ENTERPRISE
+* WIN8_X64_PRO
+* WIN8_X86_PRO
+* WIN81_X64_ENTERPRISE
+* WIN81_X64_PRO
+
