@@ -43,6 +43,7 @@ BUILDER_TYPES := vmware virtualbox
 TEMPLATE_FILENAMES := $(wildcard *.json)
 BOX_FILENAMES := $(TEMPLATE_FILENAMES:.json=$(BOX_SUFFIX))
 BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $(BOX_FILENAMES), box/$(builder)/$(box_filename)))
+TEST_BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $(BOX_FILENAMES), test-box/$(builder)/$(box_filename)))
 VMWARE_BOX_DIR := box/vmware
 VIRTUALBOX_BOX_DIR := box/virtualbox
 VMWARE_OUTPUT := output-vmware-iso
@@ -52,22 +53,46 @@ VIRTUALBOX_BUILDER := virtualbox-iso
 CURRENT_DIR := $(shell pwd)
 SOURCES := $(wildcard script/*.bat) $(wildcard floppy/*.*)
 
-.PHONY: all list clean
+.PHONY: all list clean test
 
 all: $(BOX_FILES)
 
-test-win7: test-win7-vmware-openssh test-win7-vmware-cygwin test-win7-virtualbox-openssh test-win7-virtualbox-cygwin
+test: $(TEST_BOX_FILES)
 
-# test-$(VMWARE_BOX_DIR)/win7x86-enterprise$(BOX_SUFFIX)
-test-win7-vmware-openssh: test-$(VMWARE_BOX_DIR)/win7x64-enterprise$(BOX_SUFFIX) test-$(VMWARE_BOX_DIR)/win7x64-pro$(BOX_SUFFIX) test-$(VMWARE_BOX_DIR)/win7x64-pro$(BOX_SUFFIX)
+###############################################################################
+# Target shortcuts
+define SHORTCUT
 
-# win7x86-enterprise-cygwin-chef11.12.4 - network not working
-# test-$(VMWARE_BOX_DIR)/win7x86-enterprise-cygwin$(BOX_SUFFIX)
-test-win7-vmware-cygwin: test-$(VMWARE_BOX_DIR)/win7x64-enterprise-cygwin$(BOX_SUFFIX) test-$(VMWARE_BOX_DIR)/win7x64-pro-cygwin$(BOX_SUFFIX) test-$(VMWARE_BOX_DIR)/win7x64-pro-cygwin$(BOX_SUFFIX)
+$(1): $(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
-test-win7-virtualbox-openssh: test-$(VIRTUALBOX_BOX_DIR)/win7x64-enterprise$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/win7x86-enterprise$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/win7x64-pro$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/win7x64-pro$(BOX_SUFFIX)
+$(1)-cygwin: $(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
 
-test-win7-virtualbox-cygwin: test-$(VIRTUALBOX_BOX_DIR)/win7x64-enterprise-cygwin$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/win7x86-enterprise-cygwin$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/win7x64-pro-cygwin$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/win7x64-pro-cygwin$(BOX_SUFFIX)
+test-$(1): test-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+test-$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+vmware/$(1): $(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+vmware/$(1)-cygwin: $(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+virtualbox/$(1): $(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+virtualbox/$(1)-cygwin: $(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+test-vmware/$(1): test-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+test-vmware/$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+test-virtualbox/$(1): test-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+test-virtualbox/$(1)-cygwin: test-$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+endef
+
+SHORTCUT_TARGETS := win2008r2-datacenter win2008r2-enterprise win2008r2-standard win2008r2-web win2012-datacenter win2012-standard win2012r2-datacenter win2012r2-standard win7x64-enterprise win7x64-pro win7x86-enterprise win7x86-pro win8x64-enterprise win8x64-pro win8x86-enterprise win8x86-pro win81x64-enterprise win81x64-pro win81x86-enterprise win81x86-pro
+$(foreach i,$(SHORTCUT_TARGETS),$(eval $(call SHORTCUT,$(i))))
+
+###############################################################################
 
 # Generic rule - not used currently
 #$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): %.json
@@ -117,6 +142,21 @@ $(VMWARE_BOX_DIR)/win2008r2-web-cygwin$(BOX_SUFFIX): win2008r2-web-cygwin.json
 	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2008R2_X64)" $<
 
 $(VMWARE_BOX_DIR)/win2012-datacenter$(BOX_SUFFIX): win2012-datacenter.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012_X64)" $<
+
+$(VMWARE_BOX_DIR)/win2012-standard$(BOX_SUFFIX): win2012-standard.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012_X64)" $<
+
+$(VMWARE_BOX_DIR)/win2012-datacenter-cygwin$(BOX_SUFFIX): win2012-datacenter-cygwin.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012_X64)" $<
+
+$(VMWARE_BOX_DIR)/win2012-standard-cygwin$(BOX_SUFFIX): win2012-standard-cygwin.json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
 	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012_X64)" $<
@@ -186,6 +226,41 @@ $(VMWARE_BOX_DIR)/win8x64-enterprise$(BOX_SUFFIX): win8x64-enterprise.json
 	mkdir -p $(VMWARE_BOX_DIR)
 	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X64_ENTERPRISE)" $<
 
+$(VMWARE_BOX_DIR)/win8x64-pro$(BOX_SUFFIX): win8x64-pro.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X64_PRO)" $<
+
+$(VMWARE_BOX_DIR)/win8x86-enterprise$(BOX_SUFFIX): win8x86-enterprise.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X86_ENTERPRISE)" $<
+
+$(VMWARE_BOX_DIR)/win8x86-pro$(BOX_SUFFIX): win8x86-pro.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X86_PRO)" $<
+
+$(VMWARE_BOX_DIR)/win8x64-enterprise-cygwin$(BOX_SUFFIX): win8x64-enterprise-cygwin.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X64_ENTERPRISE)" $<
+
+$(VMWARE_BOX_DIR)/win8x64-pro-cygwin$(BOX_SUFFIX): win8x64-pro-cygwin.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X64_PRO)" $<
+
+$(VMWARE_BOX_DIR)/win8x86-enterprise-cygwin$(BOX_SUFFIX): win8x64-enterprise-cygwin.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X86_ENTERPRISE)" $<
+
+$(VMWARE_BOX_DIR)/win8x86-pro-cygwin$(BOX_SUFFIX): win8x86-pro-cygwin.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X86_PRO)" $<
+
 $(VMWARE_BOX_DIR)/win81x64-enterprise$(BOX_SUFFIX): win81x64-enterprise.json floppy/win81x64-enterprise/Autounattend.xml
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
@@ -226,47 +301,6 @@ $(VMWARE_BOX_DIR)/win81x86-pro-cygwin$(BOX_SUFFIX): win81x86-pro-cygwin.json flo
 	mkdir -p $(VMWARE_BOX_DIR)
 	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN81_X86_PRO)" $<
 
-#win2008r2-datacenter-cygwin.json
-	#win2008r2-datacenter.jso
-#win2008r2-enterprise-cygwin.jso
-#win2008r2-enterprise.jso
-#win2008r2-standard-cygwin.jso
-#win2008r2-standard.json
-#win2008r2-web-cygwin.jso
-#win2008r2-web.jso
-#win2012-datacenter-cygwin.jso
-	#win2012-datacenter.jso
-#win2012-standard-cygwin.jso
-#win2012-standard.jso
-#win2012r2-datacenter-cygwin.jso
-	#win2012r2-datacenter.json
-#win2012r2-standard-cygwin.json
-#win2012r2-standard.json
-#win7x64-enterprise-cygwin.json
-	#win7x64-enterprise.json
-#win7x64-pro-cygwin.json
-#win7x64-pro.json
-#win7x86-enterprise-cygwin.json
-	#win7x86-enterprise.json
-#win7x86-pro-cygwin.json
-#win7x86-pro.json
-#win81x64-enterprise-cygwin.json
-	#win81x64-enterprise.json
-#win81x64-pro-cygwin.json
-#win81x64-pro.json
-#win81x86-enterprise-cygwin.json
-#win81x86-enterprise.json
-#win81x86-pro-cygwin.json
-#win81x86-pro.json
-#win8x64-enterprise-cygwin.json
-#win8x64-enterprise.json
-#win8x64-pro-cygwin.json
-#win8x64-pro.json
-#win8x86-enterprise-cygwin.json
-#win8x86-enterprise.json
-#win8x86-pro-cygwin.json
-#win8x86-pro.json
-
 # Generic rule - not used currently
 #$(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX): %.json
 #       cd $(dir $<)
@@ -299,11 +333,6 @@ $(VIRTUALBOX_BOX_DIR)/win2008r2-datacenter-cygwin$(BOX_SUFFIX): win2008r2-datace
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
 	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2008R2_X64)" $<
 
-$(VIRTUALBOX_BOX_DIR)/win2008r2-enterprise$(BOX_SUFFIX): win2008r2-enterprise.json
-	rm -rf $(VIRTUALBOX_OUTPUT)
-	mkdir -p $(VIRTUALBOX_BOX_DIR)
-	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2008R2_X64)" $<
-
 $(VIRTUALBOX_BOX_DIR)/win2008r2-enterprise-cygwin$(BOX_SUFFIX): win2008r2-enterprise-cygwin.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
@@ -320,6 +349,21 @@ $(VIRTUALBOX_BOX_DIR)/win2008r2-web-cygwin$(BOX_SUFFIX): win2008r2-web-cygwin.js
 	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2008R2_X64)" $<
 
 $(VIRTUALBOX_BOX_DIR)/win2012-datacenter$(BOX_SUFFIX): win2012-datacenter.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012_X64)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win2012-standard$(BOX_SUFFIX): win2012-standard.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012_X64)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win2012-datacenter-cygwin$(BOX_SUFFIX): win2012-datacenter-cygwin.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012_X64)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win2012-standard-cygwin$(BOX_SUFFIX): win2012-standard-cygwin.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
 	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012_X64)" $<
@@ -389,6 +433,41 @@ $(VIRTUALBOX_BOX_DIR)/win8x64-enterprise$(BOX_SUFFIX): win8x64-enterprise.json
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
 	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X64_ENTERPRISE)" $<
 
+$(VIRTUALBOX_BOX_DIR)/win8x64-pro$(BOX_SUFFIX): win8x64-pro.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X64_PRO)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win8x86-enterprise$(BOX_SUFFIX): win8x86-enterprise.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X86_ENTERPRISE)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win8x86-pro$(BOX_SUFFIX): win8x86-pro.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X86_PRO)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win8x64-enterprise-cygwin$(BOX_SUFFIX): win8x64-enterprise-cygwin.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X64_ENTERPRISE)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win8x64-pro-cygwin$(BOX_SUFFIX): win8x64-pro-cygwin.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X64_PRO)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win8x86-enterprise-cygwin$(BOX_SUFFIX): win8x86-enterprise-cygwin.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X86_ENTERPRISE)" $<
+
+$(VIRTUALBOX_BOX_DIR)/win8x86-pro-cygwin$(BOX_SUFFIX): win8x86-pro-cygwin.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN8_X86_PRO)" $<
+
 $(VIRTUALBOX_BOX_DIR)/win81x64-enterprise$(BOX_SUFFIX): win81x64-enterprise.json $(SOURCES) floppy/win81x64-enterprise/Autounattend.xml
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
@@ -430,10 +509,12 @@ $(VIRTUALBOX_BOX_DIR)/win81x86-pro-cygwin$(BOX_SUFFIX): win81x86-pro-cygwin.json
 	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN81_X86_PRO)" $<
 
 list:
-	@for builder in $(BUILDER_TYPES) ; do \
-		for box_filename in $(BOX_FILENAMES) ; do \
-			echo box/$$builder/$$box_filename ; \
-		done ; \
+	@echo "Prepend 'vwmare/' or 'virtualbox/' to build only one target platform:"
+	@echo "  make vmware/win7x64"
+	@echo ""
+	@echo "Targets:"
+	@for shortcut_target in $(SHORTCUT_TARGETS) ; do \
+		echo $$shortcut_target ; \
 	done
 
 clean: clean-builders clean-output clean-packer-cache
