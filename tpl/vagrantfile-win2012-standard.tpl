@@ -9,10 +9,12 @@ Vagrant.configure("2") do |config|
     config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct:true
     config.vm.communicator = "winrm"
     config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct:true 
-  
+    # Port forward SSH
+    config.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct:true
+
     # Berkshelf
     # config.berkshelf.enabled = true
-  
+
     config.vm.provider :virtualbox do |v, override|
         v.gui = true
         v.customize ["modifyvm", :id, "--memory", 768]
