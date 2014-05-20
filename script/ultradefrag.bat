@@ -8,9 +8,9 @@ if not defined TEMP set TEMP=%USERPROFILE%\AppData\Local\Temp
 set ULTRADEFRAG_VERSION=6.0.2
 
 if exist "%SystemDrive%\Program Files (x86)" (
-  set ULTRADEFRAG_ZIP=ultradefrag-portable-%ULTRADEFRAG_VERSION%.bin.i386.zip
-) else (
   set ULTRADEFRAG_ZIP=ultradefrag-portable-%ULTRADEFRAG_VERSION%.bin.amd64.zip
+) else (
+  set ULTRADEFRAG_ZIP=ultradefrag-portable-%ULTRADEFRAG_VERSION%.bin.i386.zip
 )
 
 set ULTRADEFRAG_URL=http://downloads.sourceforge.net/ultradefrag/%ULTRADEFRAG_ZIP%
