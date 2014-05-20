@@ -2,8 +2,8 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
-    "iso_url": "iso/en_windows_7_enterprise_with_sp1_x64_dvd_u_677651.iso",
-    "iso_checksum": "a491f985dccfb5863f31b728dddbedb2ff4df8d1",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
+    "iso_checksum": "15ddabafa72071a06d5213b486a02d5b55cb7070",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'"
   },
   "builders": [
