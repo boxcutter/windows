@@ -2,8 +2,26 @@
 
 ### Overview
 
-The repository contains templates for Windows that can create Vagrant boxes
-using Packer ([Website](packer.io)) ([Github](http://github.com/mitchellh/packer))
+This repository contains templates for Windows that can create
+Vagrant boxes using Packer.
+
+## Current Boxes
+
+64-bit boxes:
+
+* win7x64-enterprise, VMWare 3.5GB/VirtualBox 3.2GB
+* win7x64-enterprise-cygwin, VMWare 3.5GB/VirtualBox 3.3GB
+* win7x64-pro, VMware 3.5GB/VirtualBox 3.2GB
+* win7x64-pro-cygwin, VMware 3.5GB/VirtualBox 3.3GB
+
+
+32-bit boxes:
+
+* win7x86-enterprise, VMWare 2.5GB/VirtualBox 2.4GB
+* win7x86-enterprise-cygwin, VMWare 2.5GB/VirtualBox 2.4GB
+* win7x86-pro, VMware 2.5GB/VirtualBox 2.4GB
+* win7x86-pro-cygwin, VMware 2.6GB/VirtualBox 2.4GB
+ 
 
 ## Building the Vagrant boxes
 
