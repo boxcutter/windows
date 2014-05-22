@@ -40,7 +40,7 @@
       }
     },
     {
-      "vm_name": "win8x86-enterpsie-cygwin",
+      "vm_name": "win8x86-enterprise-cygwin",
       "type": "virtualbox-iso",
       "guest_os_type": "Windows8",
       "iso_url": "{{ user `iso_url` }}",
