@@ -9,6 +9,10 @@ Vagrant boxes using Packer.
 
 64-bit boxes:
 
+* win8x64-enterprise, VMware 3.6GB/VirtualBox 3.3GB
+* win8x64-enterprise-cygwin, VMWare 3.5GB/VirtualBox 3.3GB
+* win8x64-pro, VMWare 3.6GB/VirtualBox 3.4GB
+* win8x64-pro-cygwin, VMWare 3.6GB/VirtualBox 3.4GB
 * win7x64-enterprise, VMWare 3.5GB/VirtualBox 3.2GB
 * win7x64-enterprise-cygwin, VMWare 3.5GB/VirtualBox 3.3GB
 * win7x64-pro, VMware 3.5GB/VirtualBox 3.2GB
@@ -17,6 +21,10 @@ Vagrant boxes using Packer.
 
 32-bit boxes:
 
+* win8x86-enterprise, VMware 2.6GB/VirtualBox 2.4GB
+* win8x86-enterprise-cygwin, VMware 2.6GB/VirtualBox  2.4GB
+* win8x86-pro, VMware 2.6GB/VirtualBox 2.4GB
+* win8x86-pro-cygwin, VMware 2.6GB/VirtualBox 2.4GB
 * win7x86-enterprise, VMWare 2.5GB/VirtualBox 2.4GB
 * win7x86-enterprise-cygwin, VMWare 2.5GB/VirtualBox 2.4GB
 * win7x86-pro, VMware 2.5GB/VirtualBox 2.4GB
