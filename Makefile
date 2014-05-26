@@ -562,7 +562,7 @@ $(VIRTUALBOX_BOX_DIR)/win81x86-pro-cygwin$(BOX_SUFFIX): win81x86-pro-cygwin.json
 	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN81_X86_PRO)" -var "iso_checksum=$(WIN81_X86_PRO_CHECKSUM)" $<
 
 list:
-	@echo "Prepend 'vwmare/' or 'virtualbox/' to build only one target platform:"
+	@echo "Prepend 'vmware/' or 'virtualbox/' to build only one target platform:"
 	@echo "  make vmware/win7x64"
 	@echo ""
 	@echo "Targets:"
