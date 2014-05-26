@@ -145,6 +145,18 @@ test-win81-openssh: test-win81x64-enterprise test-win81x64-pro test-win81x86-ent
 
 test-win81-cygwin: test-win81x64-enterprise-cygwin test-win81x64-pro-cygwin test-win81x86-enterprise-cygwin test-win81x86-pro-cygwin
 
+win2008r2: win2008r2-openssh win2008r2-cygwin
+
+win2008r2-openssh: win2008r2-datacenter win2008r2-enterprise win2008r2-standard win2008r2-web
+
+win2008r2-cygwin: win2008r2-datacenter-cygwin win2008r2-enterprise-cygwin win2008r2-standard-cygwin win2008r2-web-cygwin
+
+test-win2008r2: test-win2008r2-openssh test-win2008r2-cygwin
+
+test-win2008r2-openssh: test-win2008r2-datacenter test-win2008r2-enterprise test-win2008r2-standard test-win2008r2-web
+
+test-win2008r2-cygwin: test-win2008r2-datacenter-cygwin test-win2008r2-enterprise-cygwin test-win2008r2-standard-cygwin test-win2008r2-web-cygwin
+
 
 # Generic rule - not used currently
 #$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): %.json
