@@ -565,6 +565,10 @@ list:
 	@echo "Prepend 'vmware/' or 'virtualbox/' to build only one target platform:"
 	@echo "  make vmware/win7x64"
 	@echo ""
+	@echo "Append '-cygwin' to build with Cygwin SSH instead of the default"
+	@echo "OpenSSH:"
+	@echo "  make win7x64-cygwin"
+	@echo ""
 	@echo "Targets:"
 	@for shortcut_target in $(SHORTCUT_TARGETS) ; do \
 		echo $$shortcut_target ; \
