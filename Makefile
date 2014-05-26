@@ -157,6 +157,29 @@ test-win2008r2-openssh: test-win2008r2-datacenter test-win2008r2-enterprise test
 
 test-win2008r2-cygwin: test-win2008r2-datacenter-cygwin test-win2008r2-enterprise-cygwin test-win2008r2-standard-cygwin test-win2008r2-web-cygwin
 
+win2012: win2012-openssh win2012-cygwin
+
+win2012-openssh: win2012-datacenter win2012-standard
+
+win2012-cygwin: win2012-datacenter-cygwin win2012-standard-cygwin
+
+test-win2012: test-win2012-openssh test-win2012-cygwin
+
+test-win2012-openssh: test-win2012-datacenter test-win2012-standard
+
+test-win2012-cygwin: test-win2012-datacenter-cygwin test-win2012-standard-cygwin
+
+win2012r2: win2012r2-openssh win2012r2-cygwin
+
+win2012r2-openssh: win2012r2-datacenter win2012r2-standard
+
+win2012r2-cygwin: win2012r2-datacenter-cygwin win2012r2-standard-cygwin
+
+test-win2012r2: test-win2012r2-openssh test-win2012r2-cygwin
+
+test-win2012r2-openssh: test-win2012r2-datacenter test-win2012r2-standard
+
+test-win2012r2-cygwin: test-win2012r2-datacenter-cygwin test-win2012r2-standard-cygwin
 
 # Generic rule - not used currently
 #$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): %.json
