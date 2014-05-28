@@ -1,17 +1,29 @@
-:: zz-start-sshd.cmd
+setlocal EnableDelayedExpansion EnableExtensions
+
+if not defined %PACKER_SERVICES% set PACKER_SERVICES=opensshd sshd winrm
+
+title Starting services: %PACKER_SERVICES%. Please wait...
+
 :: Intentionally named with zz so it runs last by 00-run-all-scripts.cmd so
-:: that the Packer ssh connection is not inadvertently dropped during the
+:: that the Packer winrm/ssh connections is not inadvertently dropped during the
 :: Sysprep run
 
-setlocal EnableDelayedExpansion
-setlocal EnableExtensions
+for %%i in (%PACKER_SERVICES%) do (
+  echo ==^> Checking if the %%i service is installed
+  sc query %%i >nul 2>nul && (
+    echo ==^> Starting the %%i service
+    sc start %%i
+  )
+)
 
-set SSH_SERVICE=
+:exit0
 
-echo ==^> Determining installed SSH_SERVICE
-sc query sshd >nul 2>nul && set SSH_SERVICE=sshd
-sc query opensshd >nul 2>nul && set SSH_SERVICE=opensshd
+ver>nul
 
-echo ==^> Starting the %SSH_SERVICE% service
-sc start %SSH_SERVICE%
-timeout 10
+goto :exit
+
+:exit1
+
+verify other 2>nul
+
+:exit

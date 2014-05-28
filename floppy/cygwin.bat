@@ -1,55 +1,98 @@
 setlocal EnableDelayedExpansion EnableExtensions
+title Installing Cygwin. Please wait...
 
-:: Force CYGWIN_ARCH to 32-bit - 64-bit seems to crash a lot
-set CYGWIN_ARCH=x86
+if not defined CYGWIN_ARCH (
+  :: Force CYGWIN_ARCH to 32-bit - 64-bit seems to crash a lot
+  set CYGWIN_ARCH=x86
 
-:: Force CYGWIN_ARCH to 64-bit - 32-bit seems to crash a lot on Windows 2012
-systeminfo | findstr /B /C:"OS Name" | findstr "2012"
-if not errorlevel 1 set CYGWIN_ARCH=x86_64
+  :: Force CYGWIN_ARCH to 64-bit - 32-bit seems to crash a lot on Windows 2008 and 2012
+  systeminfo 2>nul  | findstr /b /c:"OS Name" | findstr "2008 2012" >nul
+  if not errorlevel 1 set CYGWIN_ARCH=x86_64
+)
 
-:: Force CYGWIN_ARCH to 64-bit - 32-bit seems to crash a lot on Windows 2008
-systeminfo | findstr /B /C:"OS Name" | findstr "2008"
-if not errorlevel 1 set CYGWIN_ARCH=x86_64
+if not defined CYGWIN_HOME       set CYGWIN_HOME=%SystemDrive%\cygwin
+if not defined CYGWIN_MIRROR_URL set CYGWIN_MIRROR_URL=http://mirrors.kernel.org/sourceware/cygwin
+if not defined CYGWIN_PACKAGES   set CYGWIN_PACKAGES=openssh
+if not defined CYGWIN_URL        set CYGWIN_URL=http://cygwin.com/setup-x86.exe
+if not defined SSHD_PASSWORD     set SSHD_PASSWORD=abc&&123!!
 
-set CYGWIN_SETUP_URL=http://cygwin.com/setup-%CYGWIN_ARCH%.exe
-set CYGWIN_SETUP_LOCAL_PATH=%TEMP%\setup-%CYGWIN_ARCH%.exe
-set CYGWIN_HOME=%SystemDrive%\cygwin
-set CYGWIN_PACKAGES=openssh
-set CYGWIN_MIRROR_URL=http://mirrors.kernel.org/sourceware/cygwin
-
-PATH=%PATH%;%CYGWIN_HOME%\bin
+for %%i in ("%CYGWIN_URL%") do set CYGWIN_EXE=%%~nxi
+set CYGWIN_DIR=%TEMP%\cygwin
+set CYGWIN_PATH=%CYGWIN_DIR%\%CYGWIN_EXE%
 
 title Installing Cygwin and %CYGWIN_PACKAGES% to %CYGWIN_HOME%. Please wait...
 
-cd /D "%TEMP%"
+echo ==^> Creating "%CYGWIN_DIR%"
+mkdir "%CYGWIN_DIR%"
+pushd "%CYGWIN_DIR%"
 
-echo ==^> Downloading "%CYGWIN_SETUP_URL%" to "%CYGWIN_SETUP_LOCAL_PATH%"
-
-PATH=%PATH%;~dp0
-for %%i in (_download.cmd) do set _download=%%~$PATH:i
-if defined _download (
-  call "%_download%" "%CYGWIN_SETUP_URL%" "%CYGWIN_SETUP_LOCAL_PATH%"
+if exist "%SystemRoot%\_download.cmd" (
+  call "%SystemRoot%\_download.cmd" "%CYGWIN_URL%" "%CYGWIN_PATH%"
 ) else (
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CYGWIN_SETUP_URL%', '%CYGWIN_SETUP_LOCAL_PATH%')" <NUL
+  echo ==^> Downloading "%CYGWIN_URL%" to "%CYGWIN_PATH%"
+  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CYGWIN_URL%', '%CYGWIN_PATH%')" <NUL
 )
+if errorlevel 1 goto exit1
+
+echo ==^> Blocking SSH port 22 on the firewall
+netsh advfirewall firewall add rule name="SSHD" dir=in action=block program="%CYGWIN_HOME%\usr\sbin\sshd.exe" enable=yes
+netsh advfirewall firewall add rule name="ssh" dir=in action=block protocol=TCP localport=22
 
 echo ==^> Installing Cygwin
-"%CYGWIN_SETUP_LOCAL_PATH%" -a %CYGWIN_ARCH% -q -R %CYGWIN_HOME% -P %CYGWIN_PACKAGES% -s %CYGWIN_MIRROR_URL%
+"%CYGWIN_PATH%" -a %CYGWIN_ARCH% -q -R %CYGWIN_HOME% -P %CYGWIN_PACKAGES% -s %CYGWIN_MIRROR_URL%
 
-echo ==^> Stopping the ssh service
-cygrunsrv -E sshd
+if errorlevel 1 goto exit1
 
-echo ==^> Opening firewall port 22 for the sshd service
+if not exist a:\cygwin.sh echo ==^> ERROR: File not found: a:\cygwin.sh & goto exit1
+
+echo ==^> Running a:\cygwin.sh
+set CYGWIN=ntsecbinmode mintty nodosfilewarning
+pushd "%CYGWIN_HOME%\bin"
+PATH=%PATH%;%CYGWIN_HOME%\bin
+bash /cygdrive/a/cygwin.sh "%SSHD_PASSWORD%"
+
+if errorlevel 1 goto exit1
+
+:: cygwin has its own timeout command
+popd
+
+echo ==^> Waiting for the sshd service to finish starting
+timeout 5
+
+sc query sshd | findstr "RUNNING" >nul
+if errorlevel 1 goto sshd_not_running
+
+echo ==^> Stopping the sshd service
+
+sc stop sshd
+
+:is_sshd_running
+
+timeout 1
+
+sc query sshd | findstr "STOPPED" >nul
+if errorlevel 1 goto is_sshd_running
+
+:sshd_not_running
+ver>nul
+
+echo ==^> Unblocking SSH port 22 on the firewall
+netsh advfirewall firewall delete rule name="SSHD"
+netsh advfirewall firewall delete rule name="ssh"
+
+echo ==^> Opening SSH port 22 on the firewall
 netsh advfirewall firewall add rule name="SSHD" dir=in action=allow program="%CYGWIN_HOME%\usr\sbin\sshd.exe" enable=yes
 netsh advfirewall firewall add rule name="ssh" dir=in action=allow protocol=TCP localport=22
 
-echo ==^> Shelling out to configure Unix bits
-set CYGWIN=ntsecbinmode mintty nodosfilewarning
-bash a:/cygwin.sh "abc&&123!!"
+:exit0
 
-echo ==^> Deleting the Cygwin installer and downloaded packages
-del "%CYGWIN_SETUP_LOCAL_PATH%"
-for /D %%i in (%TEMP%\http*.*) do del /s /q "%%~i"
+ver>nul
 
-echo ==^> Fixing corrupt recycle bin - see http://www.winhelponline.com/blog/fix-corrupted-recycle-bin-windows-7-vista/
-rd /s /q %SystemDrive%\$Recycle.bin
+goto :exit
+
+:exit1
+
+verify other 2>nul
+
+:exit
+

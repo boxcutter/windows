@@ -1,23 +1,32 @@
 setlocal EnableDelayedExpansion EnableExtensions
 
+if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
+
 set url=%~1
+
 set filename=%~2
 
-if not defined url goto :eof
+if not defined url echo ==^> ERROR: _download.cmd called without URL parameter. & goto exit1
 
 if not defined filename set filename=%TEMP%\%~nx1
 
-if exist "%filename%" del /f "%filename%"
+if exist "%filename%" echo ==^> File "%filename%" already exists, skipping download. & goto exit0
 
-for %%i in ("%filename%") do set basename=%%~nxi
+set basename=
 
-if not exist "%~dp0\%basename%" goto download
+for %%i in ("%url%") do set basename=%%~nxi
 
-echo ==^> Copying "%~dp0\%basename%" to "%filename%"
+if not defined basename goto download
 
-copy /y "%~dp0\%basename%" "%filename%"
+set found=
 
-goto :eof
+@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined found @if exist "%%~i\%basename%" set found=%%~i\%basename%
+
+if not defined found goto download
+
+echo ==^> Copying "%found%" to "%filename%", skipping download.
+
+copy /y "%found%" "%filename%" && goto exit0
 
 :download
 
@@ -25,17 +34,21 @@ echo ==^> Downloading "%url%" to "%filename%"
 
 set wget=
 
-PATH=%SystemRoot%;%PATH%;%~dp0
-
 for %%i in (wget.exe) do set wget=%%~$PATH:i
 
-:: for some reason the above commands do not work sometimes
-if not defined wget if exist %SystemRoot%\wget.exe set wget=%SystemRoot%\wget.exe
-if not defined wget if exist d:\wget.exe set wget=d:\wget.exe
-if not defined wget if exist e:\wget.exe set wget=e:\wget.exe
-if not defined wget if exist %~dp0\wget.exe set wget=%~dp0\wget.exe
-
 if defined wget goto wget
+
+@for %%i in (%SystemRoot% %PACKER_SEARCH_PATHS%) do @if not defined wget @if exist "%%~i\wget.exe" set wget=%%~i\wget.exe
+
+:wget
+
+if not exist "%wget%" goto bitsadmin
+
+"%wget%" --no-check-certificate --quiet -O "%filename%" "%url%"
+
+if not errorlevel 1 if exist "%filename%" goto exit0
+
+:bitsadmin
 
 set bitsadmin=
 
@@ -43,26 +56,32 @@ for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
 
 if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
 
-if defined bitsadmin goto bitsadmin
-
-:wget
-
-"%wget%" --no-check-certificate --quiet -O "%filename%" "%url%"
-
-if exist "%filename%" goto :eof
-
-if not defined bitsadmin goto powershell
-
-:bitsadmin
+if not exist "%bitsadmin%" goto powershell
 
 for %%i in ("%filename%") do set jobname=%%~nxi
 
 "%bitsadmin%" /transfer "%jobname%" "%url%" "%filename%"
 
-if exist "%filename%" goto :eof
+if not errorlevel 1 if exist "%filename%" goto exit0
 
 :powershell
 
 powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
 
-goto :eof
+if not errorlevel 1 if exist "%filename%" goto exit0
+
+echo ==^> ERROR: Failed to download "%url%" to "%filename%"
+
+goto :exit1
+
+:exit0
+
+ver>nul
+
+goto :exit
+
+:exit1
+
+verify other 2>nul
+
+:exit
