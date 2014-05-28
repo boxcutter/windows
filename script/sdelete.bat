@@ -23,7 +23,7 @@ if not exist "%SDELETE_PATH%" goto exit1
 reg add HKCU\Software\Sysinternals\SDelete /v EulaAccepted /t REG_DWORD /d 1 /f
 
 echo ==^> Running SDelete on %SystemDrive%
-start /b /wait "%SDELETE_PATH%" -z %SystemDrive%
+"%SDELETE_PATH%" -z %SystemDrive%
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%SDELETE_PATH%" -z %SystemDrive%
 ver>nul
