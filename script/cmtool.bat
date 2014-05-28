@@ -3,13 +3,14 @@
 @if not defined PACKER_DEBUG echo off
 
 if not defined CM echo ==^> ERROR: The "CM" variable was not found in the environment & goto exit1
-if not defined CM_VERSION echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment
-if not defined CM_VERSION set CM_VERSION=latest
+
+if "%CM%" == "nocm"   goto nocm
+
+if not defined CM_VERSION echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment & set CM_VERSION=latest
 
 if "%CM%" == "chef"   goto chef
 if "%CM%" == "puppet" goto puppet
 if "%CM%" == "salt"   goto salt
-if "%CM%" == "nocm"   goto nocm
 
 echo ==^> ERROR: Unknown value for environment variable CM: "%CM%"
 
