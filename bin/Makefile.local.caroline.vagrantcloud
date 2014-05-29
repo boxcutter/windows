@@ -1,0 +1,8 @@
+VAGRANTCLOUD_TARGETS := win7-nocm win8-nocm win81-nocm win2008r2-nocm win2012-nocm win2012r2-nocm win7-chef11.12.4 win8x64-chef11.12.4 win81x64-chef11.12.4 win2008r2-chef11.12.4 win2012-chef11.12.4 win2012r2-chef11.12.4
+test-vagrantcloud:
+	@for vagrantcloud_target in $(VAGRANTCLOUD_TARGETS) ; do \
+		bin/test-vagrantcloud-box.sh box-cutter/$$vagrantcloud_target virtualbox virtualbox $(CURRENT_DIR)/test/*_spec.rb || exit; \
+	done
+	@for vagrantcloud_target in $(VAGRANTCLOUD_TARGETS) ; do \
+		bin/test-vagrantcloud-box.sh box-cutter/$$vagrantcloud_target vmware_fusion vmware_desktop $(CURRENT_DIR)/test/*_spec.rb || exit; \
+	done
