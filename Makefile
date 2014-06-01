@@ -55,7 +55,11 @@ else
 	BOX_SUFFIX := -$(CM)$(CM_VERSION).box
 endif
 BUILDER_TYPES ?= vmware virtualbox
-VAGRANT_PROVIDER ?= vmware_fusion
+ifeq ($(OS),Windows_NT)
+	VAGRANT_PROVIDER ?= vmware_workstation
+else
+	VAGRANT_PROVIDER ?= vmware_fusion
+endif
 TEMPLATE_FILENAMES := $(wildcard *.json)
 BOX_FILENAMES := $(TEMPLATE_FILENAMES:.json=$(BOX_SUFFIX))
 BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $(BOX_FILENAMES), box/$(builder)/$(box_filename)))
