@@ -76,7 +76,7 @@ ifeq ($(UNAME_O),Cygwin)
 	CURRENT_DIR := $(shell cygpath -m $(CURRENT_DIR))
 endif
 
-SOURCES := $(wildcard script/*.bat) $(wildcard floppy/*.*)
+SOURCES := $(wildcard script/*.*) $(wildcard floppy/*.*)
 
 .PHONY: all list clean test
 
