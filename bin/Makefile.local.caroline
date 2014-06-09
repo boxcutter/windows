@@ -1,4 +1,3 @@
-CM := nocm
 caroline_msdn := file:///Volumes/Storage/MSDN_Chef
 WIN2008R2_X64 := $(caroline_msdn)/win2008r2/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso
 WIN2008R2_X64_CHECKSUM := 7e7e9425041b3328ccf723a0855c2bc4f462ec57
