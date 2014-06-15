@@ -59,8 +59,9 @@ echo "PUBLIC=${SYSTEMDRIVE}\\Users\\Public" >>"${SSHENV}"
 echo "SESSIONNAME=Console" >>"${SSHENV}"
 echo "TEMP=${SYSTEMDRIVE}\\Users\\${USERNAME}\\AppData\\Local\\Temp" >>"${SSHENV}"
 echo "TMP=${SYSTEMDRIVE}\\Users\\${USERNAME}\\AppData\\Local\\Temp" >>"${SSHENV}"
-# to override "cyg_server":
-echo "USERNAME=${USERNAME}" >>"${SSHENV}"
+# This fix simply masks the issue, we need to fix the underlying cause
+# to override "sshd_server":
+# echo "USERNAME=${USERNAME}" >>"${SSHENV}"
 
 if [ -d "${SYSTEMDRIVE}/Program Files (x86)" ];then
   echo "COMMONPROGRAMFILES(X86)=${SYSTEMDRIVE}\\Program Files (x86)\\Common Files" >>"${SSHENV}"

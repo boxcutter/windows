@@ -14,7 +14,7 @@ if not defined CYGWIN_HOME       set CYGWIN_HOME=%SystemDrive%\cygwin
 if not defined CYGWIN_MIRROR_URL set CYGWIN_MIRROR_URL=http://mirrors.kernel.org/sourceware/cygwin
 if not defined CYGWIN_PACKAGES   set CYGWIN_PACKAGES=openssh
 if not defined CYGWIN_URL        set CYGWIN_URL=http://cygwin.com/setup-x86.exe
-if not defined SSHD_PASSWORD     set SSHD_PASSWORD=abc&&123!!
+if not defined SSHD_PASSWORD     set SSHD_PASSWORD=D@rj33l1ng
 
 for %%i in ("%CYGWIN_URL%") do set CYGWIN_EXE=%%~nxi
 set CYGWIN_DIR=%TEMP%\cygwin
@@ -83,6 +83,10 @@ netsh advfirewall firewall delete rule name="ssh"
 echo ==^> Opening SSH port 22 on the firewall
 netsh advfirewall firewall add rule name="SSHD" dir=in action=allow program="%CYGWIN_HOME%\usr\sbin\sshd.exe" enable=yes
 netsh advfirewall firewall add rule name="ssh" dir=in action=allow protocol=TCP localport=22
+
+:: This fix simply masks the issue, we need to fix the underlying cause
+:: echo ==^> Overriding sshd_server username in environment
+:: reg add "HKLM\Software\Microsoft\Command Processor" /v AutoRun /t REG_SZ /d "@for %%i in (%%USERPROFILE%%) do @set USERNAME=%%~ni" /f
 
 :exit0
 

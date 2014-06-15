@@ -1,6 +1,6 @@
 setlocal EnableDelayedExpansion EnableExtensions
 
-if not defined %PACKER_SERVICES% set PACKER_SERVICES=opensshd sshd winrm
+if not defined PACKER_SERVICES set PACKER_SERVICES=opensshd sshd winrm
 
 title Starting services: %PACKER_SERVICES%. Please wait...
 

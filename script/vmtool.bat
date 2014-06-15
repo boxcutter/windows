@@ -39,7 +39,7 @@ goto :eof
 :install_sevenzip
 ::::::::::::
 
-pushd
+pushd .
 
 set SEVENZIP_EXE=
 set SEVENZIP_DLL=
@@ -244,6 +244,8 @@ rmdir "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" || ver>nul
 call :install_sevenzip
 if errorlevel 1 goto exit1
 
+pushd "%VMWARE_TOOLS_DIR%"
+
 echo ==^> Extracting the VMWare Tools installer
 7z e -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_ISO_PATH%" "%VMWARE_TOOLS_SETUP_EXE%"
 
@@ -334,15 +336,19 @@ ver>nul
 
 :exit0
 
-ver>nul
+@ping 127.0.0.1
+@ver>nul
 
-goto :exit
+@goto :exit
 
 :exit1
 
-verify other 2>nul
+@ping 127.0.0.1
+@verify other 2>nul
 
 :exit
 
-echo ==^> Script exiting with errorlevel %ERRORLEVEL%
-exit /b %ERRORLEVEL%
+@echo ==^> Script exiting with errorlevel %ERRORLEVEL%
+@exit /b %ERRORLEVEL%
+
+

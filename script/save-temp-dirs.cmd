@@ -11,22 +11,28 @@ if not exist "%PACKER_LOG_PATH%" mkdir "%PACKER_LOG_PATH%"
 if not exist "%PACKER_LOG_PATH%" echo ==^> ERROR: Unable to create directory "%PACKER_LOG_PATH%" & goto exit1
 
 xcopy /c /i /y "%TEMP%\*.log.txt" "%PACKER_LOG_PATH%\"
-xcopy /c /e /h /i /k /r /y "%TEMP%" "%PACKER_LOG_PATH%\temp\"
-xcopy /c /e /h /i /k /r /y "%SystemRoot%\TEMP" "%PACKER_LOG_PATH%\windows_temp\"
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: xcopy /c /i /y "%TEMP%\*.log.txt" "%PACKER_LOG_PATH%\"
 
-goto exit0
+xcopy /c /e /h /i /k /r /y "%TEMP%" "%PACKER_LOG_PATH%\temp\"
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: xcopy /c /e /h /i /k /r /y "%TEMP%" "%PACKER_LOG_PATH%\temp\"
+
+xcopy /c /e /h /i /k /r /y "%SystemRoot%\TEMP" "%PACKER_LOG_PATH%\windows_temp\"
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: xcopy /c /e /h /i /k /r /y "%SystemRoot%\TEMP" "%PACKER_LOG_PATH%\windows_temp\"
 
 :exit0
 
-ver>nul
+@ping 127.0.0.1
+@ver>nul
 
-goto :exit
+@goto :exit
 
 :exit1
 
-verify other 2>nul
+@ping 127.0.0.1
+@verify other 2>nul
 
 :exit
 
-echo ==^> Script exiting with errorlevel %ERRORLEVEL%
-exit /b %ERRORLEVEL%
+@echo ==^> Script exiting with errorlevel %ERRORLEVEL%
+@exit /b %ERRORLEVEL%
+

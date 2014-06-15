@@ -10,6 +10,8 @@ if exist "%SystemDrive%\Program Files (x86)" (
   set DOTNET_FRAMEWORK_DIR=%SystemRoot%\Microsoft.NET\Framework
 )
 
+if not exist "%DOTNET_FRAMEWORK_DIR%" echo ==^> ERROR: Directory not found "%DOTNET_FRAMEWORK_DIR%" & goto exit1
+
 for /r "%DOTNET_FRAMEWORK_DIR%" %%i in (ngen.exe) do if exist "%%~i" (
   echo ==> Executing: "%%~i" update /force
   echo.|time|findstr "current"
@@ -19,15 +21,17 @@ for /r "%DOTNET_FRAMEWORK_DIR%" %%i in (ngen.exe) do if exist "%%~i" (
 
 :exit0
 
-ver>nul
+@ping 127.0.0.1
+@ver>nul
 
-goto :exit
+@goto :exit
 
 :exit1
 
-verify other 2>nul
+@ping 127.0.0.1
+@verify other 2>nul
 
 :exit
 
-echo ==^> Script exiting with errorlevel %ERRORLEVEL%
-exit /b %ERRORLEVEL%
+@echo ==^> Script exiting with errorlevel %ERRORLEVEL%
+@exit /b %ERRORLEVEL%

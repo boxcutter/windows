@@ -8,21 +8,24 @@ if not defined PACKER_LOG_DIR set PACKER_LOG_DIR=z:\c\packer_logs
 
 set PACKER_LOG_PATH=%PACKER_LOG_DIR%\%COMPUTERNAME%
 if not exist "%PACKER_LOG_PATH%" mkdir "%PACKER_LOG_PATH%"
-if not exist "%PACKER_LOG_PATH%" echo ==^> ERROR: Unable to create directory "%PACKER_LOG_PATH%" & goto exit1
+if not exist "%PACKER_LOG_PATH%" echo ==^> WARNING: Unable to create directory "%PACKER_LOG_PATH%" & goto exit0
 
 xcopy /c /i /y "%TEMP%\*.log.txt" "%PACKER_LOG_PATH%"
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: xcopy /c /i /y "%TEMP%\*.log.txt" "%PACKER_LOG_PATH%"
 
 :exit0
 
-ver>nul
+@ping 127.0.0.1
+@ver>nul
 
-goto :exit
+@goto :exit
 
 :exit1
 
-verify other 2>nul
+@ping 127.0.0.1
+@verify other 2>nul
 
 :exit
 
-echo ==^> Script exiting with errorlevel %ERRORLEVEL%
-exit /b %ERRORLEVEL%
+@echo ==^> Script exiting with errorlevel %ERRORLEVEL%
+@exit /b %ERRORLEVEL%

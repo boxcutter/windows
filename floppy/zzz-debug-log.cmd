@@ -2,48 +2,51 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if not defined PACKER_DEBUG echo off
 
-if "%1" == "output_debug_info" goto output_debug_info
+if "%1" == "" goto main
 
-set LOG_ID=%RANDOM%
+goto %1
 
-for /f %%a in ("%TIME%") do for /f "delims=:. tokens=1-4" %%b in ("%%a") do (
-  if %%b leq 9 (
-    set LOG_ID=0%%b-%%c-%%d.%%e
-  ) else (
-    set LOG_ID=%%b-%%c-%%d.%%e
-  )
-)
+goto :eof
 
-set PACKER_DEBUG_LOG=%TEMP%\packer_debug_%LOG_ID%.log.txt
+::::::::::::
+:find_tee
+::::::::::::
 
-echo ==^> Displaying debug log
+set _TEE_CMD=
 
-call "%~0" output_debug_info
+for %%i in (tee.cmd tee.exe) do set _TEE_CMD=%%~$PATH:i
+if exist "%_TEE_CMD%" goto :eof
 
-echo ==^> Saving debug log to "%PACKER_DEBUG_LOG%"
+for %%i in ("%SystemRoot%" %PACKER_SEARCH_PATHS%) do if exist "%%~i\tee.exe" set _TEE_CMD=%%~i\tee.exe
+if exist "%_TEE_CMD%" goto :eof
 
-call "%~0" output_debug_info >"%PACKER_DEBUG_LOG%"
+for %%i in ("%SystemRoot%" %PACKER_SEARCH_PATHS%) do if exist "%%~i\tee.cmd" set _TEE_CMD=%%~i\tee.cmd
+if exist "%_TEE_CMD%" goto :eof
 
-if not defined PACKER_LOG_DIR set PACKER_LOG_DIR=z:\c\packer_logs
+set _TEE_CMD=%SystemRoot%\tee.cmd
+set _TEE_JS=%SystemRoot%\tee.js
 
-set PACKER_LOG_PATH=%PACKER_LOG_DIR%\%COMPUTERNAME%
+:: see http://stackoverflow.com/a/10719322/1432614
+echo var fso = new ActiveXObject("Scripting.FileSystemObject");>"%_TEE_JS%"
+echo var out = fso.OpenTextFile(WScript.Arguments(0),2,true);>>"%_TEE_JS%"
+echo var chr;>>"%_TEE_JS%"
+echo while( ^^!WScript.StdIn.AtEndOfStream ) {>>"%_TEE_JS%"
+echo   chr=WScript.StdIn.Read(1);>>"%_TEE_JS%"
+echo   WScript.StdOut.Write(chr);>>"%_TEE_JS%"
+echo   out.Write(chr);>>"%_TEE_JS%"
+echo }>>"%_TEE_JS%"
 
-echo ==^> Saving all installation files to "%PACKER_LOG_PATH%"
+echo @cscript //E:JScript //nologo "%_TEE_JS%" %%* >"%_TEE_CMD%"
 
-if not exist "%PACKER_LOG_PATH%" mkdir "%PACKER_LOG_PATH%"
-if not exist "%PACKER_LOG_PATH%" echo ==^> WARNING: Unable to create directory "%PACKER_LOG_PATH%" & goto exit0
+set _TEE_JS=
 
-xcopy /c /e /h /i /k /r /y "%TEMP%\*.log.txt" "%PACKER_LOG_PATH%\"
-xcopy /c /e /h /i /k /r /y "%TEMP%" "%PACKER_LOG_PATH%\temp\"
-xcopy /c /e /h /i /k /r /y "%SystemRoot%\TEMP" "%PACKER_LOG_PATH%\windows_temp\"
-
-goto exit0
+goto :eof
 
 ::::::::::::
 :output_debug_info
 ::::::::::::
 
-echo on
+@echo on
 
 @echo %date% %time%: %0 log started
 
@@ -75,7 +78,15 @@ ipconfig
 
 @echo ==============================
 
+netstat -an
+
+@echo ==============================
+
 systeminfo
+
+@echo ==============================
+
+chkdsk %SYSTEMDRIVE%
 
 @echo ==============================
 
@@ -97,17 +108,56 @@ for %%i in ("%USERPROFILE%\AppData\Local\Temp" "%SystemRoot%\TEMP") do if exist 
 
 @echo ==============================
 
+goto :eof
+
+::::::::::::
+:main
+::::::::::::
+
+set _PACKER_LOG_ID=
+
+for /f %%a in ("%TIME%") do for /f "delims=:. tokens=1-4" %%b in ("%%a") do (
+  if %%b leq 9 (
+    set _PACKER_LOG_ID=0%%b-%%c-%%d.%%e
+  ) else (
+    set _PACKER_LOG_ID=%%b-%%c-%%d.%%e
+  )
+)
+
+if not defined _PACKER_LOG_ID set _PACKER_LOG_ID=%RANDOM%
+
+set PACKER_DEBUG_LOG=%TEMP%\packer_debug_%_PACKER_LOG_ID%.log.txt
+
+echo ==^> Generating debug log
+
+call :find_tee
+
+call "%~0" output_debug_info | "%_TEE_CMD%" "%PACKER_DEBUG_LOG%"
+
+if not defined PACKER_LOG_DIR set PACKER_LOG_DIR=z:\c\packer_logs
+
+set PACKER_LOG_PATH=%PACKER_LOG_DIR%\%COMPUTERNAME%
+
+echo ==^> Saving debug log to "%PACKER_LOG_PATH%"
+
+if not exist "%PACKER_LOG_PATH%" mkdir "%PACKER_LOG_PATH%"
+if not exist "%PACKER_LOG_PATH%" echo ==^> WARNING: Unable to create directory "%PACKER_LOG_PATH%" & goto exit0
+
+xcopy /c /e /h /i /k /r /y "%PACKER_DEBUG_LOG%" "%PACKER_LOG_PATH%\"
+
 :exit0
 
-ver>nul
+@ping 127.0.0.1
+@ver>nul
 
-goto :exit
+@goto :exit
 
 :exit1
 
-verify other 2>nul
+@ping 127.0.0.1
+@verify other 2>nul
 
 :exit
 
-echo ==^> Script exiting with errorlevel %ERRORLEVEL%
-exit /b %ERRORLEVEL%
+@echo ==^> Script exiting with errorlevel %ERRORLEVEL%
+@exit /b %ERRORLEVEL%

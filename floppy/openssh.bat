@@ -1,10 +1,9 @@
 setlocal EnableDelayedExpansion EnableExtensions
 title Installing Openssh. Please wait...
 
-if not defined SSHD_PASSWORD set SSHD_PASSWORD=abc&&123!!
-
 if not defined OPENSSH_32_URL set OPENSSH_32_URL=http://www.mls-software.com/files/setupssh-6.6p1-1-v1.exe
 if not defined OPENSSH_64_URL set OPENSSH_64_URL=http://www.mls-software.com/files/setupssh-6.6p1-1-v1(x64).exe
+if not defined SSHD_PASSWORD  set SSHD_PASSWORD=D@rj33l1ng
 
 if exist "%SystemDrive%\Program Files (x86)" (
   set OPENSSH_URL="%OPENSSH_64_URL%"
@@ -83,8 +82,9 @@ echo PUBLIC=%SystemDrive%\Users\Public>>"%SSHENV%"
 echo SESSIONNAME=Console>>"%SSHENV%"
 echo TEMP=%SystemDrive%\Users\%USERNAME%\AppData\Local\Temp>>"%SSHENV%"
 echo TMP=%SystemDrive%\Users\%USERNAME%\AppData\Local\Temp>>"%SSHENV%"
-:: to override cyg_server:
-echo USERNAME=%USERNAME%>>"%SSHENV%"
+:: This fix simply masks the issue, we need to fix the underlying cause
+:: to override sshd_server:
+:: echo USERNAME=%USERNAME%>>"%SSHENV%"
 
 if exist "%SystemDrive%\Program Files (x86)" (
   echo COMMONPROGRAMFILES^(X86^)=%SystemDrive%\Program Files ^(x86^)\Common Files>>"%SSHENV%"
@@ -111,6 +111,10 @@ icacls "%ProgramFiles%\OpenSSH\usr\sbin" /grant %USERNAME%:(OI)RX
 
 echo ==^> Setting user's home directories to their windows profile directory
 powershell -Command "(Get-Content '%ProgramFiles%\OpenSSH\etc\passwd') | Foreach-Object { $_ -replace '/home/(\w+)', '/cygdrive/c/Users/$1' } | Set-Content '%ProgramFiles%\OpenSSH\etc\passwd'"
+
+:: This fix simply masks the issue, we need to fix the underlying cause
+:: echo ==^> Overriding sshd_server username in environment
+:: reg add "HKLM\Software\Microsoft\Command Processor" /v AutoRun /t REG_SZ /d "@for %%i in (%%USERPROFILE%%) do @set USERNAME=%%~ni" /f
 
 :exit0
 

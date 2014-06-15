@@ -39,5 +39,5 @@ set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n
 set PACKER_SERVICES=opensshd sshd winrm
 
 :: Uncomment the following to define a new password for the sshd service
-:: Default: abc&&123!!
-:: set SSHD_PASSWORD=abc&&123!!
+:: Default: D@rj33l1ng
+:: set SSHD_PASSWORD=D@rj33l1ng
