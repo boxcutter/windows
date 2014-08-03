@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 create_vagrantfile_linux() {
-vagrant plugin install vagrant-serverspec
+vagrant plugin list | grep vagrant-serverspec && echo "vagrant-serverspec installed" || vagrant plugin install vagrant-serverspec
 cat << EOF > $tmp_path/Vagrantfile
 Vagrant.configure('2') do |config|
 config.vm.box = '$box_path'
