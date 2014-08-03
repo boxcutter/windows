@@ -2,9 +2,8 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if not defined PACKER_DEBUG echo off
 
-echo ==^> Uninstalling 7zip
-if exist "%SystemRoot%\7z.exe" del /f "%SystemRoot%\7z.exe"
-if exist "%SystemRoot%\7z.dll" del /f "%SystemRoot%\7z.dll"
+shutdown /s /t 10 /f /d p:4:1 /c Packer_Reboot
+ping -t 127.0.0.1
 
 :exit0
 
@@ -22,4 +21,3 @@ if exist "%SystemRoot%\7z.dll" del /f "%SystemRoot%\7z.dll"
 
 @echo ==^> Script exiting with errorlevel %ERRORLEVEL%
 @exit /b %ERRORLEVEL%
-

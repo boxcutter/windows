@@ -11,13 +11,15 @@ Vagrant.configure("2") do |config|
     config.vm.network :forwarded_port, guest: 5985, host: 5985, id: "winrm", auto_correct:true
     # Port forward SSH
     config.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct:true
- 
+
     # Berkshelf
     # config.berkshelf.enabled = true
 
     config.vm.provider :virtualbox do |v, override|
         v.gui = true
-        v.customize ["modifyvm", :id, "--memory", 768]
+        v.customize ["modi	config.vm.guest = :windows
+	#config.windows.set_work_network = true
+fyvm", :id, "--memory", 768]
         v.customize ["modifyvm", :id, "--cpus", 1]
         v.customize ["modifyvm", :id, "--vram", "256"]
         v.customize ["setextradata", "global", "GUI/MaxGuestResolution", "any"]
