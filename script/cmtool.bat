@@ -9,6 +9,7 @@ if "%CM%" == "nocm"   goto nocm
 if not defined CM_VERSION echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment & set CM_VERSION=latest
 
 if "%CM%" == "chef"   goto chef
+if "%CM%" == "chefdk" goto chefdk
 if "%CM%" == "puppet" goto puppet
 if "%CM%" == "salt"   goto salt
 
@@ -21,7 +22,7 @@ goto exit1
 ::::::::::::
 
 if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CHEF_URL=https://www.getchef.com/chef/install.msi
-if not defined CHEF_URL set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-client-%CM_VERSION%.windows.msi
+if not defined CHEF_URL set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-windows-%CM_VERSION%.windows.msi
 
 set CHEF_MSI=chef-client-latest.msi
 set CHEF_DIR=%TEMP%\chef
@@ -44,6 +45,39 @@ echo ==^> Installing Chef client %CM_VERSION%
 msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log"  %CHEF_OPTIONS%
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log"  %CHEF_OPTIONS%
+ver>nul
+
+goto exit0
+
+::::::::::::
+:chefdk
+::::::::::::
+
+if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CHEFDK_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chefdk-windows-0.2.0-2.windows.msi
+if not defined CHEFDK_URL set CHEFDK_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chefdk-windows-%CM_VERSION%.windows.msi
+
+set CHEFDK_MSI=chefdk-windows-latest.msi
+set CHEFDK_DIR=%TEMP%\chefdk
+set CHEFDK_PATH=%CHEFDK_DIR%\%CHEFDK_MSI%
+
+echo ==^> Creating "%CHEFDK_DIR%"
+mkdir "%CHEFDK_DIR%"
+pushd "%CHEFDK_DIR%"
+
+:: todo support CM_VERSION variable
+if exist "%SystemRoot%\_download.cmd" (
+  echo ==^> Downloading %CHEFDK_URL% to %CHEFDK_PATH%
+  call "%SystemRoot%\_download.cmd" "%CHEFDK_URL%" "%CHEFDK_PATH%"
+) else (
+  echo ==^> Downloading %CHEFDK_URL% to %CHEFDK_PATH%
+  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CHEFDK_URL%', '%CHEFDK_PATH%')" <NUL
+)
+if not exist "%CHEFDK_PATH%" goto exit1
+
+echo ==^> Installing Chef Development Kit %CM_VERSION%
+msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log"  %CHEFDK_OPTIONS%
+
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log"  %CHEFDK_OPTIONS%
 ver>nul
 
 goto exit0
