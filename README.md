@@ -6,31 +6,16 @@
 This repository contains templates for Windows that can create
 Vagrant boxes using Packer.
 
-## Current Boxes
+## Core Boxes
 
 64-bit boxes:
 
-* win8x64-enterprise, VMware 3.6GB/VirtualBox 3.3GB
-* win8x64-enterprise-cygwin, VMWare 3.5GB/VirtualBox 3.3GB
-* win8x64-pro, VMWare 3.6GB/VirtualBox 3.4GB
-* win8x64-pro-cygwin, VMWare 3.6GB/VirtualBox 3.4GB
-* win7x64-enterprise, VMWare 3.5GB/VirtualBox 3.2GB
-* win7x64-enterprise-cygwin, VMWare 3.5GB/VirtualBox 3.3GB
-* win7x64-pro, VMware 3.5GB/VirtualBox 3.2GB
-* win7x64-pro-cygwin, VMware 3.5GB/VirtualBox 3.3GB
-
-
-32-bit boxes:
-
-* win8x86-enterprise, VMware 2.6GB/VirtualBox 2.4GB
-* win8x86-enterprise-cygwin, VMware 2.6GB/VirtualBox  2.4GB
-* win8x86-pro, VMware 2.6GB/VirtualBox 2.4GB
-* win8x86-pro-cygwin, VMware 2.6GB/VirtualBox 2.4GB
-* win7x86-enterprise, VMWare 2.5GB/VirtualBox 2.4GB
-* win7x86-enterprise-cygwin, VMWare 2.5GB/VirtualBox 2.4GB
-* win7x86-pro, VMware 2.5GB/VirtualBox 2.4GB
-* win7x86-pro-cygwin, VMware 2.6GB/VirtualBox 2.4GB
- 
+* win2012r2-datacenter-nocm, VMware 4.3GB/VirtualBox 4.2GB
+* win2012-datacenter-nocm, VMware 3.7GB/VirtualBox 3.5GB
+* win2008r2-datacenter-nocm, VMware 3.0GB/VirtualBox 2.8GB
+* win81x64-enterprise-nocm, VMware 4.0GB/VirtualBox 3.6GB
+* win8x64-enterprise-nocm, VMware 3.6GB/VirtualBox 3.3GB
+* win7x64-enterprise-nocm, VMware 3.5GB/VirtualBox 3.2GB
 
 ## Building the Vagrant boxes
 
