@@ -46,8 +46,8 @@ upload-s3-vmware-east:
 	done
 
 upload-s3-virtualbox-east:
-	@for virtualbox_box_file in $(VIRTUALBOX_BOX_FILES_EAST) ; do \
-		aws s3 cp $$virtualbox_box_file $(VIRTUALBOX_S3_BUCKET) --grants full=$(S3_GRANT_ID) read=$(ALLUSERS_ID) ; \
+	@for virtualbox_box_file in $(VIRTUALBOX_BOX_FILES) ; do \
+		aws s3 cp $$virtualbox_box_file $(VIRTUALBOX_S3_BUCKET_EAST) --grants full=$(S3_GRANT_ID) read=$(ALLUSERS_ID) ; \
 	done
 
 upload-s3-vmware-west:
