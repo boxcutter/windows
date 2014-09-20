@@ -1,5 +1,6 @@
 {
   "variables": {
+    "version": "0.1.0",
     "cm": "chef",
     "cm_version": "",
     "iso_url": "iso/en_windows_8_x64_dvd_915440.iso",
@@ -99,6 +100,6 @@
     "keep_input_artifact": false,
     "compression_level": 1,
     "vagrantfile_template": "tpl/vagrantfile-win8x64-pro.tpl",
-    "output": "box/{{.Provider}}/win8x64-pro-{{user `cm`}}{{user `cm_version`}}.box"
+    "output": "box/{{.Provider}}/win8x64-pro-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
   }]
 }

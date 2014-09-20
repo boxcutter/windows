@@ -1,5 +1,6 @@
 {
   "variables": {
+    "version": "0.1.0",
     "cm": "chef",
     "cm_version": "",
     "iso_url": "iso/en_windows_7_professional_with_sp1_vl_build_x86_dvd_u_677896.iso",
@@ -107,6 +108,6 @@
     "keep_input_artifact": false,
     "compression_level": 1,
     "vagrantfile_template": "tpl/vagrantfile-win7x86-pro-cygwin.tpl",
-    "output": "box/{{.Provider}}/win7x86-pro-cygwin-{{user `cm`}}{{user `cm_version`}}.box"
+    "output": "box/{{.Provider}}/win7x86-pro-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
   }]
 }

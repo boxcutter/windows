@@ -1,5 +1,6 @@
 {
   "variables": {
+    "version": "0.1.0",
     "cm": "chef",
     "cm_version": "",
     "iso_url": "so/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso",
@@ -95,6 +96,6 @@
     "keep_input_artifact": false,
     "compression_level": 1,
     "vagrantfile_template": "tpl/vagrantfile-win2008r2-enterprise-cygwin.tpl",
-    "output": "box/{{.Provider}}/win2008r2-enterprise-cygwin-{{user `cm`}}{{user `cm_version`}}.box"
+    "output": "box/{{.Provider}}/win2008r2-enterprise-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
   }]
 }

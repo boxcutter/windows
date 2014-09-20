@@ -43,16 +43,22 @@ ifndef CM_VERSION
 		CM_VERSION = latest
 	endif
 endif
+BOX_VERSION ?= $(shell cat VERSION)
+ifeq ($(CM),nocm)
+	BOX_SUFFIX := -$(CM)-$(BOX_VERSION).box
+else
+	BOX_SUFFIX := -$(CM)$(CM_VERSION)-$(BOX_VERSION).box
+endif
 # Packer does not allow empty variables, so only pass variables that are defined
 ifdef CM_VERSION
-	PACKER_VARS := -var 'cm=$(CM)' -var 'cm_version=$(CM_VERSION)'
+	PACKER_VARS := -var 'cm=$(CM)' -var 'cm_version=$(CM_VERSION)' -var 'version=$(BOX_VERSION)'
 else
-	PACKER_VARS := -var 'cm=$(CM)'
+	PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)'
 endif
-ifeq ($(CM),nocm)
-	BOX_SUFFIX := -$(CM).box
+ifdef PACKER_DEBUG
+	PACKER := PACKER_LOG=1 packer --debug
 else
-	BOX_SUFFIX := -$(CM)$(CM_VERSION).box
+	PACKER := packer
 endif
 BUILDER_TYPES ?= vmware virtualbox
 ifeq ($(OS),Windows_NT)
@@ -78,7 +84,7 @@ endif
 
 SOURCES := $(wildcard script/*.*) $(wildcard floppy/*.*)
 
-.PHONY: all list clean test
+.PHONY: list
 
 all: $(BOX_FILES)
 
