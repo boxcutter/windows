@@ -77,7 +77,7 @@ VIRTUALBOX_OUTPUT := output-virtualbox-iso
 VMWARE_BUILDER := vmware-iso
 VIRTUALBOX_BUILDER := virtualbox-iso
 CURRENT_DIR := $(shell pwd)
-UNAME_O := $(shell uname -o)
+UNAME_O := $(shell uname -o 2> /dev/null)
 ifeq ($(UNAME_O),Cygwin)
 	CURRENT_DIR := $(shell cygpath -m $(CURRENT_DIR))
 endif
