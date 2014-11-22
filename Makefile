@@ -7,6 +7,8 @@ EVAL_WIN7_X64 ?= http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/
 EVAL_WIN7_X64_CHECKSUM ?= 15ddabafa72071a06d5213b486a02d5b55cb7070
 EVAL_WIN81_X64 ?= http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO
 EVAL_WIN81_X64_CHECKSUM ?= 73321fa912305e5a16096ef62380a91ee1f112da
+EVAL_WIN2008R2_X64 ?= http://download.microsoft.com/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso
+EVAL_WIN2008R2_X64_CHECKSUM ?= beed231a34e90e1dd9a04b3afabec31d62ce3889
 EVAL_WIN2012R2_X64 ?= http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO
 EVAL_WIN2012R2_X64_CHECKSUM ?= 7e3f89dbff163e259ca9b0d1f078daafd2fed513
 
@@ -215,6 +217,11 @@ $(VMWARE_BOX_DIR)/win2008r2-datacenter$(BOX_SUFFIX): win2008r2-datacenter.json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
 	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2008R2_X64)" -var "iso_checksum=$(WIN2008R2_X64_CHECKSUM)" $<
+
+$(VMWARE_BOX_DIR)/eval-win2008r2-datacenter$(BOX_SUFFIX): eval-win2008r2-datacenter.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(EVAL_WIN2008R2_X64)" -var "iso_checksum=$(EVAL_WIN2008R2_X64_CHECKSUM)" $<
 
 $(VMWARE_BOX_DIR)/win2008r2-enterprise$(BOX_SUFFIX): win2008r2-enterprise.json
 	rm -rf $(VMWARE_OUTPUT)
@@ -437,6 +444,11 @@ $(VIRTUALBOX_BOX_DIR)/win2008r2-datacenter$(BOX_SUFFIX): win2008r2-datacenter.js
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
 	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2008R2_X64)" -var "iso_checksum=$(WIN2008R2_X64_CHECKSUM)" $<
+
+$(VIRTUALBOX_BOX_DIR)/eval-win2008r2-datacenter$(BOX_SUFFIX): eval-win2008r2-datacenter.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(EVAL_WIN2008R2_X64)" -var "iso_checksum=$(EVAL_WIN2008R2_X64_CHECKSUM)" $<
 
 $(VIRTUALBOX_BOX_DIR)/win2008r2-enterprise$(BOX_SUFFIX): win2008r2-enterprise.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
