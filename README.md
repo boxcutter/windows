@@ -10,6 +10,7 @@ Vagrant boxes using Packer.
 
 64-bit boxes:
 
+* eval-win201r2-datacenter-nocm, VMware
 * win2012r2-datacenter-nocm, VMware 4.3GB/VirtualBox 4.2GB
 * win2012-datacenter-nocm, VMware 3.7GB/VirtualBox 3.5GB
 * win2008r2-datacenter-nocm, VMware 3.0GB/VirtualBox 2.8GB
@@ -78,6 +79,7 @@ For Windows, the ISO path variables are:
 
 * `WIN2008R2_X64`
 * `WIN2012_X64`
+* `WIN2012R2_EVAL_X64`
 * `WIN2012R2_X64`
 * `WIN7_X64_ENTERPRISE`
 * `WIN7_X64_PRO`

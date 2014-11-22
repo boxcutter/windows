@@ -3,6 +3,9 @@ ifneq ("$(wildcard Makefile.local)", "")
         include Makefile.local
 endif
 
+EVAL_WIN2012R2_X64 ?= http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO
+EVAL_WIN2012R2_X64_CHECKSUM ?= 7e3f89dbff163e259ca9b0d1f078daafd2fed513
+
 WIN2008R2_X64 ?= iso/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso
 WIN2008R2_X64_CHECKSUM ?= 7e7e9425041b3328ccf723a0855c2bc4f462ec57
 WIN2012_X64 ?= iso/win2012/en_windows_server_2012_x64_dvd_915478.iso
@@ -120,7 +123,7 @@ test-virtualbox/$(1)-cygwin: test-$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
 
 endef
 
-SHORTCUT_TARGETS := win2008r2-datacenter win2008r2-enterprise win2008r2-standard win2008r2-web win2012-datacenter win2012-standard win2012r2-datacenter win2012r2-standard win7x64-enterprise win7x64-pro win7x86-enterprise win7x86-pro win8x64-enterprise win8x64-pro win8x86-enterprise win8x86-pro win81x64-enterprise win81x64-pro win81x86-enterprise win81x86-pro
+SHORTCUT_TARGETS := $(basename $(TEMPLATE_FILENAMES))
 $(foreach i,$(SHORTCUT_TARGETS),$(eval $(call SHORTCUT,$(i))))
 
 ###############################################################################
@@ -268,6 +271,11 @@ $(VMWARE_BOX_DIR)/win2012r2-datacenter$(BOX_SUFFIX): win2012r2-datacenter.json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
 	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012R2_X64)" -var "iso_checksum=$(WIN2012R2_X64_CHECKSUM)" $<
+
+$(VMWARE_BOX_DIR)/eval-win2012r2-datacenter$(BOX_SUFFIX): eval-win2012r2-datacenter.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(EVAL_WIN2012R2_X64)" -var "iso_checksum=$(EVAL_WIN2012R2_X64_CHECKSUM)" $<
 
 $(VMWARE_BOX_DIR)/win2012r2-standard$(BOX_SUFFIX): win2012r2-standard.json
 	rm -rf $(VMWARE_OUTPUT)
@@ -475,6 +483,11 @@ $(VIRTUALBOX_BOX_DIR)/win2012r2-datacenter$(BOX_SUFFIX): win2012r2-datacenter.js
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
 	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(WIN2012R2_X64)" -var "iso_checksum=$(WIN2012R2_X64_CHECKSUM)" $<
+
+$(VIRTUALBOX_BOX_DIR)/eval-win2012r2-datacenter$(BOX_SUFFIX): eval-win2012r2-datacenter.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(EVAL_WIN2012R2_X64)" -var "iso_checksum=$(EVAL_WIN2012R2_X64_CHECKSUM)" $<
 
 $(VIRTUALBOX_BOX_DIR)/win2012r2-standard$(BOX_SUFFIX): win2012r2-standard.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
