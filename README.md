@@ -10,7 +10,6 @@ Vagrant boxes using Packer.
 
 64-bit boxes:
 
-* eval-win201r2-datacenter-nocm, VMware
 * win2012r2-datacenter-nocm, VMware 4.3GB/VirtualBox 4.2GB
 * win2012-datacenter-nocm, VMware 3.7GB/VirtualBox 3.5GB
 * win2008r2-datacenter-nocm, VMware 3.0GB/VirtualBox 2.8GB
