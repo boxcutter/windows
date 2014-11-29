@@ -1,4 +1,11 @@
-caroline_msdn := file:///Volumes/Storage/MSDN_Chef
+caroline_wineval := /Volumes/Storage/software/wineval
+EVAL_WIN7_X64 := $(caroline_wineval)/7/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso
+EVAL_WIN81_X64 := $(caroline_wineval)/81/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO
+EVAL_WIN2008R2_X64 := $(caroline_wineval)/2008r2/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso
+EVAL_WIN2012_X64 := $(caroline_wineval)/2012/9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.ISO
+EVAL_WIN2012R2_X64 := $(caroline_wineval)/2012r2/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO
+
+caroline_msdn := file:///Volumes/Storage/software/MSDN_Chef
 WIN2008R2_X64 := $(caroline_msdn)/win2008r2/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso
 WIN2008R2_X64_CHECKSUM := 7e7e9425041b3328ccf723a0855c2bc4f462ec57
 WIN2012_X64 := $(caroline_msdn)/win2012/en_windows_server_2012_x64_dvd_915478.iso
@@ -30,9 +37,10 @@ WIN81_X86_PRO := $(caroline_msdn)/win81update/en_windows_8.1_professional_vl_wit
 WIN81_X86_PRO_CHECKSUM := c2d6f5d06362b7cb17dfdaadfb848c760963b254
 
 VIRTUALBOX_VERSION := $(shell virtualbox --help | head -n 1 | awk '{print $$NF}')
+VMWARE_VERSION := 9.8.4
 VMWARE_BOX_FILES := $(wildcard box/vmware/*.box)
 VIRTUALBOX_BOX_FILES := $(wildcard box/virtualbox/*.box)
-VMWARE_S3_BUCKET := s3://box-cutter/windows/vmware9.8.3/
+VMWARE_S3_BUCKET := s3://box-cutter/windows/vmware$(VMWARE_VERSION)/
 VIRTUALBOX_S3_BUCKET := s3://box-cutter/windows/virtualbox$(VIRTUALBOX_VERSION)/
 S3_GRANT_ID := id=6efa364c53605afa1f4186b2b23ba97a354e74c7b9238317d9f57bc8f6f6bc5a
 ALLUSERS_ID := uri=http://acs.amazonaws.com/groups/global/AllUsers
