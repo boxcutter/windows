@@ -709,17 +709,17 @@ clean-packer-cache:
 	rm -rf packer_cache
 
 test-$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): $(VMWARE_BOX_DIR)/%$(BOX_SUFFIX)
-	rm -f ~/.ssh/known_hosts
+	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/test-box.sh $< vmware_desktop $(VAGRANT_PROVIDER) $(CURRENT_DIR)/test/*_spec.rb
 
 test-$(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX): $(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX)
-	rm -f ~/.ssh/known_hosts
+	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/test-box.sh $< virtualbox virtualbox $(CURRENT_DIR)/test/*_spec.rb
 
 ssh-$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): $(VMWARE_BOX_DIR)/%$(BOX_SUFFIX)
-	rm -f ~/.ssh/known_hosts
+	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/ssh-box.sh $< vmware_desktop $(VAGRANT_PROVIDER) $(CURRENT_DIR)/test/*_spec.rb
 
 ssh-$(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX): $(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX)
-	rm -f ~/.ssh/known_hosts
+	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/ssh-box.sh $< virtualbox virtualbox $(CURRENT_DIR)/test/*_spec.rb
