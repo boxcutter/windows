@@ -13,6 +13,7 @@ if not defined CYGWIN_ARCH (
 if not defined CYGWIN_HOME       set CYGWIN_HOME=%SystemDrive%\cygwin
 if not defined CYGWIN_MIRROR_URL set CYGWIN_MIRROR_URL=http://mirrors.kernel.org/sourceware/cygwin
 if not defined CYGWIN_PACKAGES   set CYGWIN_PACKAGES=openssh
+if not defined CYGWIN_TRIES      set CYGWIN_TRIES=3
 if not defined CYGWIN_URL        set CYGWIN_URL=http://cygwin.com/setup-x86.exe
 if not defined SSHD_PASSWORD     set SSHD_PASSWORD=D@rj33l1ng
 
@@ -38,10 +39,27 @@ echo ==^> Blocking SSH port 22 on the firewall
 netsh advfirewall firewall add rule name="SSHD" dir=in action=block program="%CYGWIN_HOME%\usr\sbin\sshd.exe" enable=yes
 netsh advfirewall firewall add rule name="ssh" dir=in action=block protocol=TCP localport=22
 
-echo ==^> Installing Cygwin
+set CYGWIN_TRY=0
+
+:retry
+
+set /a CYGWIN_TRY=%CYGWIN_TRY%+1
+
+echo ==^> Installing Cygwin (attempt %CYGWIN_TRY% of %CYGWIN_TRIES%)
+
 "%CYGWIN_PATH%" -a %CYGWIN_ARCH% -q -R %CYGWIN_HOME% -P %CYGWIN_PACKAGES% -s %CYGWIN_MIRROR_URL%
 
-if errorlevel 1 goto exit1
+if not errorlevel 1 goto installed_ok
+
+echo ==^> The Cygwin installation failed and returned error %ERRORLEVEL%.
+
+if /i %CYGWIN_TRY% geq %CYGWIN_TRIES% goto exit1
+
+choice /C Y /N /T %PACKER_PAUSE% /D Y /M "Waiting for %PACKER_PAUSE% seconds, press Y to continue: "
+
+goto retry
+
+:installed_ok
 
 if not exist a:\cygwin.sh echo ==^> ERROR: File not found: a:\cygwin.sh & goto exit1
 
