@@ -86,7 +86,7 @@ goto exit0
 :puppet
 ::::::::::::
 
-if "%CM_VERSION%" == "latest" set CM_VERSION=3.6.1
+if "%CM_VERSION%" == "latest" set CM_VERSION=3.7.3
 
 if not defined PUPPET_URL set PUPPET_URL=http://downloads.puppetlabs.com/windows/puppet-%CM_VERSION%.msi
 
@@ -120,9 +120,9 @@ goto exit0
 :salt
 ::::::::::::
 
-if "%CM_VERSION%" == "latest" set CM_VERSION=2014.1.4
+if "%CM_VERSION%" == "latest" set CM_VERSION=2014.7.0
 
-if not defined SALT_32_URL set SALT_32_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-win32-Setup.exe
+if not defined SALT_32_URL set SALT_32_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-x86-Setup.exe
 if not defined SALT_64_URL set SALT_64_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-AMD64-Setup.exe
 
 if exist "%SystemDrive%\Program Files (x86)" (
