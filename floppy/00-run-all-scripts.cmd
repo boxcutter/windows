@@ -83,10 +83,12 @@ for /f %%i in (%_PACKER_RUN%) do (
   echo ==^> Executing %%~i
   title Executing %%~i, please wait...
 
-  "%ComSpec%" %_PACKER_CMD_OPTS% /c "%~d0\%%~nxi" 2>&1 | "%_TEE_CMD%" "%TEMP%\%%~ni.log.txt"
-  echo ==^> Error level %ERRORLEVEL% was returned by %%~i
-  echo %date% %time%: Error level %ERRORLEVEL% returned by %%~i >>"%_PACKER_LOG%"
-  if errorlevel 1 (
+  del "%temp%\%%~ni.err"
+
+  ("%ComSpec%" %_PACKER_CMD_OPTS% /c "%~d0\%%~nxi" 2>&1 || copy /y nul "%temp%\%%~ni.err" >nul) | "%_TEE_CMD%" "%TEMP%\%%~ni.log.txt"
+  if exist "%temp%\%%~ni.err" (
+    echo ==^> %%~i returned an error. See "%TEMP%\%%~ni.log.txt" for details.
+    echo %date% %time%: %%~i returned an error. See "%TEMP%\%%~ni.log.txt" for details. >>"%_PACKER_LOG%"
     if defined PACKER_PAUSE_ON_ERROR (
       echo 
       title Press any key to continue . . .
@@ -96,11 +98,14 @@ for /f %%i in (%_PACKER_RUN%) do (
       shutdown /s /t 0 /f /d p:4:1 /c "Packer shutdown as %%~i returned error %errorlevel%"
     )
   ) else (
+    echo ==^> %%~i completed successfully.
+    echo %date% %time%: %%~i completed successfully. >>"%_PACKER_LOG%"
     if defined PACKER_PAUSE (
       title Waiting for %PACKER_PAUSE% seconds, press Y to continue
       choice /C Y /N /T %PACKER_PAUSE% /D Y /M "Waiting for %PACKER_PAUSE% seconds, press Y to continue: "
     )
   )
+  del "%temp%\%%~ni.err"
   popd
 )
 
