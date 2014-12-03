@@ -37,7 +37,7 @@ if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
 ) else (
   echo ==^> Downloading %CHEF_URL% to %CHEF_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CHEF_URL%', '%CHEF_PATH%')" <NUL
+  powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEF_URL%\", '%CHEF_PATH%')" <NUL
 )
 if not exist "%CHEF_PATH%" goto exit1
 
@@ -53,10 +53,10 @@ goto exit0
 :chefdk
 ::::::::::::
 
-if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CHEFDK_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chefdk-windows-0.2.0-2.windows.msi
-if not defined CHEFDK_URL set CHEFDK_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chefdk-windows-%CM_VERSION%.windows.msi
+if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CHEFDK_URL=https://www.getchef.com/chef/download-chefdk?p=windows^&pv=2008r2^&m=x86_64
+if not defined CHEFDK_URL set CHEFDK_URL=https://www.getchef.com/chef/download-chefdk?p=windows^&pv=2008r2^&m=x86_64^&v=%CM_VERSION%
 
-set CHEFDK_MSI=chefdk-windows-latest.msi
+set CHEFDK_MSI=chefdk-windows.msi
 set CHEFDK_DIR=%TEMP%\chefdk
 set CHEFDK_PATH=%CHEFDK_DIR%\%CHEFDK_MSI%
 
@@ -64,14 +64,8 @@ echo ==^> Creating "%CHEFDK_DIR%"
 mkdir "%CHEFDK_DIR%"
 pushd "%CHEFDK_DIR%"
 
-:: todo support CM_VERSION variable
-if exist "%SystemRoot%\_download.cmd" (
-  echo ==^> Downloading %CHEFDK_URL% to %CHEFDK_PATH%
-  call "%SystemRoot%\_download.cmd" "%CHEFDK_URL%" "%CHEFDK_PATH%"
-) else (
-  echo ==^> Downloading %CHEFDK_URL% to %CHEFDK_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CHEFDK_URL%', '%CHEFDK_PATH%')" <NUL
-)
+echo ==^> Downloading Chef DK to %CHEFDK_PATH%
+powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CHEFDK_URL%', '%CHEFDK_PATH%')" <NUL
 if not exist "%CHEFDK_PATH%" goto exit1
 
 echo ==^> Installing Chef Development Kit %CM_VERSION%
