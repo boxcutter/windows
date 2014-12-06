@@ -38,7 +38,7 @@ WIN81_X86_PRO := $(winry_msdn)/win81update/en_windows_8.1_professional_vl_with_u
 WIN81_X86_PRO_CHECKSUM ?= c2d6f5d06362b7cb17dfdaadfb848c760963b254
 
 VIRTUALBOX_VERSION := $(shell virtualbox --help | head -n 1 | awk '{print $$NF}')
-VMWARE_VERSION := 9.8.4
+VMWARE_VERSION := 9.9.0
 VMWARE_BOX_FILES := $(wildcard box/vmware/*.box)
 VIRTUALBOX_BOX_FILES := $(wildcard box/virtualbox/*.box)
 VMWARE_S3_BUCKET := s3://box-cutter/windows/vmware$(VMWARE_VERSION)/
