@@ -53,6 +53,7 @@ ifndef CM_VERSION
 	endif
 endif
 BOX_VERSION ?= $(shell cat VERSION)
+UPDATE ?= false
 ifeq ($(CM),nocm)
 	BOX_SUFFIX := -$(CM)-$(BOX_VERSION).box
 else
@@ -60,9 +61,9 @@ else
 endif
 # Packer does not allow empty variables, so only pass variables that are defined
 ifdef CM_VERSION
-	PACKER_VARS := -var 'cm=$(CM)' -var 'cm_version=$(CM_VERSION)' -var 'version=$(BOX_VERSION)'
+	PACKER_VARS := -var 'cm=$(CM)' -var 'cm_version=$(CM_VERSION)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDATE)'
 else
-	PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)'
+	PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDATE)'
 endif
 ifdef PACKER_DEBUG
 	PACKER := PACKER_LOG=1 packer --debug
@@ -694,6 +695,12 @@ list:
 	@echo "Targets:"
 	@for shortcut_target in $(SHORTCUT_TARGETS) ; do \
 		echo $$shortcut_target ; \
+	done
+
+validate:
+	@for template_filename in $(TEMPLATE_FILENAMES) ; do \
+		echo Checking $$template_filename ; \
+		packer validate $$template_filename ; \
 	done
 
 clean: clean-builders clean-output clean-packer-cache

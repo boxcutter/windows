@@ -4,7 +4,8 @@
     "cm": "chef",
     "cm_version": "",
     "iso_url": "iso/en_windows_server_2012_x64_dvd_915478.iso",
-    "iso_checksum": "d09e752b1ee480bc7e93dfa7d5c3a9b8aac477ba"
+    "iso_checksum": "d09e752b1ee480bc7e93dfa7d5c3a9b8aac477ba",
+    "update": true
   },
   "builders": [
     {
@@ -73,7 +74,8 @@
       "remote_path": "/tmp/script.bat",
       "environment_vars": [
         "CM={{user `cm`}}",
-        "CM_VERSION={{user `cm_version`}}"
+        "CM_VERSION={{user `cm_version`}}",
+        "UPDATE={{user `update`}}"
       ],
       "execute_command": "{{.Vars}} cmd /c $(/bin/cygpath -m '{{.Path}}')",
       "scripts": [

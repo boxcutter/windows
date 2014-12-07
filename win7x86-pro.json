@@ -5,7 +5,8 @@
     "cm_version": "",
     "iso_url": "iso/en_windows_7_professional_with_sp1_vl_build_x86_dvd_u_677896.iso",
     "iso_checksum": "d5bd65e1b326d728f4fd146878ee0d9a3da85075",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'"
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+    "update": true
   },
   "builders": [
     {
@@ -80,7 +81,8 @@
       "remote_path": "/tmp/script.bat",
       "environment_vars": [
         "CM={{user `cm`}}",
-        "CM_VERSION={{user `cm_version`}}"
+        "CM_VERSION={{user `cm_version`}}",
+        "UPDATE={{user `update`}}"
       ],
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "scripts": [
