@@ -47,8 +47,8 @@ call winrm quickconfig -transport:http
 call winrm set winrm/config @{MaxTimeoutms="1800000"}
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config @{MaxTimeoutms="1800000"}
 
-call winrm set winrm/config/winrs @{MaxMemoryPerShellMB="300"}
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config/winrs @{MaxMemoryPerShellMB="300"}
+call winrm set winrm/config/winrs @{MaxMemoryPerShellMB="800"}
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config/winrs @{MaxMemoryPerShellMB="800"}
 
 call winrm set winrm/config/service @{AllowUnencrypted="true"}
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config/service @{AllowUnencrypted="true"}
