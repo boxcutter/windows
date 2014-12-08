@@ -60,10 +60,9 @@ else
 	BOX_SUFFIX := -$(CM)$(CM_VERSION)-$(BOX_VERSION).box
 endif
 # Packer does not allow empty variables, so only pass variables that are defined
+PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDATE)'
 ifdef CM_VERSION
-	PACKER_VARS := -var 'cm=$(CM)' -var 'cm_version=$(CM_VERSION)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDATE)'
-else
-	PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDATE)'
+	PACKER_VARS := $(PACKER_VARS) -var 'cm_version=$(CM_VERSION)'
 endif
 ifdef PACKER_DEBUG
 	PACKER := PACKER_LOG=1 packer --debug
