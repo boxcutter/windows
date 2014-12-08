@@ -8,20 +8,49 @@ exit /b
 <job><script language="VBScript">
     Option Explicit
 
-    Dim updateSession, updateSearch, updatesToDownload
-    Dim updatesToInstall, installResult
-    Set updateSession = CreateObject("Microsoft.Update.Session")
-    updateSession.ClientApplicationID = "packer"
-    Set updateSearch = searchForUpdates(updateSession)
-    Set updatesToDownload = createUpdateCollection(updateSearch)
-    Set updatesToInstall = downloadUpdates(updateSession, updateSearch, updatesToDownload)
-    Set installResult = installUpdates(updateSession, updatesToInstall) 
-    If installResult.RebootRequired Then
-        Dim objShell
-        Set objShell = WScript.CreateObject("wscript.shell")
-        objShell.Run "shutdown.exe /r /t 00"
-        WScript.Sleep 60
-    End If
+    Dim updatePass
+    For updatePass = 1 to 10
+        WScript.Echo "Update Pass #" & updatePass & vbCRLF
+
+        Dim updateSession, updateSearch, updatesToDownload
+        Dim updatesToInstall, installResult
+        On Error Resume Next
+        Dim numTries
+        For numTries = 1 to 20
+            WScript.Echo "Creating Microsoft.Update.Session..." & vbCRLF
+            Set updateSession = CreateObject("Microsoft.Update.Session")
+            If Err.Number <> 0 Then
+                WScript.Echo "Error " & Hex(Err) & " calling " & Err.Source & vbCRLF
+                WScript.Echo Err.Description & vbCRLF
+                WScript.Echo "Retrying..." & vbCRLF
+                WScript.Echo "Sleeping for 20 seconds" & vbCRLF
+                WScript.Sleep 20000
+                WScript.Echo "Waking up" & vbCRLF
+            Else
+                Exit For
+            End If
+        Next
+        On Error Goto 0
+        updateSession.ClientApplicationID = "packer"
+        Set updateSearch = searchForUpdates(updateSession)
+        Set updatesToDownload = createUpdateCollection(updateSearch)
+        Set updatesToInstall = downloadUpdates(updateSession, updateSearch, updatesToDownload)
+        Set installResult = installUpdates(updateSession, updatesToInstall) 
+        If installResult.RebootRequired Then
+            Dim objShell
+            Set objShell = WScript.CreateObject("wscript.shell")
+            objShell.Run "shutdown.exe /r /t 00"
+            WScript.Echo "Sleeping for 120 seconds" & vbCRLF
+            WScript.Sleep 1200000
+            WScript.Echo "Waking up" & vbCRLF
+        End If
+
+        Set updateSession = Nothing
+        Set updateSearch = Nothing
+        Set updatesToDownload = Nothing
+        Set updatesToInstall = Nothing
+        Set installResult = Nothing
+    Next
 
     Function searchForUpdates(updateSession)
         Dim updateSearcher
@@ -30,18 +59,38 @@ exit /b
 
         Dim searchString, searchResult, i
         searchString = "IsInstalled=0 and Type='Software' and IsHidden=0"
-        Set searchResult = updateSearcher.Search(searchString)
+        On Error Resume Next
+        Dim numTries
+        For numTries = 1 to 20
+            WScript.Echo "Calling Search..." & vbCRLF
+            Set searchResult = updateSearcher.Search(searchString)
+            If Err.Number <> 0 Then
+                WScript.Echo "Error " & Hex(Err) & " calling " & Err.Source & vbCRLF
+                WScript.Echo Err.Description & vbCRLF
+                WScript.Echo "Retrying..." & vbCRLF
+                WScript.Echo "Sleeping for 20 seconds" & vbCRLF
+                WScript.Sleep 20000
+                WScript.Echo "Waking up" & vbCRLF
+            Else
+                Exit For
+            End If
+        Next
+        On Error Goto 0
+
         WScript.Echo "List of applicable items on the machine:"
         For i = 0 To searchResult.Updates.Count-1
             Dim update
             Set update = searchResult.Updates.Item(i)
             WScript.Echo i + 1 & "> " & update.Title
+            Set update = Nothing
         Next
         If searchResult.Updates.Count = 0 Then
             WScript.Echo "There are no applicable updates."
             WScript.Quit
         End If
         Set searchForUpdates = searchResult
+        Set updateSearcher = Nothing
+        Set searchResult = Nothing
     End Function
 
     Function createUpdateCollection(updateSearch)
