@@ -1,6 +1,7 @@
 PREDOWNLOADED_FILES=$(wildcard vshell*.*)
 
 # always 301's to latest installer:
+#MLSSSH_64_URL?=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
 CHEF_URL?=https://www.opscode.com/chef/install.msi
 CHOCOLATEY_URL?=https://chocolatey.org/install.ps1
 COREUTILS_URL?=http://downloads.sourceforge.net/gnuwin32/coreutils-5.3.0-bin.zip
@@ -8,7 +9,6 @@ CYGWIN_URL?=http://cygwin.com/setup-x86.exe
 DOTNET_URL?=http://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe
 LESSMSI_URL?=https://github.com/activescott/lessmsi/releases/download/v1.2.0/lessmsi-v1.2.0.zip
 MLSSSH_32_URL?=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
-#MLSSSH_64_URL?=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
 NUGET_URL?=http://nuget.org/nuget.exe
 PUPPET_URL?=https://downloads.puppetlabs.com/windows/puppet-3.7.3.msi
 SALT_32_URL?=https://docs.saltstack.com/downloads/Salt-Minion-2014.7.0-x86-Setup.exe
@@ -16,9 +16,9 @@ SALT_64_URL?=https://docs.saltstack.com/downloads/Salt-Minion-2014.7.0-AMD64-Set
 SDELETE_URL?=http://live.sysinternals.com/sdelete.exe
 SEVENZIP_32_URL?=http://downloads.sourceforge.net/sevenzip/7z922.msi
 SEVENZIP_64_URL?=http://downloads.sourceforge.net/sevenzip/7z922-x64.msi
-UNXTUTILS_URL?=http://downloads.sourceforge.net/unxutils/UnxUtils.zip
 ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.i386.zip
 ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.amd64.zip
+UNXTUTILS_URL?=http://downloads.sourceforge.net/unxutils/UnxUtils.zip
 VAGRANT_PUB_URL?=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 VBOX_ISO_URL?=http://download.virtualbox.org/virtualbox/4.3.20/VBoxGuestAdditions_4.3.20.iso
 VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/10.0.4/2249910/windows/packages/tools-windows-9.6.2.exe.tar
@@ -47,6 +47,7 @@ VBOX_ISO=$(shell basename $(VBOX_ISO_URL))
 VMWARE_TOOLS_TAR=$(shell basename $(VMWARE_TOOLS_TAR_URL))
 
 TEE_EXE=tee.exe
+UNZIP_EXE=unzip.exe
 WGET_EXE=$(shell basename $(WGET_URL))
 
 # "$(MLSSSH_64)"
@@ -71,6 +72,7 @@ $(TEE_EXE) \
 $(ULTRADEFRAG_32) \
 $(ULTRADEFRAG_64) \
 unzip.vbs \
+$(UNZIP_EXE) \
 $(VAGRANT_PUB) \
 VBoxGuestAdditions.iso \
 $(VBOX_ISO) \
@@ -84,16 +86,6 @@ provisions.iso: $(FILES)
 	-rm -f $@
 	mkisofs -J -r -l -udf -o $@ $^ $(PREDOWNLOADED_FILES)
 
-windows.iso:
-	-test -f "$$SYSTEMDRIVE/Program Files/VMware/VMware Workstation/windows.iso" && \
-	     cp "$$SYSTEMDRIVE/Program Files/VMware/VMware Workstation/windows.iso" $@
-	test $@ || \
-	test -f "$$SYSTEMDRIVE/Program Files (x86)/VMware/VMware Workstation/windows.iso" && \
-	     cp "$$SYSTEMDRIVE/Program Files (x86)/VMware/VMware Workstation/windows.iso" $@
-
-VBoxGuestAdditions.iso:
-	cp -p "$$SYSTEMDRIVE/Program Files/Oracle/VirtualBox/VBoxGuestAdditions.iso" $@
-
 $(CHEF):
 	-$(WGET) -O $@ $(CHEF_URL)
 	-rm -f provisions.iso
@@ -104,12 +96,6 @@ $(CHOCOLATEY):
 
 $(COREUTILS):
 	-$(WGET) -O $@ $(COREUTILS_URL)
-	-rm -f provisions.iso
-
-$(TEE_EXE): $(UNXTUTILS)
-	unzip -o -j $< usr/local/wbin/$@
-	-upx -9 $@
-	touch --reference $@ $<
 	-rm -f provisions.iso
 
 $(CYGWIN):
@@ -161,12 +147,22 @@ $(SEVENZIP_64):
 	-$(WGET) -O $@ $(SEVENZIP_64_URL)
 	-rm -f provisions.iso
 
+$(TEE_EXE): $(UNXTUTILS)
+	unzip -o -j $< usr/local/wbin/$@
+	-upx -9 $@
+	touch --reference $@ $<
+	-rm -f provisions.iso
+
 $(ULTRADEFRAG_32):
 	-$(WGET) -O $@ $(ULTRADEFRAG_32_URL)
 	-rm -f provisions.iso
 
 $(ULTRADEFRAG_64):
 	-$(WGET) -O $@ $(ULTRADEFRAG_64_URL)
+	-rm -f provisions.iso
+
+$(UNXTUTILS):
+	-$(WGET) -O $@ $(UNXTUTILS_URL)
 	-rm -f provisions.iso
 
 unzip.vbs:
@@ -182,13 +178,18 @@ unzip.vbs:
 	echo 'Set fso = Nothing'>>$@
 	echo 'Set objShell = Nothing'>>$@
 
-$(UNXTUTILS):
-	-$(WGET) -O $@ $(UNXTUTILS_URL)
+$(UNZIP_EXE): $(UNXTUTILS)
+	unzip -o -j $< usr/local/wbin/$@
+	-upx -9 $@
+	touch --reference $@ $<
 	-rm -f provisions.iso
 
 $(VAGRANT_PUB):
 	-$(WGET) -O $@ $(VAGRANT_PUB_URL)
 	-rm -f provisions.iso
+
+VBoxGuestAdditions.iso:
+	cp -p "$$SYSTEMDRIVE/Program Files/Oracle/VirtualBox/VBoxGuestAdditions.iso" $@
 
 $(VBOX_ISO):
 	-$(WGET) -O $@ $(VBOX_ISO_URL)
@@ -205,6 +206,13 @@ $(WGET_EXE):
 	touch --reference .$@ $@
 	-rm -f .$@
 	-rm -f provisions.iso
+
+windows.iso:
+	-test -f "$$SYSTEMDRIVE/Program Files/VMware/VMware Workstation/windows.iso" && \
+	     cp "$$SYSTEMDRIVE/Program Files/VMware/VMware Workstation/windows.iso" $@
+	test $@ || \
+	test -f "$$SYSTEMDRIVE/Program Files (x86)/VMware/VMware Workstation/windows.iso" && \
+	     cp "$$SYSTEMDRIVE/Program Files (x86)/VMware/VMware Workstation/windows.iso" $@
 
 .PHONY: clean
 clean:
