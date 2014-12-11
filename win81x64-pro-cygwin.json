@@ -29,7 +29,6 @@
         "floppy/passwordchange.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/_uninstall-cygwin.bat",
         "floppy/zz-start-sshd.cmd"
       ],
       "tools_upload_flavor": "windows",
@@ -63,7 +62,6 @@
         "floppy/passwordchange.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/_uninstall-cygwin.bat",
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
@@ -89,7 +87,11 @@
       "scripts": [
         "script/vagrant.bat",
         "script/cmtool.bat",
-        "script/vmtool.bat"
+        "script/vmtool.bat",
+        "script/clean.bat",
+        "script/ultradefrag.bat",
+        "script/uninstall-7zip.bat",
+        "script/sdelete.bat"
       ]
     },
     {

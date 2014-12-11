@@ -31,7 +31,6 @@
         "floppy/networkprompt.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/_uninstall-cygwin.bat",
         "floppy/zz-start-sshd.cmd"
       ],
       "tools_upload_flavor": "windows",
@@ -67,7 +66,6 @@
         "floppy/networkprompt.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/_uninstall-cygwin.bat",
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],

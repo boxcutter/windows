@@ -42,7 +42,7 @@
       }
     },
     {
-      "vm_name": "win2012r2-datacenter",
+      "vm_name": "eval-win2012r2-datacenter",
       "type": "virtualbox-iso",
       "guest_os_type": "Windows2012_64",
       "iso_url": "{{ user `iso_url` }}",
@@ -85,7 +85,7 @@
       ],
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "scripts": [
-        "script/update.bat", 
+        "script/update.bat",
         "script/vagrant.bat",
         "script/cmtool.bat",
         "script/vmtool.bat",
