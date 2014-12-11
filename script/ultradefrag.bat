@@ -1,35 +1,103 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
-if not defined ULTRADEFRAG_32_URL set ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.amd64.zip
-if not defined ULTRADEFRAG_64_URL set ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.i386.zip
+if not defined SEVENZIP_URL set SEVENZIP_URL=http://downloads.sourceforge.net/sevenzip/7z922.msi
+if not defined ULTRADEFRAG_32_URL set ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.i386.zip
+if not defined ULTRADEFRAG_64_URL set ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.amd64.zip
 
 goto :main
 
 ::::::::::::
-:find_unzip_vbs
+:install_sevenzip
 ::::::::::::
 
-for %%i in ("%TEMP%" %PACKER_SEARCH_PATHS%) do if exist "%%~i\unzip.vbs" set UNZIP_VBS=%%~i\unzip.vbs
+pushd .
 
-if exist "%UNZIP_VBS%" goto :eof
+set SEVENZIP_EXE=
+set SEVENZIP_DLL=
+for %%i in (7z.exe) do set SEVENZIP_EXE=%%~$PATH:i
+if defined SEVENZIP_EXE goto return0
 
-set UNZIP_VBS=%TEMP%\unzip.vbs
+@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined SEVENZIP_EXE @if exist "%%~i\7z.exe" set SEVENZIP_EXE=%%~i\7z.exe
 
-echo Set fso = CreateObject("Scripting.FileSystemObject")>"%UNZIP_VBS%"
-echo ZipFile=fso.GetAbsolutePathName(Wscript.Arguments(0))>>"%UNZIP_VBS%"
-echo ExtractTo=fso.GetAbsolutePathName(Wscript.Arguments(1))>>"%UNZIP_VBS%"
-echo If NOT fso.FolderExists(ExtractTo) Then>>"%UNZIP_VBS%"
-echo    fso.CreateFolder(ExtractTo)>>"%UNZIP_VBS%"
-echo End If>>"%UNZIP_VBS%"
-echo set objShell = CreateObject("Shell.Application")>>"%UNZIP_VBS%"
-echo set FilesInZip=objShell.NameSpace(ZipFile).items>>"%UNZIP_VBS%"
-echo objShell.NameSpace(ExtractTo).CopyHere(FilesInZip)>>"%UNZIP_VBS%"
-echo Set fso = Nothing>>"%UNZIP_VBS%"
-echo Set objShell = Nothing>>"%UNZIP_VBS%"
+if not defined SEVENZIP_EXE goto get_sevenzip
+
+@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined SEVENZIP_DLL @if exist "%%~i\7z.dll" set SEVENZIP_DLL=%%~i\7z.dll
+
+if not defined SEVENZIP_DLL goto get_sevenzip
+
+ver >nul
+call :copy_sevenzip
+if not errorlevel 1 goto return0
+
+:get_sevenzip
+
+for %%i in ("%SEVENZIP_URL%") do set SEVENZIP_MSI=%%~nxi
+set SEVENZIP_DIR=%TEMP%\sevenzip
+set SEVENZIP_PATH=%SEVENZIP_DIR%\%SEVENZIP_MSI%
+
+echo ==^> Creating "%SEVENZIP_DIR%"
+mkdir "%SEVENZIP_DIR%"
+cd /d "%SEVENZIP_DIR%"
+
+if exist "%SystemRoot%\_download.cmd" (
+  call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
+) else (
+  echo ==^> Downloading "%SEVENZIP_URL%" to "%SEVENZIP_PATH%"
+  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SEVENZIP_URL%', '%SEVENZIP_PATH%')" <NUL
+)
+if not exist "%SEVENZIP_PATH%" goto return1
+
+echo ==^> Installing "%SEVENZIP_PATH%"
+msiexec /qb /i "%SEVENZIP_PATH%"
+
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%SEVENZIP_PATH%"
+ver>nul
+
+if exist "%ProgramFiles%\7-Zip" cd /D "%ProgramFiles%\7-Zip" & goto find_sevenzip
+
+if defined ProgramFiles(x86) if exist "%ProgramFiles(x86)%\7-Zip" cd /D "%ProgramFiles(x86)%\7-Zip" & goto find_sevenzip
+
+echo ==^> ERROR: Directory not found: "%ProgramFiles%\7-Zip"
+
+goto return1
+
+:find_sevenzip
+
+set SEVENZIP_EXE=
+
+for /r %%i in (7z.exe) do if exist "%%~i" set SEVENZIP_EXE=%%~i
+
+if not exist "%SEVENZIP_EXE%" echo ==^> ERROR: Failed to unzip "%SEVENZIP_PATH%" & goto return1
+
+set SEVENZIP_DLL=
+
+for /r %%i in (7z.dll) do if exist "%%~i" set SEVENZIP_DLL=%%~i
+
+if not exist "%SEVENZIP_DLL%" echo ==^> ERROR: Failed to unzip "%SEVENZIP_PATH%" & goto return1
+
+:copy_sevenzip
+
+echo ==^> Copying "%SEVENZIP_EXE%" to "%SystemRoot%"
+copy /y "%SEVENZIP_EXE%" "%SystemRoot%\" || goto return1
+copy /y "%SEVENZIP_DLL%" "%SystemRoot%\" || goto return1
+
+:return0
+
+popd
+ver>nul
+
+goto return
+
+:return1
+
+popd
+verify other 2>nul
+
+:return
 
 goto :eof
 
@@ -37,7 +105,7 @@ goto :eof
 :main
 ::::::::::::
 
-if exist "%SystemDrive%\Program Files (x86)" (
+if defined ProgramFiles(x86) (
   set ULTRADEFRAG_URL=%ULTRADEFRAG_64_URL%
 ) else (
   set ULTRADEFRAG_URL=%ULTRADEFRAG_32_URL%
@@ -54,33 +122,28 @@ pushd "%ULTRADEFRAG_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%ULTRADEFRAG_URL%" "%ULTRADEFRAG_PATH%"
 ) else (
-  echo ==^> Downloadling "%ULTRADEFRAG_URL%" to "%ULTRADEFRAG_PATH%"
+  echo ==^> Downloading "%ULTRADEFRAG_URL%" to "%ULTRADEFRAG_PATH%"
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%ULTRADEFRAG_URL%', '%ULTRADEFRAG_PATH%')" <NUL
 )
 if not exist "%ULTRADEFRAG_PATH%" goto exit1
 
-call :find_unzip_vbs
-
-if not exist "%UNZIP_VBS%" echo ==^> ERROR: File not found: "%UNZIP_VBS%" & goto return1
+call :install_sevenzip
+if errorlevel 1 goto exit1
 
 echo ==^> Unzipping "%ULTRADEFRAG_PATH%" to "%ULTRADEFRAG_DIR%"
-cscript "%UNZIP_VBS%" //b "%ULTRADEFRAG_PATH%" "%ULTRADEFRAG_DIR%"
+7z e -y -o"%ULTRADEFRAG_DIR%" "%ULTRADEFRAG_PATH%" *\udefrag.exe *\*.dll
 
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: cscript a:\unzip.vbs //b "%ULTRADEFRAG_PATH%" "%ULTRADEFRAG_DIR%"
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e -o"%ULTRADEFRAG_DIR%" "%ULTRADEFRAG_PATH%"
 ver>nul
 
-set ULTRADEFRAG_UNZIP_DIR=
+for /r %%i in (udefrag.exe) do if exist "%%~i" set ULTRADEFRAG_EXE=%%~i
 
-for /d %%i in ("%ULTRADEFRAG_DIR%\*.*") do set ULTRADEFRAG_UNZIP_DIR=%%~i
-
-if not defined ULTRADEFRAG_UNZIP_DIR echo ==^> ERROR: Unzipping "%ULTRADEFRAG_PATH%" failed to create a directory in "%ULTRADEFRAG_DIR%" & goto exit1
-
-if not exist "%ULTRADEFRAG_UNZIP_DIR%\udefrag.exe" echo ==^> ERROR: File not found: "%ULTRADEFRAG_UNZIP_DIR%\udefrag.exe" & goto exit1
+if not exist "%ULTRADEFRAG_EXE%" echo ==^> ERROR: File not found: udefrag.exe in "%ULTRADEFRAG_DIR%" & goto exit1
 
 echo ==^> Running UltraDefrag on %SystemDrive%
-"%ULTRADEFRAG_UNZIP_DIR%\udefrag.exe" --optimize --repeat %SystemDrive%
+"%ULTRADEFRAG_EXE%" --optimize --repeat %SystemDrive%
 
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%ULTRADEFRAG_UNZIP_DIR%\udefrag.exe" --optimize --repeat %SystemDrive%
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%ULTRADEFRAG_EXE%" --optimize --repeat %SystemDrive%
 ver>nul
 
 popd

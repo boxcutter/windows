@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 echo ==^> Enabling RDP on port 3389
 netsh advfirewall firewall add rule name="Open Port 3389" dir=in action=allow protocol=TCP localport=3389

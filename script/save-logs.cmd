@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 echo ==^> Saving installation logs
 

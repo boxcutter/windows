@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined VAGRANT_PUB_URL set VAGRANT_PUB_URL=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 
@@ -16,7 +16,7 @@ pushd "%VAGRANT_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%VAGRANT_PUB_URL%" "%VAGRANT_PATH%"
 ) else (
-  echo ==^> Downloadling "%VAGRANT_PUB_URL%" to "%VAGRANT_PATH%"
+  echo ==^> Downloading "%VAGRANT_PUB_URL%" to "%VAGRANT_PATH%"
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%VAGRANT_PUB_URL%', '%VAGRANT_PATH%')" <NUL
 )
 if not exist "%VAGRANT_PATH%" goto exit1

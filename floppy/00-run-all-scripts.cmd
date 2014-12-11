@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG (@echo off) else (@echo on)
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 goto main
 

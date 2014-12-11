@@ -1,4 +1,7 @@
-setlocal EnableDelayedExpansion EnableExtensions
+@setlocal EnableDelayedExpansion EnableExtensions
+@for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
+
 title Installing wget. Please wait...
 
 :: bitsadmin can't download http://users.ugent.be/~bpuype/cgi-bin/fetch.pl?dl=wget/wget.exe

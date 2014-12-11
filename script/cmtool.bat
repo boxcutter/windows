@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined CM echo ==^> ERROR: The "CM" variable was not found in the environment & goto exit1
 
@@ -32,7 +32,6 @@ echo ==^> Creating "%CHEF_DIR%"
 mkdir "%CHEF_DIR%"
 pushd "%CHEF_DIR%"
 
-:: todo support CM_VERSION variable
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
 ) else (
@@ -65,7 +64,12 @@ mkdir "%CHEFDK_DIR%"
 pushd "%CHEFDK_DIR%"
 
 echo ==^> Downloading Chef DK to %CHEFDK_PATH%
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CHEFDK_URL%', '%CHEFDK_PATH%')" <NUL
+if exist "%SystemRoot%\_download.cmd" (
+  call "%SystemRoot%\_download.cmd" "%CHEFDK_URL%" "%CHEFDK_PATH%"
+) else (
+  echo ==^> Downloading %CHEFDK_URL% to %CHEFDK_PATH%
+  powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEFDK_URL%\", '%CHEFDK_PATH%')" <NUL
+)
 if not exist "%CHEFDK_PATH%" goto exit1
 
 echo ==^> Installing Chef Development Kit %CM_VERSION%
@@ -119,7 +123,7 @@ if "%CM_VERSION%" == "latest" set CM_VERSION=2014.7.0
 if not defined SALT_32_URL set SALT_32_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-x86-Setup.exe
 if not defined SALT_64_URL set SALT_64_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-AMD64-Setup.exe
 
-if exist "%SystemDrive%\Program Files (x86)" (
+if defined ProgramFiles(x86) (
   set SALT_URL=%SALT_64_URL%
 ) else (
   set SALT_URL=%SALT_32_URL%
@@ -133,7 +137,6 @@ echo ==^> Creating "%SALT_DIR%"
 mkdir "%SALT_DIR%"
 pushd "%SALT_DIR%"
 
-:: todo support CM_VERSION variable
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SALT_URL%" "%SALT_PATH%"
 ) else (

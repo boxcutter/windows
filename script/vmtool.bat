@@ -1,39 +1,14 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
-if not defined LESSMSI_URL set LESSMSI_URL=https://github.com/activescott/lessmsi/releases/download/v1.2.0/lessmsi-v1.2.0.zip
 if not defined SEVENZIP_URL set SEVENZIP_URL=http://downloads.sourceforge.net/sevenzip/7z922.msi
 if not defined VBOX_ISO_URL set VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/4.3.20/VBoxGuestAdditions_4.3.20.iso
 if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/10.0.4/2249910/windows/packages/tools-windows-9.6.2.exe.tar
 
 goto main
-
-::::::::::::
-:find_unzip_vbs
-::::::::::::
-
-for %%i in ("%TEMP%" %PACKER_SEARCH_PATHS%) do if exist "%%~i\unzip.vbs" set UNZIP_VBS=%%~i\unzip.vbs
-
-if exist "%UNZIP_VBS%" goto :eof
-
-set UNZIP_VBS=%TEMP%\unzip.vbs
-
-echo Set fso = CreateObject("Scripting.FileSystemObject")>"%UNZIP_VBS%"
-echo ZipFile=fso.GetAbsolutePathName(Wscript.Arguments(0))>>"%UNZIP_VBS%"
-echo ExtractTo=fso.GetAbsolutePathName(Wscript.Arguments(1))>>"%UNZIP_VBS%"
-echo If NOT fso.FolderExists(ExtractTo) Then>>"%UNZIP_VBS%"
-echo    fso.CreateFolder(ExtractTo)>>"%UNZIP_VBS%"
-echo End If>>"%UNZIP_VBS%"
-echo set objShell = CreateObject("Shell.Application")>>"%UNZIP_VBS%"
-echo set FilesInZip=objShell.NameSpace(ZipFile).items>>"%UNZIP_VBS%"
-echo objShell.NameSpace(ExtractTo).CopyHere(FilesInZip)>>"%UNZIP_VBS%"
-echo Set fso = Nothing>>"%UNZIP_VBS%"
-echo Set objShell = Nothing>>"%UNZIP_VBS%"
-
-goto :eof
 
 ::::::::::::
 :install_sevenzip
@@ -48,22 +23,21 @@ if defined SEVENZIP_EXE goto return0
 
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined SEVENZIP_EXE @if exist "%%~i\7z.exe" set SEVENZIP_EXE=%%~i\7z.exe
 
-if not defined SEVENZIP_EXE goto unmsi_sevenzip
+if not defined SEVENZIP_EXE goto get_sevenzip
 
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined SEVENZIP_DLL @if exist "%%~i\7z.dll" set SEVENZIP_DLL=%%~i\7z.dll
 
-if not defined SEVENZIP_DLL goto unmsi_sevenzip
+if not defined SEVENZIP_DLL goto get_sevenzip
 
-copy /y "%SEVENZIP_EXE%" "%SystemRoot%\" || goto unmsi_sevenzip
-copy /y "%SEVENZIP_DLL%" "%SystemRoot%\" || goto unmsi_sevenzip
+ver >nul
+call :copy_sevenzip
+if not errorlevel 1 goto return0
 
-goto return0
+:get_sevenzip
 
-:unmsi_sevenzip
-
-for %%i in ("%SEVENZIP_URL%") do set SEVENZIP_ZIP=%%~nxi
+for %%i in ("%SEVENZIP_URL%") do set SEVENZIP_MSI=%%~nxi
 set SEVENZIP_DIR=%TEMP%\sevenzip
-set SEVENZIP_PATH=%SEVENZIP_DIR%\%SEVENZIP_ZIP%
+set SEVENZIP_PATH=%SEVENZIP_DIR%\%SEVENZIP_MSI%
 
 echo ==^> Creating "%SEVENZIP_DIR%"
 mkdir "%SEVENZIP_DIR%"
@@ -72,71 +46,26 @@ cd /d "%SEVENZIP_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
 ) else (
-  echo ==^> Downloadling "%SEVENZIP_URL%" to "%SEVENZIP_PATH%"
+  echo ==^> Downloading "%SEVENZIP_URL%" to "%SEVENZIP_PATH%"
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SEVENZIP_URL%', '%SEVENZIP_PATH%')" <NUL
 )
 if not exist "%SEVENZIP_PATH%" goto return1
 
-systeminfo | findstr /R "OS.Name.*2008.R2" >nul
-
-if errorlevel 1 goto run_lessmsi
-
-rem Running lessmsi in Windows 2008 R2 produces:
-rem Error: System.IO.FileNotFoundException: Could not load file or assembly 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' or one of its dependencies. The system cannot find the file specified.
-rem File name: 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
-rem at LessMsi.Cli.ExtractCommand.Run(List`1 allArgs)
-rem at LessMsi.Cli.Program.Main(String[] args)
-
+echo ==^> Installing "%SEVENZIP_PATH%"
 msiexec /qb /i "%SEVENZIP_PATH%"
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%SEVENZIP_PATH%"
 ver>nul
 
-if exist "%ProgramFiles%\7-Zip" cd /D "%ProgramFiles%\7-Zip" & goto copy_sevenzip
+if exist "%ProgramFiles%\7-Zip" cd /D "%ProgramFiles%\7-Zip" & goto find_sevenzip
 
-if defined ProgramFiles(x86) if exist "%ProgramFiles(x86)%\7-Zip" cd /D "%ProgramFiles(x86)%\7-Zip" & goto copy_sevenzip
+if defined ProgramFiles(x86) if exist "%ProgramFiles(x86)%\7-Zip" cd /D "%ProgramFiles(x86)%\7-Zip" & goto find_sevenzip
 
-echo ==^> ERROR: Directory not found: "%ProgramFiles%\7-Zip" & goto return1
+echo ==^> ERROR: Directory not found: "%ProgramFiles%\7-Zip"
 
-:run_lessmsi
+goto return1
 
-echo ==^> Unpacking "%SEVENZIP_PATH%" to "%SEVENZIP_DIR%"
-
-for %%i in ("%LESSMSI_URL%") do set LESSMSI_ZIP=%%~nxi
-set LESSMSI_DIR=%TEMP%\lessmsi
-set LESSMSI_PATH=%LESSMSI_DIR%\%LESSMSI_ZIP%
-
-echo ==^> Creating "%LESSMSI_DIR%"
-mkdir "%LESSMSI_DIR%"
-cd /d "%LESSMSI_DIR%"
-
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%LESSMSI_URL%" "%LESSMSI_PATH%"
-) else (
-  echo ==^> Downloadling "%LESSMSI_URL%" to "%LESSMSI_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%LESSMSI_URL%', '%LESSMSI_PATH%')" <NUL
-)
-if not exist "%LESSMSI_PATH%" goto return1
-
-call :find_unzip_vbs
-
-if not exist "%UNZIP_VBS%" echo ==^> ERROR: File not found: "%UNZIP_VBS%" & goto return1
-
-echo ==^> Unzipping "%LESSMSI_PATH%" to "%LESSMSI_DIR%"
-cscript "%UNZIP_VBS%" //b "%LESSMSI_PATH%" "%LESSMSI_DIR%"
-
-set LESSMSI_EXE=
-
-for %%i in ("%LESSMSI_DIR%\*.exe") do set LESSMSI_EXE=%%~i
-
-if not exist "%LESSMSI_EXE%" echo ==^> ERROR: Failed to unzip "%LESSMSI_PATH%" & goto return1
-
-"%LESSMSI_EXE%" x "%SEVENZIP_PATH%" 7z.exe 7z.dll
-
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%LESSMSI_EXE%" x "%SEVENZIP_PATH%" 7z.exe 7z.dll
-ver>nul
-
-:copy_sevenzip
+:find_sevenzip
 
 set SEVENZIP_EXE=
 
@@ -149,6 +78,8 @@ set SEVENZIP_DLL=
 for /r %%i in (7z.dll) do if exist "%%~i" set SEVENZIP_DLL=%%~i
 
 if not exist "%SEVENZIP_DLL%" echo ==^> ERROR: Failed to unzip "%SEVENZIP_PATH%" & goto return1
+
+:copy_sevenzip
 
 echo ==^> Copying "%SEVENZIP_EXE%" to "%SystemRoot%"
 copy /y "%SEVENZIP_EXE%" "%SystemRoot%\" || goto return1
@@ -190,7 +121,7 @@ goto exit1
 :vmware
 ::::::::::::
 
-if exist "%SystemDrive%\Program Files (x86)" (
+if defined ProgramFiles(x86) (
   set VMWARE_TOOLS_SETUP_EXE=setup64.exe
 ) else (
   set VMWARE_TOOLS_SETUP_EXE=setup.exe
@@ -219,7 +150,7 @@ if defined VMWARE_TOOLS_ISO_PATH goto install_vmware_tools_from_iso
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%VMWARE_TOOLS_TAR_URL%" "%VMWARE_TOOLS_TAR_PATH%"
 ) else (
-  echo ==^> Downloadling "%VMWARE_TOOLS_TAR_URL%" to "%VMWARE_TOOLS_TAR_PATH%"
+  echo ==^> Downloading "%VMWARE_TOOLS_TAR_URL%" to "%VMWARE_TOOLS_TAR_PATH%"
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%VMWARE_TOOLS_TAR_URL%', '%VMWARE_TOOLS_TAR_PATH%')" <NUL
 )
 if not exist "%VMWARE_TOOLS_TAR_PATH%" goto exit1
@@ -227,7 +158,7 @@ if not exist "%VMWARE_TOOLS_TAR_PATH%" goto exit1
 call :install_sevenzip
 if errorlevel 1 goto exit1
 
-7z e -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_TAR_PATH%"
+7z e -y -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_TAR_PATH%" tools-windows-*.exe
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e "%VMWARE_TOOLS_TAR_PATH%"
 ver>nul
@@ -240,11 +171,8 @@ if not exist "%VMWARE_TOOLS_INSTALLER_PATH%" echo ==^> ERROR: Failed to unzip "%
 
 "%VMWARE_TOOLS_INSTALLER_PATH%" /s
 
-if exist "%SystemDrive%\Program Files (x86)" (
-  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%SystemDrive%\Program Files ^(x86^)\VMware
-) else (
-  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%SystemDrive%\Program Files\VMware
-)
+set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles%\VMware
+if defined ProgramFiles(x86) set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles(x86)%\VMware
 
 if not exist "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" echo ==^> ERROR: Directory not found: "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" & goto exit1
 
@@ -322,7 +250,7 @@ if defined VBOX_ISO_PATH goto install_vbox_guest_additions_from_iso
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%VBOX_ISO_URL%" "%VBOX_ISO_PATH%"
 ) else (
-  echo ==^> Downloadling "%VBOX_ISO_URL%" to "%VBOX_ISO_PATH%"
+  echo ==^> Downloading "%VBOX_ISO_URL%" to "%VBOX_ISO_PATH%"
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%VBOX_ISO_URL%', '%VBOX_ISO_PATH%')" <NUL
 )
 if not exist "%VBOX_ISO_PATH%" goto exit1

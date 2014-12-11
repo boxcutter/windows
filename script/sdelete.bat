@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined SDELETE_URL set SDELETE_URL=http://live.sysinternals.com/sdelete.exe
 
@@ -15,7 +15,7 @@ pushd "%SDELETE_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SDELETE_URL%" "%SDELETE_PATH%"
 ) else (
-  echo ==^> Downloadling "%SDELETE_URL%" to "%SDELETE_PATH%"
+  echo ==^> Downloading "%SDELETE_URL%" to "%SDELETE_PATH%"
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SDELETE_URL%', '%SDELETE_PATH%')" <NUL
 )
 if not exist "%SDELETE_PATH%" goto exit1

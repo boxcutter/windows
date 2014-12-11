@@ -1,4 +1,6 @@
-setlocal EnableDelayedExpansion EnableExtensions
+@setlocal EnableDelayedExpansion EnableExtensions
+@for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 

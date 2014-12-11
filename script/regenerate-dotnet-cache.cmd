@@ -1,10 +1,10 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 echo ==^> Regenerating .Net native image cache
 
-if exist "%SystemDrive%\Program Files (x86)" (
+if defined ProgramFiles(x86) (
   set DOTNET_FRAMEWORK_DIR=%SystemRoot%\Microsoft.NET\Framework64
 ) else (
   set DOTNET_FRAMEWORK_DIR=%SystemRoot%\Microsoft.NET\Framework

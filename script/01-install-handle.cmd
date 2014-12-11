@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined HANDLE_URL set HANDLE_URL=http://live.sysinternals.com/handle.exe
 
@@ -15,7 +15,7 @@ pushd "%HANDLE_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%HANDLE_URL%" "%HANDLE_PATH%"
 ) else (
-  echo ==^> Downloadling "%HANDLE_URL%" to "%HANDLE_PATH%"
+  echo ==^> Downloading "%HANDLE_URL%" to "%HANDLE_PATH%"
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%HANDLE_URL%', '%HANDLE_PATH%')" <NUL
 )
 if not exist "%HANDLE_PATH%" goto exit1

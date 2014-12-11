@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
-@if not defined PACKER_DEBUG echo off
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined CYGWIN_HOME set CYGWIN_HOME=%SystemDrive%\cygwin
 if not defined PACKER_SHUTDOWN_SECONDS set PACKER_SHUTDOWN_SECONDS=0

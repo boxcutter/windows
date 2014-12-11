@@ -1,4 +1,6 @@
-setlocal EnableDelayedExpansion EnableExtensions
+@setlocal EnableDelayedExpansion EnableExtensions
+@for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
+@if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined PACKER_SERVICES set PACKER_SERVICES=opensshd sshd winrm
 
