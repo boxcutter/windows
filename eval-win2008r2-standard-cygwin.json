@@ -1,0 +1,107 @@
+{
+  "variables": {
+    "version": "0.1.0",
+    "cm": "chef",
+    "cm_version": "",
+    "iso_url": "http://download.microsoft.com/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso",
+    "iso_checksum": "beed231a34e90e1dd9a04b3afabec31d62ce3889",
+    "update": true
+  },
+  "builders": [
+    {
+      "vm_name": "eval-win2008r2-standard-cygwin",
+      "type": "vmware-iso",
+      "guest_os_type": "windows7srv-64",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "floppy_files": [
+        "floppy/win2008r2-standard/Autounattend.xml",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/install-winrm.cmd",
+        "floppy/powerconfig.bat",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/cygwin.bat",
+        "floppy/cygwin.sh",
+        "floppy/zz-start-sshd.cmd"
+      ],
+      "tools_upload_flavor": "windows",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+      "disk_size": 40960,
+      "vmx_data": {
+        "memsize": "768",
+        "numvcpus": "1",
+        "cpuid.coresPerSocket": "1"
+      }
+    },
+    {
+      "vm_name": "eval-win2008r2-standard-cygwin",
+      "type": "virtualbox-iso",
+      "guest_os_type": "Windows2008_64",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "floppy_files": [
+        "floppy/win2008r2-standard/Autounattend.xml",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/install-winrm.cmd",
+        "floppy/powerconfig.bat",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/cygwin.bat",
+        "floppy/cygwin.sh",
+        "floppy/zz-start-sshd.cmd",
+        "floppy/oracle-cert.cer"
+      ],
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+      "disk_size": 40960,
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "768"],
+        ["modifyvm", "{{.Name}}", "--cpus", "1"]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "remote_path": "/tmp/script.bat",
+      "environment_vars": [
+        "CM={{user `cm`}}",
+        "CM_VERSION={{user `cm_version`}}",
+        "UPDATE={{user `update`}}"
+      ],
+      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
+      "scripts": [
+        "script/vagrant.bat",
+        "script/cmtool.bat",
+        "script/vmtool.bat",
+        "script/clean.bat",
+        "script/ultradefrag.bat",
+        "script/uninstall-7zip.bat",
+        "script/sdelete.bat"
+      ]
+    },
+    {
+      "type": "shell",
+      "inline": ["rm -f /tmp/script.bat"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "keep_input_artifact": false,
+    "compression_level": 1,
+    "vagrantfile_template": "tpl/vagrantfile-eval-win2008r2-standard-cygwin.tpl",
+    "output": "box/{{.Provider}}/eval-win2008r2-standard-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
+  }]
+}

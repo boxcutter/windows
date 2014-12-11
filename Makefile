@@ -62,12 +62,12 @@ endif
 # Packer does not allow empty variables, so only pass variables that are defined
 PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDATE)'
 ifdef CM_VERSION
-	PACKER_VARS := $(PACKER_VARS) -var 'cm_version=$(CM_VERSION)'
+	PACKER_VARS += -var 'cm_version=$(CM_VERSION)'
 endif
+PACKER ?= packer
 ifdef PACKER_DEBUG
-	PACKER := PACKER_LOG=1 packer --debug
+	PACKER := PACKER_LOG=1 $(PACKER) --debug
 else
-	PACKER := packer
 endif
 BUILDER_TYPES ?= vmware virtualbox
 ifeq ($(OS),Windows_NT)
@@ -228,7 +228,7 @@ eval-openssh: eval-win2012r2-datacenter eval-win2008r2-datacenter eval-win81x64-
 
 test-eval-openssh: test-eval-win2012r2-datacenter test-eval-win2008r2-datacenter test-eval-win81x64-enterprise test-eval-win7x64-enterprise
 
-define buildbox
+define BUILDBOX
 
 $(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
 	rm -rf $(VIRTUALBOX_OUTPUT)
@@ -245,95 +245,80 @@ $(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
 	mkdir -p $(PARALLELS_BOX_DIR)
 	packer build -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
 
+$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+	rm -rf $(VIRTUALBOX_OUTPUT)
+	mkdir -p $(VIRTUALBOX_BOX_DIR)
+	packer build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+
+$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+	rm -rf $(VMWARE_OUTPUT)
+	mkdir -p $(VMWARE_BOX_DIR)
+	packer build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+
+$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+	rm -rf $(PARALLELS_OUTPUT)
+	mkdir -p $(PARALLELS_BOX_DIR)
+	packer build -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+
 endef
 
-$(eval $(call buildbox,win2008r2-datacenter,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2008r2-datacenter,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,eval-win2008r2-datacenter,$(EVAL_WIN2008R2_X64),$(EVAL_WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,eval-win2008r2-datacenter,$(EVAL_WIN2008R2_X64),$(EVAL_WIN2008R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2008r2-enterprise,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2008r2-enterprise,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2008r2-standard,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2008r2-standard,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2008r2-web,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,eval-win2008r2-standard,$(EVAL_WIN2008R2_X64),$(EVAL_WIN2008R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2008r2-datacenter-cygwin,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2008r2-web,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2008r2-enterprise-cygwin,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2012-datacenter,$(WIN2012_X64),$(WIN2012_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2008r2-standard-cygwin,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2012-standard,$(WIN2012_X64),$(WIN2012_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2008r2-web-cygwin,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2012r2-datacenter,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2012-datacenter,$(WIN2012_X64),$(WIN2012_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,eval-win2012r2-datacenter,$(EVAL_WIN2012R2_X64),$(EVAL_WIN2012R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2012-standard,$(WIN2012_X64),$(WIN2012_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2012r2-standard,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2012-datacenter-cygwin,$(WIN2012_X64),$(WIN2012_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,eval-win2012r2-standard,$(EVAL_WIN2012R2_X64),$(EVAL_WIN2012R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2012-standard-cygwin,$(WIN2012_X64),$(WIN2012_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win2012r2-standardcore,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2012r2-datacenter,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win7x64-enterprise,$(WIN7_X64_ENTERPRISE),$(WIN7_X64_ENTERPRISE_CHECKSUM)))
 
-$(eval $(call buildbox,eval-win2012r2-datacenter,$(EVAL_WIN2012R2_X64),$(EVAL_WIN2012R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,eval-win7x64-enterprise,$(EVAL_WIN7_X64),$(EVAL_WIN7_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win2012r2-standard,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win7x86-enterprise,$(WIN7_X86_ENTERPRISE),$(WIN7_X86_ENTERPRISE_CHECKSUM)))
 
-$(eval $(call buildbox,win2012r2-datacenter-cygwin,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win7x64-pro,$(WIN7_X64_PRO),$(WIN7_X64_PRO_CHECKSUM)))
 
-$(eval $(call buildbox,win2012r2-standard-cygwin,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win7x86-pro,$(WIN7_X86_PRO),$(WIN7_X86_PRO_CHECKSUM)))
 
-$(eval $(call buildbox,win7x64-enterprise,$(WIN7_X64_ENTERPRISE),$(WIN7_X64_ENTERPRISE_CHECKSUM)))
+$(eval $(call BUILDBOX,win8x64-enterprise,$(WIN8_X64_ENTERPRISE),$(WIN8_X64_ENTERPRISE_CHECKSUM)))
 
-$(eval $(call buildbox,eval-win7x64-enterprise,$(EVAL_WIN7_X64),$(EVAL_WIN7_X64_CHECKSUM)))
+$(eval $(call BUILDBOX,win8x64-pro,$(WIN8_X64_PRO),$(WIN8_X64_PRO_CHECKSUM)))
 
-$(eval $(call buildbox,win7x86-enterprise,$(WIN7_X86_ENTERPRISE),$(WIN7_X86_ENTERPRISE_CHECKSUM)))
+$(eval $(call BUILDBOX,win8x86-enterprise,$(WIN8_X86_ENTERPRISE),$(WIN8_X86_ENTERPRISE_CHECKSUM)))
 
-$(eval $(call buildbox,win7x64-pro,$(WIN7_X64_PRO),$(WIN7_X64_PRO_CHECKSUM)))
+$(eval $(call BUILDBOX,win8x86-pro,$(WIN8_X86_PRO),$(WIN8_X86_PRO_CHECKSUM)))
 
-$(eval $(call buildbox,win7x86-pro,$(WIN7_X86_PRO),$(WIN7_X86_PRO_CHECKSUM)))
+$(eval $(call BUILDBOX,win81x64-enterprise,$(WIN81_X64_ENTERPRISE),$(WIN81_X64_ENTERPRISE_CHECKSUM)))
 
-$(eval $(call buildbox,win7x64-enterprise-cygwin,$(WIN7_X64_ENTERPRISE),$(WIN7_X64_ENTERPRISE_CHECKSUM)))
+$(eval $(call BUILDBOX,eval-win81x64-enterprise,$(EVAL_WIN81_X64),$(EVAL_WIN81_X64_CHECKSUM)))
 
-$(eval $(call buildbox,win7x86-enterprise-cygwin,$(WIN7_X86_ENTERPRISE),$(WIN7_X86_ENTERPRISE_CHECKSUM)))
+$(eval $(call BUILDBOX,win81x86-enterprise,$(WIN81_X86_ENTERPRISE),$(WIN81_X86_ENTERPRISE_CHECKSUM)))
 
-$(eval $(call buildbox,win7x64-pro-cygwin,$(WIN7_X64_PRO),$(WIN7_X64_PRO_CHECKSUM)))
+$(eval $(call BUILDBOX,win81x64-pro,$(WIN81_X64_PRO),$(WIN81_X64_PRO_CHECKSUM)))
 
-$(eval $(call buildbox,win7x86-pro-cygwin,$(WIN7_X86_PRO),$(WIN7_X86_PRO_CHECKSUM)))
+$(eval $(call BUILDBOX,win81x86-pro,$(WIN81_X86_PRO),$(WIN81_X86_PRO_CHECKSUM)))
 
-$(eval $(call buildbox,win8x64-enterprise,$(WIN8_X64_ENTERPRISE),$(WIN8_X64_ENTERPRISE_CHECKSUM)))
-
-$(eval $(call buildbox,win8x64-pro,$(WIN8_X64_PRO),$(WIN8_X64_PRO_CHECKSUM)))
-
-$(eval $(call buildbox,win8x86-enterprise,$(WIN8_X86_ENTERPRISE),$(WIN8_X86_ENTERPRISE_CHECKSUM)))
-
-$(eval $(call buildbox,win8x86-pro,$(WIN8_X86_PRO),$(WIN8_X86_PRO_CHECKSUM)))
-
-$(eval $(call buildbox,win8x64-enterprise-cygwin,$(WIN8_X64_ENTERPRISE),$(WIN8_X64_ENTERPRISE_CHECKSUM)))
-
-$(eval $(call buildbox,win8x64-pro-cygwin,$(WIN8_X64_PRO),$(WIN8_X64_PRO_CHECKSUM)))
-
-$(eval $(call buildbox,win8x86-enterprise-cygwin,$(WIN8_X86_ENTERPRISE),$(WIN8_X86_ENTERPRISE_CHECKSUM)))
-
-$(eval $(call buildbox,win8x86-pro-cygwin,$(WIN8_X86_PRO),$(WIN8_X86_PRO_CHECKSUM)))
-
-$(eval $(call buildbox,win81x64-enterprise,$(WIN81_X64_ENTERPRISE),$(WIN81_X64_ENTERPRISE_CHECKSUM)))
-
-$(eval $(call buildbox,eval-win81x64-enterprise,$(EVAL_WIN81_X64),$(EVAL_WIN81_X64_CHECKSUM)))
-
-$(eval $(call buildbox,win81x86-enterprise,$(WIN81_X86_ENTERPRISE),$(WIN81_X86_ENTERPRISE_CHECKSUM)))
-
-$(eval $(call buildbox,win81x64-pro,$(WIN81_X64_PRO),$(WIN81_X64_PRO_CHECKSUM)))
-
-$(eval $(call buildbox,win81x86-pro,$(WIN81_X86_PRO),$(WIN81_X86_PRO_CHECKSUM)))
-
-$(eval $(call buildbox,win81x64-enterprise-cygwin,$(WIN81_X64_ENTERPRISE),$(WIN81_X64_ENTERPRISE_CHECKSUM)))
-
-$(eval $(call buildbox,win81x86-enterprise-cygwin,$(WIN81_X86_ENTERPRISE),$(WIN81_X86_ENTERPRISE_CHECKSUM)))
-
-$(eval $(call buildbox,win81x64-pro-cygwin,$(WIN81_X64_PRO),$(WIN81_X64_PRO_CHECKSUM)))
-
-$(eval $(call buildbox,win81x86-pro-cygwin,$(WIN81_X86_PRO),$(WIN81_X86_PRO_CHECKSUM)))
+# can't find powershell:
+#$(eval $(call BUILDBOX,win2008r2-standardcore,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
+#$(eval $(call BUILDBOX,win2008r2-standardcore-cygwin,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
 
 # Generic rule - not used currently
 #$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): %.json
@@ -350,17 +335,22 @@ $(eval $(call buildbox,win81x86-pro-cygwin,$(WIN81_X86_PRO),$(WIN81_X86_PRO_CHEC
 #       packer build -only=virtualbox-iso $(PACKER_VARS) $<
 
 list:
-	@echo "Prepend 'vmware/' or 'virtualbox/' to build only one target platform:"
-	@echo "  make vmware/win7x64"
+	@echo "To build for all target platforms:"
+	@echo "  make win7x64-pro"
 	@echo ""
-	@echo "Append '-cygwin' to build with Cygwin SSH instead of the default"
-	@echo "OpenSSH:"
-	@echo "  make win7x64-cygwin"
+	@echo "Prepend 'vmware/' or 'virtualbox/' to build only one target platform:"
+	@echo "  make vmware/win7x64-pro"
+	@echo ""
+	@echo "Append '-cygwin' to use Cygwin's SSH instead of OpenSSH:"
+	@echo "  make win7x64-pro-cygwin"
+	@echo ""
+	@echo "Or to build for vmware only:"
+	@echo "  make vmware/win7x64-pro-cygwin"
 	@echo ""
 	@echo "Targets:"
 	@for shortcut_target in $(SHORTCUT_TARGETS) ; do \
 		echo $$shortcut_target ; \
-	done
+	done | sort
 
 validate:
 	@for template_filename in $(TEMPLATE_FILENAMES) ; do \
