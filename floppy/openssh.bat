@@ -4,20 +4,10 @@
 
 title Installing Openssh. Please wait...
 
-if not defined OPENSSH_32_URL set OPENSSH_32_URL=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
-:: if not defined OPENSSH_64_URL set OPENSSH_64_URL=http://www.mls-software.com/files/setupssh-6.7p1-1-v1(x64).exe
+if not defined OPENSSH_URL set OPENSSH_URL=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
 if not defined SSHD_PASSWORD  set SSHD_PASSWORD=D@rj33l1ng
 
-:: if defined ProgramFiles(x86) (
-::   set OPENSSH_URL="%OPENSSH_64_URL%"
-:: ) else (
-  set OPENSSH_URL="%OPENSSH_32_URL%"
-:: )
-
-:: strip off quotes
 for %%i in (%OPENSSH_URL%) do set OPENSSH_EXE=%%~nxi
-for %%i in (%OPENSSH_URL%) do set OPENSSH_URL=%%~i
-
 set OPENSSH_DIR=%TEMP%\openssh
 set OPENSSH_PATH=%OPENSSH_DIR%\%OPENSSH_EXE%
 

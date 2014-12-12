@@ -2,7 +2,14 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
-if not defined SEVENZIP_URL set SEVENZIP_URL=http://downloads.sourceforge.net/sevenzip/7z922.msi
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://downloads.sourceforge.net/sevenzip/7z935.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://downloads.sourceforge.net/sevenzip/7z935-x64.msi
+
+if defined ProgramFiles(x86) (
+  set SEVENZIP_URL=%SEVENZIP_64_URL%
+) else (
+  set SEVENZIP_URL=%SEVENZIP_32_URL%
+)
 
 echo ==^> Uninstalling 7zip
 if exist "%SystemRoot%\7z.exe" del /f "%SystemRoot%\7z.exe"

@@ -4,7 +4,9 @@
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
-if not defined SEVENZIP_URL set SEVENZIP_URL=http://downloads.sourceforge.net/sevenzip/7z922.msi
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://downloads.sourceforge.net/sevenzip/7z935.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://downloads.sourceforge.net/sevenzip/7z935-x64.msi
+
 if not defined ULTRADEFRAG_32_URL set ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.i386.zip
 if not defined ULTRADEFRAG_64_URL set ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.amd64.zip
 
@@ -13,6 +15,12 @@ goto :main
 ::::::::::::
 :install_sevenzip
 ::::::::::::
+
+if defined ProgramFiles(x86) (
+  set SEVENZIP_URL=%SEVENZIP_64_URL%
+) else (
+  set SEVENZIP_URL=%SEVENZIP_32_URL%
+)
 
 pushd .
 

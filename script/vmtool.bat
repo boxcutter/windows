@@ -4,15 +4,24 @@
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
-if not defined SEVENZIP_URL set SEVENZIP_URL=http://downloads.sourceforge.net/sevenzip/7z922.msi
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://downloads.sourceforge.net/sevenzip/7z935.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://downloads.sourceforge.net/sevenzip/7z935-x64.msi
+
 if not defined VBOX_ISO_URL set VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/4.3.20/VBoxGuestAdditions_4.3.20.iso
-if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/10.0.4/2249910/windows/packages/tools-windows-9.6.2.exe.tar
+
+if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/11.0.0/2305329/windows/packages/tools-windows-9.9.0.exe.tar
 
 goto main
 
 ::::::::::::
 :install_sevenzip
 ::::::::::::
+
+if defined ProgramFiles(x86) (
+  set SEVENZIP_URL=%SEVENZIP_64_URL%
+) else (
+  set SEVENZIP_URL=%SEVENZIP_32_URL%
+)
 
 pushd .
 

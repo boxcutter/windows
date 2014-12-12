@@ -4,19 +4,22 @@
 
 echo ==^> Regenerating .Net native image cache
 
-if defined ProgramFiles(x86) (
-  set DOTNET_FRAMEWORK_DIR=%SystemRoot%\Microsoft.NET\Framework64
-) else (
-  set DOTNET_FRAMEWORK_DIR=%SystemRoot%\Microsoft.NET\Framework
-)
+for %%i in (Framework Framework64) do (
+  if exist "%SystemRoot%\Microsoft.NET\%%~i" (
+    pushd "%SystemRoot%\Microsoft.NET\%%~i"
 
-if not exist "%DOTNET_FRAMEWORK_DIR%" echo ==^> ERROR: Directory not found "%DOTNET_FRAMEWORK_DIR%" & goto exit1
+    set ngen=
+    for /r %%j in (ngen.exe) do if exist "%%~j" (
+      set ngen=%%~j
+    )
 
-for /r "%DOTNET_FRAMEWORK_DIR%" %%i in (ngen.exe) do if exist "%%~i" (
-  echo ==> Executing: "%%~i" update /force
-  echo.|time|findstr "current"
-  "%%~i" update /force
-  echo.|time|findstr "current"
+    echo ==^> Executing: "!ngen!" update /force /queue
+    "!ngen!" update /force /queue
+    echo ==^> Executing: "!ngen!" executequeueditems
+    "!ngen!" executequeueditems
+
+    popd
+  )
 )
 
 :exit0

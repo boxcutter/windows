@@ -83,7 +83,7 @@ for /f %%i in (%_PACKER_RUN%) do (
   echo ==^> Executing %%~i
   title Executing %%~i, please wait...
 
-  del "%temp%\%%~ni.err"
+  if exist "%temp%\%%~ni.err" del "%temp%\%%~ni.err"
 
   ("%ComSpec%" %_PACKER_CMD_OPTS% /c "%~d0\%%~nxi" 2>&1 || copy /y nul "%temp%\%%~ni.err" >nul) | "%_TEE_CMD%" "%TEMP%\%%~ni.log.txt"
   if exist "%temp%\%%~ni.err" (
@@ -105,7 +105,7 @@ for /f %%i in (%_PACKER_RUN%) do (
       choice /C Y /N /T %PACKER_PAUSE% /D Y /M "Waiting for %PACKER_PAUSE% seconds, press Y to continue: "
     )
   )
-  del "%temp%\%%~ni.err"
+  if exist "%temp%\%%~ni.err" del "%temp%\%%~ni.err"
   popd
 )
 
