@@ -18,11 +18,11 @@ pushd ${tmp_path}
 vagrant init ${box_name}
 VAGRANT_LOG=warn vagrant up --provider ${vagrant_provider}
 vagrant ssh
-if [[ -z "${PACKER_KEEP_BOX}" ]]; then
+if [[ -z "${PACKER_KEEP_BOX:-}" ]]; then
   vagrant destroy -f
 fi
 popd
 
-if [[ -z "${PACKER_KEEP_BOX}" ]]; then
+if [[ -z "${PACKER_KEEP_BOX:-}" ]]; then
   vagrant box remove ${box_name} --provider ${box_provider}
 fi
