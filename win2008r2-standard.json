@@ -28,6 +28,7 @@
         "floppy/_packer_config.cmd",
         "floppy/passwordchange.bat",
         "floppy/openssh.bat",
+        "floppy/disablewinupdate.bat",
         "floppy/zz-start-sshd.cmd"
       ],
       "tools_upload_flavor": "windows",
@@ -59,6 +60,7 @@
         "floppy/_packer_config.cmd",
         "floppy/passwordchange.bat",
         "floppy/openssh.bat",
+        "floppy/disablewinupdate.bat",
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
