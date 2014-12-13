@@ -1,7 +1,7 @@
 <!-- :
 if NOT "%UPDATE%" == "true" exit /b
 echo ==^> Running Windows Update
-cscript /nologo "%~f0?.wsf"
+cscript //nologo "%~f0?.wsf"
 exit /b
 
 ----- Begin wsf script --->
