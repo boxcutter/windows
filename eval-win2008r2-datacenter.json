@@ -29,6 +29,7 @@
         "floppy/passwordchange.bat",
         "floppy/openssh.bat",
         "floppy/disablewinupdate.bat",
+        "floppy/upgrade-wua.bat",
         "floppy/zz-start-sshd.cmd"
       ],
       "tools_upload_flavor": "windows",
@@ -61,6 +62,7 @@
         "floppy/passwordchange.bat",
         "floppy/openssh.bat",
         "floppy/disablewinupdate.bat",
+        "floppy/upgrade-wua.bat",
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
@@ -83,6 +85,7 @@
       ],
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "scripts": [
+        "script/update.bat",
         "script/vagrant.bat",
         "script/cmtool.bat",
         "script/vmtool.bat",
