@@ -5,7 +5,8 @@
     "cm_version": "",
     "iso_url": "iso/en_windows_server_2012_x64_dvd_915478.iso",
     "iso_checksum": "d09e752b1ee480bc7e93dfa7d5c3a9b8aac477ba",
-    "update": true
+    "update": true,
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'"
   },
   "builders": [
     {
@@ -31,7 +32,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "tools_upload_flavor": "windows",
-      "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vmx_data": {
         "memsize": "768",
@@ -62,7 +63,7 @@
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
-      "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "768"],

@@ -5,7 +5,8 @@
     "cm_version": "",
     "iso_url": "iso/en_windows_8.1_enterprise_with_update_x86_dvd_4065185.iso",
     "iso_checksum": "fe43558b4708b4b786bc3286924813b0aad21106",
-    "update": true
+    "update": true,
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'"
   },
   "builders": [
     {
@@ -32,7 +33,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "tools_upload_flavor": "windows",
-      "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vmx_data": {
         "memsize": "768",
@@ -65,7 +66,7 @@
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
-      "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "768"],

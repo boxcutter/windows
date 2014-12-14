@@ -5,7 +5,8 @@
     "cm_version": "",
     "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO",
     "iso_checksum": "7e3f89dbff163e259ca9b0d1f078daafd2fed513",
-    "update": true
+    "update": true,
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'"
   },
   "builders": [
     {
@@ -33,7 +34,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "tools_upload_flavor": "windows",
-      "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vmx_data": {
         "memsize": "1536",
@@ -67,7 +68,7 @@
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
-      "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "1536"],

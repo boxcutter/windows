@@ -5,7 +5,8 @@
     "cm_version": "",
     "iso_url": "iso/en_windows_8_x86_dvd_915417.iso",
     "iso_checksum": "22d680ec53336bee8a5b276a972ceba104787f62",
-    "update": true
+    "update": true,
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'"
   },
   "builders": [
     {
@@ -32,7 +33,7 @@
       ],
       "tools_upload_flavor": "windows",
       "ssh_wait_timeout": "10000s",
-      "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vmx_data": {
         "memsize": "768",
@@ -64,7 +65,7 @@
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
-      "shutdown_command": "shutdown /s /t 1 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "768"],
