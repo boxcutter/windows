@@ -132,5 +132,5 @@
             <EnableLUA>false</EnableLUA>
         </component>
     </settings>
-    <cpi:offlineImage cpi:source="catalog://winryadkx64/users/misheska/github/box-cutter/windows-vm/wsim/wineval/win81/install_windows 8.1 enterprise evaluation.clg" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+    <cpi:offlineImage cpi:source="catalog://winryadkx64/users/misheska/github/box-cutter/windows-vm/wsim/wineval/win81/x64/install_windows 8.1 enterprise evaluation.clg" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>
