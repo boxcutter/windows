@@ -25,11 +25,11 @@ EVAL_WIN2012_X64_CHECKSUM ?= 922b365c3360ce630f6a4b4f2f3c79e66165c0fb
 
 WIN2008R2_X64 ?= iso/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso
 WIN2008R2_X64_CHECKSUM ?= 7e7e9425041b3328ccf723a0855c2bc4f462ec57
-WIN2012_X64 ?= iso/win2012/en_windows_server_2012_x64_dvd_915478.iso
+WIN2012_X64 ?= iso/en_windows_server_2012_x64_dvd_915478.iso
 WIN2012_X64_CHECKSUM ?= d09e752b1ee480bc7e93dfa7d5c3a9b8aac477ba
 WIN2012R2_X64 ?= iso/en_windows_server_2012_r2_with_update_x64_dvd_4065220.iso
 WIN2012R2_X64_CHECKSUM ?= af9ef225a510d6d51c5520396452d4f1c1e06935
-WIN7_X64_ENTERPRISE ?= iso/win7/en_windows_7_enterprise_with_sp1_x64_dvd_u_677651.iso
+WIN7_X64_ENTERPRISE ?= iso/en_windows_7_enterprise_with_sp1_x64_dvd_u_677651.iso
 WIN7_X64_ENTERPRISE_CHECKSUM ?= a491f985dccfb5863f31b728dddbedb2ff4df8d1
 WIN7_X64_PRO ?= iso/en_windows_7_professional_with_sp1_vl_build_x64_dvd_u_677791.iso
 WIN7_X64_PRO_CHECKSUM ?= 708e0338d4e2f094dfeb860347c84a6ed9e91d0c
