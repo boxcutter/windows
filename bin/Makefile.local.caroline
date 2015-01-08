@@ -1,5 +1,5 @@
-caroline_wineval := /Volumes/Storage/software/wineval
-EVAL_WIN7_X64 := $(caroline_wineval)/7/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso
+caroline_wineval := /Volumes/Thunder/software/wineval
+EVAL_WIN7_X64 := $(caroline_wineval)/7/x64/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso
 EVAL_WIN81_X64 := $(caroline_wineval)/81/x64/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO
 EVAL_WIN81_X86 := $(caroline_wineval)/81/x86/9600.16384.WINBLUE_RTM.130821-1623_X86FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X86FREE_EN-US_DV5.ISO
 EVAL_WIN2008R2_X64 := $(caroline_wineval)/2008r2/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso
