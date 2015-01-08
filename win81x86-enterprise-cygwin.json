@@ -99,9 +99,9 @@
       "parallels_tools_flavor": "win",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
-      "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "1536"],
-        ["modifyvm", "{{.Name}}", "--cpus", "1"]
+      "prlctl": [
+        ["set", "{{.Name}}", "--memsize", "768"],
+        ["set", "{{.Name}}", "--cpus", "1"]
       ]
     }
   ],
