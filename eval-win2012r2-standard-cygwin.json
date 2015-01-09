@@ -121,7 +121,6 @@
       ],
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "scripts": [
-        "script/update.bat",
         "script/vagrant.bat",
         "script/cmtool.bat",
         "script/vmtool.bat",
