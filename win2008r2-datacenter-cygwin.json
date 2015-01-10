@@ -37,7 +37,7 @@
       "shutdown_command": "{{ user `shutdown_command`}}", 
       "disk_size": 40960,
       "vmx_data": {
-        "memsize": "768",
+        "memsize": "1536",
         "numvcpus": "1",
         "cpuid.coresPerSocket": "1"
       }
@@ -70,7 +70,7 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "768"],
+        ["modifyvm", "{{.Name}}", "--memory", "1536"],
         ["modifyvm", "{{.Name}}", "--cpus", "1"]
       ]
     },

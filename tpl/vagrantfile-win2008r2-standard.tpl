@@ -34,4 +34,10 @@ Vagrant.configure("2") do |config|
       v.vmx["scsi0.virtualDev"] = "lsilogic"
     end
   end
+
+  config.vm.provider :parallels do |v, override|
+    v.customize ["set", :id, "--cpus", 1]
+    v.customize ["set", :id, "--memsize", 1536]
+    v.customize ["set", :id, "--videosize", "256"]
+  end
 end
