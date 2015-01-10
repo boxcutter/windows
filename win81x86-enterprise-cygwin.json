@@ -100,7 +100,7 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "disk_size": 40960,
       "prlctl": [
-        ["set", "{{.Name}}", "--memsize", "768"],
+        ["set", "{{.Name}}", "--memsize", "1536"],
         ["set", "{{.Name}}", "--cpus", "1"]
       ]
     }
