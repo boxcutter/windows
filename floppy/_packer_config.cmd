@@ -35,8 +35,8 @@
 set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
 :: List of services to start by floppy/zz-start-sshd.cmd
-:: Default: opensshd sshd winrm
-set PACKER_SERVICES=opensshd sshd winrm
+:: Default: opensshd sshd BvSshServer winrm
+set PACKER_SERVICES=opensshd sshd BvSshServer winrm
 
 :: Uncomment the following to define a new password for the sshd service
 :: Default: D@rj33l1ng
