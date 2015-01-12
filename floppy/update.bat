@@ -10,16 +10,34 @@ Option Explicit
 deleteStartupEntry
 
 Dim updateSession, updateSearcher, searchResult
+On Error Resume Next
 Set updateSession = CreateObject("Microsoft.Update.Session")
+If Err.Number <> 0 Then
+    LogWrite "Error " & Hex(Err) & " calling " & Err.Source
+    LogWrite Err.Description
+End If
+On Error Goto 0
 updateSession.ClientApplicationID = "packer"
+On Error Resume Next
 Set updateSearcher = updateSession.CreateUpdateSearcher()
-WScript.Echo "Searching for updates..."
+If Err.Number <> 0 Then
+    LogWrite "Error " & Hex(Err) & " calling " & Err.Source
+    LogWrite Err.Description
+End If
+On Error Goto 0
+LogWrite "Searching for updates..."
+On Error Resume Next
 Set searchResult = updateSearcher.Search("IsInstalled=0 and Type='Software' and IsHidden=0")
+If Err.Number <> 0 Then
+    LogWrite "Error " & Hex(Err) & " calling " & Err.Source
+    LogWrite Err.Description
+End If
+On Error Goto 0
 If searchResult.Updates.Count Then
-    WScript.Echo "There are " & searchResult.Updates.Count & " applicable updates"
+    LogWrite "There are " & searchResult.Updates.Count & " applicable updates"
 End if 
 If searchResult.Updates.Count = 0 Then
-    WScript.Echo "There are no applicable updates."
+    LogWrite "There are no applicable updates."
     WScript.Quit
 End If
 
@@ -46,7 +64,13 @@ End Sub
 Function getUpdatesToDownload(searchResult)
     LogWrite "Creating collection of updates to download."
     Dim updatesToDownload, i
+    On Error Resume Next
     Set updatesToDownload = CreateObject("Microsoft.Update.UpdateColl")
+    If Err.Number <> 0 Then
+        LogWrite "Error " & Hex(Err) & " calling " & Err.Source
+        LogWrite Err.Description 
+    End If
+    On Error Goto 0
     For i = 0 to searchResult.Updates.Count-1
         Dim update, addThisUpdate
         Set update = searchResult.Updates.Item(i)
@@ -107,9 +131,21 @@ End Function
 Function installUpdates(updateSession, updatesToInstall)
     LogWrite "Installing updates..."
     Dim installer, installationResult, i
+    On Error Resume Next
     Set installer = updateSession.CreateUpdateInstaller()
+    If Err.Number <> 0 Then
+        LogWrite "Error " & Hex(Err) & " calling " & Err.Source
+        LogWrite Err.Description
+    End If
+    On Error Goto 0
     installer.Updates = updatesToInstall
+    On Error Resume Next
     Set installationResult = installer.Install()
+    If Err.Number <> 0 Then
+        LogWrite "Error " & Hex(Err) & " calling " & Err.Source
+        LogWrite Err.Description
+    End If
+    On Error Goto 0
     LogWrite "Installation Result: " & installationResult.ResultCode
     LogWrite "Reboot Required: " & installationResult.RebootRequired
     LogWrite "Listing of updates installed and individual installation results:"
@@ -120,14 +156,23 @@ Function installUpdates(updateSession, updatesToInstall)
 End Function
 
 Sub deleteStartupEntry
-   Const HKEY_LOCAL_MACHINE = &H80000002
-   Dim strComputer
-   strComputer = "."
-   Dim reg, strKeyPath, strValueName
-   Set reg=GetObject("winmgmts:{impersonationLevel=impersonate}!\\" & strComputer & "\root\default:StdRegProv")
-   strKeyPath = "Software\Microsoft\Windows\CurrentVersion\Run"
-   strValueName = "WindowsUpdate"
-   reg.DeleteValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName
+    Const HKEY_LOCAL_MACHINE = &H80000002
+    Dim strComputer
+    strComputer = "."
+    Dim reg, strKeyPath, strValueName, strValue
+    Set reg=GetObject("winmgmts:{impersonationLevel=impersonate}!\\" & strComputer & "\root\default:StdRegProv")
+    strKeyPath = "Software\Microsoft\Windows\CurrentVersion\Run"
+    strValueName = "WindowsUpdate"
+    LogWrite "Chedking to see if the following registry key exits:"
+    LogWrite "HKLM\" & strKeyPath
+    reg.GetStringValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName, strValue
+    If IsNull(strValue) Then
+        LogWrite "The registry key does not exist from a prior run."
+    Else
+        LogWrite "The registry key exists from a prior run, deleting..." 
+        reg.DeleteValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName
+        LogWrite "Registry key deleted."
+    End If
 End Sub
 
 Sub addStartupEntry
@@ -149,6 +194,7 @@ Sub addStartupEntry
 End Sub
 
 Sub reboot(computerName)
+    LogWrite "Rebooting " & computerName
     Dim objWMIService, colOS, objOS
     Set objWMIService = GetObject("winmgmts:{impersonationLevel=impersonate,(Shutdown)}!\\" & computerName & "\root\cimv2")
     Set colOS = objWMIService.ExecQuery("Select * from Win32_OperatingSystem")
