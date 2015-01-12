@@ -4,7 +4,7 @@
 
 title Setting time format. Please wait...
 
-echo ==^> Setting time format to AM/PM
+echo ==^> Setting time format to 24 hour time
 reg add "HKCU\Control Panel\International" /f /v sShortTime /t REG_SZ /d "HH:mm"
 reg add "HKCU\Control Panel\International" /f /v sTimeFormat /t REG_SZ /d "HH:mm:ss" 
 
