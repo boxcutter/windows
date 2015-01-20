@@ -209,7 +209,7 @@ goto :exit0
 ::::::::::::
 set PARALLELS_INSTALL=PTAgent.exe
 REM parallels tools don't have a download :(
-call :install_sevelzip
+call :install_sevenzip
 if errorlevel 1 goto exit1
 echo ==^> Extracting the Parallels Tools installer
 echo ==^>   to %TEMP%\parallels\*
