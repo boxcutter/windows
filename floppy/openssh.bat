@@ -4,7 +4,7 @@
 
 title Installing Openssh. Please wait...
 
-if not defined OPENSSH_URL set OPENSSH_URL=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
+if not defined OPENSSH_URL set OPENSSH_URL=http://www.mls-software.com/files/setupssh-6.7p1-2.exe
 if not defined SSHD_PASSWORD  set SSHD_PASSWORD=D@rj33l1ng
 
 for %%i in (%OPENSSH_URL%) do set OPENSSH_EXE=%%~nxi

@@ -120,8 +120,11 @@ goto exit0
 
 if "%CM_VERSION%" == "latest" set CM_VERSION=2014.7.0
 
-if not defined SALT_32_URL set SALT_32_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-x86-Setup.exe
 if not defined SALT_64_URL set SALT_64_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-AMD64-Setup.exe
+
+if "%CM_VERSION%" == "2014.7.0" set CM_VERSION=2014.7.0-1
+
+if not defined SALT_32_URL set SALT_32_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-win32-Setup.exe
 
 if defined ProgramFiles(x86) (
   set SALT_URL=%SALT_64_URL%
