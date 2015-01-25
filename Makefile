@@ -19,6 +19,11 @@ EVAL_WIN81_X86_CHECKSUM ?= e2c60b093b11b99c8f021c518249f4c42093efe2
 EVAL_WIN8_X64 ?= http://download.microsoft.com/download/5/3/C/53C31ED0-886C-4F81-9A38-F58CE4CE71E8/9200.16384.WIN8_RTM.120725-1247_X64FRE_ENTERPRISE_EVAL_EN-US-HRM_CENA_X64FREE_EN-US_DV5.ISO
 EVAL_WIN8_X64_CHECKSUM ?= ae59e04462e4dc74e971d6e98d0cc1f2f3d63f1d
 
+EVAL_WIN10_X64     ?= http://iso.esd.microsoft.com/W9TPI/B6B0A0278A90510669EAB90ABF80B22A/Windows10_TechnicalPreview_x64_EN-US_9926.iso
+EVAL_WIN10_X64_CHECKSUM ?= 6a95316728299d95249a29fbeb9676ded23b8beb
+EVAL_WIN10_X86     ?= http://iso.esd.microsoft.com/W9TPI/B6B0A0278A90510669EAB90ABF80B22A/Windows10_TechnicalPreview_x32_EN-US_9926.iso
+EVAL_WIN10_X86_CHECKSUM ?= 1ae10947cc297ae299e1c81f95812efbb5c84121
+
 # @todo:
 EVAL_WIN2012_X64 ?= http://download.microsoft.com/download/6/D/A/6DAB58BA-F939-451D-9101-7DE07DC09C03/9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.ISO
 EVAL_WIN2012_X64_CHECKSUM ?= 922b365c3360ce630f6a4b4f2f3c79e66165c0fb
@@ -278,9 +283,9 @@ test-win2012r2-cygwin: test-win2012r2-datacenter-cygwin test-win2012r2-standard-
 
 eval: eval-openssh
 
-eval-openssh: eval-win2012r2-datacenter eval-win2008r2-datacenter eval-win81x64-enterprise eval-win7x64-enterprise
+eval-openssh: eval-win2012r2-datacenter eval-win2008r2-datacenter eval-win81x64-enterprise eval-win7x64-enterprise eval-win10x64-enterprise
 
-test-eval-openssh: test-eval-win2012r2-datacenter test-eval-win2008r2-datacenter test-eval-win81x64-enterprise test-eval-win7x64-enterprise
+test-eval-openssh: test-eval-win2012r2-datacenter test-eval-win2008r2-datacenter test-eval-win81x64-enterprise test-eval-win7x64-enterprise test-eval-win10x64-enterprise
 
 define BUILDBOX
 
@@ -375,6 +380,10 @@ $(eval $(call BUILDBOX,eval-win7x86-enterprise,$(EVAL_WIN7_X86),$(EVAL_WIN7_X86_
 $(eval $(call BUILDBOX,eval-win81x86-enterprise,$(EVAL_WIN81_X86),$(EVAL_WIN81_X86_CHECKSUM)))
 
 $(eval $(call BUILDBOX,eval-win8x64-enterprise,$(EVAL_WIN8_X64),$(EVAL_WIN8_X64_CHECKSUM)))
+
+$(eval $(call BUILDBOX,eval-win10x64-enterprise,$(EVAL_WIN10_X64),$(EVAL_WIN10_X64_CHECKSUM)))
+
+$(eval $(call BUILDBOX,eval-win10x86-enterprise,$(EVAL_WIN10_X86),$(EVAL_WIN10_X86_CHECKSUM)))
 
 # @todo:
 #$(eval $(call BUILDBOX,eval-win2012-standard,$(EVAL_WIN2012_X64),$(EVAL_WIN2012_X64_CHECKSUM)))

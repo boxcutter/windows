@@ -10,6 +10,9 @@ EVAL_WIN7_X32      ?= http://care.dlservice.microsoft.com/dl/download/evalx/win7
 EVAL_WIN81_X32     ?= http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X86FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X86FREE_EN-US_DV5.ISO
 EVAL_WIN8_X64      ?= http://download.microsoft.com/download/5/3/C/53C31ED0-886C-4F81-9A38-F58CE4CE71E8/9200.16384.WIN8_RTM.120725-1247_X64FRE_ENTERPRISE_EVAL_EN-US-HRM_CENA_X64FREE_EN-US_DV5.ISO
 
+EVAL_WIN10_X32     ?= http://iso.esd.microsoft.com/W9TPI/B6B0A0278A90510669EAB90ABF80B22A/Windows10_TechnicalPreview_x32_EN-US_9926.iso
+EVAL_WIN10_X64     ?= http://iso.esd.microsoft.com/W9TPI/B6B0A0278A90510669EAB90ABF80B22A/Windows10_TechnicalPreview_x64_EN-US_9926.iso
+
 EVAL_WIN2008R2_X64_NAME ?= $(shell basename $(EVAL_WIN2008R2_X64))
 EVAL_WIN2012R2_X64_NAME ?= $(shell basename $(EVAL_WIN2012R2_X64))
 EVAL_WIN7_X64_NAME      ?= $(shell basename ${EVAL_WIN7_X64})
@@ -19,6 +22,9 @@ EVAL_WIN2012_X64_NAME   ?= $(shell basename $(EVAL_WIN2012_X64))
 EVAL_WIN7_X32_NAME      ?= $(shell basename $(EVAL_WIN7_X32))
 EVAL_WIN81_X32_NAME     ?= $(shell basename $(EVAL_WIN81_X32))
 EVAL_WIN8_X64_NAME      ?= $(shell basename $(EVAL_WIN8_X64))
+
+EVAL_WIN10_X32_NAME      ?= $(shell basename $(EVAL_WIN10_X32))
+EVAL_WIN10_X64_NAME      ?= $(shell basename $(EVAL_WIN10_X64))
 
 WGET ?= wget
 
@@ -31,7 +37,14 @@ isos:	\
 	$(EVAL_WIN7_X64_NAME) \
 	$(EVAL_WIN81_X32_NAME) \
 	$(EVAL_WIN81_X64_NAME) \
-	$(EVAL_WIN8_X64_NAME)
+	$(EVAL_WIN8_X64_NAME) \
+	$(EVAL_WIN10_X32_NAME) \
+	$(EVAL_WIN10_X64_NAME)
+
+.PHONY: win10
+win10: \
+	$(EVAL_WIN10_X64_NAME) \
+	$(EVAL_WIN10_X32_NAME)
 
 $(EVAL_WIN2008R2_X64_NAME):
 	$(WGET) $(EVAL_WIN2008R2_X64)
@@ -56,6 +69,12 @@ $(EVAL_WIN81_X64_NAME):
 
 $(EVAL_WIN8_X64_NAME):
 	$(WGET) $(EVAL_WIN8_X64)
+
+$(EVAL_WIN10_X32_NAME):
+	$(WGET) $(EVAL_WIN10_X32)
+
+$(EVAL_WIN10_X64_NAME):
+	$(WGET) $(EVAL_WIN10_X64)
 
 .PHONY: hash
 hash:
