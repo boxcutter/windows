@@ -18,7 +18,7 @@ Vagrant boxes using Packer.
 
 ## Building the Vagrant boxes
 
-To build all the boxes, you will need both VirtualBox and VMware Fusion installed.
+To build all the boxes, you will need both VirtualBox and VMware Fusion or Workstation installed.
 
 A GNU Make `Makefile` drives the process via the following targets:
 
@@ -75,10 +75,15 @@ for the Windows install ISO files.
 
 For Windows, the ISO path variables are:
 
+* `EVAL_WIN10_X64`
+* `EVAL_WIN10_X86`
 * `EVAL_WIN2008R2_X64`
 * `EVAL_WIN2012R2_X64`
 * `EVAL_WIN7_X64`
+* `EVAL_WIN7_X86`
 * `EVAL_WIN81_X64`
+* `EVAL_WIN81_X86`
+* `EVAL_WIN8_X64`
 * `WIN2008R2_X64`
 * `WIN2012_X64`
 * `WIN2012R2_X64`
