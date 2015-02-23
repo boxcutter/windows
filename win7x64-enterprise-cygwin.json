@@ -1,23 +1,7 @@
 {
-  "variables": {
-    "version": "0.1.0",
-    "cm": "chef",
-    "cm_version": "",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
-    "iso_checksum": "15ddabafa72071a06d5213b486a02d5b55cb7070",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-    "update": true
-  },
   "builders": [
     {
-      "vm_name": "win7x64-enterprise-cygwin",
-      "type": "vmware-iso",
-      "guest_os_type": "windows7-64",
-      "iso_url": "{{ user `iso_url` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
+      "disk_size": 40960,
       "floppy_files": [
         "floppy/win7x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -33,26 +17,25 @@
         "floppy/cygwin.bat",
         "floppy/zz-start-sshd.cmd"
       ],
-      "tools_upload_flavor": "windows",
-      "ssh_wait_timeout": "10000s",
+      "guest_os_type": "windows7-64",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command` }}",
-      "disk_size": 40960,
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "tools_upload_flavor": "windows",
+      "type": "vmware-iso",
+      "vm_name": "win7x64-enterprise-cygwin",
       "vmx_data": {
+        "cpuid.coresPerSocket": "1",
         "memsize": "2048",
-        "numvcpus": "1",
-        "cpuid.coresPerSocket": "1"
+        "numvcpus": "1"
       }
     },
     {
-      "vm_name": "win7x64-enterprise-cygwin",
-      "type": "virtualbox-iso",
-      "guest_os_type": "Windows7_64",
-      "iso_url": "{{ user `iso_url` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "10000s",
+      "disk_size": 40960,
       "floppy_files": [
         "floppy/win7x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -69,23 +52,33 @@
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
-      "shutdown_command": "{{ user `shutdown_command`}}",
-      "disk_size": 40960,
-      "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "2048"],
-        ["modifyvm", "{{.Name}}", "--cpus", "1"]
-      ]
-    },
-    {
-      "vm_name": "win7x64-enterprise-cygwin",
-      "type": "parallels-iso",
-      "guest_os_type": "win-7",
-      "iso_url": "{{ user `iso_url` }}",
+      "guest_os_type": "Windows7_64",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "ssh_username": "vagrant",
+      "iso_url": "{{ user `iso_url` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
       "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "2048"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ],
+      "vm_name": "win7x64-enterprise-cygwin"
+    },
+    {
+      "disk_size": 40960,
       "floppy_files": [
         "floppy/win7x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -101,25 +94,51 @@
         "floppy/cygwin.bat",
         "floppy/zz-start-sshd.cmd"
       ],
+      "guest_os_type": "win-7",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
-      "shutdown_command": "{{ user `shutdown_command`}}",
-      "disk_size": 40960,
       "prlctl": [
-        ["set", "{{.Name}}", "--memsize", "2048"],
-        ["set", "{{.Name}}", "--cpus", "1"]
-      ]
+        [
+          "set",
+          "{{.Name}}",
+          "--memsize",
+          "2048"
+        ],
+        [
+          "set",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ],
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "10000s",
+      "type": "parallels-iso",
+      "vm_name": "win7x64-enterprise-cygwin"
+    }
+  ],
+  "post-processors": [
+    {
+      "compression_level": 1,
+      "keep_input_artifact": false,
+      "output": "box/{{.Provider}}/win7x64-enterprise-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "type": "vagrant",
+      "vagrantfile_template": "tpl/vagrantfile-win7x64-enterprise-cygwin.tpl"
     }
   ],
   "provisioners": [
     {
-      "type": "shell",
-      "remote_path": "/tmp/script.bat",
       "environment_vars": [
         "CM={{user `cm`}}",
         "CM_VERSION={{user `cm_version`}}",
         "UPDATE={{user `update`}}"
       ],
       "execute_command": "{{.Vars}} cmd /c $(/bin/cygpath -m '{{.Path}}')",
+      "remote_path": "/tmp/script.bat",
       "scripts": [
         "script/vagrant.bat",
         "script/cmtool.bat",
@@ -128,18 +147,24 @@
         "script/ultradefrag.bat",
         "script/uninstall-7zip.bat",
         "script/sdelete.bat"
-      ]
+      ],
+      "type": "shell"
     },
     {
-      "type": "shell",
-      "inline": ["rm -f /tmp/script.bat"]
+      "inline": [
+        "rm -f /tmp/script.bat"
+      ],
+      "type": "shell"
     }
   ],
-  "post-processors": [{
-    "type": "vagrant",
-    "keep_input_artifact": false,
-    "compression_level": 1,
-    "vagrantfile_template": "tpl/vagrantfile-win7x64-enterprise-cygwin.tpl",
-    "output": "box/{{.Provider}}/win7x64-enterprise-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
-  }]
+  "variables": {
+    "cm": "chef",
+    "cm_version": "",
+    "iso_checksum": "15ddabafa72071a06d5213b486a02d5b55cb7070",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+    "update": true,
+    "version": "0.1.0"
+  }
 }
+
