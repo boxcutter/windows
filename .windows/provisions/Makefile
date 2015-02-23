@@ -20,8 +20,8 @@ ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-port
 ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.amd64.zip
 UNXTUTILS_URL?=http://downloads.sourceforge.net/unxutils/UnxUtils.zip
 VAGRANT_PUB_URL?=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
-VBOX_ISO_URL?=http://download.virtualbox.org/virtualbox/4.3.20/VBoxGuestAdditions_4.3.20.iso
-VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/11.0.0/2305329/windows/packages/tools-windows-9.9.0.exe.tar
+VBOX_ISO_URL?=http://download.virtualbox.org/virtualbox/4.3.22/VBoxGuestAdditions_4.3.22.iso
+VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/11.1.0/2496824/windows/packages/tools-windows-9.9.2.exe.tar
 WGET_URL?=http://users.ugent.be/~bpuype/wget/wget.exe
 
 CHEF:=chef-client-latest.msi
