@@ -2,6 +2,7 @@
   "builders": [
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win8x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -33,6 +34,7 @@
     },
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win8x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -73,6 +75,7 @@
     },
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win8x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
