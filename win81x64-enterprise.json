@@ -159,6 +159,7 @@
     }
   ],
   "variables": {
+    "headless": false,
     "cm": "chef",
     "cm_version": "",
     "iso_checksum": "8fb332a827998f807a1346bef55969c6519668b9",
