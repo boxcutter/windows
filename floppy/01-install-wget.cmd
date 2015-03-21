@@ -4,8 +4,7 @@
 
 title Installing wget. Please wait...
 
-:: bitsadmin can't download http://users.ugent.be/~bpuype/cgi-bin/fetch.pl?dl=wget/wget.exe
-if not defined WGET_URL set WGET_URL=https://web.archive.org/web/20140911054858/http://users.ugent.be/~bpuype/wget/wget.exe
+if not defined WGET_URL set WGET_URL=https://eternallybored.org/misc/wget/wget.exe
 
 for %%i in ("%WGET_URL%") do set filename=%SystemRoot%\%%~nxi
 
