@@ -22,7 +22,7 @@ UNXTUTILS_URL?=http://downloads.sourceforge.net/unxutils/UnxUtils.zip
 VAGRANT_PUB_URL?=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 VBOX_ISO_URL?=http://download.virtualbox.org/virtualbox/4.3.26/VBoxGuestAdditions_4.3.26.iso
 VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/11.1.0/2496824/windows/packages/tools-windows-9.9.2.exe.tar
-WGET_URL?=http://users.ugent.be/~bpuype/wget/wget.exe
+WGET_URL?=https://web.archive.org/web/20140911054858/http://users.ugent.be/~bpuype/wget/wget.exe
 
 CHEF:=chef-client-latest.msi
 CHOCOLATEY:=$(shell basename $(CHOCOLATEY_URL))
