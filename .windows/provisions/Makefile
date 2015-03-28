@@ -2,6 +2,7 @@ PREDOWNLOADED_FILES=$(wildcard vshell*.*)
 
 # always 301's to latest installer:
 #MLSSSH_64_URL?=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
+BITVISE_URL?=http://dl.bitvise.com/BvSshServer-Inst.exe
 CHEF_URL?=https://www.opscode.com/chef/install.msi
 CHOCOLATEY_URL?=https://chocolatey.org/install.ps1
 COREUTILS_URL?=http://downloads.sourceforge.net/gnuwin32/coreutils-5.3.0-bin.zip
@@ -24,6 +25,7 @@ VBOX_ISO_URL?=http://download.virtualbox.org/virtualbox/4.3.26/VBoxGuestAddition
 VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/11.1.0/2496824/windows/packages/tools-windows-9.9.2.exe.tar
 WGET_URL?=https://eternallybored.org/misc/wget/wget.exe
 
+BITVISE:=$(shell basename $(BITVISE_URL))
 CHEF:=chef-client-latest.msi
 CHOCOLATEY:=$(shell basename $(CHOCOLATEY_URL))
 COREUTILS:=$(shell basename $(COREUTILS_URL))
@@ -54,6 +56,7 @@ WGET_EXE=$(shell basename $(WGET_URL))
 
 # $(shell find . -type f \( -name '*.exe' -o -name '*.msi' -o -name '*.pub' \) -printf '%P ')
 FILES:=\
+$(BITVISE) \
 $(CHEF) \
 $(CHOCOLATEY) \
 $(COREUTILS) \
@@ -85,6 +88,10 @@ WGET:=wget --no-check-certificate
 provisions.iso: $(FILES)
 	-rm -f $@
 	mkisofs -J -r -l -udf -o $@ $^ $(PREDOWNLOADED_FILES)
+
+$(BITVISE):
+	-$(WGET) -O $@ $(BITVISE)
+	-rm -f provisions.iso
 
 $(CHEF):
 	-$(WGET) -O $@ $(CHEF_URL)
@@ -224,6 +231,7 @@ realclean:	clean
 
 .PHONY: debug
 debug:
+	@echo BITVISE=$(BITVISE)
 	@echo CHEF=$(CHEF)
 	@echo CHOCOLATEY=$(CHOCOLATEY)
 	@echo CYGWIN=$(CYGWIN)
