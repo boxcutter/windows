@@ -149,7 +149,6 @@
         "script/vmtool.bat",
         "script/clean.bat",
         "script/ultradefrag.bat",
-        "script/uninstall-7zip.bat",
         "script/sdelete.bat"
       ],
       "type": "shell"
