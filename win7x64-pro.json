@@ -61,6 +61,7 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
+      "hard_drive_interface": "sata",
       "vboxmanage": [
         [
           "modifyvm",
