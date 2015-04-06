@@ -71,6 +71,7 @@ endif
 BOX_VERSION ?= $(shell cat VERSION)
 UPDATE ?= false
 GENERALIZE ?= false
+HEADLESS ?= false
 ifndef SHUTDOWN_COMMAND
 ifeq ($(GENERALIZE),true)
 	SHUTDOWN_COMMAND ?= C:/Windows/System32/Sysprep/sysprep.exe /generalize /shutdown /oobe /unattend:A:/Autounattend.xml
@@ -84,7 +85,7 @@ else
 	BOX_SUFFIX := -$(CM)$(CM_VERSION)-$(BOX_VERSION).box
 endif
 # Packer does not allow empty variables, so only pass variables that are defined
-PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDATE)' -var "shutdown_command=$(SHUTDOWN_COMMAND)"
+PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDATE)' -var 'headless=$(HEADLESS)' -var "shutdown_command=$(SHUTDOWN_COMMAND)"
 ifdef CM_VERSION
 	PACKER_VARS += -var 'cm_version=$(CM_VERSION)'
 endif

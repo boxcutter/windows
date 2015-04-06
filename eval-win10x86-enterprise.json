@@ -2,6 +2,7 @@
   "builders": [
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/eval-win10x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -35,6 +36,7 @@
     },
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/eval-win10x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -82,6 +84,7 @@
     },
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/eval-win10x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -159,6 +162,7 @@
     }
   ],
   "variables": {
+    "headless": false,
     "cm": "chef",
     "cm_version": "",
     "iso_checksum": "2a9213f2774c5d323a6231eab25cc23f99b4b6fc",

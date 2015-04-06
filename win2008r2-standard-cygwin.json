@@ -2,6 +2,7 @@
   "builders": [
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win2008r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -35,6 +36,7 @@
     },
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win2008r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -77,6 +79,7 @@
     },
     {
       "disk_size": 40960,
+      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win2008r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -155,6 +158,7 @@
     }
   ],
   "variables": {
+    "headless": false,
     "cm": "chef",
     "cm_version": "",
     "iso_checksum": "7e7e9425041b3328ccf723a0855c2bc4f462ec57",
