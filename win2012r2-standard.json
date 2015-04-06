@@ -2,7 +2,6 @@
   "builders": [
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win2012r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -16,6 +15,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "windows8srv-64",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -35,7 +35,6 @@
     },
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win2012r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -50,6 +49,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows2012_64",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -82,7 +82,6 @@
     },
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win2012r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -96,6 +95,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "win-2012",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -165,9 +165,9 @@
     }
   ],
   "variables": {
-    "headless": false,
     "cm": "chef",
     "cm_version": "",
+    "headless": false,
     "iso_checksum": "865494e969704be1c4496d8614314361d025775e",
     "iso_url": "iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
@@ -175,3 +175,4 @@
     "version": "0.1.0"
   }
 }
+

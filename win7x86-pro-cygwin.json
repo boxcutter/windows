@@ -2,7 +2,6 @@
   "builders": [
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win7x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -19,6 +18,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "windows7",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -37,7 +37,6 @@
     },
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win7x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -55,6 +54,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows7",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -81,7 +81,6 @@
     },
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win7x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -98,6 +97,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "win-7",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -161,9 +161,9 @@
     }
   ],
   "variables": {
-    "headless": false,
     "cm": "chef",
     "cm_version": "",
+    "headless": false,
     "iso_checksum": "d5bd65e1b326d728f4fd146878ee0d9a3da85075",
     "iso_url": "iso/en_windows_7_professional_with_sp1_vl_build_x86_dvd_u_677896.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",

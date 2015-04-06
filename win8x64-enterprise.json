@@ -2,7 +2,6 @@
   "builders": [
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win8x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -18,6 +17,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "windows8-64",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -36,7 +36,6 @@
     },
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win8x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -53,6 +52,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows8_64",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -79,7 +79,6 @@
     },
     {
       "disk_size": 40960,
-      "headless": "{{ user `headless` }}",
       "floppy_files": [
         "floppy/win8x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -95,6 +94,7 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "win-8",
+      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -158,9 +158,9 @@
     }
   ],
   "variables": {
-    "headless": false,
     "cm": "chef",
     "cm_version": "",
+    "headless": false,
     "iso_checksum": "4eadfe83e736621234c63e8465986f0af6aa3c82",
     "iso_url": "iso/en_windows_8_enterprise_x64_dvd_917522.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
