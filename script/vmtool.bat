@@ -49,6 +49,7 @@ msiexec /qb /i "%SEVENZIP_PATH%"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%SEVENZIP_PATH%"
 ver>nul
 if exist "%ProgramFiles%\7-Zip" cd /D "%ProgramFiles%\7-Zip" & goto find_sevenzip
+if defined ProgramW6432 if exist "%ProgramW6432%\7-Zip" cd /D "%ProgramW6432%\7-Zip" & goto find_sevenzip
 if defined ProgramFiles(x86) if exist "%ProgramFiles(x86)%\7-Zip" cd /D "%ProgramFiles(x86)%\7-Zip" & goto find_sevenzip
 echo ==^> ERROR: Directory not found: "%ProgramFiles%\7-Zip"
 goto return1
