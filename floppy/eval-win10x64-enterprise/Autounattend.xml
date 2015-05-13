@@ -40,12 +40,7 @@
                     <InstallFrom>
                         <MetaData wcm:action="add">
                             <Key>/IMAGE/NAME</Key>
-<!-- Tried:
-Windows 8.1 Pro (works)
-Windows 10 Pro Technical Preview (fails)
-Windows 10 Technical Preview (fails)
--->
-                            <Value>Windows 8.1 Pro</Value>
+                            <Value>Windows 10 Pro Technical Preview</Value>
                         </MetaData>
                     </InstallFrom>
                     <InstallTo>
@@ -59,7 +54,7 @@ Windows 10 Technical Preview (fails)
                 <FullName>Vagrant Administrator</FullName>
                 <Organization>Vagrant Inc.</Organization>
                 <!-- Product Key from http://windows.microsoft.com/en-us/windows/preview-iso -->
-                <ProductKey>NKJFK-GPHP7-G8C3J-P6JXR-HQRJR
+                <ProductKey>6P99N-YF42M-TPGBG-9VMJP-YKHCF
                     <WillShowUI>Never</WillShowUI>
                 </ProductKey>
             </UserData>

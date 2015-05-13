@@ -165,8 +165,8 @@
     "cm": "chef",
     "cm_version": "",
     "headless": false,
-    "iso_checksum": "2a9213f2774c5d323a6231eab25cc23f99b4b6fc",
-    "iso_url": "http://iso.esd.microsoft.com/W9TPI/ECF708991AAA0C729E4A489622E686AB/Windows10_TechnicalPreview_x32_EN-US_10041.iso",
+    "iso_checksum": "563ffadae3577e7ad0e1cb61bef58d48a17a9d91",
+    "iso_url": "http://iso.esd.microsoft.com/W10IP/E0F85BFCD0F6BA607BF1528926371D21F8F6B6BF/Windows10_InsiderPreview_x32_EN-US_10074.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": true,
     "version": "0.1.0"
