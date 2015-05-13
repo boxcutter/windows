@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2012r2-standardcore/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -34,7 +34,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2012r2-standardcore/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -58,6 +58,7 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
+      "hard_drive_interface": "sata",
       "vboxmanage": [
         [
           "modifyvm",
@@ -81,7 +82,7 @@
       "vm_name": "win2012r2-standardcore"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2012r2-standardcore/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -165,6 +166,7 @@
     }
   ],
   "variables": {
+    "disk_size": 40960,
     "cm": "chef",
     "cm_version": "",
     "headless": false,
