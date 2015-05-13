@@ -48,9 +48,9 @@ echo ==^> Installing "%SEVENZIP_PATH%"
 msiexec /qb /i "%SEVENZIP_PATH%"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%SEVENZIP_PATH%"
 ver>nul
-if exist "%ProgramFiles%\7-Zip" cd /D "%ProgramFiles%\7-Zip" & goto find_sevenzip
-if defined ProgramW6432 if exist "%ProgramW6432%\7-Zip" cd /D "%ProgramW6432%\7-Zip" & goto find_sevenzip
-if defined ProgramFiles(x86) if exist "%ProgramFiles(x86)%\7-Zip" cd /D "%ProgramFiles(x86)%\7-Zip" & goto find_sevenzip
+set SEVENZIP_INSTALL_DIR=
+for %%i in ("%ProgramFiles%" "%ProgramW6432%" "%ProgramFiles(x86)%") do if exist "%%~i\7-Zip" set SEVENZIP_INSTALL_DIR=%%~i\7-Zip
+if exist "%SEVENZIP_INSTALL_DIR%" cd /D "%SEVENZIP_INSTALL_DIR%" & goto find_sevenzip
 echo ==^> ERROR: Directory not found: "%ProgramFiles%\7-Zip"
 goto return1
 
@@ -125,7 +125,7 @@ if errorlevel 1 goto exit1
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e "%VMWARE_TOOLS_TAR_PATH%"
 ver>nul
 set VMWARE_TOOLS_INSTALLER_PATH=
-for %%i in (tools-windows-*.exe) do set VMWARE_TOOLS_INSTALLER_PATH=%CD%\%%~i
+for %%i in ("%VMWARE_TOOLS_DIR%\tools-windows-*.exe") do set VMWARE_TOOLS_INSTALLER_PATH=%%~i
 if not exist "%VMWARE_TOOLS_INSTALLER_PATH%" echo ==^> ERROR: Failed to unzip "%VMWARE_TOOLS_TAR_PATH%" & goto exit1
 "%VMWARE_TOOLS_INSTALLER_PATH%" /s
 set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles%\VMware
@@ -209,25 +209,33 @@ goto :exit0
 :parallels
 ::::::::::::
 set PARALLELS_INSTALL=PTAgent.exe
+
+set PARALLELS_DIR=%TEMP%\parallels
+set PARALLELS_PATH=%PARALLELS_DIR%\%PARALLELS_INSTALL%
+set PARALLELS_ISO=prl-tools-win.iso
+mkdir "%PARALLELS_DIR%"
+pushd "%PARALLELS_DIR%"
+set PARALLELS_ISO_PATH=
+@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined PARALLELS_ISO_PATH @if exist "%%~i\%PARALLELS_ISO%" set PARALLELS_ISO_PATH=%%~i\%PARALLELS_ISO%
 REM parallels tools don't have a download :(
 call :install_sevenzip
 if errorlevel 1 goto exit1
 echo ==^> Extracting the Parallels Tools installer
-echo ==^>   to %TEMP%\parallels\*
-7z x -o"%TEMP%\parallels" "%USERPROFILE%\prl-tools-win.iso"
+echo ==^>   to %PARALLELS_DIR%\*
+7z x -o"%PARALLELS_DIR%" "%PARALLELS_ISO_PATH%"
 ping 127.0.0.1
 echo ==^> Installing Parallels Tools
-echo ==^>   from %TEMP%\parallels\%PARALLELS_INSTALL%
-"%TEMP%\parallels\%PARALLELS_INSTALL%" /install_silent
+echo ==^>   from %PARALLELS_PATH%
+"%PARALLELS_PATH%" /install_silent
 REM parallels tools installer tends to exit while the install agent
 REM is still running, need to sleep while it's running so we don't
 REM delete the tools.
-@if errorlevel 1 echo=^> WARNING: Error %ERRORLEVEL% was returned by: "%PARALLELS_INSTALL%" /install_silent
+@if errorlevel 1 echo=^> WARNING: Error %ERRORLEVEL% was returned by: "%PARALLELS_PATH%" /install_silent
 ver>nul
 echo ==^> Cleaning up Parallels Tools install
-del /F /S /Q "%TEMP%\parallels"
-echo ==^> Removing "%USERPROFILE%\prl-tools-win.iso"
-del /F "%USERPROFILE%\prl-tools-win.iso"
+del /F /S /Q "%PARALLELS_DIR"
+echo ==^> Removing "%PARALLELS_ISO_PATH"
+del /F "%PARALLELS_ISO_PATH"
 goto :exit0
 
 :exit0

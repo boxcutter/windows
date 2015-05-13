@@ -46,7 +46,9 @@ if defined wget goto wget
 
 if not exist "%wget%" goto bitsadmin
 
-"%wget%" --no-check-certificate --quiet -O "%filename%" "%url%"
+if not defined PACKER_DEBUG set WGET_OPTS=--no-verbose
+
+"%wget%" --no-check-certificate %WGET_OPTS% -O "%filename%" "%url%"
 
 if not errorlevel 1 if exist "%filename%" goto exit0
 

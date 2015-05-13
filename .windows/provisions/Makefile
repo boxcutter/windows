@@ -3,22 +3,22 @@ PREDOWNLOADED_FILES=$(wildcard vshell*.*)
 # always 301's to latest installer:
 #MLSSSH_64_URL?=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
 BITVISE_URL?=http://dl.bitvise.com/BvSshServer-Inst.exe
-CHEF_URL?=https://www.opscode.com/chef/install.msi
+CHEF_URL?=https://www.getchef.com/chef/install.msi
 CHOCOLATEY_URL?=https://chocolatey.org/install.ps1
 COREUTILS_URL?=http://downloads.sourceforge.net/gnuwin32/coreutils-5.3.0-bin.zip
 CYGWIN_URL?=http://cygwin.com/setup-x86.exe
 DOTNET_URL?=http://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe
-LESSMSI_URL?=https://github.com/activescott/lessmsi/releases/download/v1.2.0/lessmsi-v1.2.0.zip
-MLSSSH_32_URL?=http://www.mls-software.com/files/setupssh-6.7p1-2.exe
+LESSMSI_URL?=https://github.com/activescott/lessmsi/releases/download/v1.3/lessmsi-v1.3.zip
+MLSSSH_32_URL?=http://www.mls-software.com/files/setupssh-6.8p1-1.exe
 NUGET_URL?=http://nuget.org/nuget.exe
-PUPPET_URL?=https://downloads.puppetlabs.com/windows/puppet-3.7.4.msi
-SALT_32_URL?=http://docs.saltstack.com/downloads/Salt-Minion-2014.7.2-x86-Setup.exe
-SALT_64_URL?=https://docs.saltstack.com/downloads/Salt-Minion-2014.7.2-AMD64-Setup.exe
+PUPPET_URL?=https://downloads.puppetlabs.com/windows/puppet-latest.msi
+SALT_32_URL?=http://docs.saltstack.com/downloads/Salt-Minion-2015.5.0-x86-Setup.exe
+SALT_64_URL?=http://docs.saltstack.com/downloads/Salt-Minion-2015.5.0-AMD64-Setup.exe
 SDELETE_URL?=http://live.sysinternals.com/sdelete.exe
 SEVENZIP_32_URL?=http://downloads.sourceforge.net/sevenzip/7z938.msi
 SEVENZIP_64_URL?=http://downloads.sourceforge.net/sevenzip/7z938-x64.msi
-ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.i386.zip
-ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.amd64.zip
+ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.1.0.bin.i386.zip
+ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.1.0.bin.amd64.zip
 UNXTUTILS_URL?=http://downloads.sourceforge.net/unxutils/UnxUtils.zip
 VAGRANT_PUB_URL?=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 VBOX_ISO_URL?=http://download.virtualbox.org/virtualbox/4.3.26/VBoxGuestAdditions_4.3.26.iso
@@ -90,68 +90,68 @@ provisions.iso: $(FILES)
 	mkisofs -J -r -l -udf -o $@ $^ $(PREDOWNLOADED_FILES)
 
 $(BITVISE):
-	-$(WGET) -O $@ $(BITVISE)
+	$(WGET) -O $@ $(BITVISE_URL)
 	-rm -f provisions.iso
 
 $(CHEF):
-	-$(WGET) -O $@ $(CHEF_URL)
+	$(WGET) -O $@ $(CHEF_URL)
 	-rm -f provisions.iso
 
 $(CHOCOLATEY):
-	-$(WGET) -O $@ $(CHOCOLATEY_URL)
+	$(WGET) -O $@ $(CHOCOLATEY_URL)
 	-rm -f provisions.iso
 
 $(COREUTILS):
-	-$(WGET) -O $@ $(COREUTILS_URL)
+	$(WGET) -O $@ $(COREUTILS_URL)
 	-rm -f provisions.iso
 
 $(CYGWIN):
-	-$(WGET) -O $@ $(CYGWIN_URL)
+	$(WGET) -O $@ $(CYGWIN_URL)
 	-rm -f provisions.iso
 
 $(DOTNET):
-	-$(WGET) -O $@ $(DOTNET_URL)
+	$(WGET) -O $@ $(DOTNET_URL)
 	-rm -f provisions.iso
 
 $(LESSMSI):
-	-$(WGET) -O $@ $(LESSMSI_URL)
+	$(WGET) -O $@ $(LESSMSI_URL)
 	-rm -f provisions.iso
 
 $(MLSSSH_32):
-	-$(WGET) -O $@ $(MLSSSH_32_URL)
+	$(WGET) -O $@ $(MLSSSH_32_URL)
 	-rm -f provisions.iso
 
 #"$(MLSSSH_64)":
-#	-$(WGET) -O $@ "$(MLSSSH_64_URL)"
+#	$(WGET) -O $@ "$(MLSSSH_64_URL)"
 #	touch --reference $@ "\"$(MLSSSH_64)\""
 #	-rm -f provisions.iso
 
 $(NUGET):
-	-$(WGET) -O $@ $(NUGET_URL)
+	$(WGET) -O $@ $(NUGET_URL)
 	-rm -f provisions.iso
 
 $(PUPPET):
-	-$(WGET) -O $@ $(PUPPET_URL)
+	$(WGET) -O $@ $(PUPPET_URL)
 	-rm -f provisions.iso
 
 $(SDELETE):
-	-$(WGET) -O $@ $(SDELETE_URL)
+	$(WGET) -O $@ $(SDELETE_URL)
 	-rm -f provisions.iso
 
 $(SALT_32):
-	-$(WGET) -O $@ $(SALT_32_URL)
+	$(WGET) -O $@ $(SALT_32_URL)
 	-rm -f provisions.iso
 
 $(SALT_64):
-	-$(WGET) -O $@ $(SALT_64_URL)
+	$(WGET) -O $@ $(SALT_64_URL)
 	-rm -f provisions.iso
 
 $(SEVENZIP_32):
-	-$(WGET) -O $@ $(SEVENZIP_32_URL)
+	$(WGET) -O $@ $(SEVENZIP_32_URL)
 	-rm -f provisions.iso
 
 $(SEVENZIP_64):
-	-$(WGET) -O $@ $(SEVENZIP_64_URL)
+	$(WGET) -O $@ $(SEVENZIP_64_URL)
 	-rm -f provisions.iso
 
 $(TEE_EXE): $(UNXTUTILS)
@@ -161,15 +161,15 @@ $(TEE_EXE): $(UNXTUTILS)
 	-rm -f provisions.iso
 
 $(ULTRADEFRAG_32):
-	-$(WGET) -O $@ $(ULTRADEFRAG_32_URL)
+	$(WGET) -O $@ $(ULTRADEFRAG_32_URL)
 	-rm -f provisions.iso
 
 $(ULTRADEFRAG_64):
-	-$(WGET) -O $@ $(ULTRADEFRAG_64_URL)
+	$(WGET) -O $@ $(ULTRADEFRAG_64_URL)
 	-rm -f provisions.iso
 
 $(UNXTUTILS):
-	-$(WGET) -O $@ $(UNXTUTILS_URL)
+	$(WGET) -O $@ $(UNXTUTILS_URL)
 	-rm -f provisions.iso
 
 unzip.vbs:
@@ -192,22 +192,22 @@ $(UNZIP_EXE): $(UNXTUTILS)
 	-rm -f provisions.iso
 
 $(VAGRANT_PUB):
-	-$(WGET) -O $@ $(VAGRANT_PUB_URL)
+	$(WGET) -O $@ $(VAGRANT_PUB_URL)
 	-rm -f provisions.iso
 
 VBoxGuestAdditions.iso:
 	cp -p "$$SYSTEMDRIVE/Program Files/Oracle/VirtualBox/VBoxGuestAdditions.iso" $@
 
 $(VBOX_ISO):
-	-$(WGET) -O $@ $(VBOX_ISO_URL)
+	$(WGET) -O $@ $(VBOX_ISO_URL)
 	-rm -f provisions.iso
 
 $(VMWARE_TOOLS_TAR):
-	-$(WGET) -O $@ $(VMWARE_TOOLS_TAR_URL)
+	$(WGET) -O $@ $(VMWARE_TOOLS_TAR_URL)
 	-rm -f provisions.iso
 
 $(WGET_EXE):
-	-$(WGET) -O $@ $(WGET_URL)
+	$(WGET) -O $@ $(WGET_URL)
 	touch --reference $@ .$@
 	-upx -9 $@
 	touch --reference .$@ $@

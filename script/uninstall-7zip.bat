@@ -2,8 +2,8 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
-if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://downloads.sourceforge.net/sevenzip/7z935.msi
-if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://downloads.sourceforge.net/sevenzip/7z935-x64.msi
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://downloads.sourceforge.net/sevenzip/7z938.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://downloads.sourceforge.net/sevenzip/7z938-x64.msi
 
 if defined ProgramFiles(x86) (
   set SEVENZIP_URL=%SEVENZIP_64_URL%
@@ -37,9 +37,7 @@ goto exit0
 
 set SEVENZIP_INSTALL_DIR=
 
-if exist "%ProgramFiles%\7-Zip" set SEVENZIP_INSTALL_DIR=%ProgramFiles%\7-Zip
-
-if defined ProgramFiles(x86) if exist "%ProgramFiles(x86)%\7-Zip" set SEVENZIP_INSTALL_DIR=%ProgramFiles(x86)%\7-Zip
+for %%i in ("%ProgramFiles%" "%ProgramW6432%" "%ProgramFiles(x86)%") do if exist "%%~i\7-Zip" set SEVENZIP_INSTALL_DIR=%%~i\7-Zip
 
 if not exist "%SEVENZIP_INSTALL_DIR%" echo ==^> WARNING: Directory not found: "%SEVENZIP_INSTALL_DIR%" & goto exit0
 

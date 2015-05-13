@@ -41,9 +41,9 @@ if exist "%SystemRoot%\_download.cmd" (
 if not exist "%CHEF_PATH%" goto exit1
 
 echo ==^> Installing Chef client %CM_VERSION%
-msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log"  %CHEF_OPTIONS%
+msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
 
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log"  %CHEF_OPTIONS%
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
 ver>nul
 
 goto exit0
@@ -73,9 +73,9 @@ if exist "%SystemRoot%\_download.cmd" (
 if not exist "%CHEFDK_PATH%" goto exit1
 
 echo ==^> Installing Chef Development Kit %CM_VERSION%
-msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log"  %CHEFDK_OPTIONS%
+msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log" %CHEFDK_OPTIONS%
 
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log"  %CHEFDK_OPTIONS%
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log" %CHEFDK_OPTIONS%
 ver>nul
 
 goto exit0
@@ -84,7 +84,7 @@ goto exit0
 :puppet
 ::::::::::::
 
-if "%CM_VERSION%" == "latest" set CM_VERSION=3.7.4
+:: if "%CM_VERSION%" == "latest" set CM_VERSION=3.7.5
 
 if not defined PUPPET_URL set PUPPET_URL=http://downloads.puppetlabs.com/windows/puppet-%CM_VERSION%.msi
 
@@ -118,7 +118,7 @@ goto exit0
 :salt
 ::::::::::::
 
-if "%CM_VERSION%" == "latest" set CM_VERSION=2014.7.2
+if "%CM_VERSION%" == "latest" set CM_VERSION=2015.5.0
 
 if not defined SALT_64_URL set SALT_64_URL=https://docs.saltstack.com/downloads/Salt-Minion-%CM_VERSION%-AMD64-Setup.exe
 

@@ -4,11 +4,11 @@
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
-if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://downloads.sourceforge.net/sevenzip/7z935.msi
-if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://downloads.sourceforge.net/sevenzip/7z935-x64.msi
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://downloads.sourceforge.net/sevenzip/7z938.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://downloads.sourceforge.net/sevenzip/7z938-x64.msi
 
-if not defined ULTRADEFRAG_32_URL set ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.i386.zip
-if not defined ULTRADEFRAG_64_URL set ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.0.4.bin.amd64.zip
+if not defined ULTRADEFRAG_32_URL set ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.1.0.bin.i386.zip
+if not defined ULTRADEFRAG_64_URL set ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.1.0.bin.amd64.zip
 
 goto :main
 
@@ -65,9 +65,11 @@ msiexec /qb /i "%SEVENZIP_PATH%"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%SEVENZIP_PATH%"
 ver>nul
 
-if exist "%ProgramFiles%\7-Zip" cd /D "%ProgramFiles%\7-Zip" & goto find_sevenzip
+set SEVENZIP_INSTALL_DIR=
 
-if defined ProgramFiles(x86) if exist "%ProgramFiles(x86)%\7-Zip" cd /D "%ProgramFiles(x86)%\7-Zip" & goto find_sevenzip
+for %%i in ("%ProgramFiles%" "%ProgramW6432%" "%ProgramFiles(x86)%") do if exist "%%~i\7-Zip" set SEVENZIP_INSTALL_DIR=%%~i\7-Zip
+
+if exist "%SEVENZIP_INSTALL_DIR%" cd /D "%SEVENZIP_INSTALL_DIR%" & goto find_sevenzip
 
 echo ==^> ERROR: Directory not found: "%ProgramFiles%\7-Zip"
 
