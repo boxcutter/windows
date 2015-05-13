@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2012r2-datacenter/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -35,7 +35,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2012r2-datacenter/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -51,6 +51,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows2012_64",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -83,7 +84,7 @@
       "vm_name": "win2012r2-datacenter-cygwin"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2012r2-datacenter/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -170,6 +171,7 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "af9ef225a510d6d51c5520396452d4f1c1e06935",
     "iso_url": "iso/en_windows_server_2012_r2_with_update_x64_dvd_4065220.iso",

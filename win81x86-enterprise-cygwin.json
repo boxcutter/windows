@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win81x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -35,7 +35,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win81x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -51,6 +51,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows8",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -77,7 +78,7 @@
       "vm_name": "win81x86-enterprise-cygwin"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win81x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -158,6 +159,7 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "fe43558b4708b4b786bc3286924813b0aad21106",
     "iso_url": "iso/en_windows_8.1_enterprise_with_update_x86_dvd_4065185.iso",

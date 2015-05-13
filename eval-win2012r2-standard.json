@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/eval-win2012r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -35,7 +35,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/eval-win2012r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -51,6 +51,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows2012_64",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -83,7 +84,7 @@
       "vm_name": "eval-win2012r2-standard"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/eval-win2012r2-standard/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -170,6 +171,7 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",

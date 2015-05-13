@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win81x64-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -35,7 +35,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win81x64-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -51,6 +51,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows8_64",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -83,7 +84,7 @@
       "vm_name": "win81x64-pro-cygwin"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win81x64-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -164,6 +165,7 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "e50a6f0f08e933f25a71fbc843827fe752ed0365",
     "iso_url": "iso/en_windows_8.1_professional_vl_with_update_x64_dvd_4065194.iso",

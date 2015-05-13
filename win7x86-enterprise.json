@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -35,7 +35,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -52,6 +52,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows7",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -78,7 +79,7 @@
       "vm_name": "win7x86-enterprise"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -160,6 +161,7 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "4e0450ac73ab6f9f755eb422990cd9c7a1f3509c",
     "iso_url": "iso/en_windows_7_enterprise_with_sp1_x86_dvd_u_677710.iso",

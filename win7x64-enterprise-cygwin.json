@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -36,7 +36,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -54,6 +54,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows7_64",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -80,7 +81,7 @@
       "vm_name": "win7x64-enterprise-cygwin"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x64-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -163,6 +164,7 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "15ddabafa72071a06d5213b486a02d5b55cb7070",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",

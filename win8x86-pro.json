@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win8x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -33,7 +33,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win8x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -48,6 +48,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows8",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -74,7 +75,7 @@
       "vm_name": "win8x86-pro"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win8x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -154,6 +155,7 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "22d680ec53336bee8a5b276a972ceba104787f62",
     "iso_url": "iso/en_windows_8_x86_dvd_915417.iso",

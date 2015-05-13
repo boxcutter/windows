@@ -1,7 +1,7 @@
 {
   "builders": [
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2008r2-datacenter/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -35,7 +35,7 @@
       }
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2008r2-datacenter/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -52,6 +52,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows2008_64",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -78,7 +79,7 @@
       "vm_name": "win2008r2-datacenter-cygwin"
     },
     {
-      "disk_size": 40960,
+      "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2008r2-datacenter/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -160,6 +161,7 @@
   "variables": {
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "7e7e9425041b3328ccf723a0855c2bc4f462ec57",
     "iso_url": "iso/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso",
