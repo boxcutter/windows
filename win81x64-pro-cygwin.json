@@ -51,6 +51,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows8_64",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -60,7 +61,6 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
-      "hard_drive_interface": "sata",
       "vboxmanage": [
         [
           "modifyvm",
@@ -163,9 +163,9 @@
     }
   ],
   "variables": {
-    "disk_size": 40960,
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "e50a6f0f08e933f25a71fbc843827fe752ed0365",
     "iso_url": "iso/en_windows_8.1_professional_vl_with_update_x64_dvd_4065194.iso",

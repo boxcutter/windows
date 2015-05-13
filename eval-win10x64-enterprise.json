@@ -53,6 +53,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows81_64",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -62,7 +63,6 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
-      "hard_drive_interface": "sata",
       "vboxmanage": [
         [
           "modifyvm",
@@ -165,9 +165,9 @@
     }
   ],
   "variables": {
-    "disk_size": 40960,
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "e354b44994b46fb7cdc295fa1f075d9f95fecea8",
     "iso_url": "http://iso.esd.microsoft.com/W10IP/E0F85BFCD0F6BA607BF1528926371D21F8F6B6BF/Windows10_InsiderPreview_x64_EN-US_10074.iso",

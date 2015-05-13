@@ -52,6 +52,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows7",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -61,7 +62,6 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
-      "hard_drive_interface": "sata",
       "vboxmanage": [
         [
           "modifyvm",
@@ -159,9 +159,9 @@
     }
   ],
   "variables": {
-    "disk_size": 40960,
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "4e0450ac73ab6f9f755eb422990cd9c7a1f3509c",
     "iso_url": "iso/en_windows_7_enterprise_with_sp1_x86_dvd_u_677710.iso",

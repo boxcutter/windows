@@ -49,6 +49,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_os_type": "Windows2012_64",
+      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -58,7 +59,6 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
-      "hard_drive_interface": "sata",
       "vboxmanage": [
         [
           "modifyvm",
@@ -166,9 +166,9 @@
     }
   ],
   "variables": {
-    "disk_size": 40960,
     "cm": "chef",
     "cm_version": "",
+    "disk_size": 40960,
     "headless": false,
     "iso_checksum": "865494e969704be1c4496d8614314361d025775e",
     "iso_url": "iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
