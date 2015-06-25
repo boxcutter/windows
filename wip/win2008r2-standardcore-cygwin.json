@@ -35,7 +35,7 @@
       ],
       "tools_upload_flavor": "windows",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-      "disk_size": 40960,
+      "disk_size": "40960",
       "vmx_data": {
         "memsize": "768",
         "numvcpus": "1",
@@ -52,7 +52,7 @@
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "10000s",
-      "disk_size": 40960,
+      "disk_size": "40960",
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
