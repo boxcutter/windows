@@ -21,7 +21,7 @@ if exist %SystemRoot%\SysWOW64\cmd.exe (
   @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force" <NUL
 )
 
-systeminfo 2>nul | findstr /b /c:"OS Name" | findstr /c:"Windows 7" >nul
+systeminfo 2>nul | findstr /b /c:"OS Name" | findstr /c:"Windows 7" /c:"Windows 10" >nul
 if errorlevel 1 goto skip_fixnetwork
 
 if not exist a:\fixnetwork.ps1 echo ==^> ERROR: File not found: a:\fixnetwork.ps1

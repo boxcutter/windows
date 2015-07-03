@@ -1,0 +1,173 @@
+{
+  "builders": [
+    {
+      "communicator": "winrm",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/fixnetwork.ps1",
+        "floppy/hotfix-KB2842230.bat",
+        "floppy/install-winrm.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/unzip.vbs",
+        "floppy/win2012-standard/Autounattend.xml",
+        "floppy/zz-start-sshd.cmd"
+      ],
+      "guest_os_type": "windows8srv-64",
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "tools_upload_flavor": "windows",
+      "type": "vmware-iso",
+      "vm_name": "win2012-standard-ssh",
+      "vmx_data": {
+        "cpuid.coresPerSocket": "1",
+        "memsize": "1536",
+        "numvcpus": "1"
+      },
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+      "winrm_username": "vagrant"
+    },
+    {
+      "communicator": "winrm",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/fixnetwork.ps1",
+        "floppy/hotfix-KB2842230.bat",
+        "floppy/install-winrm.cmd",
+        "floppy/oracle-cert.cer",
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/unzip.vbs",
+        "floppy/win2012-standard/Autounattend.xml",
+        "floppy/zz-start-sshd.cmd"
+      ],
+      "guest_os_type": "Windows2012_64",
+      "hard_drive_interface": "sata",
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "1536"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ],
+      "vm_name": "win2012-standard-ssh",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+      "winrm_username": "vagrant"
+    },
+    {
+      "communicator": "winrm",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/fixnetwork.ps1",
+        "floppy/hotfix-KB2842230.bat",
+        "floppy/install-winrm.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/unzip.vbs",
+        "floppy/win2012-standard/Autounattend.xml",
+        "floppy/zz-start-sshd.cmd"
+      ],
+      "guest_os_type": "win-2012",
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "parallels_tools_flavor": "win",
+      "prlctl": [
+        [
+          "set",
+          "{{.Name}}",
+          "--memsize",
+          "1536"
+        ],
+        [
+          "set",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ],
+        [
+          "set",
+          "{{.Name}}",
+          "--efi-boot",
+          "off"
+        ]
+      ],
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "type": "parallels-iso",
+      "vm_name": "win2012-standard-ssh",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+      "winrm_username": "vagrant"
+    }
+  ],
+  "post-pro-sshcessors": [
+    {
+      "compression_level": 1,
+      "keep_input_artifact": false,
+      "output": "box/{{.Provider}}/win2012-standard-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "type": "vagrant",
+      "vagrantfile_template": "tpl/vagrantfile-win2012-standard-ssh.tpl"
+    }
+  ],
+  "provisioners": [
+    {
+      "environment_vars": [
+        "CM={{user `cm`}}",
+        "CM_VERSION={{user `cm_version`}}",
+        "UPDATE={{user `update`}}"
+      ],
+      "scripts": [
+        "script/vagrant.bat",
+        "script/cmtool.bat",
+        "script/vmtool.bat",
+        "script/clean.bat",
+        "script/ultradefrag.bat",
+        "script/uninstall-7zip.bat",
+        "script/sdelete.bat"
+      ],
+      "type": "windows-shell"
+    }
+  ],
+  "variables": {
+    "cm": "chef",
+    "cm_version": "",
+    "disk_size": "40960",
+    "headless": "false",
+    "iso_checksum": "d09e752b1ee480bc7e93dfa7d5c3a9b8aac477ba",
+    "iso_url": "iso/en_windows_server_2012_x64_dvd_915478.iso",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "update": "true",
+    "version": "0.1.0"
+  }
+}

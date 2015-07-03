@@ -2,6 +2,8 @@
 @for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+echo on
+
 title Installing wget. Please wait...
 
 if not defined WGET_URL set WGET_URL=https://eternallybored.org/misc/wget/wget.exe
@@ -20,23 +22,23 @@ if exist "%filename%" goto exit0
 
 echo ==^> Downloading "%WGET_URL%" to "%filename%"
 
+:powershell
+
+powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WGET_URL%', '%filename%')" <NUL
+
+if exist "%filename%" goto exit0
+
 set bitsadmin=
 
 for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
 
 if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
 
-if not exist "%bitsadmin%" goto powershell
+if not exist "%bitsadmin%" goto exit1
 
 for %%i in ("%filename%") do set jobname=%%~nxi
 
 "%bitsadmin%" /transfer "%jobname%" "%WGET_URL%" "%filename%"
-
-if exist "%filename%" goto exit0
-
-:powershell
-
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WGET_URL%', '%filename%')" <NUL
 
 if exist "%filename%" goto exit0
 

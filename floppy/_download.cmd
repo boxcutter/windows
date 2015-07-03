@@ -44,11 +44,17 @@ if defined wget goto wget
 
 :wget
 
-if not exist "%wget%" goto bitsadmin
+if not exist "%wget%" goto powershell
 
 if not defined PACKER_DEBUG set WGET_OPTS=--no-verbose
 
 "%wget%" --no-check-certificate %WGET_OPTS% -O "%filename%" "%url%"
+
+if not errorlevel 1 if exist "%filename%" goto exit0
+
+:powershell
+
+powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
 
 if not errorlevel 1 if exist "%filename%" goto exit0
 
@@ -65,12 +71,6 @@ if not exist "%bitsadmin%" goto powershell
 for %%i in ("%filename%") do set jobname=%%~nxi
 
 "%bitsadmin%" /transfer "%jobname%" "%url%" "%filename%"
-
-if not errorlevel 1 if exist "%filename%" goto exit0
-
-:powershell
-
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
 
 if not errorlevel 1 if exist "%filename%" goto exit0
 
