@@ -1,17 +1,18 @@
 {
   "builders": [
     {
+      "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win81x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/fixnetwork.ps1",
+        "floppy/install-winrm.cmd",
         "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
+        "floppy/powerconfig.bat",
+        "floppy/win81x86-pro/Autounattend.xml",
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "windows8",
@@ -20,9 +21,6 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "win81x86-pro",
@@ -31,22 +29,26 @@
         "memsize": "1536",
         "numvcpus": "1",
         "scsi0.virtualDev": "lsisas1068"
-      }
+      },
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+      "winrm_username": "vagrant"
     },
     {
+      "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win81x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/fixnetwork.ps1",
+        "floppy/install-winrm.cmd",
+        "floppy/oracle-cert.cer",
         "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/zz-start-sshd.cmd",
-        "floppy/oracle-cert.cer"
+        "floppy/powerconfig.bat",
+        "floppy/win81x86-pro/Autounattend.xml",
+        "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "Windows8",
       "hard_drive_interface": "sata",
@@ -55,9 +57,6 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
       "vboxmanage": [
         [
@@ -73,20 +72,24 @@
           "1"
         ]
       ],
-      "vm_name": "win81x86-pro"
+      "vm_name": "win81x86-pro",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+      "winrm_username": "vagrant"
     },
     {
+      "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win81x86-pro/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/fixnetwork.ps1",
+        "floppy/install-winrm.cmd",
         "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
+        "floppy/powerconfig.bat",
+        "floppy/win81x86-pro/Autounattend.xml",
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "win-8.1",
@@ -110,11 +113,11 @@
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
-      "vm_name": "win81x86-pro"
+      "vm_name": "win81x86-pro",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+      "winrm_username": "vagrant"
     }
   ],
   "post-processors": [
@@ -133,8 +136,6 @@
         "CM_VERSION={{user `cm_version`}}",
         "UPDATE={{user `update`}}"
       ],
-      "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
-      "remote_path": "/tmp/script.bat",
       "scripts": [
         "script/vagrant.bat",
         "script/cmtool.bat",
@@ -144,13 +145,7 @@
         "script/uninstall-7zip.bat",
         "script/sdelete.bat"
       ],
-      "type": "shell"
-    },
-    {
-      "inline": [
-        "rm -f /tmp/script.bat"
-      ],
-      "type": "shell"
+      "type": "windows-shell"
     }
   ],
   "variables": {
@@ -160,9 +155,8 @@
     "headless": "false",
     "iso_checksum": "c2d6f5d06362b7cb17dfdaadfb848c760963b254",
     "iso_url": "iso/en_windows_8.1_professional_vl_with_update_x86_dvd_4065201.iso",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "update": "true",
     "version": "0.1.0"
   }
 }
-
