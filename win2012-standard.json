@@ -25,7 +25,7 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
-      "vm_name": "win2012-standard-ssh",
+      "vm_name": "win2012-standard",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "memsize": "1536",
@@ -75,7 +75,7 @@
           "1"
         ]
       ],
-      "vm_name": "win2012-standard-ssh",
+      "vm_name": "win2012-standard",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
@@ -125,7 +125,7 @@
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
-      "vm_name": "win2012-standard-ssh",
+      "vm_name": "win2012-standard",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"

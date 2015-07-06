@@ -24,7 +24,7 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
-      "vm_name": "eval-win81x86-enterprise-ssh",
+      "vm_name": "eval-win81x86-enterprise",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "memsize": "1536",
@@ -80,7 +80,7 @@
           "1"
         ]
       ],
-      "vm_name": "eval-win81x86-enterprise-ssh",
+      "vm_name": "eval-win81x86-enterprise",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
@@ -123,7 +123,7 @@
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
-      "vm_name": "eval-win81x86-enterprise-ssh",
+      "vm_name": "eval-win81x86-enterprise",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
