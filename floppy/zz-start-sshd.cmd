@@ -13,6 +13,9 @@ title Starting services: %PACKER_SERVICES%. Please wait...
 for %%i in (%PACKER_SERVICES%) do (
   echo ==^> Checking if the %%i service is installed
   sc query %%i >nul 2>nul && (
+    echo ==^> Configuring %%i service to autostart
+    sc config %%i start= auto
+  
     echo ==^> Starting the %%i service
     sc start %%i
   )
