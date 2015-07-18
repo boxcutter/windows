@@ -67,8 +67,8 @@ call winrm set winrm/config/client/auth @{Basic="true"}
 call winrm set winrm/config/listener?Address=*+Transport=HTTP @{Port="5985"}
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config/listener?Address=*+Transport=HTTP @{Port="5985"}
 
-sc config winrm start= auto
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: sc config winrm start= auto
+sc config winrm start= disabled
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: sc config winrm start= disabled
 
 :: wait for winrm service to finish starting
 timeout 5
