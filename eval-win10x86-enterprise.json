@@ -162,8 +162,8 @@
     "cm_version": "",
     "disk_size": "40960",
     "headless": "false",
-    "iso_checksum": "cab43a5077610e75d8ab98fffa13f3ea06a39cad",
-    "iso_url": "http://iso.esd.microsoft.com/W10IP/4B33E0680A465FBA52C09A34454D5EB6/Windows10_InsiderPreview_x32_EN-US_10162.iso",
+    "iso_checksum": "875b450d67e7176b8b3c72a80c60a0628bf1afac",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/C/3/9/C399EEA8-135D-4207-92C9-6AAB3259F6EF/10240.16384.150709-1700.TH1_CLIENTENTERPRISEEVAL_OEMRET_X86FRE_EN-US.ISO",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "update": "true",
     "version": "0.1.0"

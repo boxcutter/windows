@@ -16,18 +16,18 @@
                     <CreatePartitions>
                         <CreatePartition wcm:action="add">
                             <Order>1</Order>
-                            <Size>20000</Size>
                             <Type>Primary</Type>
+                            <Extend>true</Extend>
                         </CreatePartition>
                     </CreatePartitions>
                     <ModifyPartitions>
                         <ModifyPartition wcm:action="add">
-                            <Active>true</Active>
-                            <Extend>true</Extend>
+                            <Extend>false</Extend>
                             <Format>NTFS</Format>
                             <Letter>C</Letter>
                             <Order>1</Order>
                             <PartitionID>1</PartitionID>
+                            <Label>Windows 10</Label>
                         </ModifyPartition>
                     </ModifyPartitions>
                     <DiskID>0</DiskID>
@@ -35,30 +35,31 @@
                 </Disk>
                 <WillShowUI>OnError</WillShowUI>
             </DiskConfiguration>
-            <ImageInstall>
-                <OSImage>
-                    <InstallFrom>
-                        <MetaData wcm:action="add">
-                            <Key>/IMAGE/NAME</Key>
-                            <Value>Windows 10 Pro Technical Preview</Value>
-                        </MetaData>
-                    </InstallFrom>
-                    <InstallTo>
-                        <DiskID>0</DiskID>
-                        <PartitionID>1</PartitionID>
-                    </InstallTo>
-                </OSImage>
-            </ImageInstall>
             <UserData>
                 <AcceptEula>true</AcceptEula>
                 <FullName>Vagrant Administrator</FullName>
                 <Organization>Vagrant Inc.</Organization>
-                <!-- Product Key from http://windows.microsoft.com/en-us/windows/preview-iso -->
-                <ProductKey>
-                    <Key>8N67H-M3CY9-QT7C4-2TR7M-TXYCV</Key>
+                <!-- Product Key from http://technet.microsoft.com/en-us/library/jj612867.aspx -->
+                <ProductKey>NPPR9-FWDCX-D2C8J-H872K-2YT43
                     <WillShowUI>Never</WillShowUI>
                 </ProductKey>
             </UserData>
+            <ImageInstall>
+                <OSImage>
+                    <InstallTo>
+                        <DiskID>0</DiskID>
+                        <PartitionID>1</PartitionID>
+                    </InstallTo>
+                    <WillShowUI>OnError</WillShowUI>
+                    <InstallToAvailablePartition>false</InstallToAvailablePartition>
+                    <InstallFrom>
+                        <MetaData wcm:action="add">
+                            <Key>/IMAGE/NAME</Key>
+                            <Value>Windows 10 Enterprise Evaluation</Value>
+                        </MetaData>
+                    </InstallFrom>
+                </OSImage>
+            </ImageInstall>
         </component>
     </settings>
     <settings pass="specialize">
