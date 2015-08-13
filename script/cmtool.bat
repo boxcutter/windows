@@ -22,9 +22,16 @@ goto exit1
 ::::::::::::
 
 if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CHEF_URL=https://www.getchef.com/chef/install.msi
-if not defined CHEF_URL set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-windows-%CM_VERSION%.windows.msi
+if not defined CHEF_URL (
+  if "%CM_VERSION:~0,2%" == "12" set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-client-%CM_VERSION%-1.msi
+  if "%CM_VERSION%" == "11.18.12" set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-client-%CM_VERSION%-1.msi
+  if "%CM_VERSION%" == "11.18.10" set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-client-%CM_VERSION%-1.msi
+  if "%CM_VERSION%" == "11.12.8" set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-windows-%CM_VERSION%-2.windows.msi
+  if "%CM_VERSION%" == "11.4.4" set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-windows-%CM_VERSION%-2.windows.msi
+)
+if not defined CHEF_URL set CHEF_URL=https://opscode-omnibus-packages.s3.amazonaws.com/windows/2008r2/x86_64/chef-windows-%CM_VERSION%-1.windows.msi
 
-set CHEF_MSI=chef-client-latest.msi
+set CHEF_MSI=chef-client.msi
 set CHEF_DIR=%TEMP%\chef
 set CHEF_PATH=%CHEF_DIR%\%CHEF_MSI%
 
