@@ -137,7 +137,7 @@
         "UPDATE={{user `update`}}"
       ],
       "execute_command": "{{.Vars}} cmd /c $(/bin/cygpath -m '{{.Path}}')",
-      "remote_path": "/tmp/script.bat",
+      "remote_path": "C:/Windows/Temp/script.bat",
       "scripts": [
         "script/vagrant.bat",
         "script/cmtool.bat",
@@ -151,7 +151,7 @@
     },
     {
       "inline": [
-        "rm -f /tmp/script.bat"
+        "rm -f /cygdrive/c/Windows/Temp/script.bat"
       ],
       "type": "shell"
     }
