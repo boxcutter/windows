@@ -126,9 +126,9 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win2008r2-standard-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "box/{{.Provider}}/win2008r2-standard-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-win2008r2-standard-ssh.tpl"
+      "vagrantfile_template": "tpl/vagrantfile-win2008r2-standard.tpl"
     }
   ],
   "provisioners": [
