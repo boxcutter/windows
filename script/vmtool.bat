@@ -107,8 +107,10 @@ set VMWARE_TOOLS_ISO=windows.iso
 mkdir "%VMWARE_TOOLS_DIR%"
 pushd "%VMWARE_TOOLS_DIR%"
 set VMWARE_TOOLS_SETUP_PATH=
+:vmware_tools_setup_path_search
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VMWARE_TOOLS_SETUP_PATH @if exist "%%~i\VMwareToolsUpgrader.exe" set VMWARE_TOOLS_SETUP_PATH=%%~i\%VMWARE_TOOLS_SETUP_EXE%
 if defined VMWARE_TOOLS_SETUP_PATH goto install_vmware_tools
+if not defined VMWARE_TOOLS_SETUP_PATH ( if defined VMWARE_TOOLS_MOUNTED goto vmware_tools_setup_path_search )
 set VMWARE_TOOLS_ISO_PATH=
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VMWARE_TOOLS_ISO_PATH @if exist "%%~i\%VMWARE_TOOLS_ISO%" set VMWARE_TOOLS_ISO_PATH=%%~i\%VMWARE_TOOLS_ISO%
 if defined VMWARE_TOOLS_ISO_PATH goto install_vmware_tools_from_iso
@@ -171,7 +173,7 @@ if exist "%SystemDrive%\Program Files (x86)" (
   set VBOX_SETUP_EXE=VBoxWindowsAdditions-x86.exe
 )
 for %%i in ("%VBOX_ISO_URL%") do set VBOX_ISO=%%~nxi
-set VBOX_ISO_DIR=%TEMP%\vmware
+set VBOX_ISO_DIR=%TEMP%\virtualbox
 set VBOX_ISO_PATH=%VBOX_ISO_DIR%\%VBOX_ISO%
 set VBOX_ISO=VBoxGuestAdditions.iso
 mkdir "%VBOX_ISO_DIR%"
