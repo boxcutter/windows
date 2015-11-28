@@ -23,7 +23,7 @@ UNXTUTILS_URL?=http://downloads.sourceforge.net/unxutils/UnxUtils.zip
 VAGRANT_PUB_URL?=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/4.3.28/VBoxGuestAdditions_4.3.28.iso
 VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/11.1.2/2780323/windows/packages/tools-windows-9.9.3.exe.tar
-WGET_URL?=https://eternallybored.org/misc/wget/wget.exe
+WGET_URL?=https://eternallybored.org/misc/wget/current/wget.exe
 
 BITVISE:=$(shell basename $(BITVISE_URL))
 CHEF:=chef-client-latest.msi
