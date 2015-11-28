@@ -2,8 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.define "vagrant-win2008r2-datacenter-ssh-ssh"
-  config.vm.box = "win2008r2-datacenter-ssh-ssh"
+  config.vm.define "vagrant-win2008r2-datacenter-ssh"
+  config.vm.box = "win2008r2-datacenter-ssh"
 
   # Port forward WinRM and RDP
   config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct:true
