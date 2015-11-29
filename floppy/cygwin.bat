@@ -9,7 +9,7 @@ if not defined CYGWIN_ARCH (
   set CYGWIN_ARCH=x86
 
   :: Force CYGWIN_ARCH to 64-bit - 32-bit seems to crash a lot on Windows 2008 and 2012
-  systeminfo 2>nul  | findstr /b /c:"OS Name" | findstr "2008 2012" >nul
+  wmic os get Caption | findstr "2008 2012" >nul
   if not errorlevel 1 set CYGWIN_ARCH=x86_64
 )
 
