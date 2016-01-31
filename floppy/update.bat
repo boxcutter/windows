@@ -38,6 +38,7 @@ If searchResult.Updates.Count Then
 End if 
 If searchResult.Updates.Count = 0 Then
     LogWrite "There are no applicable updates."
+    ExecutePostInstallBatch
     WScript.Quit
 End If
 
@@ -50,7 +51,11 @@ If installResult.RebootRequired Then
     reboot(".")
     WScript.Quit
 Else
-    Dim fso    
+    ExecutePostInstallBatch
+End If
+
+Sub ExecutePostInstallBatch
+    Dim fso
     Set fso = CreateObject("Scripting.FileSystemObject")
 
     If (fso.FileExists("a:\_post_update_install.bat")) Then
@@ -58,7 +63,7 @@ Else
         Set objShell = WScript.CreateObject("WScript.Shell")
         objShell.Run "a:\_post_update_install.bat"
     End If
-End If
+End Sub
 
 Sub LogWrite(message)
     Dim strFile, objFSO, objFile
