@@ -48,6 +48,16 @@ Set installResult = installUpdates(updateSession, updatesToInstall)
 If installResult.RebootRequired Then
     addStartupEntry
     reboot(".")
+    WScript.Quit
+Else
+    Dim fso    
+    Set fso = CreateObject("Scripting.FileSystemObject")
+
+    If (fso.FileExists("a:\_post_update_install.bat")) Then
+        Dim objShell
+        Set objShell = WScript.CreateObject("WScript.Shell")
+        objShell.Run "a:\_post_update_install.bat"
+    End If
 End If
 
 Sub LogWrite(message)
