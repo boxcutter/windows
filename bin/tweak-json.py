@@ -344,7 +344,7 @@ new_data = json_data
 
 mtime = os.path.getmtime(json_file_path)
 
-new_data  = json.dumps(new_data, sort_keys=True, indent=2)
+new_data  = json.dumps(new_data, sort_keys=True, indent=2, separators=(',', ': '))
 json_file.close()
 
 json_file = open(json_file_path, 'wb')
