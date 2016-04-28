@@ -137,10 +137,10 @@ for i, a in enumerate(json_data['builders']):
     a['skip_compaction'] = compression_level == 0
 
     if winrm:
-      a['communicator_type'] = 'winrm'
+      a['communicator'] = 'winrm'
       a['winrm_username'] = 'vagrant'
       a['winrm_password'] = 'vagrant'
-      a['winrm_wait_timeout'] = timeout_seconds + 's'
+      a['winrm_timeout'] = timeout_seconds + 's'
 
     if not tools_upload_flavor:
       if 'tools_upload_flavor' in a:
