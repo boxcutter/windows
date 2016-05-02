@@ -21,15 +21,18 @@ goto exit1
 :chef
 ::::::::::::
 
-if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CHEF_URL=https://www.getchef.com/chef/install.msi
-if defined ProgramFiles(x86) (
-  SET CHEF_CPU=x64
-) else (
-  SET CHEF_CPU=x686
-)
-if not defined CHEF_URL set CHEF_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-%CHEF_CPU%.msi
+if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=12.9.38-1
 
-set CHEF_MSI=chef-client-latest.msi
+if not defined CHEF_URL set CHEF_64_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-x64.msi
+if not defined CHEF_URL set CHEF_32_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-x86.msi
+
+if defined ProgramFiles(x86) (
+  SET CHEF_URL=%CHEF_64_URL%
+) else (
+  SET CHEF_URL=%CHEF_32_URL%
+)
+
+for %%i in ("%CHEF_URL%") do set CHEF_MSI=%%~nxi
 set CHEF_DIR=%TEMP%\chef
 set CHEF_PATH=%CHEF_DIR%\%CHEF_MSI%
 
@@ -57,10 +60,17 @@ goto exit0
 :chefdk
 ::::::::::::
 
-if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CHEFDK_URL=https://www.getchef.com/chef/download-chefdk?p=windows^&pv=2008r2^&m=x86_64
-if not defined CHEFDK_URL set CHEFDK_URL=https://www.getchef.com/chef/download-chefdk?p=windows^&pv=2008r2^&m=x86_64^&v=%CM_VERSION%
+if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CM_VERSION=0.13.21-1
+if not defined CHEFDK_URL set CHEFDK_64_URL=https://packages.chef.io/stable/windows/2008r2/chefdk-%CM_VERSION%-x86.msi
+if not defined CHEFDK_URL set CHEFDK_32_URL=https://packages.chef.io/stable/windows/2008r2/chefdk-%CM_VERSION%-x86.msi
 
-set CHEFDK_MSI=chefdk-windows.msi
+if defined ProgramFiles(x86) (
+  SET CHEFDK_URL=%CHEFDK_64_URL%
+) else (
+  SET CHEFDK_URL=%CHEFDK_32_URL%
+)
+
+for %%i in ("%CHEFDK_URL%") do set CHEFDK_MSI=%%~nxi
 set CHEFDK_DIR=%TEMP%\chefdk
 set CHEFDK_PATH=%CHEFDK_DIR%\%CHEFDK_MSI%
 
@@ -89,9 +99,16 @@ goto exit0
 :puppet
 ::::::::::::
 
-:: if "%CM_VERSION%" == "latest" set CM_VERSION=3.7.5
+:: if "%CM_VERSION%" == "latest" set CM_VERSION=3.8.7
 
-if not defined PUPPET_URL set PUPPET_URL=http://downloads.puppetlabs.com/windows/puppet-%CM_VERSION%.msi
+if not defined PUPPET_64_URL set PUPPET_URL=https://downloads.puppetlabs.com/windows/puppet-x64-%CM_VERSION%.msi
+if not defined PUPPET_32_URL set PUPPET_URL=https://downloads.puppetlabs.com/windows/puppet-%CM_VERSION%.msi
+
+if defined ProgramFiles(x86) (
+  set PUPPET_URL=%PUPPET_64_URL%
+) else (
+  set PUPPET_URL=%PUPPET_32_URL%
+)
 
 for %%i in ("%PUPPET_URL%") do set PUPPET_MSI=%%~nxi
 set PUPPET_DIR=%TEMP%\puppet
@@ -126,7 +143,6 @@ goto exit0
 if "%CM_VERSION%" == "latest" set CM_VERSION=2015.8.8-2
 
 if not defined SALT_64_URL set SALT_64_URL=https://repo.saltstack.com/windows/Salt-Minion-%CM_VERSION%-AMD64-Setup.exe
-
 if not defined SALT_32_URL set SALT_32_URL=https://repo.saltstack.com/windows/Salt-Minion-%CM_VERSION%-x86-Setup.exe
 
 if defined ProgramFiles(x86) (

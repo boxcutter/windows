@@ -2,7 +2,7 @@
 @for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
-title Upgrading Windows Upgrade Agent.  Please wait...
+title Upgrading Windows Update Agent.  Please wait...
 
 if not defined WUA_64_URL set WUA_64_URL=http://download.windowsupdate.com/windowsupdate/redist/standalone/7.6.7600.320/WindowsUpdateAgent-7.6-x64.exe
 if not defined WUA_32_URL set WUA_32_URL=http://download.windowsupdate.com/windowsupdate/redist/standalone/7.6.7600.320/WindowsUpdateAgent-7.6-x86.exe

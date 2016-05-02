@@ -1,32 +1,44 @@
 PREDOWNLOADED_FILES=$(wildcard vshell*.*)
 
+CHEF_VERSION?=12.9.38-1
+SALT_VERSION?=2015.8.8-2
+SEVENZIP_VERSION?=1514
+ULTRADEFRAG_VERSION?=7.0.1
+VBOX_VERSION?=5.0.18
+
 # always 301's to latest installer:
 #MLSSSH_64_URL?=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
-BITVISE_URL?=http://dl.bitvise.com/BvSshServer-Inst.exe
-CHEF_URL?=https://www.getchef.com/chef/install.msi
+BITVISE_URL?=https://bvdl.s3-eu-west-1.amazonaws.com/BvSshServer-Inst.exe
+CHEF_64_URL?=https://packages.chef.io/stable/windows/2008r2/chef-client-$(CHEF_VERSION)-x64.msi
+CHEF_32_URL?=https://packages.chef.io/stable/windows/2008r2/chef-client-$(CHEF_VERSION)-x86.msi
+CHEFDK_URL=https://packages.chef.io/stable/windows/2008r2/chefdk-0.13.21-1-x86.msi
 CHOCOLATEY_URL?=https://chocolatey.org/install.ps1
 COREUTILS_URL?=http://downloads.sourceforge.net/gnuwin32/coreutils-5.3.0-bin.zip
 CYGWIN_URL?=http://cygwin.com/setup-x86.exe
-DOTNET_URL?=http://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe
-LESSMSI_URL?=https://github.com/activescott/lessmsi/releases/download/v1.3/lessmsi-v1.3.zip
-MLSSSH_32_URL?=http://www.mls-software.com/files/setupssh-6.8p1-1.exe
+::DOTNET_URL?=http://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe
+DOTNET_URL?=https://download.microsoft.com/download/C/3/A/C3A5200B-D33C-47E9-9D70-2F7C65DAAD94/NDP46-KB3045557-x86-x64-AllOS-ENU.exe
+LESSMSI_URL?=https://github.com/activescott/lessmsi/releases/download/v1.4/lessmsi-v1.4.zip
+MLSSSH_32_URL?=http://www.mls-software.com/files/setupssh-7.2p2-1-v1.exe
 NUGET_URL?=http://nuget.org/nuget.exe
-PUPPET_URL?=https://downloads.puppetlabs.com/windows/puppet-latest.msi
-SALT_32_URL?=http://docs.saltstack.com/downloads/Salt-Minion-2015.5.0-x86-Setup.exe
-SALT_64_URL?=http://docs.saltstack.com/downloads/Salt-Minion-2015.5.0-AMD64-Setup.exe
+PUPPET_32_URL?=https://downloads.puppetlabs.com/windows/puppet-latest.msi
+PUPPET_64_URL?=https://downloads.puppetlabs.com/windows/puppet-x64-latest.msi
+SALT_32_URL?=https://repo.saltstack.com/windows/Salt-Minion-$(SALT_VERSION)-x86-Setup.exe
+SALT_64_URL?=https://repo.saltstack.com/windows/Salt-Minion-$(SALT_VERSION)-AMD64-Setup.exe
 SDELETE_URL?=http://live.sysinternals.com/sdelete.exe
-SEVENZIP_32_URL=http://www.7-zip.org/a/7z938.msi
-SEVENZIP_64_URL=http://www.7-zip.org/a/7z938-x64.msi
-ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.1.0.bin.i386.zip
-ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-6.1.0.bin.amd64.zip
+SEVENZIP_32_URL=http://www.7-zip.org/a/7z$(SEVENZIP_VERSION).msi
+SEVENZIP_64_URL=http://www.7-zip.org/a/7z$(SEVENZIP_VERSION)-x64.msi
+ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-$(ULTRADEFRAG_VERSION).bin.i386.zip
+ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-$(ULTRADEFRAG_VERSION).bin.amd64.zip
 UNXTUTILS_URL?=http://downloads.sourceforge.net/unxutils/UnxUtils.zip
 VAGRANT_PUB_URL?=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
-VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/4.3.28/VBoxGuestAdditions_4.3.28.iso
-VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/11.1.2/2780323/windows/packages/tools-windows-9.9.3.exe.tar
+VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/$(VBOX_VERSION)/VBoxGuestAdditions_$(VBOX_VERSION).iso
+VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.1.1/3770994/windows/packages/tools-windows.tar
 WGET_URL?=https://eternallybored.org/misc/wget/current/wget.exe
 
 BITVISE:=$(shell basename $(BITVISE_URL))
-CHEF:=chef-client-latest.msi
+CHEF_32:=$(shell basename $(CHEF_32_URL))
+CHEF_64:=$(shell basename $(CHEF_64_URL))
+CHEFDK:=$(shell basename $(CHEFDK_URL))
 CHOCOLATEY:=$(shell basename $(CHOCOLATEY_URL))
 COREUTILS:=$(shell basename $(COREUTILS_URL))
 CYGWIN:=$(shell basename $(CYGWIN_URL))
@@ -35,7 +47,8 @@ LESSMSI:=$(shell basename $(LESSMSI_URL))
 MLSSSH_32:=$(shell basename $(MLSSSH_32_URL))
 #MLSSSH_64:=$(shell basename "$(MLSSSH_64_URL)")
 NUGET:=$(shell basename $(NUGET_URL))
-PUPPET:=$(shell basename $(PUPPET_URL))
+PUPPET_32:=$(shell basename $(PUPPET_32_URL))
+PUPPET_64:=$(shell basename $(PUPPET_64_URL))
 SDELETE:=$(shell basename $(SDELETE_URL))
 SALT_32:=$(shell basename $(SALT_32_URL))
 SALT_64:=$(shell basename $(SALT_64_URL))
@@ -57,7 +70,9 @@ WGET_EXE=$(shell basename $(WGET_URL))
 # $(shell find . -type f \( -name '*.exe' -o -name '*.msi' -o -name '*.pub' \) -printf '%P ')
 FILES:=\
 $(BITVISE) \
-$(CHEF) \
+$(CHEF_32) \
+$(CHEF_64) \
+$(CHEFDK) \
 $(CHOCOLATEY) \
 $(COREUTILS) \
 $(CYGWIN) \
@@ -65,7 +80,8 @@ $(DOTNET) \
 $(LESSMSI) \
 $(MLSSSH_32) \
 $(NUGET) \
-$(PUPPET) \
+$(PUPPET_32) \
+$(PUPPET_64) \
 $(SDELETE) \
 $(SALT_32) \
 $(SALT_64) \
@@ -85,6 +101,12 @@ windows.iso \
 
 WGET:=wget --no-check-certificate
 
+.PHONY: all
+all:	provisions.iso
+
+.PHONY: iso
+iso:	provisions.iso
+
 provisions.iso: $(FILES)
 	-rm -f $@
 	mkisofs -J -r -l -udf -o $@ $^ $(PREDOWNLOADED_FILES)
@@ -93,8 +115,16 @@ $(BITVISE):
 	$(WGET) -O $@ $(BITVISE_URL)
 	-rm -f provisions.iso
 
-$(CHEF):
-	$(WGET) -O $@ $(CHEF_URL)
+$(CHEF_32):
+	$(WGET) -O $@ $(CHEF_32_URL)
+	-rm -f provisions.iso
+
+$(CHEF_64):
+	$(WGET) -O $@ $(CHEF_64_URL)
+	-rm -f provisions.iso
+
+$(CHEFDK):
+	$(WGET) -O $@ $(CHEFDK_URL)
 	-rm -f provisions.iso
 
 $(CHOCOLATEY):
@@ -130,8 +160,12 @@ $(NUGET):
 	$(WGET) -O $@ $(NUGET_URL)
 	-rm -f provisions.iso
 
-$(PUPPET):
-	$(WGET) -O $@ $(PUPPET_URL)
+$(PUPPET_32):
+	$(WGET) -O $@ $(PUPPET_32_URL)
+	-rm -f provisions.iso
+
+$(PUPPET_64):
+	$(WGET) -O $@ $(PUPPET_64_URL)
 	-rm -f provisions.iso
 
 $(SDELETE):
@@ -227,12 +261,16 @@ clean:
 
 .PHONY: realclean
 realclean:	clean
-	rm -f $(FILES) "\"$(MLSSSH_64)\""
+	rm -f $(FILES)
+
+# "\"$(MLSSSH_64)\""
 
 .PHONY: debug
 debug:
 	@echo BITVISE=$(BITVISE)
-	@echo CHEF=$(CHEF)
+	@echo CHEF_32=$(CHEF_32)
+	@echo CHEF_64=$(CHEF_64)
+	@echo CHEFDK=$(CHEFDK)
 	@echo CHOCOLATEY=$(CHOCOLATEY)
 	@echo CYGWIN=$(CYGWIN)
 	@echo DOTNET=$(DOTNET)
@@ -241,7 +279,8 @@ debug:
 	@echo MLSSSH_64="$(MLSSSH_64)"
 	#@echo MLSSSH_64_URL="$(MLSSSH_64_URL)"
 	@echo NUGET=$(NUGET)
-	@echo PUPPET=$(PUPPET)
+	@echo PUPPET_32=$(PUPPET_32)
+	@echo PUPPET_64=$(PUPPET_64)
 	@echo SDELETE=$(SDELETE)
 	@echo SALT_32=$(SALT_32)
 	@echo SALT_64=$(SALT_64)
@@ -253,3 +292,12 @@ debug:
 	@echo VBOX_ISO=$(VBOX_ISO)
 	@echo VMWARE_TOOLS_TAR=$(VMWARE_TOOLS_TAR)
 	@echo WGET_EXE=$(WGET_EXE)
+
+.PHONY: help
+help:
+	@echo make
+	@echo make all
+	@echo make iso
+	@echo make clean
+	@echo make realclean
+	@echo make debug
