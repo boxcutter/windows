@@ -54,6 +54,7 @@
         "floppy/update.bat",
         "floppy/zz-start-sshd.cmd"
       ],
+      "guest_additions_mode": "attach",
       "guest_os_type": "Windows81_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",

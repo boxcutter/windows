@@ -50,6 +50,7 @@
         "floppy/win2012r2-standardcore/Autounattend.xml",
         "floppy/zz-start-sshd.cmd"
       ],
+      "guest_additions_mode": "attach",
       "guest_os_type": "Windows2012_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
