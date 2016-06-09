@@ -101,8 +101,8 @@ goto exit0
 
 :: if "%CM_VERSION%" == "latest" set CM_VERSION=3.8.7
 
-if not defined PUPPET_64_URL set PUPPET_URL=https://downloads.puppetlabs.com/windows/puppet-x64-%CM_VERSION%.msi
-if not defined PUPPET_32_URL set PUPPET_URL=https://downloads.puppetlabs.com/windows/puppet-%CM_VERSION%.msi
+if not defined PUPPET_URL set PUPPET_64_URL=https://downloads.puppetlabs.com/windows/puppet-x64-%CM_VERSION%.msi
+if not defined PUPPET_URL set PUPPET_64_URL=https://downloads.puppetlabs.com/windows/puppet-%CM_VERSION%.msi
 
 if defined ProgramFiles(x86) (
   set PUPPET_URL=%PUPPET_64_URL%
