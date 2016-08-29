@@ -54,8 +54,8 @@
                     <InstallToAvailablePartition>false</InstallToAvailablePartition>
                     <InstallFrom>
                         <MetaData wcm:action="add">
-                            <Key>/IMAGE/NAME</Key>
-                            <Value>Windows 10 Enterprise Evaluation</Value>
+                            <Key>/IMAGE/INDEX</Key>
+                            <Value>1</Value>
                         </MetaData>
                     </InstallFrom>
                 </OSImage>
