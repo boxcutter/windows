@@ -2,6 +2,8 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+if not defined TEMP set TEMP=%USERPROFILE%\AppData\Local\Temp
+
 if not defined CM echo ==^> ERROR: The "CM" variable was not found in the environment & goto exit1
 
 if "%CM%" == "nocm"   goto nocm
@@ -23,13 +25,23 @@ goto exit1
 
 if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=12.9.38-1
 
-if not defined CHEF_URL set CHEF_64_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-x64.msi
-if not defined CHEF_URL set CHEF_32_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-x86.msi
+for /f "tokens=1,2,3 delims=." %%a in ('echo %CM_VERSION%') do (
+    set CM_MAJOR_VER=%%a
+    set CM_MINOR_VER=%%b
+    set CM_INC_VER=%%c
+)
 
-if defined ProgramFiles(x86) (
-  SET CHEF_URL=%CHEF_64_URL%
+if not defined CHEF_URL set CHEF_32_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-x86.msi
+if %CM_MAJOR_VER% GEQ 12 (
+    if %CM_MINOR_VER% GEQ 7 (
+        if not defined CHEF_URL set CHEF_64_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-x64.msi
+    )
+)
+
+if defined CHEF_64_URL if defined ProgramFiles(x86) (
+    SET CHEF_URL=!CHEF_64_URL!
 ) else (
-  SET CHEF_URL=%CHEF_32_URL%
+    SET CHEF_URL=!CHEF_32_URL!
 )
 
 for %%i in ("%CHEF_URL%") do set CHEF_MSI=%%~nxi
@@ -198,4 +210,3 @@ echo ==^> Building box without a configuration management tool
 
 @echo ==^> Script exiting with errorlevel %ERRORLEVEL%
 @exit /b %ERRORLEVEL%
-
