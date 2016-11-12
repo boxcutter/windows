@@ -1,6 +1,6 @@
 @echo off
 
-:: Uncomment to disable trying to use BITS for file downloads
+:: Uncomment to disable trying to use BITS for file downloads.
 :: set USE_BITS=false
 
 :: Uncomment the following to set proxy server config for all scripts
