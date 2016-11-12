@@ -32,7 +32,7 @@ if exist "%SystemRoot%\_download.cmd" (
 ) else (
   echo ==^> Downloading "%HOTFIX_2842230_URL%" to "%HOTFIX_2842230_PATH%"
   if defined http_proxy (
-    powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')); $wc.DownloadFile('%HOTFIX_2842230_URL%', '%HOTFIX_2842230_PATH%')" >nul
+    powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.proxy.BypassList = (('%no_proxy%').split(',')) ; $wc.DownloadFile('%HOTFIX_2842230_URL%', '%HOTFIX_2842230_PATH%')" >nul
   ) else (
     powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%HOTFIX_2842230_URL%', '%HOTFIX_2842230_PATH%')" >nul
   )

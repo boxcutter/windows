@@ -24,12 +24,16 @@ echo ==^> Downloading "%WGET_URL%" to "%filename%"
 
 :powershell
 if defined http_proxy (
-    powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')); $wc.DownloadFile('%WGET_URL%', '%filename%')" >nul
+    powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.proxy.BypassList = (('%no_proxy%').split(',')) ; $wc.DownloadFile('%WGET_URL%', '%filename%')" >nul
 ) else (
     powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WGET_URL%', '%filename%')" >nul
 )
 
 if not errorlevel 1 if exist "%filename%" goto exit0
+
+if defined USE_BITS (
+    if "%USE_BITS%" == "false" if not exist "%filename%" goto exit1
+)
 
 set bitsadmin=
 
