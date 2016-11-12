@@ -1,5 +1,19 @@
 @echo off
 
+:: Uncomment the following to set proxy server config for all scripts
+:: Be sure to set the proxy and no_proxy lines to your required settings
+:: set http_proxy=
+:: set https_proxy=
+:: set proxy=10.10.10.10:80
+::
+:: if defined proxy (
+::   echo ==^> Setting HTTP Proxy....
+::   echo ==^> HTTP Proxy Set to %proxy%
+::   set http_proxy=http://%proxy%
+::   set https_proxy=http://%proxy%
+::   set no_proxy=noproxy.domain.com,noproxy2.domain.com
+:: )
+
 :: Uncomment the following to set a different Cygwin mirror
 :: Default: http://mirrors.kernel.org/sourceware/cygwin
 :: set CYGWIN_MIRROR_URL=http://mirrors.kernel.org/sourceware/cygwin

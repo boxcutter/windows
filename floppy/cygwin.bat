@@ -34,8 +34,13 @@ if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CYGWIN_URL%" "%CYGWIN_PATH%"
 ) else (
   echo ==^> Downloading "%CYGWIN_URL%" to "%CYGWIN_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CYGWIN_URL%', '%CYGWIN_PATH%')" <NUL
+  if defined http_proxy (
+    powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')); $wc.DownloadFile('%CYGWIN_URL%', '%CYGWIN_PATH%')" >nul
+  ) else (
+    powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CYGWIN_URL%', '%CYGWIN_PATH%')" >nul
+  )
 )
+
 if errorlevel 1 goto exit1
 
 echo ==^> Blocking SSH port 22 on the firewall
@@ -50,7 +55,11 @@ set /a CYGWIN_TRY=%CYGWIN_TRY%+1
 
 echo ==^> Installing Cygwin (attempt %CYGWIN_TRY% of %CYGWIN_TRIES%)
 
-"%CYGWIN_PATH%" -a %CYGWIN_ARCH% -q -R %CYGWIN_HOME% -P %CYGWIN_PACKAGES% -s %CYGWIN_MIRROR_URL%
+if defined proxy (
+  "%CYGWIN_PATH%" -a %CYGWIN_ARCH% -q -R %CYGWIN_HOME% -P %CYGWIN_PACKAGES% -s %CYGWIN_MIRROR_URL% -p %proxy%
+) else (
+  "%CYGWIN_PATH%" -a %CYGWIN_ARCH% -q -R %CYGWIN_HOME% -P %CYGWIN_PACKAGES% -s %CYGWIN_MIRROR_URL%
+)
 
 if not errorlevel 1 goto installed_ok
 
@@ -120,4 +129,3 @@ goto :exit
 verify other 2>nul
 
 :exit
-

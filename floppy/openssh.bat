@@ -16,12 +16,16 @@ mkdir "%OPENSSH_DIR%"
 pushd "%OPENSSH_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%OPENSSH_URL%" "%OPENSSH_PATH%"
+    call "%SystemRoot%\_download.cmd" "%OPENSSH_URL%" "%OPENSSH_PATH%"
 ) else (
-  echo ==^> Downloading "%OPENSSH_URL%" to "%OPENSSH_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%OPENSSH_URL%', '%OPENSSH_PATH%')" <NUL
+    if defined http_proxy (
+        powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')); $wc.DownloadFile('%OPENSSH_URL%', '%OPENSSH_PATH%')" >nul
+    ) else (
+        powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%OPENSSH_URL%', '%OPENSSH_PATH%')" >nul
+    )
 )
-if not exist "%OPENSSH_PATH%" goto exit1
+
+if errorlevel 1 goto exit1
 
 echo ==^> Blocking SSH port 22 on the firewall
 netsh advfirewall firewall add rule name="SSHD" dir=in action=block program="%ProgramFiles%\OpenSSH\usr\sbin\sshd.exe" enable=yes

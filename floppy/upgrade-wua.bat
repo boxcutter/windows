@@ -24,7 +24,11 @@ if exist "%SystemRoot%\_download.cmd" (
     call "%SystemRoot%\_download.cmd" "%WUA_URL%" "%WUA_PATH%"
 ) else (
     echo ==^> Downloading "%WUA_URL%" to "%WUA_PATH%"
-    powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WUA_URL%', '%WUA_PATH%')" <NUL
+    if defined http_proxy (
+        powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')); $wc.DownloadFile('%WUA_URL%', '%WUA_PATH%')" >nul
+    ) else (
+        powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WUA_URL%', '%WUA_PATH%')" >nul
+    )
 )
 if not exist "%WUA_PATH%" goto exit1
 

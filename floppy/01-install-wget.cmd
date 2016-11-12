@@ -23,10 +23,13 @@ if exist "%filename%" goto exit0
 echo ==^> Downloading "%WGET_URL%" to "%filename%"
 
 :powershell
+if defined http_proxy (
+    powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')); $wc.DownloadFile('%WGET_URL%', '%filename%')" >nul
+) else (
+    powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WGET_URL%', '%filename%')" >nul
+)
 
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WGET_URL%', '%filename%')" <NUL
-
-if exist "%filename%" goto exit0
+if not errorlevel 1 if exist "%filename%" goto exit0
 
 set bitsadmin=
 

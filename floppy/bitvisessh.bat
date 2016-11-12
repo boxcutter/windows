@@ -19,8 +19,13 @@ if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%BITVISE_URL%" "%BITVISE_PATH%"
 ) else (
   echo ==^> Downloading "%BITVISE_URL%" to "%BITVISE_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%BITVISE_URL%', '%BITVISE_PATH%')" <NUL
+  if defined http_proxy (
+    powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')); $wc.DownloadFile('%BITVISE_URL%', '%BITVISE_PATH%')" >nul
+  ) else (
+    powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%BITVISE_URL%', '%BITVISE_PATH%')" >nul
+  )
 )
+
 if not exist "%BITVISE_PATH%" goto exit1
 
 echo ==^> Blocking SSH port 22 on the firewall

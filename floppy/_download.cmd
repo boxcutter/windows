@@ -53,8 +53,11 @@ if not defined PACKER_DEBUG set WGET_OPTS=--no-verbose
 if not errorlevel 1 if exist "%filename%" goto exit0
 
 :powershell
-
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
+if defined http_proxy (
+    powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')); $wc.DownloadFile('%url%', '%filename%')" >nul
+) else (
+    powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" >nul
+)
 
 if not errorlevel 1 if exist "%filename%" goto exit0
 
