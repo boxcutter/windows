@@ -24,7 +24,7 @@ goto exit1
 :chef
 ::::::::::::
 
-if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=12.16.42-1
+if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=12.16.42
 
 :: srtrip -1 if %CM_VERSION% ends in -1
 set CM_VERSION=%CM_VERSION:-1=%
