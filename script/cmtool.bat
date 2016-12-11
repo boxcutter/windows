@@ -2,7 +2,6 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
-
 if not defined TEMP set TEMP=%USERPROFILE%\AppData\Local\Temp
 
 if not defined CM echo ==^> ERROR: The "CM" variable was not found in the environment & goto exit1
@@ -63,9 +62,15 @@ if not defined CHEF_URL if defined ProgramFiles(x86) (
 
 if defined CHEF_64_URL (
     SET CHEF_URL=%CHEF_64_URL%
-) else (
+) else if defined CHEF_32_URL (
     SET CHEF_URL=%CHEF_32_URL%
 )
+
+if not defined CHEF_URL
+  echo Could not get Chef %CM_VERSION% download url...
+  goto exit1
+)
+
 
 for %%i in ("%CHEF_URL%") do set CHEF_MSI=%%~nxi
 set CHEF_DIR=%TEMP%\chef
@@ -82,8 +87,6 @@ if exist "%SystemRoot%\_download.cmd" (
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEF_URL%\", '%CHEF_PATH%')" <NUL
 )
 if not exist "%CHEF_PATH%" goto exit1
-
-exit
 
 echo ==^> Installing Chef client %CM_VERSION%
 msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
@@ -133,10 +136,16 @@ if not defined CHEFDK_URL if defined ProgramFiles(x86) (
         )
     )
 )
+
 if defined CHEFDK_64_URL (
     SET CHEFDK_URL=%CHEFDK_64_URL%
-) else (
+) else if defined CHEFDK_32_URL (
     SET CHEFDK_URL=%CHEFDK_32_URL%
+)
+
+if not defined CHEFDK_URL
+  echo Could not get chefdk %CM_VERSION% download url...
+  goto exit1
 )
 
 for %%i in ("%CHEFDK_URL%") do set CHEFDK_MSI=%%~nxi
