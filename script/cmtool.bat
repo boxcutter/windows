@@ -66,7 +66,7 @@ if defined CHEF_64_URL (
     SET CHEF_URL=%CHEF_32_URL%
 )
 
-if not defined CHEF_URL
+if not defined CHEF_URL (
   echo Could not get Chef %CM_VERSION% download url...
   goto exit1
 )
@@ -143,7 +143,7 @@ if defined CHEFDK_64_URL (
     SET CHEFDK_URL=%CHEFDK_32_URL%
 )
 
-if not defined CHEFDK_URL
+if not defined CHEFDK_URL (
   echo Could not get chefdk %CM_VERSION% download url...
   goto exit1
 )
