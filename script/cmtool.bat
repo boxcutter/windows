@@ -64,8 +64,10 @@ if not defined CHEF_URL (
 
     if defined CHEF_64_URL (
         SET CHEF_URL=!CHEF_64_URL!
+        set CHEF_ARCH=x86_64
     ) else if defined CHEF_32_URL (
         SET CHEF_URL=!CHEF_32_URL!
+        set CHEF_ARCH=x86
     )
 
     if not defined CHEF_URL (
@@ -90,7 +92,7 @@ if exist "%SystemRoot%\_download.cmd" (
 )
 if not exist "%CHEF_PATH%" goto exit1
 
-echo ==^> Installing Chef client %CM_VERSION%
+echo ==^> Installing Chef client %CM_VERSION% %CHEF_ARCH%
 msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
@@ -143,8 +145,10 @@ if not defined CHEFDK_URL (
 
     if defined CHEFDK_64_URL (
         SET CHEFDK_URL=!CHEFDK_64_URL!
+        SET CHEFDK_ARCH=x86_64
     ) else if defined CHEFDK_32_URL (
         SET CHEFDK_URL=!CHEFDK_32_URL!
+        SET CHEFDK_ARCH=x86
     )
 
     if not defined CHEFDK_URL (
@@ -170,7 +174,7 @@ if exist "%SystemRoot%\_download.cmd" (
 )
 if not exist "%CHEFDK_PATH%" goto exit1
 
-echo ==^> Installing Chef Development Kit %CM_VERSION%
+echo ==^> Installing Chef Development Kit %CM_VERSION% %CHEFDK_ARCH%
 msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log" %CHEFDK_OPTIONS%
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log" %CHEFDK_OPTIONS%
