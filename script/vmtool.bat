@@ -3,10 +3,10 @@
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
-if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://www.7-zip.org/a/7z1600.msi
-if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://www.7-zip.org/a/7z1600-x64.msi
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://www.7-zip.org/a/7z1604.exe
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://www.7-zip.org/a/7z1604-x64.msi
 if not defined VBOX_ISO_URL set VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/5.0.20/VBoxGuestAdditions_5.0.20.iso
-if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.1.1/3770994/windows/packages/tools-windows.tar
+if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar
 goto main
 
 ::::::::::::
@@ -31,7 +31,7 @@ call :copy_sevenzip
 if not errorlevel 1 goto return0
 
 :get_sevenzip
-for %%i in ("%SEVENZIP_URL%") do set SEVENZIP_MSI=%%~nxi
+for %%i in ("%SEVENZIP_URL%") do set SEVENZIP_MSI=%%~nxi`
 set SEVENZIP_DIR=%TEMP%\sevenzip
 set SEVENZIP_PATH=%SEVENZIP_DIR%\%SEVENZIP_MSI%
 echo ==^> Creating "%SEVENZIP_DIR%"
