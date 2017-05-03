@@ -24,9 +24,15 @@ echo ==^> Removing potentially corrupt recycle bin
 :: see http://www.winhelponline.com/blog/fix-corrupted-recycle-bin-windows-7-vista/
 rmdir /q /s %SystemDrive%\$Recycle.bin
 
-echo ==^> Cleaning "%USERPROFILE%"
+echo ==^> Cleaning ISOs in "%USERPROFILE%"
 
 for %%i in (VBoxGuestAdditions.iso windows.iso) do if exist "%USERPROFILE%\%%~i" del /f "%USERPROFILE%\%%~i"
+
+echo ==^> Removing Windows update files
+net stop wuauserv
+rmdir /S /Q C:\Windows\SoftwareDistribution\Download
+mkdir C:\Windows\SoftwareDistribution\Download
+net start wuauserv
 
 :exit0
 
