@@ -37,10 +37,6 @@ echo ==^> Changing remote UAC account policy
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 
-echo ==^> Blocking WinRM port 5985 on the firewall
-netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
-
 echo ==^> Configuring Windows Remote Management (WinRM) service
 
 call winrm quickconfig -q
@@ -67,27 +63,22 @@ call winrm set winrm/config/client/auth @{Basic="true"}
 call winrm set winrm/config/listener?Address=*+Transport=HTTP @{Port="5985"}
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config/listener?Address=*+Transport=HTTP @{Port="5985"}
 
-sc config winrm start= disabled
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: sc config winrm start= disabled
+sc config winrm start= auto
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: sc config winrm start= auto
+
+sc query winrm | findstr "RUNNING" >nul
+if errorlevel 1 goto winrm_not_running
+goto :winrm_running
+
+:winrm_not_running
+
+sc start winrm
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: sc start winrm
 
 :: wait for winrm service to finish starting
 timeout 5
 
-sc query winrm | findstr "RUNNING" >nul
-if errorlevel 1 goto winrm_not_running
-
-echo ==^> Stopping winrm service
-
-sc stop winrm
-
-:is_winrm_running
-
-timeout 1
-
-sc query winrm | findstr "STOPPED" >nul
-if errorlevel 1 goto is_winrm_running
-
-:winrm_not_running
+:winrm_running
 
 echo ==^> Unblocking WinRM port 5985 on the firewall
 netsh advfirewall firewall delete rule name="winrm"
