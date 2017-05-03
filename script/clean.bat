@@ -29,10 +29,7 @@ echo ==^> Cleaning ISOs in "%USERPROFILE%"
 for %%i in (VBoxGuestAdditions.iso windows.iso) do if exist "%USERPROFILE%\%%~i" del /f "%USERPROFILE%\%%~i"
 
 echo ==^> Removing Windows update files
-net stop wuauserv
-rmdir /S /Q C:\Windows\SoftwareDistribution\Download
-mkdir C:\Windows\SoftwareDistribution\Download
-net start wuauserv
+Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
 :exit0
 
