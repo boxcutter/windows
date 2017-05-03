@@ -2,7 +2,7 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
-if not defined SDELETE_URL set SDELETE_URL=http://live.sysinternals.com/sdelete.exe
+if not defined SDELETE_URL set SDELETE_URL=https://www.dropbox.com/s/buph48biyid8src/sdelete.exe
 
 for %%i in ("%SDELETE_URL%") do set SDELETE_EXE=%%~nxi
 set SDELETE_DIR=%TEMP%\sdelete
