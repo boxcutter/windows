@@ -29,7 +29,7 @@
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "memsize": "1536",
-        "numvcpus": "1"
+        "numvcpus": "2"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -72,7 +72,7 @@
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "vm_name": "eval-win7x86-enterprise",
@@ -114,7 +114,7 @@
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",

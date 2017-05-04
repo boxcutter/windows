@@ -32,8 +32,8 @@
       "vm_name": "eval-win7x64-enterprise-cygwin",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "2048",
-        "numvcpus": "1"
+        "memsize": "3072",
+        "numvcpus": "2"
       }
     },
     {
@@ -71,13 +71,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "2048"
+          "3072"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "vm_name": "eval-win7x64-enterprise-cygwin"
@@ -111,13 +111,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "2048"
+          "3072"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
