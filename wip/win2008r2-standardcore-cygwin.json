@@ -21,7 +21,7 @@
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
+        "floppy/zz-winrm_setup.cmd",
         "floppy/powerconfig.bat",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
@@ -56,7 +56,7 @@
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
+        "floppy/zz-winrm_setup.cmd",
         "floppy/powerconfig.bat",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",

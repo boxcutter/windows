@@ -11,12 +11,12 @@ reg ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v Enable
 
 title Enabling Windows Remote Management. Please wait...
 
-echo ==^> Setting the PowerShell ExecutionPolicy to RemoteSigned (64 bit)
+echo ==^> Setting the PowerShell ExecutionPolicy to RemoteSigned for 64 bit
 powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force" <NUL
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force"
 
 if exist %SystemRoot%\SysWOW64\cmd.exe (
-  echo ==^> Setting the PowerShell ExecutionPolicy to RemoteSigned (32 bit)
+  echo ==^> Setting the PowerShell ExecutionPolicy to RemoteSigned for 32 bit
   %SystemRoot%\SysWOW64\cmd.exe /c powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force" <NUL
   @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force" <NUL
 )
