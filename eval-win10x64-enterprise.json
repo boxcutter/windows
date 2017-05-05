@@ -8,12 +8,12 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/update.bat",
-        "floppy/_post_update_install.bat",
         "floppy/zz-winrm_setup.cmd"
       ],
       "guest_os_type": "windows8srv-64",
@@ -43,6 +43,7 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/oracle-cert.cer",
@@ -92,12 +93,13 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/zz-winrm_setup.cmd",
-        "floppy/update.bat"
+        "floppy/update.bat",
+        "floppy/zz-winrm_setup.cmd"
       ],
       "guest_os_type": "win-8.1",
       "headless": "{{ user `headless` }}",
@@ -148,6 +150,7 @@
         "script/vmtool.bat",
         "script/clean.bat",
         "script/ultradefrag.bat",
+        "script/uninstall-7zip.bat",
         "script/sdelete.bat"
       ],
       "type": "windows-shell"
