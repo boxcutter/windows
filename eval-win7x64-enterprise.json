@@ -29,8 +29,8 @@
       "vm_name": "eval-win7x64-enterprise",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "2048",
-        "numvcpus": "1"
+        "memsize": "3072",
+        "numvcpus": "2"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -69,13 +69,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "2048"
+          "3072"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "vm_name": "eval-win7x64-enterprise",
@@ -111,20 +111,20 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "2048"
+          "3072"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
       "vm_name": "eval-win7x64-enterprise",
       "winrm_password": "vagrant",
-      "winrm_timeout": "10000s",
+      "winrm_timeout": "20000s",
       "winrm_username": "vagrant"
     }
   ],
