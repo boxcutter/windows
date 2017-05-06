@@ -49,6 +49,7 @@
         "floppy/win8x86-pro/Autounattend.xml",
         "floppy/zz-start-sshd.cmd"
       ],
+      "guest_additions_mode": "attach",
       "guest_os_type": "Windows8",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
