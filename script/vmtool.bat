@@ -31,7 +31,7 @@ call :copy_sevenzip
 if not errorlevel 1 goto return0
 
 :get_sevenzip
-for %%i in ("%SEVENZIP_URL%") do set SEVENZIP_MSI=%%~nxi`
+for %%i in ("%SEVENZIP_URL%") do set SEVENZIP_MSI=%%~nxi
 set SEVENZIP_DIR=%TEMP%\sevenzip
 set SEVENZIP_PATH=%SEVENZIP_DIR%\%SEVENZIP_MSI%
 echo ==^> Creating "%SEVENZIP_DIR%"
