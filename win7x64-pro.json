@@ -28,7 +28,7 @@
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "memsize": "2048",
-        "numvcpus": "1"
+        "numvcpus": "2"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -71,7 +71,7 @@
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "vm_name": "win7x64-pro",
@@ -111,7 +111,7 @@
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",

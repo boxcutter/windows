@@ -29,8 +29,8 @@
       "vm_name": "eval-win2012r2-datacenter-ssh",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "1536",
-        "numvcpus": "1",
+        "memsize": "2048",
+        "numvcpus": "2",
         "scsi0.virtualDev": "lsisas1068"
       }
     },
@@ -68,13 +68,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "1536"
+          "2048"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ],
         [
           "setextradata",
@@ -110,13 +110,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "1536"
+          "2048"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ],
         [
           "set",

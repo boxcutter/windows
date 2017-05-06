@@ -31,7 +31,7 @@
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "memsize": "2048",
-        "numvcpus": "1"
+        "numvcpus": "2"
       }
     },
     {
@@ -75,7 +75,7 @@
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "vm_name": "win7x64-enterprise-ssh"
@@ -112,7 +112,7 @@
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",

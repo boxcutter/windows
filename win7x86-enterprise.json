@@ -27,8 +27,8 @@
       "vm_name": "win7x86-enterprise",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "1536",
-        "numvcpus": "1"
+        "memsize": "2048",
+        "numvcpus": "2"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -65,13 +65,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "1536"
+          "2048"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "vm_name": "win7x86-enterprise",
@@ -105,13 +105,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "1536"
+          "2048"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
