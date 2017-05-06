@@ -59,6 +59,7 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
+      "post_shutdown_delay": "30s",
       "type": "virtualbox-iso",
       "vboxmanage": [
         [
@@ -102,7 +103,6 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "win-8.1",
-      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -162,8 +162,8 @@
     "cm_version": "",
     "disk_size": "40960",
     "headless": "false",
-    "iso_checksum": "e2c60b093b11b99c8f021c518249f4c42093efe2",
-    "iso_url": "http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X86FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X86FREE_EN-US_DV5.ISO",
+    "iso_checksum": "4ddd0881779e89d197cb12c684adf47fd5d9e540",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X86FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X86FREE_EN-US_DV9.ISO",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "update": "true",
     "version": "0.1.0"

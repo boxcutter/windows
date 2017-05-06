@@ -21,10 +21,9 @@ goto exit1
 :chef
 ::::::::::::
 
-if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=12.9.38-1
-
-if not defined CHEF_URL set CHEF_64_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-x64.msi
-if not defined CHEF_URL set CHEF_32_URL=https://packages.chef.io/stable/windows/2008r2/chef-client-%CM_VERSION%-x86.msi
+if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=12.19.36
+if not defined CHEF_URL set CHEF_64_URL=https://packages.chef.io/files/stable/chef/%CM_VERSION%/windows/2008r2/chef-client-%CM_VERSION%-1-x64.msi
+if not defined CHEF_URL set CHEF_32_URL=https://packages.chef.io/files/stable/chef/%CM_VERSION%/windows/2008r2/chef-client-%CM_VERSION%-1-x86.msi
 
 if defined ProgramFiles(x86) (
   SET CHEF_URL=%CHEF_64_URL%
@@ -60,9 +59,9 @@ goto exit0
 :chefdk
 ::::::::::::
 
-if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CM_VERSION=0.13.21-1
-if not defined CHEFDK_URL set CHEFDK_64_URL=https://packages.chef.io/stable/windows/2008r2/chefdk-%CM_VERSION%-x86.msi
-if not defined CHEFDK_URL set CHEFDK_32_URL=https://packages.chef.io/stable/windows/2008r2/chefdk-%CM_VERSION%-x86.msi
+if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CM_VERSION=1.3.43
+if not defined CHEFDK_URL set CHEFDK_64_URL=https://packages.chef.io/files/stable/chefdk/%CM_VERSION%/windows/2008r2/chefdk-%CM_VERSION%-1-x86.msi
+if not defined CHEFDK_URL set CHEFDK_32_URL=https://packages.chef.io/files/stable/chefdk/%CM_VERSION%/windows/2008r2/chefdk-%CM_VERSION%-1-x86.msi
 
 if defined ProgramFiles(x86) (
   SET CHEFDK_URL=%CHEFDK_64_URL%
@@ -198,4 +197,3 @@ echo ==^> Building box without a configuration management tool
 
 @echo ==^> Script exiting with errorlevel %ERRORLEVEL%
 @exit /b %ERRORLEVEL%
-

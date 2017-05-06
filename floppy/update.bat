@@ -35,7 +35,7 @@ End If
 On Error Goto 0
 If searchResult.Updates.Count Then
     LogWrite "There are " & searchResult.Updates.Count & " applicable updates"
-End if 
+End if
 If searchResult.Updates.Count = 0 Then
     LogWrite "There are no applicable updates."
     ExecutePostInstallBatch
@@ -83,7 +83,7 @@ Function getUpdatesToDownload(searchResult)
     Set updatesToDownload = CreateObject("Microsoft.Update.UpdateColl")
     If Err.Number <> 0 Then
         LogWrite "Error " & Hex(Err) & " calling " & Err.Source
-        LogWrite Err.Description 
+        LogWrite Err.Description
     End If
     On Error Goto 0
     For i = 0 to searchResult.Updates.Count-1
@@ -109,7 +109,7 @@ Function getUpdatesToDownload(searchResult)
         LogWrite "All applicable updates were skipped."
         WScript.Quit
     End If
-    Set getUpdatesToDownload = updatesToDownload 
+    Set getUpdatesToDownload = updatesToDownload
 End Function
 
 Function downloadUpdates(updateSession, updatesToDownload)
@@ -178,13 +178,13 @@ Sub deleteStartupEntry
     Set reg=GetObject("winmgmts:{impersonationLevel=impersonate}!\\" & strComputer & "\root\default:StdRegProv")
     strKeyPath = "Software\Microsoft\Windows\CurrentVersion\Run"
     strValueName = "WindowsUpdate"
-    LogWrite "Chedking to see if the following registry key exits:"
+    LogWrite "Checking to see if the following registry key exits:"
     LogWrite "HKLM\" & strKeyPath
     reg.GetStringValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName, strValue
     If IsNull(strValue) Then
         LogWrite "The registry key does not exist from a prior run."
     Else
-        LogWrite "The registry key exists from a prior run, deleting..." 
+        LogWrite "The registry key exists from a prior run, deleting..."
         reg.DeleteValue HKEY_LOCAL_MACHINE, strKeyPath, strValueName
         LogWrite "Registry key deleted."
     End If

@@ -60,6 +60,7 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
+      "post_shutdown_delay": "30s",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
@@ -98,7 +99,6 @@
         "floppy/zz-start-sshd.cmd"
       ],
       "guest_os_type": "win-8",
-      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
@@ -166,8 +166,8 @@
     "cm_version": "",
     "disk_size": "40960",
     "headless": "false",
-    "iso_checksum": "4eadfe83e736621234c63e8465986f0af6aa3c82",
-    "iso_url": "iso/en_windows_8_enterprise_x64_dvd_917522.iso",
+    "iso_checksum": "ae59e04462e4dc74e971d6e98d0cc1f2f3d63f1d",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
     "version": "0.1.0"
