@@ -53,6 +53,7 @@
         "floppy/zz-start-sshd.cmd",
         "floppy/oracle-cert.cer"
       ],
+      "guest_additions_mode": "attach",
       "guest_os_type": "Windows7_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
