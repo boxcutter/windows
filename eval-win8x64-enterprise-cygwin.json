@@ -15,7 +15,7 @@
         "floppy/hotfix-KB2842230.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows8-64",
       "headless": "{{ user `headless` }}",
@@ -50,7 +50,7 @@
         "floppy/hotfix-KB2842230.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/zz-start-sshd.cmd",
+        "floppy/zz-start-transports.cmd",
         "floppy/oracle-cert.cer"
       ],
       "guest_additions_mode": "attach",
@@ -97,7 +97,7 @@
         "floppy/hotfix-KB2842230.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-8",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -174,4 +174,3 @@
     "version": "0.1.0"
   }
 }
-

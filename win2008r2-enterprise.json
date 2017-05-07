@@ -14,7 +14,7 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/win2008r2-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows7srv-64",
       "headless": "{{ user `headless` }}",
@@ -49,7 +49,7 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/win2008r2-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_additions_mode": "attach",
       "guest_os_type": "Windows2008_64",
@@ -93,7 +93,7 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/win2008r2-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-2008",
       "iso_checksum": "{{ user `iso_checksum` }}",
