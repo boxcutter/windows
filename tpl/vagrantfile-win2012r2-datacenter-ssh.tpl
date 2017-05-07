@@ -1,8 +1,9 @@
+#Generated from tpl/template.tpl on 2016-11-28 03:01:30.
+#If you edit this file, your changes may be overwritten.
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.define "vagrant-win2012r2-datacenter-ssh"
   config.vm.box = "win2012r2-datacenter-ssh"
 
   # Port forward WinRM and RDP
@@ -15,7 +16,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :virtualbox do |v, override|
     v.gui = true
-    v.customize ["modifyvm", :id, "--memory", 1536]
+    v.customize ["modifyvm", :id, "--memory", 2048]
     v.customize ["modifyvm", :id, "--cpus", 1]
     v.customize ["modifyvm", :id, "--vram", "256"]
     v.customize ["setextradata", "global", "GUI/MaxGuestResolution", "any"]
@@ -25,7 +26,7 @@ Vagrant.configure("2") do |config|
   ["vmware_fusion", "vmware_workstation"].each do |provider|
     config.vm.provider provider do |v, override|
       v.gui = true
-      v.vmx["memsize"] = "1536"
+      v.vmx["memsize"] = "2048"
       v.vmx["numvcpus"] = "1"
       v.vmx["cpuid.coresPerSocket"] = "1"
       v.vmx["ethernet0.virtualDev"] = "vmxnet3"
@@ -37,7 +38,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :parallels do |v, override|
     v.customize ["set", :id, "--cpus", 1]
-    v.customize ["set", :id, "--memsize", 1536]
+    v.customize ["set", :id, "--memsize", 2048]
     v.customize ["set", :id, "--videosize", "256"]
   end
 end

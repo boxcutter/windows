@@ -1,8 +1,9 @@
+#Generated from tpl/template.tpl on 2016-11-28 03:01:30.
+#If you edit this file, your changes may be overwritten.
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.define "vagrant-win7x64-enterprise"
   config.vm.box = "win7x64-enterprise"
 
   # Port forward WinRM and RDP
@@ -31,7 +32,7 @@ Vagrant.configure("2") do |config|
       v.vmx["ethernet0.virtualDev"] = "vmxnet3"
       v.vmx["RemoteDisplay.vnc.enabled"] = "false"
       v.vmx["RemoteDisplay.vnc.port"] = "5900"
-      v.vmx["scsi0.virtualDev"] = "lsilogic"
+      v.vmx["scsi0.virtualDev"] = "lsisas1068"
     end
   end
 

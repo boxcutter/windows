@@ -1,14 +1,14 @@
 <!-- :
 @setlocal EnableDelayedExpansion EnableExtensions
-@for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
-@if defined PACKER_DEBUG (@echo on) else (@echo off)
+@for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
+@if "%PACKER_DEBUG%" geq "5" (@echo on) else (@echo off)
 
 echo ==^> Enabling updates for other products from Microsoft Update
 net stop wuauserv
 
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v EnableFeaturedSoftware /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v EnableFeaturedSoftware /t REG_DWORD /d 1 /f
 
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v IncludeRecommendedUpdates /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v IncludeRecommendedUpdates /t REG_DWORD /d 1 /f
 
 cscript //nologo "%~f0?.wsf"
 

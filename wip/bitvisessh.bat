@@ -5,8 +5,6 @@ SET PACKER_DEBUG=true
 
 title Installing Bitvise SSH Server.  Please wait...
 
-if not defined BITVISE_URL set BITVISE_URL=http://dl.bitvise.com/BvSshServer-Inst.exe
-
 for %%i in (%BITVISE_URL%) do set BITVISE_EXE=%%~nxi
 set BITVISE_DIR=%TEMP%\bitvise
 set BITVISE_PATH=%BITVISE_DIR%\%BITVISE_EXE%
@@ -60,12 +58,60 @@ goto :exit
 verify other 2>nul
 
 :exit
+	if %ERRORLEVEL% neq 0 (
+		call :log %0 ERROR: %0 exiting with code %ERRORLEVEL%
+		if %PACKER_IGNORE_ERRORS% neq 0 (
+			call :log Overiding exit code as PACKER_IGNORE_ERRORS is set
+			goto :exit0
+		)
+	) else (
+		call :log %0 exiting with code %ERRORLEVEL%
+	)
+	exit /b %ERRORLEVEL%
 
-REM # Configure Bitvise SSH server
-REM start-process -FilePath 'C:\Program Files\Bitvise SSH Server\BssCfg.exe' -ArgumentList 'settings importtext A:\bitvisessh.cfg' -wait -verb RunAs
-REM
-REM # Start Bitvise SSH server
-REM Set-Service -Name BvSshServer -StartupType Automatic -Status Running 
-REM
-REM # Disable firewall
-REM netsh advfirewall set allprofiles state off
+:exit0
+	ver>nul
+	goto :exit
+
+:exit1
+	verify other 2>nul
+	goto :exit
+
+:log
+	echo %* >&2
+	echo %TIME% %* >>"%PACKER_LOG%"
+	goto :eof
+
+:run
+	call :log Executing: %*
+	ver>nul
+	%*
+	if %ERRORLEVEL% neq 0 (
+		call :log ERROR: %ERRORLEVEL% returned by: %*
+	)
+	goto :eof
+
+:sleep
+	@set /a "_sleep=%1+1" >nul
+	@ping -n %_sleep% 127.0.0.1 >nul 2>nul
+	@goto :eof
+
+:wget
+	where _download.cmd >nul 2>nul
+	if %ERRORLEVEL% neq 0 (
+		if exist "a:\01-install-wget.cmd" (
+			call "a:\01-install-wget.cmd"
+		)
+	)
+	call :run call _download.cmd %*
+	goto :eof
+
+:unzip
+	where _unzip.cmd >nul 2>nul
+	if %ERRORLEVEL% neq 0 (
+		if exist "a:\01-install-unzip.cmd" (
+			call "a:\01-install-unzip.cmd"
+		)
+	)
+	call :run call _unzip.cmd %*
+	goto :eof

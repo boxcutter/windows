@@ -2,9 +2,9 @@
 packer_cache/
 output-*
 *.box
+*.log
 *.tar.gz
 iso
-crash.log
 tmp
 .vagrant/
 *.swp

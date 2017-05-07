@@ -1,0 +1,8 @@
+: lines that start with a colon are ignored
+: package names can be separated by spaces, tabs, or newlines
+: to avoid popups, please dependency packages first (e.g., paint.net requires dotnet4.6.1)
+
+7zip
+busybox
+unzip
+wget

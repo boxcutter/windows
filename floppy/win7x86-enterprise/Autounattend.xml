@@ -83,7 +83,7 @@
             </OOBE>
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c a:\00-run-all-scripts.cmd</CommandLine>
+                    <CommandLine>cmd.exe /e:on /v:on /c a:\_run-scripts.cmd 2&gt;&amp;1 | a:\_tee.cmd "%TEMP%\_run-scripts.log"</CommandLine>
                     <Description>Run all *.bat and *.cmd scripts on drive A:</Description>
                     <Order>1</Order>
                     <RequiresUserInput>true</RequiresUserInput>

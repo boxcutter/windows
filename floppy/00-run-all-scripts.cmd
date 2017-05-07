@@ -1,6 +1,6 @@
 @setlocal EnableDelayedExpansion EnableExtensions
-@for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
-@if defined PACKER_DEBUG (@echo on) else (@echo off)
+@for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
+@if "%PACKER_DEBUG%" geq "5" (@echo on) else (@echo off)
 
 goto main
 
@@ -43,13 +43,15 @@ goto :eof
 ::::::::::::
 
 :: If TEMP is not defined in this shell instance, define it ourselves
-if not defined TEMP set TEMP=%USERPROFILE%\AppData\Local\Temp
+if not defined TEMP (
+    set TEMP=%USERPROFILE%\AppData\Local\Temp
+)
 
 PATH=%SystemRoot%\System32;%SystemRoot%;%SystemRoot%\System32\WindowsPowerShell\v1.0;%PATH%;%~dp0
 
 pushd "%~dp0"
 
-if defined PACKER_DEBUG (
+if "%PACKER_DEBUG%" geq "5" (
   set _PACKER_CMD_OPTS=
 ) else (
   set _PACKER_CMD_OPTS=/q

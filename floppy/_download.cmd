@@ -1,91 +1,442 @@
 @setlocal EnableDelayedExpansion EnableExtensions
-@for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
-@if defined PACKER_DEBUG (@echo on) else (@echo off)
+@for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
+@if "%PACKER_DEBUG%" geq "5" (@echo on) else (@echo off)
 
-if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
+call :init %0 %*
 
-set url=%~1
+@set _url=%~1
+@set _filename=%~2
 
-set filename=%~2
+@if not defined _url (
+    @call :error %0 called without URL parameter.
+    @goto exit1
+)
 
-if not defined url echo ==^> ERROR: _download.cmd called without URL parameter. & goto exit1
+@if not defined _filename (
+    @set _filename=%PACKER_TMP%\%~nx1
+)
 
-if not defined filename set filename=%TEMP%\%~nx1
+@set _basename=
 
-if exist "%filename%" echo ==^> File "%filename%" already exists, skipping download. & goto exit0
+@for %%i in ("%_url%") do @(
+    @set _basename=%%~nxi
+)
 
-set basename=
+@if not defined _basename (
+    @goto _try_wget_exe
+)
 
-for %%i in ("%url%") do set basename=%%~nxi
+@call :locate "%_basename%"
+@if not defined located_file (
+    @goto _try_wget_exe
+)
 
-if not defined basename goto download
+@echo ==^> Copying "%located_file%" to "%_filename%", skipping download.
 
-set found=
+@copy /y "%located_file%" "%_filename%"
+@if %ERRORLEVEL% equ 0 (
+    @goto exit0
+)
 
-@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined found @if exist "%%~i\%basename%" set found=%%~i\%basename%
+:_try_wget_exe
 
-if not defined found goto download
+@echo ==^> Downloading "%_url%" to "%_filename%"
 
-echo ==^> Copying "%found%" to "%filename%", skipping download.
+@set _wget=
+@for %%i in (wget.exe) do @(
+    @set _wget=%%~$PATH:i
+)
+@if not exist "%_wget%" (
+    @call :locate "wget.exe"
+    @set _wget=%located_file%
+)
 
-copy /y "%found%" "%filename%" && goto exit0
+@if not exist "%_wget%" (
+    @goto _try_powershell
+)
 
-:download
+@if "%PACKER_DEBUG%" lss "4" (
+    @set _wget_opts=--no-verbose
+)
 
-echo ==^> Downloading "%url%" to "%filename%"
+@call :run "%_wget%" --no-check-certificate %_wget_opts% -O "%_filename%" "%_url%"
 
-set wget=
+@if %ERRORLEVEL% equ 0 (
+    @if exist "%_filename%" (
+        @goto exit0
+    )
+)
 
-for %%i in (wget.exe) do set wget=%%~$PATH:i
+:_try_powershell
 
-if defined wget goto wget
+@call :run powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%_url%', '%_filename%')" <NUL
 
-@for %%i in (%SystemRoot% %PACKER_SEARCH_PATHS%) do @if not defined wget @if exist "%%~i\wget.exe" set wget=%%~i\wget.exe
+@if %ERRORLEVEL% equ 0 (
+    @if exist "%_filename%" (
+        @goto exit0
+    )
+)
 
-:wget
+:_try_bitsadmin
 
-if not exist "%wget%" goto powershell
+@set bitsadmin=
+@for %%i in (bitsadmin.exe) do @(
+    @set bitsadmin=%%~$PATH:i
+)
+@if not exist "%bitsadmin%" (
+    @set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
+)
 
-if not defined PACKER_DEBUG set WGET_OPTS=--no-verbose
+@if not exist "%bitsadmin%" (
+    @goto _try_wget_cmd
+)
 
-"%wget%" --no-check-certificate %WGET_OPTS% -O "%filename%" "%url%"
+@for %%i in ("%_filename%") do @(
+    @set jobname=%%~nxi
+)
 
-if not errorlevel 1 if exist "%filename%" goto exit0
+@call :run "%bitsadmin%" /transfer "%jobname%" "%_url%" "%_filename%"
 
-:powershell
+@if %ERRORLEVEL% equ 0 (
+    @if exist "%_filename%" (
+        @goto exit0
+    )
+)
 
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
+:_try_wget_cmd
 
-if not errorlevel 1 if exist "%filename%" goto exit0
+@set _wget_cmd=
+@for %%i in (_wget.cmd) do @(
+    @set _wget_cmd=%%~$PATH:i
+)
+@if not defined _wget_cmd (
+    @call :locate "_wget_cmd"
+    @set _wget_cmd=%located_file%
+)
+@if not exist "%_wget_cmd%" (
+    @goto exit1
+)
 
-:bitsadmin
+@call :run call "%_wget_cmd%" "%_url%" "%_filename%"
 
-set bitsadmin=
+@if %ERRORLEVEL% equ 0 (
+    @if exist "%_filename%" (
+        @goto exit0
+    )
+)
 
-for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
-
-if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
-
-if not exist "%bitsadmin%" goto powershell
-
-for %%i in ("%filename%") do set jobname=%%~nxi
-
-"%bitsadmin%" /transfer "%jobname%" "%url%" "%filename%"
-
-if not errorlevel 1 if exist "%filename%" goto exit0
-
-echo ==^> ERROR: Failed to download "%url%" to "%filename%"
-
-goto :exit1
-
-:exit0
-
-ver>nul
-
-goto :exit
-
-:exit1
-
-verify other 2>nul
+goto exit1
 
 :exit
+    :: the rest if this file was appended from /suffix.cmd
+    @if %ERRORLEVEL% equ 0 (
+        @call :info %~nx0: exiting with %ERRORLEVEL%
+        @if defined PACKER_PAUSE (
+            @call :pause %PACKER_PAUSE%
+        )
+        @exit /b 0
+        @goto :eof
+    )
+    @call :error %~nx0: exiting with %ERRORLEVEL%
+    @if defined PACKER_IGNORE_ERRORS (
+        @call :debug Setting exit code to 0 as PACKER_IGNORE_ERRORS is set
+        @exit /b 0
+        @goto :eof
+    )
+    @if defined PACKER_PAUSE_ON_ERROR (
+        @set _el=%ERRORLEVEL%
+        @call :pause
+        @exit /b %_el%
+        @goto :eof
+    )
+    @if defined PACKER_SHUTDOWN_ON_ERROR (
+        @call :info Shutting down as PACKER_SHUTDOWN_ON_ERROR is set...
+        @shutdown /s /t 0 /f /d p:4:1 /c "Packer shutdown as %0 returned error %ERRORLEVEL%"
+        @ping -t 127.0.0.1
+    )
+    @exit /b %ERRORLEVEL%
+    goto :eof
+
+:exit0
+    @ver >nul
+    @goto exit
+
+:exit1
+    @verify other 2>nul
+    @goto exit
+
+:download
+    @for %%z in ("%~1") do @(
+        @set _filename=%%~nxz
+    )
+    @set downloaded_file=%~2
+    @if defined _filename (
+        @call :locate "%_filename%"
+        @if exist "!located_file!" (
+            @set downloaded_file=!located_file!
+            @ver >nul
+            @goto :eof
+        )
+        @if not defined downloaded_file (
+            @set downloaded_file=%PACKER_TMP%\%_filename%
+        )
+    )
+    @call :wget "%~1" "%downloaded_file%"
+    @if not exist "%downloaded_file%" (
+        @set downloaded_file=
+    )
+    @set _filename=
+    @goto :eof
+
+:init
+    @set _arg0=%~nx1
+    @call :set_vars
+    @rem Directory must exist, so let's create it
+    @if not exist "%PACKER_TMP%" (
+        @mkdir "%PACKER_TMP%"
+    )
+    @call :set_tee_cmd
+    @call :set_powershell_version
+    @call :info %_arg0%: starting in %CD%: %*
+    @goto :eof
+
+:locate
+    @set located_file=
+    @for %%z in (%PACKER_SEARCH_PATHS%) do @(
+        @if not defined located_file (
+            @if exist "%%~z\%~1" (
+                @set located_file=%%~z\%~1
+            )
+        )
+    )
+    @if not defined located_file (
+        @for %%z in ("%~1") do @(
+            @set located_file=%%~$PATH:z
+        )
+    )
+    @goto :eof
+
+:log
+    @echo %TIME% %*
+    @echo %TIME% %* >>"%PACKER_LOG%"
+    @goto :eof
+
+:debug
+    @if "%PACKER_DEBUG%" geq "4" (
+        @call :log [DEBUG] %*
+    )
+    @goto :eof
+
+:info
+    @if "%PACKER_DEBUG%" geq "3" (
+        @call :log [INFO ] %*
+    )
+    @goto :eof
+
+:warn
+    @if "%PACKER_DEBUG%" geq "2" (
+        @call :log [WARN ] %*
+    )
+    @goto :eof
+
+:error
+    @if "%PACKER_DEBUG%" geq "1" (
+        @call :log [ERROR] %*
+    )
+    @goto :eof
+
+:fatal
+    @call :log [FATAL] %*
+    @goto :eof
+
+:pause
+    @set _pause_seconds=%1
+    @if not defined _pause_seconds (
+        @set _pause_seconds=2147483647
+    )
+    @set _tempfile=%USERPROFILE%\Desktop\DeleteToContinue.txt
+    @echo Remove this file to continue >"%_tempfile%"
+    @echo Waiting %_pause_seconds% seconds, or for %_tempfile% to disappear...
+    @for /f %%z in ('copy "%~f0" nul /z') do @(
+        @set "_cr=%%z"
+    )
+    @for /l %%z in (1,1,%_pause_seconds%) do @(
+        @if exist "%_tempfile%" (
+            @if defined PACKER_BUILD_NAME (
+                @if "%PACKER_DEBUG%" geq "4" (
+                    @set /p ".=Waiting %%z of %_pause_seconds% seconds, or for %_tempfile% to disappear...!_cr!" <nul
+                )
+                @call :sleep 1
+            ) else (
+                @set /p ".=Waiting %%z of %_pause_seconds% seconds, a key to be pressed, or for %_tempfile% to disappear...!_cr!" <nul
+                @timeout /T 1 >nul
+            )
+        )
+    )
+    @echo.
+    @if exist "%_tempfile%" (
+        @del "%_tempfile%"
+    )
+    @set _cr=
+    @set _tempfile=
+    @set _pause_seconds=
+    @goto :eof
+
+:run
+    @call :info Executing: %*
+    @ver >nul
+    @%*
+    @if %ERRORLEVEL% equ 3010 (
+        @call :info %ERRORLEVEL% [reboot required] returned by: %*
+        @goto :eof
+    )
+    @if %ERRORLEVEL% neq 0 (
+        @call :error %ERRORLEVEL% returned by: %*
+    )
+    @goto :eof
+
+:schtask
+    @if not defined _schtask_cmd (
+        @if defined PACKER_BUILD_NAME (
+            @call :locate _schtask.cmd
+            @if exist "%located_file%" (
+                @set _schtask_cmd=call "%located_file%"
+            )
+        )
+        @if not defined _schtask_cmd (
+            @set _schtask_cmd=call
+        )
+    )
+    @call :run %_schtask_cmd% %*
+    @goto :eof
+
+:set_powershell_version
+    @if not defined POWERSHELL_VERSION (
+        @for %%x in (3 1) do @(
+            @if not defined POWERSHELL_VERSION (
+                @for /f "tokens=2*" %%y in ('reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PowerShell\%%x\PowerShellEngine" /v PowerShellVersion') do @(
+                    @set POWERSHELL_VERSION=%%~z
+                )
+            )
+        )
+    )
+    @goto :eof
+
+:set_tee_cmd
+    @if not defined TEE_CMD (
+        @call :locate tee.exe
+        @if exist "%located_file%" (
+            @set TEE_CMD="%located_file%"
+        )
+        @if not defined TEE_CMD (
+            @call :locate _tee.cmd
+            @if exist "%located_file%" (
+               @set TEE_CMD="%located_file%"
+            )
+        )
+        @if not defined TEE_CMD (
+            @set TEE_CMD=echo
+        )
+    )
+    @goto :eof
+
+:set_vars
+    @if not defined CHOCOLATEY_APPS (
+        @set CHOCOLATEY_APPS=chocolatey*.txt
+    )
+    @if not defined CHOCOLATEY_INSTALL_OPTIONS (
+        @set CHOCOLATEY_INSTALL_OPTIONS=--force
+    )
+    @if not defined CYGWIN_MIRROR_URL (
+        @set CYGWIN_MIRROR_URL=http://mirrors.kernel.org/sourceware/cygwin
+    )
+    @if not defined MIN_POWERSHELL_VERSION (
+        @set MIN_POWERSHELL_VERSION=2.0
+    )
+    @if not defined PACKER_DEBUG (
+        @set PACKER_DEBUG=3
+    )
+    @if not defined PACKER_LOG_DIR (
+        @set PACKER_LOG_DIR=z:\c\packer_logs
+    )
+    @if not defined PACKER_PAGEFILE_MB (
+        @set PACKER_PAGEFILE_MB=512
+    )
+    @if not defined PACKER_PASSWORD (
+        @set PACKER_PASSWORD=%USERNAME%
+    )
+    @if not defined PACKER_RUN (
+        @set PACKER_RUN=_run-scripts.txt
+    )
+    @if not defined PACKER_SCRIPTS_TO_RUN (
+        @set PACKER_SCRIPTS_TO_RUN=*.bat *.cmd *.ps1
+    )
+    @if not defined PACKER_SEARCH_PATHS (
+        @set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
+    )
+    @if not defined PACKER_SERVICES (
+        @set PACKER_SERVICES=opensshd sshd winrm
+    )
+    @if not defined PACKER_TIMEOUT (
+        @set PACKER_TIMEOUT=2700
+    )
+    @if not defined PACKER_TMP (
+        @set PACKER_TMP=%TEMP%\packer
+    )
+    @if not defined PACKER_LOG (
+        @set PACKER_LOG=%PACKER_TMP%\packer.log
+    )
+    @if not defined SCOOP_APPS (
+        @set SCOOP_APPS=scoop*.txt
+    )
+    @if not defined SSHD_PASSWORD (
+        @set SSHD_PASSWORD=D@rj33l1ng
+    )
+    @if not exist "%PACKER_TMP%" (
+        @mkdir "%PACKER_TMP%"
+    )
+    @goto :eof
+
+:sleep
+    @set /a "_sleep=%1+1" >nul
+    @ping -n %_sleep% 127.0.0.1 >nul 2>nul
+    @set _sleep=
+    @goto :eof
+
+:stop
+    @call :sleep 5
+    @sc query "%~1" | findstr "RUNNING" >nul 2>nul
+    @if %ERRORLEVEL% neq 0 (
+        @goto :eof
+    )
+    @call :run sc stop "%~1"
+    @for /l %%z in (1,1,60) do @(
+        @call :sleep 1
+        @sc query "%~1" | findstr "STOPPED" >nul 2>nul
+        @if %ERRORLEVEL% equ 0 (
+            @goto :eof
+        )
+    )
+    @goto :eof
+
+:wget
+    @where /q $path:_download.cmd
+    @if %ERRORLEVEL% neq 0 (
+        @if exist "a:\01-install-wget.cmd" (
+            @call "a:\01-install-wget.cmd"
+        )
+    )
+    @call :run call _download.cmd %*
+    @goto :eof
+
+:unzip
+    @where /q $path:_unzip.cmd
+    @if %ERRORLEVEL% neq 0 (
+        @if exist "a:\01-install-unzip.cmd" (
+            @call "a:\01-install-unzip.cmd"
+        )
+    )
+    @call :run call _unzip.cmd %*
+    @goto :eof
+
+:: end of /suffix.cmd
