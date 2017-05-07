@@ -11,12 +11,12 @@ reg ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v Enable
 
 title Enabling Windows Remote Management. Please wait...
 
-echo ==^> Setting the PowerShell ExecutionPolicy to RemoteSigned (64 bit)
+echo ==^> Setting the PowerShell ExecutionPolicy to RemoteSigned for 64 bit
 powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force" <NUL
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force"
 
 if exist %SystemRoot%\SysWOW64\cmd.exe (
-  echo ==^> Setting the PowerShell ExecutionPolicy to RemoteSigned (32 bit)
+  echo ==^> Setting the PowerShell ExecutionPolicy to RemoteSigned for 32 bit
   %SystemRoot%\SysWOW64\cmd.exe /c powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force" <NUL
   @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: powershell -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force" <NUL
 )
@@ -36,10 +36,6 @@ powershell -File a:\fixnetwork.ps1 <NUL
 echo ==^> Changing remote UAC account policy
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
-
-echo ==^> Blocking WinRM port 5985 on the firewall
-netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
 
 echo ==^> Configuring Windows Remote Management (WinRM) service
 
@@ -67,27 +63,22 @@ call winrm set winrm/config/client/auth @{Basic="true"}
 call winrm set winrm/config/listener?Address=*+Transport=HTTP @{Port="5985"}
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm set winrm/config/listener?Address=*+Transport=HTTP @{Port="5985"}
 
-sc config winrm start= disabled
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: sc config winrm start= disabled
+sc config winrm start= auto
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: sc config winrm start= auto
+
+sc query winrm | findstr "RUNNING" >nul
+if errorlevel 1 goto winrm_not_running
+goto :winrm_running
+
+:winrm_not_running
+
+sc start winrm
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: sc start winrm
 
 :: wait for winrm service to finish starting
 timeout 5
 
-sc query winrm | findstr "RUNNING" >nul
-if errorlevel 1 goto winrm_not_running
-
-echo ==^> Stopping winrm service
-
-sc stop winrm
-
-:is_winrm_running
-
-timeout 1
-
-sc query winrm | findstr "STOPPED" >nul
-if errorlevel 1 goto is_winrm_running
-
-:winrm_not_running
+:winrm_running
 
 echo ==^> Unblocking WinRM port 5985 on the firewall
 netsh advfirewall firewall delete rule name="winrm"

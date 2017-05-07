@@ -8,13 +8,11 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
+        "floppy/zz-winrm_setup.cmd",
         "floppy/networkprompt.bat",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/win7x64-pro/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/win7x64-pro/Autounattend.xml"
       ],
       "guest_os_type": "windows7-64",
       "headless": "{{ user `headless` }}",
@@ -42,14 +40,12 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
+        "floppy/zz-winrm_setup.cmd",
         "floppy/networkprompt.bat",
         "floppy/oracle-cert.cer",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/win7x64-pro/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/win7x64-pro/Autounattend.xml"
       ],
       "guest_additions_mode": "attach",
       "guest_os_type": "Windows7_64",
@@ -87,13 +83,11 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
+        "floppy/zz-winrm_setup.cmd",
         "floppy/networkprompt.bat",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/win7x64-pro/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/win7x64-pro/Autounattend.xml"
       ],
       "guest_os_type": "win-7",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -139,7 +133,6 @@
         "UPDATE={{user `update`}}"
       ],
       "scripts": [
-        "script/vagrant.bat",
         "script/cmtool.bat",
         "script/vmtool.bat",
         "script/clean.bat",

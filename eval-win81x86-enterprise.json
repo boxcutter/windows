@@ -4,17 +4,16 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/eval-win81x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
         "floppy/disablewinupdate.bat",
-        "floppy/eval-win81x86-enterprise/Autounattend.xml",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-winrm_setup.cmd",
+        "floppy/update.bat"
       ],
       "guest_os_type": "windows8",
       "headless": "{{ user `headless` }}",
@@ -39,18 +38,17 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/eval-win81x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
         "floppy/disablewinupdate.bat",
-        "floppy/eval-win81x86-enterprise/Autounattend.xml",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
         "floppy/oracle-cert.cer",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-winrm_setup.cmd",
+        "floppy/update.bat"
       ],
       "guest_additions_mode": "attach",
       "guest_os_type": "Windows8",
@@ -91,17 +89,16 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/eval-win81x86-enterprise/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
         "floppy/disablewinupdate.bat",
-        "floppy/eval-win81x86-enterprise/Autounattend.xml",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-winrm_setup.cmd",
+        "floppy/update.bat"
       ],
       "guest_os_type": "win-8.1",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -147,7 +144,6 @@
         "UPDATE={{user `update`}}"
       ],
       "scripts": [
-        "script/vagrant.bat",
         "script/cmtool.bat",
         "script/vmtool.bat",
         "script/clean.bat",
