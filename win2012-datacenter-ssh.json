@@ -30,8 +30,8 @@
       "vm_name": "win2012-datacenter-ssh",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "1536",
-        "numvcpus": "1"
+        "memsize": "2048",
+        "numvcpus": "2"
       }
     },
     {
@@ -69,13 +69,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "1536"
+          "2048"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
       ],
       "vm_name": "win2012-datacenter-ssh"
@@ -106,13 +106,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "1536"
+          "2048"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ],
         [
           "set",

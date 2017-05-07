@@ -31,7 +31,7 @@
       "vm_name": "eval-win7x86-enterprise-ssh",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "1536",
+        "memsize": "2048",
         "numvcpus": "2"
       }
     },
@@ -71,7 +71,7 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "1536"
+          "2048"
         ],
         [
           "modifyvm",
@@ -109,7 +109,7 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "1536"
+          "2048"
         ],
         [
           "set",
