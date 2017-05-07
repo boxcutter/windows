@@ -29,7 +29,7 @@
         "floppy/cygwin.sh",
         "floppy/passwordchange.bat",
         "floppy/cygwin.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
         "floppy/01-install-powershell.cmd",
         ".windows/provisions/wget.exe"
       ],
@@ -64,7 +64,7 @@
         "floppy/cygwin.sh",
         "floppy/passwordchange.bat",
         "floppy/cygwin.bat",
-        "floppy/zz-start-sshd.cmd",
+        "floppy/zz-start-transports.cmd",
         "floppy/oracle-cert.cer",
         "floppy/01-install-powershell.cmd",
         ".windows/provisions/wget.exe"
