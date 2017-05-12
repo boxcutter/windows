@@ -4,8 +4,8 @@
 
 pushd "%TEMP%"
 
-# determine the version of windows since dism in windows 7 lacks cleanup-image
-# http://stackoverflow.com/questions/13212033/get-windows-version-in-a-batch-file
+:: determine the version of windows since dism in windows 7 lacks cleanup-image
+:: http://stackoverflow.com/questions/13212033/get-windows-version-in-a-batch-file
 for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION=%%i.%%j
 
 if "%VERSION%" == "6.1" (
