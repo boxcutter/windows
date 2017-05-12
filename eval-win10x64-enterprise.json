@@ -8,6 +8,7 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/fixnetwork.ps1",
@@ -44,6 +45,7 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/fixnetwork.ps1",
@@ -97,6 +99,7 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/fixnetwork.ps1",
@@ -155,6 +158,7 @@
         "script/vmtool.bat",
         "script/clean.bat",
         "script/ultradefrag.bat",
+        "script/uninstall-7zip.bat",
         "script/sdelete.bat"
       ],
       "type": "windows-shell"
