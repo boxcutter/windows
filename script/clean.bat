@@ -11,13 +11,13 @@ for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION=%%i.%%j
 if "%VERSION%" == "6.1" (
     echo ==^> Running Disk Cleanup
     C:\Windows\System32\cleanmgr.exe /sagerun:10﻿
-
-    echo ==^> Cleaning up old Windows Update files
-    for /d %%i in ("%SystemRoot%\SoftwareDistribution\Download\*.*") do rmdir /q /s "%%~i"
 ) else (
     echo ==^> Running DISM to remove old components
     Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 )
+
+echo ==^> Cleaning up old Windows Update files
+    for /d %%i in ("%SystemRoot%\SoftwareDistribution\Download\*.*") do rmdir /q /s "%%~i"
 
 echo ==^> Cleaning "%TEMP%" directories >&2
 
