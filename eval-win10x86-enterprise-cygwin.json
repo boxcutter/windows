@@ -19,7 +19,7 @@
         "floppy/update.bat",
         "floppy/zz-start-transports.cmd"
       ],
-      "guest_os_type": "windows8",
+      "guest_os_type": "windows9",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
