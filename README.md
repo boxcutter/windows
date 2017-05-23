@@ -113,3 +113,14 @@ For Windows, the ISO path variables are:
 You can also override these setting, such as with
 
     WIN81_X64_PRO := file:///Volumes/MSDN/en_windows_8.1_professional_vl_with_update_x64_dvd_4065194.iso
+
+### Acknowledgments
+
+[Parallels](http://www.parallels.com/) provides a Business Edition license of
+their software to run on the basebox build farm.
+
+<img src="http://www.parallels.com/fileadmin/images/corporate/brand-assets/images/logo-knockout-on-red.jpg" width="80">
+
+[SmartyStreets](http://www.smartystreets.com) is providing basebox hosting for the boxcutter project.
+
+<img src="https://d79i1fxsrar4t.cloudfront.net/images/brand/smartystreets.65887aa3.png" width="320">
