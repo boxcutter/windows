@@ -44,6 +44,7 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
         "floppy/disablewinupdate.bat",
         "floppy/fixnetwork.ps1",
         "floppy/install-winrm.cmd",
@@ -52,6 +53,8 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/upgrade-wua.bat",
+        "floppy/pagefile.bat",
+        "floppy/update.bat",
         "floppy/win7x64-enterprise/Autounattend.xml",
         "floppy/zz-start-sshd.cmd"
       ],

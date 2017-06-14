@@ -16,7 +16,7 @@
 :: Uncomment the following to change the pagefile size in MB as set by
 :: floppy/pagefile.bat
 :: Default: 512
-:: set PACKER_PAGEFILE_MB=512
+set PACKER_PAGEFILE_MB=512
 
 :: Uncomment the following to pause PACKER_PAUSE seconds after each script is
 :: run by floppy/00-run-all-scripts.cmd (unless you press Y)
