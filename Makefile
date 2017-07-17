@@ -24,6 +24,9 @@ EVAL_WIN10_X64_CHECKSUM ?= 6c60f91bf0ad7b20f469ab8f80863035c517f34f
 EVAL_WIN10_X86 ?= http://care.dlservice.microsoft.com/dl/download/B/8/B/B8B452EC-DD2D-4A8F-A88C-D2180C177624/15063.0.170317-1834.RS2_RELEASE_CLIENTENTERPRISEEVAL_OEMRET_X86FRE_EN-US.ISO
 EVAL_WIN10_X86_CHECKSUM ?= 1aa6d3c4451e79e69e84118ec629ad99e2ad36e7
 
+EVAL_WIN2016_X64 ?= http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO
+EVAL_WIN2016_X64_CHECKSUM ?= 772700802951b36c8cb26a61c040b9a8dc3816a3
+
 # @todo:
 EVAL_WIN2012_X64 ?= http://download.microsoft.com/download/6/D/A/6DAB58BA-F939-451D-9101-7DE07DC09C03/9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.ISO
 EVAL_WIN2012_X64_CHECKSUM ?= 922b365c3360ce630f6a4b4f2f3c79e66165c0fb
@@ -344,6 +347,24 @@ test-win2012r2-openssh: test-win2012r2-datacenter-ssh test-win2012r2-standard-ss
 test-win2012r2-cygwin: test-win2012r2-datacenter-cygwin test-win2012r2-standard-cygwin
 
 
+win2016: win2016-winrm win2016-openssh win2016-cygwin
+
+win2016-winrm: win2016-standard
+
+win2016-openssh: win2016-standard-ssh
+
+win2016-cygwin: win2016-standard-cygwin
+
+
+test-win2016: test-win2016-winrm test-win2016-openssh test-win2016-cygwin
+
+test-win2016-winrm: test-win2016-standard
+
+test-win2016-openssh: test-win2016-standard-ssh
+
+test-win2016-cygwin: test-win2016-standard-cygwin
+
+
 eval: eval-winrm eval-openssh
 
 eval-winrm: eval-win2012r2-datacenter eval-win2008r2-datacenter eval-win81x64-enterprise eval-win7x64-enterprise eval-win10x64-enterprise
@@ -426,6 +447,8 @@ $(eval $(call BUILDBOX,win2012r2-standard,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECK
 $(eval $(call BUILDBOX,eval-win2012r2-standard,$(EVAL_WIN2012R2_X64),$(EVAL_WIN2012R2_X64_CHECKSUM)))
 
 $(eval $(call BUILDBOX,win2012r2-standardcore,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
+
+$(eval $(call BUILDBOX,eval-win2016-standard,$(EVAL_WIN2016_X64),$(EVAL_WIN2016_X64_CHECKSUM)))
 
 $(eval $(call BUILDBOX,win7x64-enterprise,$(WIN7_X64_ENTERPRISE),$(WIN7_X64_ENTERPRISE_CHECKSUM)))
 
