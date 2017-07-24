@@ -139,7 +139,7 @@
   "post-processors": [
     {
       "compression_level": 1,
-      "keep_input_artifact": false,
+      "keep_input_artifact": true,
       "output": "box/{{.Provider}}/eval-win2016-standard-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "tpl/vagrantfile-eval-win2016-standard-cygwin.tpl"
