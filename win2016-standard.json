@@ -27,7 +27,7 @@
       "vm_name": "win2016-standard",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "2048",
+        "memsize": "4096",
         "numvcpus": "2",
         "scsi0.virtualDev": "lsisas1068"
       },
@@ -67,7 +67,7 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "2048"
+          "4096"
         ],
         [
           "modifyvm",
@@ -113,7 +113,7 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "2048"
+          "4096"
         ],
         [
           "set",
