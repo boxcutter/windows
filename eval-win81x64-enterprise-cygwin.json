@@ -16,7 +16,7 @@
         "floppy/cygwin.sh",
         "floppy/zz-start-transports.cmd"
       ],
-      "guest_os_type": "windows8-64",
+      "guest_os_type": "windows9-64",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -178,4 +178,3 @@
     "version": "0.1.0"
   }
 }
-
