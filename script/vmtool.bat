@@ -186,7 +186,8 @@ set VBOX_ISO=VBoxGuestAdditions.iso
 mkdir "%VBOX_ISO_DIR%"
 pushd "%VBOX_ISO_DIR%"
 set VBOX_SETUP_PATH=
-@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VBOX_SETUP_PATH @if exist "%%~i\%VBOX_SETUP_EXE%" set VBOX_SETUP_PATH=%%~i\%VBOX_SETUP_EXE%
+set VBOX_SETUP_DIR=
+@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VBOX_SETUP_PATH @if exist "%%~i\%VBOX_SETUP_EXE%" (set VBOX_SETUP_PATH=%%~i\%VBOX_SETUP_EXE% & set VBOX_SETUP_DIR=%%~i)
 if defined VBOX_SETUP_PATH goto install_vbox_guest_additions
 
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if exist "%%~i\%VBOX_ISO%" set VBOX_ISO_PATH=%%~i\%VBOX_ISO%
@@ -216,7 +217,7 @@ if not exist "%VBOX_SETUP_PATH%" echo ==^> Unable to unzip "%VBOX_ISO_PATH%" & g
 
 :install_vbox_guest_additions
 echo ==^> Installing Oracle certificate to keep install silent
-powershell -Command "Get-ChildItem %VBOX_ISO_DIR%\cert\ -Filter vbox*.cer | ForEach-Object { %VBOX_ISO_DIR%\cert\VBoxCertUtil.exe add-trusted-publisher $_.FullName --root $_.FullName }" <NUL
+powershell -Command "Get-ChildItem %VBOX_SETUP_DIR%\cert\ -Filter vbox*.cer | ForEach-Object { %VBOX_SETUP_DIR%\cert\VBoxCertUtil.exe add-trusted-publisher $_.FullName --root $_.FullName }" <NUL
 echo ==^> Installing VirtualBox Guest Additions
 "%VBOX_SETUP_PATH%" /S
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%VBOX_SETUP_PATH%" /S
