@@ -27,7 +27,7 @@ End If
 On Error Goto 0
 LogWrite "Searching for updates..."
 On Error Resume Next
-Set searchResult = updateSearcher.Search("IsInstalled=0 and Type='Software' and IsHidden=0")
+Set searchResult = updateSearcher.Search("IsInstalled=0 and Type='Software' and IsHidden=0 and BrowseOnly=0 and IsAssigned=1")
 If Err.Number <> 0 Then
     LogWrite "Error " & Hex(Err) & " calling " & Err.Source
     LogWrite Err.Description
