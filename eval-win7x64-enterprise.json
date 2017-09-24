@@ -54,7 +54,7 @@
         "floppy/powerconfig.bat",
         "floppy/upgrade-wua.bat",
         "floppy/pagefile.bat",
-        "floppy/update.bat",
+        "floppy/xx-update.bat",
         "floppy/win7x64-enterprise/Autounattend.xml",
         "floppy/zz-start-sshd.cmd"
       ],
@@ -72,18 +72,18 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "4096"
+          "8069"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "4"
         ]
       ],
       "vm_name": "eval-win7x64-enterprise",
       "winrm_password": "vagrant",
-      "winrm_timeout": "10000s",
+      "winrm_timeout": "50000s",
       "winrm_username": "vagrant"
     },
     {
