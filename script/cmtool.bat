@@ -21,7 +21,7 @@ goto exit1
 :chef
 ::::::::::::
 
-if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=13.2.20
+if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=13.6.4
 if not defined CHEF_URL set CHEF_64_URL=https://packages.chef.io/files/stable/chef/%CM_VERSION%/windows/2008r2/chef-client-%CM_VERSION%-1-x64.msi
 if not defined CHEF_URL set CHEF_32_URL=https://packages.chef.io/files/stable/chef/%CM_VERSION%/windows/2008r2/chef-client-%CM_VERSION%-1-x86.msi
 
@@ -59,7 +59,7 @@ goto exit0
 :chefdk
 ::::::::::::
 
-if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CM_VERSION=1.3.43
+if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CM_VERSION=2.3.4
 if not defined CHEFDK_URL set CHEFDK_64_URL=https://packages.chef.io/files/stable/chefdk/%CM_VERSION%/windows/2008r2/chefdk-%CM_VERSION%-1-x86.msi
 if not defined CHEFDK_URL set CHEFDK_32_URL=https://packages.chef.io/files/stable/chefdk/%CM_VERSION%/windows/2008r2/chefdk-%CM_VERSION%-1-x86.msi
 
