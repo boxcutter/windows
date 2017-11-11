@@ -3,6 +3,7 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/slim_win10.bat",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
@@ -41,6 +42,7 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/slim_win10.bat",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
@@ -96,6 +98,7 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/slim_win10.bat",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
