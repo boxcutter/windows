@@ -27,8 +27,8 @@
       "vm_name": "win2008r2-web",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "2048",
-        "numvcpus": "2"
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -52,6 +52,7 @@
         "floppy/zz-start-transports.cmd"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows2008_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -65,13 +66,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "2048"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ]
       ],
       "vm_name": "win2008r2-web",
@@ -105,13 +106,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "2048"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -151,6 +152,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",
