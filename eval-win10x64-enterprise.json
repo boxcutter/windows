@@ -31,8 +31,8 @@
       "vm_name": "eval-win10x64-enterprise",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "2048",
-        "numvcpus": "2",
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}",
         "scsi0.virtualDev": "lsisas1068"
       },
       "winrm_password": "vagrant",
@@ -61,6 +61,7 @@
         "floppy/zz-start-transports.cmd"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows10_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -75,13 +76,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "2048"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ],
         [
           "setextradata",
@@ -125,13 +126,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "2048"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -171,6 +172,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",
