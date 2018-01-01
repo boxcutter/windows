@@ -1,5 +1,9 @@
 {
   "variables": {
+    "cpus": "1",
+    "memory": "768",
+    "disk_size": "40960",
+    "guest_additions_url": "",
     "version": "0.1.0",
     "cm": "chef",
     "cm_version": "",
@@ -34,10 +38,10 @@
       ],
       "tools_upload_flavor": "windows",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-      "disk_size": "40960",
+      "disk_size": "{{ user `disk_size` }}",
       "vmx_data": {
-        "memsize": "768",
-        "numvcpus": "1",
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}",
         "cpuid.coresPerSocket": "1"
       }
     },
@@ -67,10 +71,10 @@
         ".windows/provisions/wget.exe"
       ],
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-      "disk_size": "40960",
+      "disk_size": "{{ user `disk_size` }}",
       "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "768"],
-        ["modifyvm", "{{.Name}}", "--cpus", "1"]
+        ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"],
+        ["modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"]
       ]
     }
   ],

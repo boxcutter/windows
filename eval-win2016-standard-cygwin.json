@@ -30,8 +30,8 @@
       "vm_name": "eval-win2016-standard-cygwin",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "4096",
-        "numvcpus": "2",
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}",
         "scsi0.virtualDev": "lsisas1068"
       }
     },
@@ -53,6 +53,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows2016_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -70,13 +71,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "4096"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ],
         [
           "setextradata",
@@ -113,13 +114,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "4096"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ],
         [
           "set",
@@ -173,6 +174,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "{{ user `memory` }}",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",

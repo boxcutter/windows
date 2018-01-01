@@ -32,8 +32,8 @@
       "vm_name": "eval-win7x64-enterprise-ssh",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "3072",
-        "numvcpus": "2"
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}"
       }
     },
     {
@@ -56,6 +56,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows7_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -73,13 +74,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "3072"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ]
       ],
       "vm_name": "eval-win7x64-enterprise-ssh"
@@ -112,13 +113,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "3072"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -166,6 +167,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "3072",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",
