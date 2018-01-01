@@ -29,8 +29,8 @@
       "vm_name": "eval-win2012r2-standard-ssh",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "2048",
-        "numvcpus": "2",
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}",
         "scsi0.virtualDev": "lsisas1068"
       }
     },
@@ -51,6 +51,7 @@
         "floppy/oracle-cert.cer"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows2012_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -68,13 +69,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "2048"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ],
         [
           "setextradata",
@@ -110,13 +111,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "2048"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ],
         [
           "set",
@@ -170,6 +171,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",
