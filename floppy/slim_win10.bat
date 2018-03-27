@@ -17,7 +17,7 @@ Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Siuf\Rules" /t REG_DWORD /v "Numb
 Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Siuf\Rules" /t REG_DWORD /v "PeriodInNanoSeconds" /d 0 /f
 
 echo ==^> Disabling telemetry
-Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /t REG_DWORD /v "AITEnable" /d 0 /f      
+Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /t REG_DWORD /v "AITEnable" /d 0 /f
 Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /t REG_DWORD /v "DisableInventory" /d 1 /f
 Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /t REG_DWORD /v "DisableUAR" /d 1 /f
 
@@ -34,3 +34,8 @@ Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\A
 Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /t REG_DWORD /v "SilentInstalledAppsEnabled" /d 0 /f
 Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /t REG_DWORD /v "ContentDeliveryAllowed" /d 0 /f
 Reg Add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /t REG_DWORD /v "SubscribedContentEnabled" /d 0 /f
+
+echo ==^> Remove Extra Apps
+powershell.exe "$ErrorActionPreference = 'SilentlyContinue'; Get-AppxPackage | where Name -match 'xbox|3D|photoshop|Duolingo|Eclipse|Feedback|Office|OneNote|Cellular|Skype|Tips' | Remove-AppxPackage"
+wmic product where caption='Microsoft Silverlight' call uninstall
+wmic product where caption='Microsoft OneDrive' call uninstall

@@ -16,6 +16,9 @@ if "%VERSION%" == "6.1" (
     Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 )
 
+echo ==^> Remove all System Restore Points
+vssadmin delete shadows /All
+
 echo ==^> Cleaning up old Windows Update files
     for /d %%i in ("%SystemRoot%\SoftwareDistribution\Download\*.*") do rmdir /q /s "%%~i"
 
