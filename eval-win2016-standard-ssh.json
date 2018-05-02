@@ -172,7 +172,7 @@
   ],
   "variables": {
     "cpus": "2",
-    "memory": "{{ user `memory` }}",
+    "memory": "2048",
     "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
@@ -185,4 +185,3 @@
     "version": "0.1.0"
   }
 }
-
