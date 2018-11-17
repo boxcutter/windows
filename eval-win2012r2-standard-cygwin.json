@@ -14,7 +14,7 @@
         "floppy/cygwin.bat",
         "floppy/cygwin.sh",
         "floppy/disablewinupdate.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows8srv-64",
       "headless": "{{ user `headless` }}",
@@ -30,8 +30,8 @@
       "vm_name": "eval-win2012r2-standard-cygwin",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "1536",
-        "numvcpus": "1",
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}",
         "scsi0.virtualDev": "lsisas1068"
       }
     },
@@ -49,10 +49,11 @@
         "floppy/cygwin.bat",
         "floppy/cygwin.sh",
         "floppy/disablewinupdate.bat",
-        "floppy/zz-start-sshd.cmd",
+        "floppy/zz-start-transports.cmd",
         "floppy/oracle-cert.cer"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows2012_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -70,13 +71,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "1536"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "{{ user `cpus` }}"
         ],
         [
           "setextradata",
@@ -101,7 +102,7 @@
         "floppy/cygwin.bat",
         "floppy/cygwin.sh",
         "floppy/disablewinupdate.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-2012",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -113,13 +114,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "1536"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "{{ user `cpus` }}"
         ],
         [
           "set",
@@ -173,15 +174,17 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",
     "headless": "false",
     "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
+    "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
     "version": "0.1.0"
   }
 }
-
