@@ -23,12 +23,14 @@
                         <DiskID>0</DiskID>
                         <PartitionID>1</PartitionID>
                     </InstallTo>
+                    <WillShowUI>OnError</WillShowUI>
                 </OSImage>
             </ImageInstall>
             <UserData>
                 <AcceptEula>true</AcceptEula>
             </UserData>
             <DiskConfiguration>
+                <WillShowUI>OnError</WillShowUI>
                 <Disk wcm:action="add">
                     <CreatePartitions>
                         <CreatePartition wcm:action="add">
@@ -50,7 +52,6 @@
                     <DiskID>0</DiskID>
                     <WillWipeDisk>true</WillWipeDisk>
                 </Disk>
-                <WillShowUI>OnError</WillShowUI>
             </DiskConfiguration>
         </component>
     </settings>
@@ -109,6 +110,7 @@
             <DisableAccelerators>true</DisableAccelerators>
             <DisableFirstRunWizard>true</DisableFirstRunWizard>
             <Home_Page>about:blank</Home_Page>
+            <Help_Page>about:blank</Help_Page>
         </component>
         <component name="Microsoft-Windows-IE-InternetExplorer" processorArchitecture="wow64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <SearchScopes>
@@ -122,6 +124,7 @@
             <DisableAccelerators>true</DisableAccelerators>
             <DisableFirstRunWizard>true</DisableFirstRunWizard>
             <Home_Page>about:blank</Home_Page>
+            <Help_Page>about:blank</Help_Page>
         </component>
         <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <fDenyTSConnections>false</fDenyTSConnections>

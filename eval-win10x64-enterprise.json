@@ -4,10 +4,13 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/slim_win10.bat",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
+        "floppy/autologon.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/fixnetwork.ps1",
@@ -15,9 +18,9 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/update.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
-      "guest_os_type": "windows8srv-64",
+      "guest_os_type": "windows9-64",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -28,8 +31,8 @@
       "vm_name": "eval-win10x64-enterprise",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "1536",
-        "numvcpus": "1",
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}",
         "scsi0.virtualDev": "lsisas1068"
       },
       "winrm_password": "vagrant",
@@ -40,10 +43,13 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/slim_win10.bat",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
+        "floppy/autologon.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/fixnetwork.ps1",
@@ -52,9 +58,10 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/update.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows10_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -69,13 +76,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "1536"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "{{ user `cpus` }}"
         ],
         [
           "setextradata",
@@ -93,10 +100,13 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
+        "floppy/slim_win10.bat",
         "floppy/00-run-all-scripts.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
+        "floppy/autologon.bat",
         "floppy/disablewinupdate.bat",
         "floppy/eval-win10x64-enterprise/Autounattend.xml",
         "floppy/fixnetwork.ps1",
@@ -104,7 +114,7 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/update.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-8.1",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -116,13 +126,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "1536"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "{{ user `cpus` }}"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -155,19 +165,23 @@
         "script/vmtool.bat",
         "script/clean.bat",
         "script/ultradefrag.bat",
+        "script/uninstall-7zip.bat",
         "script/sdelete.bat"
       ],
       "type": "windows-shell"
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",
     "headless": "false",
-    "iso_checksum": "6c60f91bf0ad7b20f469ab8f80863035c517f34f",
-    "iso_url": "http://care.dlservice.microsoft.com/dl/download/B/8/B/B8B452EC-DD2D-4A8F-A88C-D2180C177624/15063.0.170317-1834.RS2_RELEASE_CLIENTENTERPRISEEVAL_OEMRET_X64FRE_EN-US.ISO",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "iso_checksum": "3b5f9494d870726d6d8a833aaf6169a964b8a9be",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
     "version": "0.1.0"
   }

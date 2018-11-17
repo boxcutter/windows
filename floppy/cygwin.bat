@@ -9,7 +9,8 @@ if not defined CYGWIN_ARCH (
   set CYGWIN_ARCH=x86
 
   :: Force CYGWIN_ARCH to 64-bit - 32-bit seems to crash a lot on Windows 2008 and 2012
-  wmic os get Caption | findstr "2008 2012" >nul
+  :: 64-bit OS also needs a 64-bit shell for calls to DISM to work correctly
+  wmic os get Caption | findstr "2008 2012 2016" >nul
   if not errorlevel 1 set CYGWIN_ARCH=x86_64
 )
 
