@@ -15,7 +15,7 @@
         "floppy/networkprompt.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows7-64",
       "headless": "{{ user `headless` }}",
@@ -31,8 +31,8 @@
       "vm_name": "win7x64-enterprise-cygwin",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "2048",
-        "numvcpus": "1"
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}"
       }
     },
     {
@@ -50,10 +50,11 @@
         "floppy/networkprompt.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/zz-start-sshd.cmd",
+        "floppy/zz-start-transports.cmd",
         "floppy/oracle-cert.cer"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows7_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -71,13 +72,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "2048"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "{{ user `cpus` }}"
         ]
       ],
       "vm_name": "win7x64-enterprise-cygwin"
@@ -97,7 +98,7 @@
         "floppy/networkprompt.bat",
         "floppy/cygwin.sh",
         "floppy/cygwin.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-7",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -109,13 +110,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "2048"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "{{ user `cpus` }}"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -163,6 +164,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",

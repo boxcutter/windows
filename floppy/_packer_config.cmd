@@ -39,7 +39,7 @@
 :: Default: "%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
-:: List of services to start by floppy/zz-start-sshd.cmd
+:: List of services to start by floppy/zz-start-transports.cmd
 :: Default: opensshd sshd BvSshServer winrm
 set PACKER_SERVICES=opensshd sshd BvSshServer winrm
 
