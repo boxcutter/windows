@@ -16,7 +16,7 @@
         "floppy/powerconfig.bat",
         "floppy/upgrade-wua.bat",
         "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows7-64",
       "headless": "{{ user `headless` }}",
@@ -29,8 +29,8 @@
       "vm_name": "eval-win7x64-enterprise",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
-        "memsize": "3072",
-        "numvcpus": "2"
+        "memsize": "{{ user `memory` }}",
+        "numvcpus": "{{ user `cpus` }}"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -53,9 +53,10 @@
         "floppy/powerconfig.bat",
         "floppy/upgrade-wua.bat",
         "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows7_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -70,13 +71,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "3072"
+          "{{ user `memory` }}"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ]
       ],
       "vm_name": "eval-win7x64-enterprise",
@@ -100,7 +101,7 @@
         "floppy/powerconfig.bat",
         "floppy/upgrade-wua.bat",
         "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-7",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -112,13 +113,13 @@
           "set",
           "{{.Name}}",
           "--memsize",
-          "3072"
+          "{{ user `memory` }}"
         ],
         [
           "set",
           "{{.Name}}",
           "--cpus",
-          "2"
+          "{{ user `cpus` }}"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -158,6 +159,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "3072",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",

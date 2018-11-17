@@ -19,10 +19,13 @@ EVAL_WIN81_X86_CHECKSUM ?= 4ddd0881779e89d197cb12c684adf47fd5d9e540
 EVAL_WIN8_X64 ?= http://care.dlservice.microsoft.com/dl/download/5/3/C/53C31ED0-886C-4F81-9A38-F58CE4CE71E8/9200.16384.WIN8_RTM.120725-1247_X64FRE_ENTERPRISE_EVAL_EN-US-HRM_CENA_X64FREE_EN-US_DV5.ISO
 EVAL_WIN8_X64_CHECKSUM ?= ae59e04462e4dc74e971d6e98d0cc1f2f3d63f1d
 
-EVAL_WIN10_X64 ?= http://care.dlservice.microsoft.com/dl/download/B/8/B/B8B452EC-DD2D-4A8F-A88C-D2180C177624/15063.0.170317-1834.RS2_RELEASE_CLIENTENTERPRISEEVAL_OEMRET_X64FRE_EN-US.ISO
-EVAL_WIN10_X64_CHECKSUM ?= 6c60f91bf0ad7b20f469ab8f80863035c517f34f
-EVAL_WIN10_X86 ?= http://care.dlservice.microsoft.com/dl/download/B/8/B/B8B452EC-DD2D-4A8F-A88C-D2180C177624/15063.0.170317-1834.RS2_RELEASE_CLIENTENTERPRISEEVAL_OEMRET_X86FRE_EN-US.ISO
-EVAL_WIN10_X86_CHECKSUM ?= 1aa6d3c4451e79e69e84118ec629ad99e2ad36e7
+EVAL_WIN10_X64 ?= http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
+EVAL_WIN10_X64_CHECKSUM ?= 3b5f9494d870726d6d8a833aaf6169a964b8a9be
+EVAL_WIN10_X86 ?= http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
+EVAL_WIN10_X86_CHECKSUM ?= 4a75747a47eb689497fe57d64cec375c7949aa97
+
+EVAL_WIN2016_X64 ?= http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO
+EVAL_WIN2016_X64_CHECKSUM ?= 772700802951b36c8cb26a61c040b9a8dc3816a3
 
 # @todo:
 EVAL_WIN2012_X64 ?= http://download.microsoft.com/download/6/D/A/6DAB58BA-F939-451D-9101-7DE07DC09C03/9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.ISO
@@ -34,6 +37,8 @@ WIN2012_X64 ?= iso/en_windows_server_2012_x64_dvd_915478.iso
 WIN2012_X64_CHECKSUM ?= d09e752b1ee480bc7e93dfa7d5c3a9b8aac477ba
 WIN2012R2_X64 ?= iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso
 WIN2012R2_X64_CHECKSUM ?= 865494e969704be1c4496d8614314361d025775e
+WIN2016_X64 ?= iso/en_windows_server_2016_x64_dvd_9718492.iso
+WIN2016_X64_CHECKSUM ?= f185197af68fae4f0e06510a4579fc511ba27616
 WIN7_X64_ENTERPRISE ?= iso/en_windows_7_enterprise_with_sp1_x64_dvd_u_677651.iso
 WIN7_X64_ENTERPRISE_CHECKSUM ?= a491f985dccfb5863f31b728dddbedb2ff4df8d1
 WIN7_X64_PRO ?= iso/en_windows_7_professional_with_sp1_vl_build_x64_dvd_u_677791.iso
@@ -344,6 +349,24 @@ test-win2012r2-openssh: test-win2012r2-datacenter-ssh test-win2012r2-standard-ss
 test-win2012r2-cygwin: test-win2012r2-datacenter-cygwin test-win2012r2-standard-cygwin
 
 
+win2016: win2016-winrm win2016-openssh win2016-cygwin
+
+win2016-winrm: win2016-standard
+
+win2016-openssh: win2016-standard-ssh
+
+win2016-cygwin: win2016-standard-cygwin
+
+
+test-win2016: test-win2016-winrm test-win2016-openssh test-win2016-cygwin
+
+test-win2016-winrm: test-win2016-standard
+
+test-win2016-openssh: test-win2016-standard-ssh
+
+test-win2016-cygwin: test-win2016-standard-cygwin
+
+
 eval: eval-winrm eval-openssh
 
 eval-winrm: eval-win2012r2-datacenter eval-win2008r2-datacenter eval-win81x64-enterprise eval-win7x64-enterprise eval-win10x64-enterprise
@@ -426,6 +449,10 @@ $(eval $(call BUILDBOX,win2012r2-standard,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECK
 $(eval $(call BUILDBOX,eval-win2012r2-standard,$(EVAL_WIN2012R2_X64),$(EVAL_WIN2012R2_X64_CHECKSUM)))
 
 $(eval $(call BUILDBOX,win2012r2-standardcore,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
+
+$(eval $(call BUILDBOX,win2016-standard,$(WIN2016_X64),$(WIN2016_X64_CHECKSUM)))
+
+$(eval $(call BUILDBOX,eval-win2016-standard,$(EVAL_WIN2016_X64),$(EVAL_WIN2016_X64_CHECKSUM)))
 
 $(eval $(call BUILDBOX,win7x64-enterprise,$(WIN7_X64_ENTERPRISE),$(WIN7_X64_ENTERPRISE_CHECKSUM)))
 
