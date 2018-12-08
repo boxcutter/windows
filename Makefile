@@ -100,7 +100,7 @@ ifdef PACKER_DEBUG
 	PACKER := PACKER_LOG=1 $(PACKER)
 else
 endif
-BUILDER_TYPES ?= vmware virtualbox parallels
+BUILDER_TYPES ?= vmware virtualbox parallels hyperv
 ifeq ($(OS),Windows_NT)
 	VAGRANT_PROVIDER ?= vmware_workstation
 else
@@ -112,16 +112,20 @@ TEST_BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $
 VMWARE_BOX_DIR := box/vmware
 VIRTUALBOX_BOX_DIR := box/virtualbox
 PARALLELS_BOX_DIR := box/parallels
+HYPERV_BOX_DIR := box/hyperv
 VMWARE_BOX_FILES := $(foreach box_filename, $(BOX_FILENAMES), $(VMWARE_BOX_DIR)/$(box_filename))
 VIRTUALBOX_BOX_FILES := $(foreach box_filename, $(BOX_FILENAMES), $(VIRTUALBOX_BOX_DIR)/$(box_filename))
 PARALLELS_BOX_FILES := $(foreach box_filename, $(BOX_FILENAMES), $(PARALLELS_BOX_DIR)/$(box_filename))
+HYPERV_BOX_FILES := $(foreach box_filename, $(BOX_FILENAMES), $(HYPERV_BOX_DIR)/$(box_filename))
 BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $(BOX_FILENAMES), box/$(builder)/$(box_filename)))
 VMWARE_OUTPUT := output-vmware-iso
 VIRTUALBOX_OUTPUT := output-virtualbox-iso
 PARALLELS_OUTPUT := output-parallels-iso
+HYPERV_OUTPUT := output-hyperv-iso
 VMWARE_BUILDER := vmware-iso
 VIRTUALBOX_BUILDER := virtualbox-iso
 PARALLELS_BUILDER := parallels-iso
+HYPERV_BUILDER := hyperv-iso
 CURRENT_DIR := $(shell pwd)
 UNAME_O := $(shell uname -o 2> /dev/null)
 UNAME_P := $(shell uname -p 2> /dev/null)
@@ -194,6 +198,12 @@ parallels/$(1)-cygwin: $(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
 
 parallels/$(1)-ssh: $(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
 
+hyperv/$(1): $(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+hyperv/$(1)-cygwin: $(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+hyperv/$(1)-ssh: $(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+
 test-vmware/$(1): test-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
 test-vmware/$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
@@ -211,6 +221,12 @@ test-parallels/$(1): test-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
 test-parallels/$(1)-cygwin: test-$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
 
 test-parallels/$(1)-ssh: test-$(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+
+test-hyperv/$(1): test-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+test-hyperv/$(1)-cygwin: test-$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+test-hyperv/$(1)-ssh: test-$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
 
 ssh-vmware/$(1): ssh-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
@@ -230,11 +246,19 @@ ssh-parallels/$(1)-cygwin: ssh-$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
 
 ssh-parallels/$(1)-ssh: ssh-$(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
 
+ssh-hyperv/$(1): ssh-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+ssh-hyperv/$(1)-cygwin: ssh-$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+ssh-hyperv/$(1)-ssh: ssh-$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+
 s3cp-vmware/$(1): s3cp-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
 s3cp-virtualbox/$(1): s3cp-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
 s3cp-parallels/$(1): s3cp-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+s3cp-hyperv/$(1): s3cp-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
 endef
 
 SHORTCUT_TARGETS := $(basename $(TEMPLATE_FILENAMES))
@@ -393,6 +417,11 @@ $(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
 	mkdir -p $(PARALLELS_BOX_DIR)
 	$(PACKER) build -on-error=$(ON_ERROR) -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
 
+$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
+	rm -rf $(HYPERV_OUTPUT)
+	mkdir -p $(HYPERV_BOX_DIR)
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+
 $(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
@@ -407,6 +436,11 @@ $(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
 	rm -rf $(PARALLELS_OUTPUT)
 	mkdir -p $(PARALLELS_BOX_DIR)
 	$(PACKER) build -on-error=$(ON_ERROR) --only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+
+$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
+	rm -rf $(HYPERV_OUTPUT)
+	mkdir -p $(HYPERV_BOX_DIR)
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
 
 $(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
@@ -423,6 +457,10 @@ $(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
 	mkdir -p $(PARALLELS_BOX_DIR)
 	$(PACKER) build -on-error=$(ON_ERROR) --only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
 
+$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+	rm -rf $(HYPERV_OUTPUT)
+	mkdir -p $(HYPERV_BOX_DIR)
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
 endef
 
 $(eval $(call BUILDBOX,win2008r2-datacenter,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
@@ -518,7 +556,7 @@ list:
 	@echo "To build for all target platforms:"
 	@echo "  make win7x64-pro"
 	@echo ""
-	@echo "Prepend 'vmware/' or 'virtualbox/' or 'parallels/' to build only one target platform:"
+	@echo "Prepend 'vmware/' or 'virtualbox/' or 'parallels/' or 'hyperv/' to build only one target platform:"
 	@echo "  make vmware/win7x64-pro"
 	@echo ""
 	@echo "Append '-cygwin' to use Cygwin's SSH instead of OpenSSH:"
@@ -570,6 +608,10 @@ test-$(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX): $(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX)
 	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/test-box.sh $< parallels parallels $(CURRENT_DIR)/test/*_spec.rb
 
+test-$(HYPERV_BOX_DIR)/%$(BOX_SUFFIX): $(HYPERV_BOX_DIR)/%$(BOX_SUFFIX)
+	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
+	bin/test-box.sh $< hyperv hyperv $(CURRENT_DIR)/test/*_spec.rb
+
 ssh-$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): $(VMWARE_BOX_DIR)/%$(BOX_SUFFIX)
 	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/ssh-box.sh $< vmware_desktop $(VAGRANT_PROVIDER) $(CURRENT_DIR)/test/*_spec.rb
@@ -581,6 +623,10 @@ ssh-$(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX): $(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX)
 ssh-$(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX): $(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX)
 	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/ssh-box.sh $< parallels parallels $(CURRENT_DIR)/test/*_spec.rb
+
+ssh-$(HYPERV_BOX_DIR)/%$(BOX_SUFFIX): $(HYPERV_BOX_DIR)/%$(BOX_SUFFIX)
+	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
+	bin/ssh-box.sh $< hyperv hyperv $(CURRENT_DIR)/test/*_spec.rb
 
 S3_STORAGE_CLASS ?= REDUCED_REDUNDANCY
 S3_ALLUSERS_ID ?= uri=http://acs.amazonaws.com/groups/global/AllUsers
@@ -594,6 +640,10 @@ s3cp-$(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX): $(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX)
 s3cp-$(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX): $(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX)
 	aws s3 cp $< $(PARALLELS_S3_BUCKET) --storage-class $(S3_STORAGE_CLASS) --grants full=$(S3_GRANT_ID) read=$(S3_ALLUSERS_ID)
 
+s3cp-$(HYPERV_BOX_DIR)/%$(BOX_SUFFIX): $(HYPERV_BOX_DIR)/%$(BOX_SUFFIX)
+	aws s3 cp $< $(HYPERV_S3_BUCKET) --storage-class $(S3_STORAGE_CLASS) --grants full=$(S3_GRANT_ID) read=$(S3_ALLUSERS_ID)
+
 s3cp-vmware: $(addprefix s3cp-,$(VMWARE_BOX_FILES))
 s3cp-virtualbox: $(addprefix s3cp-,$(VIRTUALBOX_BOX_FILES))
 s3cp-parallels: $(addprefix s3cp-,$(PARALLELS_BOX_FILES))
+s3cp-hyperv: $(addprefix s3cp-,$(HYPERV_BOX_FILES))
