@@ -72,7 +72,7 @@
       "post_shutdown_delay": "30s",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
+      "ssh_timeout": "10000s",
       "type": "virtualbox-iso",
       "vboxmanage": [
         [
@@ -140,6 +140,39 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
+      "vm_name": "eval-win10x64-enterprise-ssh"
+    },
+    {
+      "cpu": "{{ user `cpus` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/slim_win10.bat",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
+        "floppy/autologon.bat",
+        "floppy/disablewinupdate.bat",
+        "floppy/eval-win10x64-enterprise/Autounattend.xml",
+        "floppy/fixnetwork.ps1",
+        "floppy/install-winrm.cmd",
+        "floppy/openssh.bat",
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/update.bat",
+        "floppy/zz-start-transports.cmd"
+      ],
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "ram_size": "{{ user `memory` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_timeout": "10000s",
+      "type": "hyperv-iso",
       "vm_name": "eval-win10x64-enterprise-ssh"
     }
   ],
