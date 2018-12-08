@@ -39,4 +39,9 @@ Vagrant.configure("2") do |config|
     v.customize ["set", :id, "--memsize", 1536]
     v.customize ["set", :id, "--videosize", "256"]
   end
+
+  config.vm.provider :hyperv do |v, override|
+    v.cpus = "1"
+    v.memory = "1536"
+  end
 end
