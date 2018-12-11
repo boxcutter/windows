@@ -122,6 +122,35 @@
       "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
       "vm_name": "win2008r2-web-cygwin"
+    },
+    {
+      "cpu": "{{ user `cpus` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/win2008r2-web/Autounattend.xml",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/install-winrm.cmd",
+        "floppy/powerconfig.bat",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/cygwin.sh",
+        "floppy/passwordchange.bat",
+        "floppy/cygwin.bat",
+        "floppy/disablewinupdate.bat",
+        "floppy/zz-start-transports.cmd"
+      ],
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "ram_size": "{{ user `memory` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_timeout": "10000s",
+      "type": "hyperv-iso",
+      "vm_name": "win2008r2-web-cygwin"
     }
   ],
   "post-processors": [
