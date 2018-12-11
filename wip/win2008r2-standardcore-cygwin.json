@@ -33,7 +33,7 @@
         "floppy/cygwin.sh",
         "floppy/passwordchange.bat",
         "floppy/cygwin.bat",
-        "floppy/zz-start-transports.cmd"
+        "floppy/zz-start-transports.cmd",
         "floppy/01-install-powershell.cmd",
         ".windows/provisions/wget.exe"
       ],

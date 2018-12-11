@@ -141,6 +141,39 @@
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
+    },
+    {
+      "communicator": "winrm",
+      "cpu": "{{ user `cpus` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/slim_win10.bat",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/_post_update_install.bat",
+        "floppy/autologon.bat",
+        "floppy/disablewinupdate.bat",
+        "floppy/eval-win10x64-enterprise/Autounattend.xml",
+        "floppy/fixnetwork.ps1",
+        "floppy/install-winrm.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/update.bat",
+        "floppy/zz-start-transports.cmd"
+      ],
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "ram_size": "{{ user `memory` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "type": "hyperv-iso",
+      "vm_name": "eval-win10x64-enterprise",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+      "winrm_username": "vagrant"
     }
   ],
   "post-processors": [

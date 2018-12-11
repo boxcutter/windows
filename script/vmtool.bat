@@ -1,3 +1,4 @@
+:: TODO: add steps to download hyperv Integration Tools .cab file based on OS and install them if the user hasn't specific their own URL
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
@@ -88,6 +89,8 @@ echo "%PACKER_BUILDER_TYPE%" | findstr /i "virtualbox" >nul
 if not errorlevel 1 goto virtualbox
 echo "%PACKER_BUILDER_TYPE%" | findstr /i "parallels" >nul
 if not errorlevel 1 goto parallels
+echo "%PACKER_BUILDER_TYPE%" | findstr /i "hyperv" >nul
+if not errorlevel 1 goto hyperv
 echo ==^> ERROR: Unknown PACKER_BUILDER_TYPE: "%PACKER_BUILDER_TYPE%"
 pushd .
 goto exit1
@@ -255,6 +258,31 @@ echo ==^> Cleaning up Parallels Tools install
 del /F /S /Q "%PARALLELS_DIR"
 echo ==^> Removing "%PARALLELS_ISO_PATH"
 del /F "%PARALLELS_ISO_PATH"
+goto :exit0
+
+::::::::::::
+:hyperv
+::::::::::::
+for /F "usebackq tokens=3,4,5" %%i in (`REG query "hklm\software\microsoft\windows NT\CurrentVersion" /v ProductName`) do set GUEST_OS=%%i %%j %%k
+
+set GUEST_OS
+
+if "%GUEST_OS%" == "Windows Server 2016" goto :exit0
+
+::First, download the appropriate Windows Update CAB file from here: https://support.microsoft.com/en-us/kb/3063109
+::  Windows 8.1: http://www.microsoft.com/downloads/details.aspx?familyid=cd142c42-204a-4566-b767-795e3409b135
+::  Windows 8.1: http://www.microsoft.com/downloads/details.aspx?familyid=3a5a9015-c121-44dd-ad2e-962f66532da7
+::  Windows Server 2012 R2: http://www.microsoft.com/downloads/details.aspx?familyid=a7704851-70bb-46c1-96d2-1b6f7ca226af
+::  Windows Server 2012: http://www.microsoft.com/downloads/details.aspx?familyid=185812c8-8eb5-43c8-8505-70a262f4277d
+::  Windows 7: http://www.microsoft.com/downloads/details.aspx?familyid=54c62651-0fc9-4642-ad12-404b3356825e
+::  Windows 7: http://www.microsoft.com/downloads/details.aspx?familyid=c84f2899-d997-42af-bd5d-cb97086e3b09
+::  Windows Server 2008 R2: http://www.microsoft.com/downloads/details.aspx?familyid=2dd45bd8-6bcd-47aa-8322-3e10b52b1f1f
+::Open up Windows Powershell with elevated privileges.
+::Set the correct path to the CAB file you’ve downloaded. For example:
+::  $integrationServicesCabPath="C:\Downloads\windows6.2-hypervintegrationservices-x86.cab"
+::Install the patch using the following command:
+::  Add-WindowsPackage -Online -PackagePath $integrationServicesCabPath
+
 goto :exit0
 
 :exit0
