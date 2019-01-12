@@ -29,6 +29,8 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "win2012-standard-cygwin",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vmx_data": {
         "cpuid.coresPerSocket": "1",
         "memsize": "{{ user `memory` }}",
@@ -67,20 +69,8 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "{{ user `memory` }}"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "{{ user `cpus` }}"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vm_name": "win2012-standard-cygwin"
     },
     {
@@ -105,19 +95,9 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "prlctl": [
-        [
-          "set",
-          "{{.Name}}",
-          "--memsize",
-          "{{ user `memory` }}"
-        ],
-        [
-          "set",
-          "{{.Name}}",
-          "--cpus",
-          "{{ user `cpus` }}"
-        ],
         [
           "set",
           "{{.Name}}",

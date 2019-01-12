@@ -26,10 +26,10 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "eval-win2008r2-datacenter",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
-        "memsize": "{{ user `memory` }}",
-        "numvcpus": "{{ user `cpus` }}"
+        "cpuid.coresPerSocket": "1"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -64,20 +64,8 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "post_shutdown_delay": "30s",
       "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "{{ user `memory` }}"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "{{ user `cpus` }}"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vm_name": "eval-win2008r2-datacenter",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -105,20 +93,8 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
-      "prlctl": [
-        [
-          "set",
-          "{{.Name}}",
-          "--memsize",
-          "{{ user `memory` }}"
-        ],
-        [
-          "set",
-          "{{.Name}}",
-          "--cpus",
-          "{{ user `cpus` }}"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
       "vm_name": "eval-win2008r2-datacenter",
