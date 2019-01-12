@@ -29,11 +29,11 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "eval-win10x64-enterprise",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
+      "disk_adapter_type": "lsisas1068",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
-        "memsize": "{{ user `memory` }}",
-        "numvcpus": "{{ user `cpus` }}",
-        "scsi0.virtualDev": "lsisas1068"
+        "cpuid.coresPerSocket": "1"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -71,19 +71,9 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "post_shutdown_delay": "30s",
       "type": "virtualbox-iso",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "{{ user `memory` }}"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "{{ user `cpus` }}"
-        ],
         [
           "setextradata",
           "{{.Name}}",
@@ -121,20 +111,8 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
-      "prlctl": [
-        [
-          "set",
-          "{{.Name}}",
-          "--memsize",
-          "{{ user `memory` }}"
-        ],
-        [
-          "set",
-          "{{.Name}}",
-          "--cpus",
-          "{{ user `cpus` }}"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
       "vm_name": "eval-win10x64-enterprise",
