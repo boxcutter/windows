@@ -29,10 +29,10 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "win7x64-enterprise-cygwin",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
-        "memsize": "{{ user `memory` }}",
-        "numvcpus": "{{ user `cpus` }}"
+        "cpuid.coresPerSocket": "1"
       }
     },
     {
@@ -67,20 +67,8 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "{{ user `memory` }}"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "{{ user `cpus` }}"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vm_name": "win7x64-enterprise-cygwin"
     },
     {
@@ -105,20 +93,8 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
-      "prlctl": [
-        [
-          "set",
-          "{{.Name}}",
-          "--memsize",
-          "{{ user `memory` }}"
-        ],
-        [
-          "set",
-          "{{.Name}}",
-          "--cpus",
-          "{{ user `cpus` }}"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",

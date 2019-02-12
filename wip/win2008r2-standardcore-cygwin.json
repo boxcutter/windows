@@ -40,9 +40,9 @@
       "tools_upload_flavor": "windows",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
       "disk_size": "{{ user `disk_size` }}",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vmx_data": {
-        "memsize": "{{ user `memory` }}",
-        "numvcpus": "{{ user `cpus`} }}",
         "cpuid.coresPerSocket": "1"
       }
     },
@@ -74,10 +74,8 @@
         ".windows/provisions/wget.exe"
       ],
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-      "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "{{ user `memory` }}"],
-        ["modifyvm", "{{.Name}}", "--cpus", "{{ user `cpus` }}"]
-      ]
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}"
     }
   ],
   "provisioners": [
