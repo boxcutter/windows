@@ -5,7 +5,7 @@
 title Enabling Windows Remote Management. Please wait...
 
 echo ==^> Turning off User Account Control (UAC)
-:: see http://www.howtogeek.com/howto/windows-vista/enable-or-disable-uac-from-the-windows-vista-command-line/
+:: see https://www.howtogeek.com/howto/windows-vista/enable-or-disable-uac-from-the-windows-vista-command-line/
 reg ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: reg ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
 
@@ -27,7 +27,7 @@ if errorlevel 1 goto skip_fixnetwork
 if not exist a:\fixnetwork.ps1 echo ==^> ERROR: File not found: a:\fixnetwork.ps1
 
 echo ==^> Setting the Network Location to private
-:: see http://blogs.msdn.com/b/powershell/archive/2009/04/03/setting-network-location-to-private.aspx
+:: see https://blogs.msdn.com/b/powershell/archive/2009/04/03/setting-network-location-to-private.aspx
 powershell -File a:\fixnetwork.ps1 <NUL
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: powershell -File a:\fixnetwork.ps1
 
@@ -97,7 +97,7 @@ netsh advfirewall firewall set rule group="remote administration" new enable=yes
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall set rule group="remote administration" new enable=yes
 
 echo ==^> Opening WinRM port 5985 on the firewall
-:: see http://social.technet.microsoft.com/Forums/windowsserver/en-US/a1e65f0f-2550-49ae-aee2-56a9bdcfb8fb/windows-7-remote-administration-firewall-group?forum=winserverManagement
+:: see https://social.technet.microsoft.com/Forums/windowsserver/en-US/a1e65f0f-2550-49ae-aee2-56a9bdcfb8fb/windows-7-remote-administration-firewall-group?forum=winserverManagement
 netsh advfirewall firewall set rule group="Windows Remote Management" new enable=yes
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall set rule group="Windows Remote Management" new enable=yes
 

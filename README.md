@@ -39,7 +39,7 @@ make virtualbox/eval-win7x86-enterprise
 
 ### Tests
 
-The tests are written in [Serverspec](http://serverspec.org) and require the
+The tests are written in [Serverspec](https://serverspec.org) and require the
 `vagrant-serverspec` plugin to be installed with:
 
     vagrant plugin install vagrant-serverspec
@@ -116,11 +116,11 @@ You can also override these setting, such as with
 
 ### Acknowledgments
 
-[Parallels](http://www.parallels.com/) provides a Business Edition license of
+[Parallels](https://www.parallels.com/) provides a Business Edition license of
 their software to run on the basebox build farm.
 
-<img src="http://www.parallels.com/fileadmin/images/corporate/brand-assets/images/logo-knockout-on-red.jpg" width="80">
+<img src="https://www.parallels.com/fileadmin/images/corporate/brand-assets/images/logo-knockout-on-red.jpg" width="80">
 
-[SmartyStreets](http://www.smartystreets.com) is providing basebox hosting for the boxcutter project.
+[SmartyStreets](https://smartystreets.com) is providing basebox hosting for the boxcutter project.
 
 <img src="https://d79i1fxsrar4t.cloudfront.net/images/brand/smartystreets.65887aa3.png" width="320">

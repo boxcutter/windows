@@ -5,7 +5,7 @@ SET PACKER_DEBUG=true
 
 title Installing Bitvise SSH Server.  Please wait...
 
-if not defined BITVISE_URL set BITVISE_URL=http://dl.bitvise.com/BvSshServer-Inst.exe
+if not defined BITVISE_URL set BITVISE_URL=https://dl.bitvise.com/BvSshServer-Inst.exe
 
 for %%i in (%BITVISE_URL%) do set BITVISE_EXE=%%~nxi
 set BITVISE_DIR=%TEMP%\bitvise

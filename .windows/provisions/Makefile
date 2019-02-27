@@ -1,38 +1,39 @@
 PREDOWNLOADED_FILES=$(wildcard vshell*.*)
 
-CHEF_VERSION?=12.9.38-1
+CHEF_VERSION?=12.22.5
 SALT_VERSION?=2015.8.8-2
-SEVENZIP_VERSION?=1604
-ULTRADEFRAG_VERSION?=7.0.2
-VBOX_VERSION?=5.0.20
+SEVENZIP_VERSION?=1900
+ULTRADEFRAG_VERSION?=7.1.1
+VBOX_VERSION?=5.2.26
+VMWARE_VERSION?=12.5.9/7535481
 
-# always 301's to latest installer:
-#MLSSSH_64_URL?=http://www.mls-software.com/files/setupssh-6.7p1-1-v1.exe
-BITVISE_URL?=https://bvdl.s3-eu-west-1.amazonaws.com/BvSshServer-Inst.exe
-CHEF_64_URL?=https://packages.chef.io/stable/windows/2008r2/chef-client-$(CHEF_VERSION)-x64.msi
-CHEF_32_URL?=https://packages.chef.io/stable/windows/2008r2/chef-client-$(CHEF_VERSION)-x86.msi
-CHEFDK_URL=https://packages.chef.io/stable/windows/2008r2/chefdk-0.13.21-1-x86.msi
+BITVISE_URL?=https://dl.bitvise.com/BvSshServer-Inst.exe
+CHEF_64_URL?=https://packages.chef.io/files/stable/chef/12.22.5/windows/2008r2/chef-client-$(CHEF_VERSION)-x64.msi
+CHEF_32_URL?=https://packages.chef.io/files/stable/chef/12.22.5/windows/2008r2/chef-client-$(CHEF_VERSION)-x86.msi
+CHEFDK_URL=https://packages.chef.io/files/stable/chefdk/0.19.6/windows/2008r2/chefdk-0.19.6-1-x86.msi
 CHOCOLATEY_URL?=https://chocolatey.org/install.ps1
-COREUTILS_URL?=http://downloads.sourceforge.net/gnuwin32/coreutils-5.3.0-bin.zip
-CYGWIN_URL?=http://cygwin.com/setup-x86.exe
-::DOTNET_URL?=http://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe
+COREUTILS_URL?=https://downloads.sourceforge.net/gnuwin32/coreutils-5.3.0-bin.zip
+CYGWIN_URL?=https://cygwin.com/setup-x86.exe
+#DOTNET_URL?=https://download.microsoft.com/download/9/5/A/95A9616B-7A37-4AF6-BC36-D6EA96C8DAAE/dotNetFx40_Full_x86_x64.exe
 DOTNET_URL?=https://download.microsoft.com/download/C/3/A/C3A5200B-D33C-47E9-9D70-2F7C65DAAD94/NDP46-KB3045557-x86-x64-AllOS-ENU.exe
 LESSMSI_URL?=https://github.com/activescott/lessmsi/releases/download/v1.4/lessmsi-v1.4.zip
-MLSSSH_32_URL?=http://www.mls-software.com/files/setupssh-7.2p2-1-v1.exe
-NUGET_URL?=http://nuget.org/nuget.exe
+MLSSSH_32_URL?=https://www.mls-software.com/files/setupssh-7.9p1-1.exe
+#MLSSSH_64_URL?=https://www.mls-software.com/files/setupssh-7.9p1-1.exe
+NUGET_URL?=https://dist.nuget.org/win-x86-commandline/v4.9.3/nuget.exe
 PUPPET_32_URL?=https://downloads.puppetlabs.com/windows/puppet-latest.msi
 PUPPET_64_URL?=https://downloads.puppetlabs.com/windows/puppet-x64-latest.msi
 SALT_32_URL?=https://repo.saltstack.com/windows/Salt-Minion-$(SALT_VERSION)-x86-Setup.exe
 SALT_64_URL?=https://repo.saltstack.com/windows/Salt-Minion-$(SALT_VERSION)-AMD64-Setup.exe
-SDELETE_URL?=http://live.sysinternals.com/sdelete.exe
-SEVENZIP_32_URL=http://www.7-zip.org/a/7z$(SEVENZIP_VERSION).msi
-SEVENZIP_64_URL=http://www.7-zip.org/a/7z$(SEVENZIP_VERSION)-x64.msi
-ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-$(ULTRADEFRAG_VERSION).bin.i386.zip
-ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-$(ULTRADEFRAG_VERSION).bin.amd64.zip
-UNXTUTILS_URL?=http://downloads.sourceforge.net/unxutils/UnxUtils.zip
-VAGRANT_PUB_URL?=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
-VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/$(VBOX_VERSION)/VBoxGuestAdditions_$(VBOX_VERSION).iso
-VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.1.1/3770994/windows/packages/tools-windows.tar
+SDELETE_URL?=https://live.sysinternals.com/sdelete.exe
+SEVENZIP_32_URL=https://www.7-zip.org/a/7z$(SEVENZIP_VERSION).msi
+SEVENZIP_64_URL=https://www.7-zip.org/a/7z$(SEVENZIP_VERSION)-x64.msi
+ULTRADEFRAG_32_URL=https://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-$(ULTRADEFRAG_VERSION).bin.i386.zip
+ULTRADEFRAG_64_URL=https://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-$(ULTRADEFRAG_VERSION).bin.amd64.zip
+UNXTUTILS_URL?=https://downloads.sourceforge.net/unxutils/UnxUtils.zip
+VAGRANT_PUB_URL?=https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub
+VBOX_ISO_URL=https://download.virtualbox.org/virtualbox/$(VBOX_VERSION)/VBoxGuestAdditions_$(VBOX_VERSION).iso
+VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/$(VMWARE_VERSION)/windows/packages/tools-windows.tar
+# See https://www.gnu.org/software/wget/faq.html#Where_can_I_download_Wget.3F
 WGET_URL?=https://eternallybored.org/misc/wget/current/wget.exe
 
 BITVISE:=$(shell basename $(BITVISE_URL))

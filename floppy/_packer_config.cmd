@@ -1,8 +1,8 @@
 @echo off
 
 :: Uncomment the following to set a different Cygwin mirror
-:: Default: http://mirrors.kernel.org/sourceware/cygwin
-:: set CYGWIN_MIRROR_URL=http://mirrors.kernel.org/sourceware/cygwin
+:: Default: https://mirrors.kernel.org/sourceware/cygwin
+:: set CYGWIN_MIRROR_URL=https://mirrors.kernel.org/sourceware/cygwin
 
 :: Uncomment the following to echo commands as they are run
 :: Default: (unset)

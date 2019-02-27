@@ -4,9 +4,9 @@
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
-if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://7-zip.org/a/7z1604.msi
-if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://7-zip.org/a/7z1604-x64.msi
-if not defined VBOX_ISO_URL set VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/5.1.30/VBoxGuestAdditions_5.1.30.iso
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=https://7-zip.org/a/7z1604.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=https://7-zip.org/a/7z1604-x64.msi
+if not defined VBOX_ISO_URL set VBOX_ISO_URL=https://download.virtualbox.org/virtualbox/5.1.30/VBoxGuestAdditions_5.1.30.iso
 if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar
 goto main
 
@@ -270,13 +270,13 @@ set GUEST_OS
 if "%GUEST_OS%" == "Windows Server 2016" goto :exit0
 
 ::First, download the appropriate Windows Update CAB file from here: https://support.microsoft.com/en-us/kb/3063109
-::  Windows 8.1: http://www.microsoft.com/downloads/details.aspx?familyid=cd142c42-204a-4566-b767-795e3409b135
-::  Windows 8.1: http://www.microsoft.com/downloads/details.aspx?familyid=3a5a9015-c121-44dd-ad2e-962f66532da7
-::  Windows Server 2012 R2: http://www.microsoft.com/downloads/details.aspx?familyid=a7704851-70bb-46c1-96d2-1b6f7ca226af
-::  Windows Server 2012: http://www.microsoft.com/downloads/details.aspx?familyid=185812c8-8eb5-43c8-8505-70a262f4277d
-::  Windows 7: http://www.microsoft.com/downloads/details.aspx?familyid=54c62651-0fc9-4642-ad12-404b3356825e
-::  Windows 7: http://www.microsoft.com/downloads/details.aspx?familyid=c84f2899-d997-42af-bd5d-cb97086e3b09
-::  Windows Server 2008 R2: http://www.microsoft.com/downloads/details.aspx?familyid=2dd45bd8-6bcd-47aa-8322-3e10b52b1f1f
+::  Windows 8.1: https://www.microsoft.com/downloads/details.aspx?familyid=cd142c42-204a-4566-b767-795e3409b135
+::  Windows 8.1: https://www.microsoft.com/downloads/details.aspx?familyid=3a5a9015-c121-44dd-ad2e-962f66532da7
+::  Windows Server 2012 R2: https://www.microsoft.com/downloads/details.aspx?familyid=a7704851-70bb-46c1-96d2-1b6f7ca226af
+::  Windows Server 2012: https://www.microsoft.com/downloads/details.aspx?familyid=185812c8-8eb5-43c8-8505-70a262f4277d
+::  Windows 7: https://www.microsoft.com/downloads/details.aspx?familyid=54c62651-0fc9-4642-ad12-404b3356825e
+::  Windows 7: https://www.microsoft.com/downloads/details.aspx?familyid=c84f2899-d997-42af-bd5d-cb97086e3b09
+::  Windows Server 2008 R2: https://www.microsoft.com/downloads/details.aspx?familyid=2dd45bd8-6bcd-47aa-8322-3e10b52b1f1f
 ::Open up Windows Powershell with elevated privileges.
 ::Set the correct path to the CAB file you’ve downloaded. For example:
 ::  $integrationServicesCabPath="C:\Downloads\windows6.2-hypervintegrationservices-x86.cab"

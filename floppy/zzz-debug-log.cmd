@@ -26,7 +26,7 @@ if exist "%_TEE_CMD%" goto :eof
 set _TEE_CMD=%SystemRoot%\tee.cmd
 set _TEE_JS=%SystemRoot%\tee.js
 
-:: see http://stackoverflow.com/a/10719322/1432614
+:: see https://stackoverflow.com/a/10719322/1432614
 echo var fso = new ActiveXObject("Scripting.FileSystemObject");>"%_TEE_JS%"
 echo var out = fso.OpenTextFile(WScript.Arguments(0),2,true);>>"%_TEE_JS%"
 echo var chr;>>"%_TEE_JS%"

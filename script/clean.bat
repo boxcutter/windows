@@ -5,7 +5,7 @@
 pushd "%TEMP%"
 
 :: determine the version of windows since dism in windows 7 lacks cleanup-image
-:: http://stackoverflow.com/questions/13212033/get-windows-version-in-a-batch-file
+:: https://stackoverflow.com/questions/13212033/get-windows-version-in-a-batch-file
 for /f "tokens=4-5 delims=. " %%i in ('ver') do set VERSION=%%i.%%j
 
 if "%VERSION%" == "6.1" (
@@ -36,7 +36,7 @@ echo ==^> Cleaning "%SystemRoot%\TEMP" files >&2
 for %%i in ("%SystemRoot%\TEMP\*.*") do if /i not "%%~nxi" equ "%~nx0" echo del /f /q /s "%%~i"
 
 echo ==^> Removing potentially corrupt recycle bin
-:: see http://www.winhelponline.com/blog/fix-corrupted-recycle-bin-windows-7-vista/
+:: see https://www.winhelponline.com/blog/fix-corrupted-recycle-bin-windows-7-vista/
 rmdir /q /s %SystemDrive%\$Recycle.bin
 
 echo ==^> Cleaning ISOs in "%USERPROFILE%"

@@ -629,7 +629,7 @@ ssh-$(HYPERV_BOX_DIR)/%$(BOX_SUFFIX): $(HYPERV_BOX_DIR)/%$(BOX_SUFFIX)
 	bin/ssh-box.sh $< hyperv hyperv $(CURRENT_DIR)/test/*_spec.rb
 
 S3_STORAGE_CLASS ?= REDUCED_REDUNDANCY
-S3_ALLUSERS_ID ?= uri=http://acs.amazonaws.com/groups/global/AllUsers
+S3_ALLUSERS_ID ?= uri=https://acs.amazonaws.com/groups/global/AllUsers
 
 s3cp-$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): $(VMWARE_BOX_DIR)/%$(BOX_SUFFIX)
 	aws s3 cp $< $(VMWARE_S3_BUCKET) --storage-class $(S3_STORAGE_CLASS) --grants full=$(S3_GRANT_ID) read=$(S3_ALLUSERS_ID)

@@ -4,11 +4,11 @@
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
-if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://7-zip.org/a/7z1604.msi
-if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://www.7-zip.org/a/7z1604-x64.msi
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=https://7-zip.org/a/7z1604.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=https://7-zip.org/a/7z1604-x64.msi
 
-if not defined ULTRADEFRAG_32_URL set ULTRADEFRAG_32_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.i386.zip
-if not defined ULTRADEFRAG_64_URL set ULTRADEFRAG_64_URL=http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.amd64.zip
+if not defined ULTRADEFRAG_32_URL set ULTRADEFRAG_32_URL=https://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.i386.zip
+if not defined ULTRADEFRAG_64_URL set ULTRADEFRAG_64_URL=https://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.amd64.zip
 
 goto :main
 

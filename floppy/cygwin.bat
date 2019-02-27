@@ -15,10 +15,10 @@ if not defined CYGWIN_ARCH (
 )
 
 if not defined CYGWIN_HOME       set CYGWIN_HOME=%SystemDrive%\cygwin
-if not defined CYGWIN_MIRROR_URL set CYGWIN_MIRROR_URL=http://mirrors.kernel.org/sourceware/cygwin
+if not defined CYGWIN_MIRROR_URL set CYGWIN_MIRROR_URL=https://mirrors.kernel.org/sourceware/cygwin
 if not defined CYGWIN_PACKAGES   set CYGWIN_PACKAGES=openssh
 if not defined CYGWIN_TRIES      set CYGWIN_TRIES=3
-if not defined CYGWIN_URL        set CYGWIN_URL=http://cygwin.com/setup-x86.exe
+if not defined CYGWIN_URL        set CYGWIN_URL=https://cygwin.com/setup-x86.exe
 if not defined SSHD_PASSWORD     set SSHD_PASSWORD=D@rj33l1ng
 
 for %%i in ("%CYGWIN_URL%") do set CYGWIN_EXE=%%~nxi

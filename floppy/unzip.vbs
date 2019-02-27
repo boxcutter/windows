@@ -1,5 +1,5 @@
-' see http://stackoverflow.com/a/911796/1432614
-' http://stackoverflow.com/a/12718299/1432614
+' see https://stackoverflow.com/a/911796/1432614
+' https://stackoverflow.com/a/12718299/1432614
 
 'If the extraction location does not exist create it.
 Set fso = CreateObject("Scripting.FileSystemObject")

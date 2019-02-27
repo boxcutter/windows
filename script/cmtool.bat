@@ -127,7 +127,7 @@ if exist "%SystemRoot%\_download.cmd" (
 if not exist "%PUPPET_PATH%" goto exit1
 
 echo ==^> Installing Puppet client %CM_VERSION%
-:: see http://docs.puppetlabs.com/pe/latest/install_windows.html
+:: see https://docs.puppetlabs.com/pe/latest/install_windows.html
 msiexec /qb /i "%PUPPET_PATH%" /l*v "%PUPPET_DIR%\puppet.log" %PUPPET_OPTIONS%
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%PUPPET_PATH%" /l*v "%PUPPET_DIR%\puppet.log" %PUPPET_OPTIONS%
@@ -167,7 +167,7 @@ if exist "%SystemRoot%\_download.cmd" (
 if not exist "%SALT_PATH%" goto exit1
 
 echo ==^> Installing Salt minion
-:: see http://docs.saltstack.com/en/latest/topics/installation/windows.html
+:: see https://docs.saltstack.com/en/latest/topics/installation/windows.html
 "%SALT_PATH%" /S %SALT_OPTIONS%
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%SALT_PATH%" /S %SALT_OPTIONS%

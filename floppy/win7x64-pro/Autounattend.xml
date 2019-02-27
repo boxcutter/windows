@@ -104,7 +104,7 @@
                     <ScopeDefault>true</ScopeDefault>
                     <ScopeDisplayName>Google</ScopeDisplayName>
                     <ScopeKey>Google</ScopeKey>
-                    <ScopeUrl>http://www.google.com/search?q={searchTerms}</ScopeUrl>
+                    <ScopeUrl>https://www.google.com/search?q={searchTerms}</ScopeUrl>
                 </Scope>
             </SearchScopes>
             <DisableAccelerators>true</DisableAccelerators>
@@ -118,7 +118,7 @@
                     <ScopeDefault>true</ScopeDefault>
                     <ScopeDisplayName>Google</ScopeDisplayName>
                     <ScopeKey>Google</ScopeKey>
-                    <ScopeUrl>http://www.google.com/search?q={searchTerms}</ScopeUrl>
+                    <ScopeUrl>https://www.google.com/search?q={searchTerms}</ScopeUrl>
                 </Scope>
             </SearchScopes>
             <DisableAccelerators>true</DisableAccelerators>

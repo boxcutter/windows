@@ -2,7 +2,7 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
-if not defined HANDLE_URL set HANDLE_URL=http://live.sysinternals.com/handle.exe
+if not defined HANDLE_URL set HANDLE_URL=https://live.sysinternals.com/handle.exe
 
 for %%i in ("%HANDLE_URL%") do set HANDLE_EXE=%%~nxi
 set HANDLE_DIR=%TEMP%\handle

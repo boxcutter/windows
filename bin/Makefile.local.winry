@@ -46,7 +46,7 @@ VIRTUALBOX_BOX_FILES := $(wildcard box/virtualbox/*.box)
 VMWARE_S3_BUCKET := s3://box-cutter/windows/vmware$(VMWARE_VERSION)/
 VIRTUALBOX_S3_BUCKET := s3://box-cutter/windows/virtualbox$(VIRTUALBOX_VERSION)/
 S3_GRANT_ID := id=6efa364c53605afa1f4186b2b23ba97a354e74c7b9238317d9f57bc8f6f6bc5a
-ALLUSERS_ID := uri=http://acs.amazonaws.com/groups/global/AllUsers
+ALLUSERS_ID := uri=https://acs.amazonaws.com/groups/global/AllUsers
 
 upload-s3: upload-s3-vmware upload-s3-virtualbox
 
