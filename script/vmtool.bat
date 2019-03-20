@@ -1,12 +1,13 @@
+:: TODO: add steps to download hyperv Integration Tools .cab file based on OS and install them if the user hasn't specific their own URL
 @setlocal EnableDelayedExpansion EnableExtensions
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
-if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://www.7-zip.org/a/7z1600.msi
-if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://www.7-zip.org/a/7z1600-x64.msi
-if not defined VBOX_ISO_URL set VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/5.0.20/VBoxGuestAdditions_5.0.20.iso
-if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.1.1/3770994/windows/packages/tools-windows.tar
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://7-zip.org/a/7z1604.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://7-zip.org/a/7z1604-x64.msi
+if not defined VBOX_ISO_URL set VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/5.1.30/VBoxGuestAdditions_5.1.30.iso
+if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar
 goto main
 
 ::::::::::::
@@ -88,6 +89,8 @@ echo "%PACKER_BUILDER_TYPE%" | findstr /i "virtualbox" >nul
 if not errorlevel 1 goto virtualbox
 echo "%PACKER_BUILDER_TYPE%" | findstr /i "parallels" >nul
 if not errorlevel 1 goto parallels
+echo "%PACKER_BUILDER_TYPE%" | findstr /i "hyperv" >nul
+if not errorlevel 1 goto hyperv
 echo ==^> ERROR: Unknown PACKER_BUILDER_TYPE: "%PACKER_BUILDER_TYPE%"
 pushd .
 goto exit1
@@ -186,7 +189,8 @@ set VBOX_ISO=VBoxGuestAdditions.iso
 mkdir "%VBOX_ISO_DIR%"
 pushd "%VBOX_ISO_DIR%"
 set VBOX_SETUP_PATH=
-@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VBOX_SETUP_PATH @if exist "%%~i\%VBOX_SETUP_EXE%" set VBOX_SETUP_PATH=%%~i\%VBOX_SETUP_EXE%
+set VBOX_SETUP_DIR=
+@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VBOX_SETUP_PATH @if exist "%%~i\%VBOX_SETUP_EXE%" (set VBOX_SETUP_PATH=%%~i\%VBOX_SETUP_EXE% & set VBOX_SETUP_DIR=%%~i)
 if defined VBOX_SETUP_PATH goto install_vbox_guest_additions
 
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if exist "%%~i\%VBOX_ISO%" set VBOX_ISO_PATH=%%~i\%VBOX_ISO%
@@ -208,16 +212,15 @@ if not exist "%VBOX_ISO_PATH%" goto exit1
 call :install_sevenzip
 if errorlevel 1 goto exit1
 echo ==^> Extracting the VirtualBox Guest Additions installer
-7z e -o"%VBOX_ISO_DIR%" "%VBOX_ISO_PATH%" "%VBOX_SETUP_EXE%"
+7z x -o"%VBOX_ISO_DIR%" "%VBOX_ISO_PATH%" "%VBOX_SETUP_EXE%" cert
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e -o"%VBOX_ISO_DIR%" "%VBOX_ISO_PATH%" "%VBOX_SETUP_EXE%"
 ver>nul
 set VBOX_SETUP_PATH=%VBOX_ISO_DIR%\%VBOX_SETUP_EXE%
 if not exist "%VBOX_SETUP_PATH%" echo ==^> Unable to unzip "%VBOX_ISO_PATH%" & goto exit1
 
 :install_vbox_guest_additions
-if not exist a:\oracle-cert.cer echo ==^> ERROR: File not found: a:\oracle-cert.cer & goto exit1
 echo ==^> Installing Oracle certificate to keep install silent
-certutil -addstore -f "TrustedPublisher" a:\oracle-cert.cer
+powershell -Command "Get-ChildItem %VBOX_SETUP_DIR%\cert\ -Filter vbox*.cer | ForEach-Object { %VBOX_SETUP_DIR%\cert\VBoxCertUtil.exe add-trusted-publisher $_.FullName --root $_.FullName }" <NUL
 echo ==^> Installing VirtualBox Guest Additions
 "%VBOX_SETUP_PATH%" /S
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%VBOX_SETUP_PATH%" /S
@@ -255,6 +258,31 @@ echo ==^> Cleaning up Parallels Tools install
 del /F /S /Q "%PARALLELS_DIR"
 echo ==^> Removing "%PARALLELS_ISO_PATH"
 del /F "%PARALLELS_ISO_PATH"
+goto :exit0
+
+::::::::::::
+:hyperv
+::::::::::::
+for /F "usebackq tokens=3,4,5" %%i in (`REG query "hklm\software\microsoft\windows NT\CurrentVersion" /v ProductName`) do set GUEST_OS=%%i %%j %%k
+
+set GUEST_OS
+
+if "%GUEST_OS%" == "Windows Server 2016" goto :exit0
+
+::First, download the appropriate Windows Update CAB file from here: https://support.microsoft.com/en-us/kb/3063109
+::  Windows 8.1: http://www.microsoft.com/downloads/details.aspx?familyid=cd142c42-204a-4566-b767-795e3409b135
+::  Windows 8.1: http://www.microsoft.com/downloads/details.aspx?familyid=3a5a9015-c121-44dd-ad2e-962f66532da7
+::  Windows Server 2012 R2: http://www.microsoft.com/downloads/details.aspx?familyid=a7704851-70bb-46c1-96d2-1b6f7ca226af
+::  Windows Server 2012: http://www.microsoft.com/downloads/details.aspx?familyid=185812c8-8eb5-43c8-8505-70a262f4277d
+::  Windows 7: http://www.microsoft.com/downloads/details.aspx?familyid=54c62651-0fc9-4642-ad12-404b3356825e
+::  Windows 7: http://www.microsoft.com/downloads/details.aspx?familyid=c84f2899-d997-42af-bd5d-cb97086e3b09
+::  Windows Server 2008 R2: http://www.microsoft.com/downloads/details.aspx?familyid=2dd45bd8-6bcd-47aa-8322-3e10b52b1f1f
+::Open up Windows Powershell with elevated privileges.
+::Set the correct path to the CAB file you’ve downloaded. For example:
+::  $integrationServicesCabPath="C:\Downloads\windows6.2-hypervintegrationservices-x86.cab"
+::Install the patch using the following command:
+::  Add-WindowsPackage -Online -PackagePath $integrationServicesCabPath
+
 goto :exit0
 
 :exit0

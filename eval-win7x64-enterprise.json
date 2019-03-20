@@ -16,7 +16,7 @@
         "floppy/powerconfig.bat",
         "floppy/upgrade-wua.bat",
         "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows7-64",
       "headless": "{{ user `headless` }}",
@@ -27,10 +27,10 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "eval-win7x64-enterprise",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
-        "memsize": "2048",
-        "numvcpus": "1"
+        "cpuid.coresPerSocket": "1"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -53,8 +53,10 @@
         "floppy/powerconfig.bat",
         "floppy/upgrade-wua.bat",
         "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
+      "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows7_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -62,21 +64,10 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
+      "post_shutdown_delay": "30s",
       "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "2048"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "1"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vm_name": "eval-win7x64-enterprise",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -98,30 +89,48 @@
         "floppy/powerconfig.bat",
         "floppy/upgrade-wua.bat",
         "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-7",
-      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
-      "prlctl": [
-        [
-          "set",
-          "{{.Name}}",
-          "--memsize",
-          "2048"
-        ],
-        [
-          "set",
-          "{{.Name}}",
-          "--cpus",
-          "1"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
+      "vm_name": "eval-win7x64-enterprise",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "20000s",
+      "winrm_username": "vagrant"
+    },
+    {
+      "communicator": "winrm",
+      "cpu": "{{ user `cpus` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/disablewinupdate.bat",
+        "floppy/fixnetwork.ps1",
+        "floppy/install-winrm.cmd",
+        "floppy/networkprompt.bat",
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/upgrade-wua.bat",
+        "floppy/win7x64-enterprise/Autounattend.xml",
+        "floppy/zz-start-transports.cmd"
+      ],
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "ram_size": "{{ user `memory` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "type": "hyperv-iso",
       "vm_name": "eval-win7x64-enterprise",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -157,6 +166,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "3072",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",

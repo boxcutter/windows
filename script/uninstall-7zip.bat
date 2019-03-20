@@ -2,8 +2,8 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
-if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://www.7-zip.org/a/7z1600.msi
-if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://www.7-zip.org/a/7z1600-x64.msi
+if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://7-zip.org/a/7z1604.msi
+if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://www.7-zip.org/a/7z1604-x64.msi
 
 if defined ProgramFiles(x86) (
   set SEVENZIP_URL=%SEVENZIP_64_URL%
@@ -60,4 +60,3 @@ rmdir /q /s "%SEVENZIP_INSTALL_DIR%"
 
 @echo ==^> Script exiting with errorlevel %ERRORLEVEL%
 @exit /b %ERRORLEVEL%
-

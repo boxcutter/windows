@@ -5,26 +5,27 @@ endif
 
 EVAL_WIN7_X64 ?= http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso
 EVAL_WIN7_X64_CHECKSUM ?= 15ddabafa72071a06d5213b486a02d5b55cb7070
-EVAL_WIN81_X64 ?= http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X64FREE_EN-US_DV5.ISO
-EVAL_WIN81_X64_CHECKSUM ?= 73321fa912305e5a16096ef62380a91ee1f112da
+EVAL_WIN81_X64 ?= http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO
+EVAL_WIN81_X64_CHECKSUM ?= 7c7d99546077c805faae40a8864882c46f0ca141
 EVAL_WIN2008R2_X64 ?= http://download.microsoft.com/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso
 EVAL_WIN2008R2_X64_CHECKSUM ?= beed231a34e90e1dd9a04b3afabec31d62ce3889
-# EVAL_WIN2012R2_X64 ?= http://care.dlservice.microsoft.com/dl/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO
-EVAL_WIN2012R2_X64 ?= http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO
-# EVAL_WIN2012R2_X64_CHECKSUM ?= 849734f37346385dac2c101e4aacba4626bb141c
-EVAL_WIN2012R2_X64_CHECKSUM ?= 7e3f89dbff163e259ca9b0d1f078daafd2fed513
+EVAL_WIN2012R2_X64 ?= http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO
+EVAL_WIN2012R2_X64_CHECKSUM ?= 849734f37346385dac2c101e4aacba4626bb141c
 
 EVAL_WIN7_X86 ?= http://care.dlservice.microsoft.com/dl/download/evalx/win7/x86/EN/7600.16385.090713-1255_x86fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENEVAL_EN_DVD.iso
 EVAL_WIN7_X86_CHECKSUM ?= 971fc00183a52c152fe924a6b99fdec011a871c2
-EVAL_WIN81_X86 ?= http://download.microsoft.com/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.16384.WINBLUE_RTM.130821-1623_X86FRE_ENTERPRISE_EVAL_EN-US-IRM_CENA_X86FREE_EN-US_DV5.ISO
-EVAL_WIN81_X86_CHECKSUM ?= e2c60b093b11b99c8f021c518249f4c42093efe2
-EVAL_WIN8_X64 ?= http://download.microsoft.com/download/5/3/C/53C31ED0-886C-4F81-9A38-F58CE4CE71E8/9200.16384.WIN8_RTM.120725-1247_X64FRE_ENTERPRISE_EVAL_EN-US-HRM_CENA_X64FREE_EN-US_DV5.ISO
+EVAL_WIN81_X86 ?= http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X86FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X86FREE_EN-US_DV9.ISO
+EVAL_WIN81_X86_CHECKSUM ?= 4ddd0881779e89d197cb12c684adf47fd5d9e540
+EVAL_WIN8_X64 ?= http://care.dlservice.microsoft.com/dl/download/5/3/C/53C31ED0-886C-4F81-9A38-F58CE4CE71E8/9200.16384.WIN8_RTM.120725-1247_X64FRE_ENTERPRISE_EVAL_EN-US-HRM_CENA_X64FREE_EN-US_DV5.ISO
 EVAL_WIN8_X64_CHECKSUM ?= ae59e04462e4dc74e971d6e98d0cc1f2f3d63f1d
 
-EVAL_WIN10_X64 ?= http://care.dlservice.microsoft.com/dl/download/C/3/9/C399EEA8-135D-4207-92C9-6AAB3259F6EF/10240.16384.150709-1700.TH1_CLIENTENTERPRISEEVAL_OEMRET_X64FRE_EN-US.ISO
-EVAL_WIN10_X64_CHECKSUM ?= 56ab095075be28a90bc0b510835280975c6bb2ce
-EVAL_WIN10_X86 ?= http://care.dlservice.microsoft.com/dl/download/C/3/9/C399EEA8-135D-4207-92C9-6AAB3259F6EF/10240.16384.150709-1700.TH1_CLIENTENTERPRISEEVAL_OEMRET_X86FRE_EN-US.ISO
-EVAL_WIN10_X86_CHECKSUM ?= 875b450d67e7176b8b3c72a80c60a0628bf1afac
+EVAL_WIN10_X64 ?= https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso
+EVAL_WIN10_X64_CHECKSUM ?= a4ea45ec1282e85fc84af49acf7a8d649c31ac5c
+EVAL_WIN10_X86 ?= https://software-download.microsoft.com/download/pr/17134.1.180410-1804.rs4_release_CLIENTENTERPRISEEVAL_OEMRET_x86FRE_en-us.iso
+EVAL_WIN10_X86_CHECKSUM ?= ddb496534203cb98284e5484e0ad60af3c0efce7
+
+EVAL_WIN2016_X64 ?= https://software-download.microsoft.com/download/pr/Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO
+EVAL_WIN2016_X64_CHECKSUM ?= 772700802951b36c8cb26a61c040b9a8dc3816a3
 
 # @todo:
 EVAL_WIN2012_X64 ?= http://download.microsoft.com/download/6/D/A/6DAB58BA-F939-451D-9101-7DE07DC09C03/9200.16384.WIN8_RTM.120725-1247_X64FRE_SERVER_EVAL_EN-US-HRM_SSS_X64FREE_EN-US_DV5.ISO
@@ -36,6 +37,8 @@ WIN2012_X64 ?= iso/en_windows_server_2012_x64_dvd_915478.iso
 WIN2012_X64_CHECKSUM ?= d09e752b1ee480bc7e93dfa7d5c3a9b8aac477ba
 WIN2012R2_X64 ?= iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso
 WIN2012R2_X64_CHECKSUM ?= 865494e969704be1c4496d8614314361d025775e
+WIN2016_X64 ?= iso/en_windows_server_2016_x64_dvd_9718492.iso
+WIN2016_X64_CHECKSUM ?= f185197af68fae4f0e06510a4579fc511ba27616
 WIN7_X64_ENTERPRISE ?= iso/en_windows_7_enterprise_with_sp1_x64_dvd_u_677651.iso
 WIN7_X64_ENTERPRISE_CHECKSUM ?= a491f985dccfb5863f31b728dddbedb2ff4df8d1
 WIN7_X64_PRO ?= iso/en_windows_7_professional_with_sp1_vl_build_x64_dvd_u_677791.iso
@@ -91,12 +94,13 @@ PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDA
 ifdef CM_VERSION
 	PACKER_VARS += -var 'cm_version=$(CM_VERSION)'
 endif
+ON_ERROR ?= cleanup
 PACKER ?= packer
 ifdef PACKER_DEBUG
 	PACKER := PACKER_LOG=1 $(PACKER)
 else
 endif
-BUILDER_TYPES ?= vmware virtualbox parallels
+BUILDER_TYPES ?= vmware virtualbox parallels hyperv
 ifeq ($(OS),Windows_NT)
 	VAGRANT_PROVIDER ?= vmware_workstation
 else
@@ -108,16 +112,20 @@ TEST_BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $
 VMWARE_BOX_DIR := box/vmware
 VIRTUALBOX_BOX_DIR := box/virtualbox
 PARALLELS_BOX_DIR := box/parallels
+HYPERV_BOX_DIR := box/hyperv
 VMWARE_BOX_FILES := $(foreach box_filename, $(BOX_FILENAMES), $(VMWARE_BOX_DIR)/$(box_filename))
 VIRTUALBOX_BOX_FILES := $(foreach box_filename, $(BOX_FILENAMES), $(VIRTUALBOX_BOX_DIR)/$(box_filename))
 PARALLELS_BOX_FILES := $(foreach box_filename, $(BOX_FILENAMES), $(PARALLELS_BOX_DIR)/$(box_filename))
+HYPERV_BOX_FILES := $(foreach box_filename, $(BOX_FILENAMES), $(HYPERV_BOX_DIR)/$(box_filename))
 BOX_FILES := $(foreach builder, $(BUILDER_TYPES), $(foreach box_filename, $(BOX_FILENAMES), box/$(builder)/$(box_filename)))
 VMWARE_OUTPUT := output-vmware-iso
 VIRTUALBOX_OUTPUT := output-virtualbox-iso
 PARALLELS_OUTPUT := output-parallels-iso
+HYPERV_OUTPUT := output-hyperv-iso
 VMWARE_BUILDER := vmware-iso
 VIRTUALBOX_BUILDER := virtualbox-iso
 PARALLELS_BUILDER := parallels-iso
+HYPERV_BUILDER := hyperv-iso
 CURRENT_DIR := $(shell pwd)
 UNAME_O := $(shell uname -o 2> /dev/null)
 UNAME_P := $(shell uname -p 2> /dev/null)
@@ -190,6 +198,12 @@ parallels/$(1)-cygwin: $(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
 
 parallels/$(1)-ssh: $(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
 
+hyperv/$(1): $(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+hyperv/$(1)-cygwin: $(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+hyperv/$(1)-ssh: $(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+
 test-vmware/$(1): test-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
 test-vmware/$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
@@ -207,6 +221,12 @@ test-parallels/$(1): test-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
 test-parallels/$(1)-cygwin: test-$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
 
 test-parallels/$(1)-ssh: test-$(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+
+test-hyperv/$(1): test-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+test-hyperv/$(1)-cygwin: test-$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+test-hyperv/$(1)-ssh: test-$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
 
 ssh-vmware/$(1): ssh-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
@@ -226,11 +246,19 @@ ssh-parallels/$(1)-cygwin: ssh-$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
 
 ssh-parallels/$(1)-ssh: ssh-$(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
 
+ssh-hyperv/$(1): ssh-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+ssh-hyperv/$(1)-cygwin: ssh-$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+
+ssh-hyperv/$(1)-ssh: ssh-$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+
 s3cp-vmware/$(1): s3cp-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
 s3cp-virtualbox/$(1): s3cp-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
 
 s3cp-parallels/$(1): s3cp-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+
+s3cp-hyperv/$(1): s3cp-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
 endef
 
 SHORTCUT_TARGETS := $(basename $(TEMPLATE_FILENAMES))
@@ -346,6 +374,24 @@ test-win2012r2-openssh: test-win2012r2-datacenter-ssh test-win2012r2-standard-ss
 test-win2012r2-cygwin: test-win2012r2-datacenter-cygwin test-win2012r2-standard-cygwin
 
 
+win2016: win2016-winrm win2016-openssh win2016-cygwin
+
+win2016-winrm: win2016-standard
+
+win2016-openssh: win2016-standard-ssh
+
+win2016-cygwin: win2016-standard-cygwin
+
+
+test-win2016: test-win2016-winrm test-win2016-openssh test-win2016-cygwin
+
+test-win2016-winrm: test-win2016-standard
+
+test-win2016-openssh: test-win2016-standard-ssh
+
+test-win2016-cygwin: test-win2016-standard-cygwin
+
+
 eval: eval-winrm eval-openssh
 
 eval-winrm: eval-win2012r2-datacenter eval-win2008r2-datacenter eval-win81x64-enterprise eval-win7x64-enterprise eval-win10x64-enterprise
@@ -359,48 +405,62 @@ define BUILDBOX
 $(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
-	$(PACKER) build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
 
 $(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
-	$(PACKER) build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
 
 $(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
 	rm -rf $(PARALLELS_OUTPUT)
 	mkdir -p $(PARALLELS_BOX_DIR)
-	$(PACKER) build -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+
+$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
+	rm -rf $(HYPERV_OUTPUT)
+	mkdir -p $(HYPERV_BOX_DIR)
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
 
 $(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
-	$(PACKER) build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
 
 $(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
-	$(PACKER) build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
 
 $(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
 	rm -rf $(PARALLELS_OUTPUT)
 	mkdir -p $(PARALLELS_BOX_DIR)
-	$(PACKER) build -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+
+$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
+	rm -rf $(HYPERV_OUTPUT)
+	mkdir -p $(HYPERV_BOX_DIR)
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
 
 $(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
-	$(PACKER) build -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
 
 $(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
-	$(PACKER) build -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
 
 $(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
 	rm -rf $(PARALLELS_OUTPUT)
 	mkdir -p $(PARALLELS_BOX_DIR)
-	$(PACKER) build -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
 
+$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+	rm -rf $(HYPERV_OUTPUT)
+	mkdir -p $(HYPERV_BOX_DIR)
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
 endef
 
 $(eval $(call BUILDBOX,win2008r2-datacenter,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))
@@ -428,6 +488,10 @@ $(eval $(call BUILDBOX,win2012r2-standard,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECK
 $(eval $(call BUILDBOX,eval-win2012r2-standard,$(EVAL_WIN2012R2_X64),$(EVAL_WIN2012R2_X64_CHECKSUM)))
 
 $(eval $(call BUILDBOX,win2012r2-standardcore,$(WIN2012R2_X64),$(WIN2012R2_X64_CHECKSUM)))
+
+$(eval $(call BUILDBOX,win2016-standard,$(WIN2016_X64),$(WIN2016_X64_CHECKSUM)))
+
+$(eval $(call BUILDBOX,eval-win2016-standard,$(EVAL_WIN2016_X64),$(EVAL_WIN2016_X64_CHECKSUM)))
 
 $(eval $(call BUILDBOX,win7x64-enterprise,$(WIN7_X64_ENTERPRISE),$(WIN7_X64_ENTERPRISE_CHECKSUM)))
 
@@ -492,7 +556,7 @@ list:
 	@echo "To build for all target platforms:"
 	@echo "  make win7x64-pro"
 	@echo ""
-	@echo "Prepend 'vmware/' or 'virtualbox/' or 'parallels/' to build only one target platform:"
+	@echo "Prepend 'vmware/' or 'virtualbox/' or 'parallels/' or 'hyperv/' to build only one target platform:"
 	@echo "  make vmware/win7x64-pro"
 	@echo ""
 	@echo "Append '-cygwin' to use Cygwin's SSH instead of OpenSSH:"
@@ -544,6 +608,10 @@ test-$(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX): $(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX)
 	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/test-box.sh $< parallels parallels $(CURRENT_DIR)/test/*_spec.rb
 
+test-$(HYPERV_BOX_DIR)/%$(BOX_SUFFIX): $(HYPERV_BOX_DIR)/%$(BOX_SUFFIX)
+	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
+	bin/test-box.sh $< hyperv hyperv $(CURRENT_DIR)/test/*_spec.rb
+
 ssh-$(VMWARE_BOX_DIR)/%$(BOX_SUFFIX): $(VMWARE_BOX_DIR)/%$(BOX_SUFFIX)
 	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/ssh-box.sh $< vmware_desktop $(VAGRANT_PROVIDER) $(CURRENT_DIR)/test/*_spec.rb
@@ -555,6 +623,10 @@ ssh-$(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX): $(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX)
 ssh-$(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX): $(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX)
 	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
 	bin/ssh-box.sh $< parallels parallels $(CURRENT_DIR)/test/*_spec.rb
+
+ssh-$(HYPERV_BOX_DIR)/%$(BOX_SUFFIX): $(HYPERV_BOX_DIR)/%$(BOX_SUFFIX)
+	-test -f .keep_known_hosts || rm -f ~/.ssh/known_hosts
+	bin/ssh-box.sh $< hyperv hyperv $(CURRENT_DIR)/test/*_spec.rb
 
 S3_STORAGE_CLASS ?= REDUCED_REDUNDANCY
 S3_ALLUSERS_ID ?= uri=http://acs.amazonaws.com/groups/global/AllUsers
@@ -568,6 +640,10 @@ s3cp-$(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX): $(VIRTUALBOX_BOX_DIR)/%$(BOX_SUFFIX)
 s3cp-$(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX): $(PARALLELS_BOX_DIR)/%$(BOX_SUFFIX)
 	aws s3 cp $< $(PARALLELS_S3_BUCKET) --storage-class $(S3_STORAGE_CLASS) --grants full=$(S3_GRANT_ID) read=$(S3_ALLUSERS_ID)
 
+s3cp-$(HYPERV_BOX_DIR)/%$(BOX_SUFFIX): $(HYPERV_BOX_DIR)/%$(BOX_SUFFIX)
+	aws s3 cp $< $(HYPERV_S3_BUCKET) --storage-class $(S3_STORAGE_CLASS) --grants full=$(S3_GRANT_ID) read=$(S3_ALLUSERS_ID)
+
 s3cp-vmware: $(addprefix s3cp-,$(VMWARE_BOX_FILES))
 s3cp-virtualbox: $(addprefix s3cp-,$(VIRTUALBOX_BOX_FILES))
 s3cp-parallels: $(addprefix s3cp-,$(PARALLELS_BOX_FILES))
+s3cp-hyperv: $(addprefix s3cp-,$(HYPERV_BOX_FILES))

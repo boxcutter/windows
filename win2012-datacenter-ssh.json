@@ -14,7 +14,7 @@
         "floppy/unzip.vbs",
         "floppy/hotfix-KB2842230.bat",
         "floppy/openssh.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows8srv-64",
       "headless": "{{ user `headless` }}",
@@ -28,10 +28,10 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "win2012-datacenter-ssh",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
-        "memsize": "1536",
-        "numvcpus": "1"
+        "cpuid.coresPerSocket": "1"
       }
     },
     {
@@ -48,9 +48,11 @@
         "floppy/unzip.vbs",
         "floppy/hotfix-KB2842230.bat",
         "floppy/openssh.bat",
-        "floppy/zz-start-sshd.cmd",
+        "floppy/zz-start-transports.cmd",
         "floppy/oracle-cert.cer"
       ],
+      "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows2012_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
@@ -58,24 +60,13 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
+      "post_shutdown_delay": "30s",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
-      "vboxmanage": [
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--memory",
-          "1536"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
-          "1"
-        ]
-      ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vm_name": "win2012-datacenter-ssh"
     },
     {
@@ -92,27 +83,16 @@
         "floppy/unzip.vbs",
         "floppy/hotfix-KB2842230.bat",
         "floppy/openssh.bat",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-2012",
-      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "prlctl": [
-        [
-          "set",
-          "{{.Name}}",
-          "--memsize",
-          "1536"
-        ],
-        [
-          "set",
-          "{{.Name}}",
-          "--cpus",
-          "1"
-        ],
         [
           "set",
           "{{.Name}}",
@@ -125,6 +105,35 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
+      "vm_name": "win2012-datacenter-ssh"
+    },
+    {
+      "cpu": "{{ user `cpus` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/win2012-datacenter/Autounattend.xml",
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/install-winrm.cmd",
+        "floppy/powerconfig.bat",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/unzip.vbs",
+        "floppy/hotfix-KB2842230.bat",
+        "floppy/openssh.bat",
+        "floppy/zz-start-transports.cmd"
+      ],
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "ram_size": "{{ user `memory` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_timeout": "10000s",
+      "type": "hyperv-iso",
       "vm_name": "win2012-datacenter-ssh"
     }
   ],
@@ -165,6 +174,9 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",

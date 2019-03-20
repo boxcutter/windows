@@ -2,8 +2,8 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.define "vagrant-win8x64-enterprise-cygwin"
-  config.vm.box = "win8x64-enterprise-cygwin"
+  config.vm.define "vagrant-win2016-standard-cygwin"
+  config.vm.box = "win2016-standard-cygwin"
 
   # Port forward WinRM and RDP
   config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct:true
@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
       v.vmx["ethernet0.virtualDev"] = "vmxnet3"
       v.vmx["RemoteDisplay.vnc.enabled"] = "false"
       v.vmx["RemoteDisplay.vnc.port"] = "5900"
-      v.vmx["scsi0.virtualDev"] = "lsilogic"
+      v.vmx["scsi0.virtualDev"] = "lsisas1068"
     end
   end
 
@@ -39,5 +39,10 @@ Vagrant.configure("2") do |config|
     v.customize ["set", :id, "--cpus", 1]
     v.customize ["set", :id, "--memsize", 1536]
     v.customize ["set", :id, "--videosize", "256"]
+  end
+
+  config.vm.provider :hyperv do |v, override|
+    v.cpus = "1"
+    v.memory = "1536"
   end
 end

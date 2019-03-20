@@ -8,16 +8,15 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/disablewinupdate.bat",
+        "floppy/eval-win2016-standard/Autounattend.xml",
         "floppy/fixnetwork.ps1",
-        "floppy/hotfix-KB2842230.bat",
         "floppy/install-winrm.cmd",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/unzip.vbs",
-        "floppy/win8x64-pro/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
-      "guest_os_type": "windows8-64",
+      "guest_os_type": "windows8srv-64",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -25,11 +24,12 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
-      "vm_name": "win8x64-pro",
+      "vm_name": "eval-win2016-standard",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
+      "disk_adapter_type": "lsisas1068",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
-        "memsize": "1536",
-        "numvcpus": "1"
+        "cpuid.coresPerSocket": "1"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
@@ -43,39 +43,37 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/disablewinupdate.bat",
+        "floppy/eval-win2016-standard/Autounattend.xml",
         "floppy/fixnetwork.ps1",
-        "floppy/hotfix-KB2842230.bat",
         "floppy/install-winrm.cmd",
         "floppy/oracle-cert.cer",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/unzip.vbs",
-        "floppy/win8x64-pro/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
-      "guest_os_type": "Windows8_64",
+      "guest_additions_mode": "attach",
+      "guest_additions_url": "{{user `guest_additions_url`}}",
+      "guest_os_type": "Windows2016_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
+      "post_shutdown_delay": "30s",
       "type": "virtualbox-iso",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "vboxmanage": [
         [
-          "modifyvm",
+          "setextradata",
           "{{.Name}}",
-          "--memory",
-          "1536"
-        ],
-        [
-          "modifyvm",
-          "{{.Name}}",
-          "--cpus",
+          "VBoxInternal/CPUM/CMPXCHG16B",
           "1"
         ]
       ],
-      "vm_name": "win8x64-pro",
+      "vm_name": "eval-win2016-standard",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
@@ -88,38 +86,61 @@
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
+        "floppy/disablewinupdate.bat",
+        "floppy/eval-win2016-standard/Autounattend.xml",
         "floppy/fixnetwork.ps1",
-        "floppy/hotfix-KB2842230.bat",
         "floppy/install-winrm.cmd",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
-        "floppy/unzip.vbs",
-        "floppy/win8x64-pro/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-transports.cmd"
       ],
-      "guest_os_type": "win-8",
-      "headless": "{{ user `headless` }}",
+      "guest_os_type": "win-2016",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
       "prlctl": [
         [
           "set",
           "{{.Name}}",
-          "--memsize",
-          "1536"
-        ],
-        [
-          "set",
-          "{{.Name}}",
-          "--cpus",
-          "1"
+          "--efi-boot",
+          "off"
         ]
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
-      "vm_name": "win8x64-pro",
+      "vm_name": "eval-win2016-standard",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "10000s",
+      "winrm_username": "vagrant"
+    },
+    {
+      "communicator": "winrm",
+      "cpu": "{{ user `cpus` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "floppy_files": [
+        "floppy/00-run-all-scripts.cmd",
+        "floppy/01-install-wget.cmd",
+        "floppy/_download.cmd",
+        "floppy/_packer_config.cmd",
+        "floppy/disablewinupdate.bat",
+        "floppy/eval-win2016-standard/Autounattend.xml",
+        "floppy/fixnetwork.ps1",
+        "floppy/install-winrm.cmd",
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/zz-start-transports.cmd"
+      ],
+      "headless": "{{ user `headless` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "iso_url": "{{ user `iso_url` }}",
+      "ram_size": "{{ user `memory` }}",
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "type": "hyperv-iso",
+      "vm_name": "eval-win2016-standard",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
@@ -128,10 +149,10 @@
   "post-processors": [
     {
       "compression_level": 1,
-      "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win8x64-pro-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "keep_input_artifact": true,
+      "output": "box/{{.Provider}}/eval-win2016-standard-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-win8x64-pro.tpl"
+      "vagrantfile_template": "tpl/vagrantfile-eval-win2016-standard.tpl"
     }
   ],
   "provisioners": [
@@ -154,12 +175,15 @@
     }
   ],
   "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
     "disk_size": "40960",
     "headless": "false",
-    "iso_checksum": "1ce53ad5f60419cf04a715cf3233f247e48beec4",
-    "iso_url": "iso/en_windows_8_x64_dvd_915440.iso",
+    "iso_checksum": "772700802951b36c8cb26a61c040b9a8dc3816a3",
+    "iso_url": "https://software-download.microsoft.com/download/pr/Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
     "update": "true",
     "version": "0.1.0"
