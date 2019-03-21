@@ -148,117 +148,117 @@ define SHORTCUT
 
 ifeq ($(UNAME_S),Darwin)
 
-$(1): $(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX) $(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+$(PREFIX)$(1): $(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) $(PARALLELS_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-$(1)-cygwin: $(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX) $(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+$(PREFIX)$(1)-cygwin: $(VMWARE_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX) $(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-$(1)-ssh: $(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX) $(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+$(PREFIX)$(1)-ssh: $(VMWARE_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX) $(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-test-$(1): test-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX) test-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+test-$(PREFIX)$(1): test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) test-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-test-$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX) test-$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+test-$(PREFIX)$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX) test-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-test-$(1)-ssh: test-$(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX) test-$(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+test-$(PREFIX)$(1)-ssh: test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX) test-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-s3cp-$(1): s3cp-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX) s3cp-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX) s3cp-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+s3cp-$(PREFIX)$(1): s3cp-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) s3cp-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) s3cp-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
 else
 
-$(1): $(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+$(PREFIX)$(1): $(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-$(1)-cygwin: $(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+$(PREFIX)$(1)-cygwin: $(VMWARE_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-$(1)-ssh: $(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+$(PREFIX)$(1)-ssh: $(VMWARE_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX) $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-test-$(1): test-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+test-$(PREFIX)$(1): test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-test-$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+test-$(PREFIX)$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-test-$(1)-ssh: test-$(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+test-$(PREFIX)$(1)-ssh: test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX) test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-s3cp-$(1): s3cp-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX) s3cp-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+s3cp-$(PREFIX)$(1): s3cp-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX) s3cp-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
 endif
 
-vmware/$(1): $(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
+vmware/$(PREFIX)$(1): $(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-vmware/$(1)-cygwin: $(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+vmware/$(PREFIX)$(1)-cygwin: $(VMWARE_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-vmware/$(1)-ssh: $(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+vmware/$(PREFIX)$(1)-ssh: $(VMWARE_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-virtualbox/$(1): $(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+virtualbox/$(PREFIX)$(1): $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-virtualbox/$(1)-cygwin: $(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+virtualbox/$(PREFIX)$(1)-cygwin: $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-virtualbox/$(1)-ssh: $(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+virtualbox/$(PREFIX)$(1)-ssh: $(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-parallels/$(1): $(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+parallels/$(PREFIX)$(1): $(PARALLELS_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-parallels/$(1)-cygwin: $(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+parallels/$(PREFIX)$(1)-cygwin: $(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-parallels/$(1)-ssh: $(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+parallels/$(PREFIX)$(1)-ssh: $(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-hyperv/$(1): $(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+hyperv/$(PREFIX)$(1): $(HYPERV_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-hyperv/$(1)-cygwin: $(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+hyperv/$(PREFIX)$(1)-cygwin: $(HYPERV_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-hyperv/$(1)-ssh: $(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+hyperv/$(PREFIX)$(1)-ssh: $(HYPERV_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-test-vmware/$(1): test-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
+test-vmware/$(PREFIX)$(1): test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-test-vmware/$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+test-vmware/$(PREFIX)$(1)-cygwin: test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-test-vmware/$(1)-ssh: test-$(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+test-vmware/$(PREFIX)$(1)-ssh: test-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-test-virtualbox/$(1): test-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+test-virtualbox/$(PREFIX)$(1): test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-test-virtualbox/$(1)-cygwin: test-$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+test-virtualbox/$(PREFIX)$(1)-cygwin: test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-test-virtualbox/$(1)-ssh: test-$(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+test-virtualbox/$(PREFIX)$(1)-ssh: test-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-test-parallels/$(1): test-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+test-parallels/$(PREFIX)$(1): test-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-test-parallels/$(1)-cygwin: test-$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+test-parallels/$(PREFIX)$(1)-cygwin: test-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-test-parallels/$(1)-ssh: test-$(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+test-parallels/$(PREFIX)$(1)-ssh: test-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-test-hyperv/$(1): test-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+test-hyperv/$(PREFIX)$(1): test-$(HYPERV_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-test-hyperv/$(1)-cygwin: test-$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+test-hyperv/$(PREFIX)$(1)-cygwin: test-$(HYPERV_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-test-hyperv/$(1)-ssh: test-$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+test-hyperv/$(PREFIX)$(1)-ssh: test-$(HYPERV_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-ssh-vmware/$(1): ssh-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
+ssh-vmware/$(PREFIX)$(1): ssh-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-ssh-vmware/$(1)-cygwin: ssh-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+ssh-vmware/$(PREFIX)$(1)-cygwin: ssh-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-ssh-vmware/$(1)-ssh: ssh-$(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+ssh-vmware/$(PREFIX)$(1)-ssh: ssh-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-ssh-virtualbox/$(1): ssh-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+ssh-virtualbox/$(PREFIX)$(1): ssh-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-ssh-virtualbox/$(1)-cygwin: ssh-$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+ssh-virtualbox/$(PREFIX)$(1)-cygwin: ssh-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-ssh-virtualbox/$(1)-ssh: ssh-$(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+ssh-virtualbox/$(PREFIX)$(1)-ssh: ssh-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-ssh-parallels/$(1): ssh-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+ssh-parallels/$(PREFIX)$(1): ssh-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-ssh-parallels/$(1)-cygwin: ssh-$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+ssh-parallels/$(PREFIX)$(1)-cygwin: ssh-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-ssh-parallels/$(1)-ssh: ssh-$(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+ssh-parallels/$(PREFIX)$(1)-ssh: ssh-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-ssh-hyperv/$(1): ssh-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+ssh-hyperv/$(PREFIX)$(1): ssh-$(HYPERV_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-ssh-hyperv/$(1)-cygwin: ssh-$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX)
+ssh-hyperv/$(PREFIX)$(1)-cygwin: ssh-$(HYPERV_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX)
 
-ssh-hyperv/$(1)-ssh: ssh-$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX)
+ssh-hyperv/$(PREFIX)$(1)-ssh: ssh-$(HYPERV_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX)
 
-s3cp-vmware/$(1): s3cp-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX)
+s3cp-vmware/$(PREFIX)$(1): s3cp-$(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-s3cp-virtualbox/$(1): s3cp-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX)
+s3cp-virtualbox/$(PREFIX)$(1): s3cp-$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-s3cp-parallels/$(1): s3cp-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX)
+s3cp-parallels/$(PREFIX)$(1): s3cp-$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 
-s3cp-hyperv/$(1): s3cp-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX)
+s3cp-hyperv/$(PREFIX)$(1): s3cp-$(HYPERV_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX)
 endef
 
 SHORTCUT_TARGETS := $(basename $(TEMPLATE_FILENAMES))
@@ -402,65 +402,65 @@ test-eval-openssh: test-eval-win2012r2-datacenter test-eval-win2008r2-datacenter
 
 define BUILDBOX
 
-$(VIRTUALBOX_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
+$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX): $(PREFIX)$(1).json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1).json
 
-$(VMWARE_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
+$(VMWARE_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX): $(PREFIX)$(1).json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1).json
 
-$(PARALLELS_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
+$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX): $(PREFIX)$(1).json
 	rm -rf $(PARALLELS_OUTPUT)
 	mkdir -p $(PARALLELS_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1).json
 
-$(HYPERV_BOX_DIR)/$(1)$(BOX_SUFFIX): $(1).json
+$(HYPERV_BOX_DIR)/$(PREFIX)$(1)$(BOX_SUFFIX): $(PREFIX)$(1).json
 	rm -rf $(HYPERV_OUTPUT)
 	mkdir -p $(HYPERV_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) -only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1).json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1).json
 
-$(VIRTUALBOX_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
+$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX): $(PREFIX)$(1)-ssh.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1)-ssh.json
 
-$(VMWARE_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
+$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX): $(PREFIX)$(1)-ssh.json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+	$(PACKER) build -on-error=$(ON_ERROR) -only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1)-ssh.json
 
-$(PARALLELS_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
+$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX): $(PREFIX)$(1)-ssh.json
 	rm -rf $(PARALLELS_OUTPUT)
 	mkdir -p $(PARALLELS_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) --only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1)-ssh.json
 
-$(HYPERV_BOX_DIR)/$(1)-ssh$(BOX_SUFFIX): $(1)-ssh.json
+$(HYPERV_BOX_DIR)/$(PREFIX)$(1)-ssh$(BOX_SUFFIX): $(PREFIX)$(1)-ssh.json
 	rm -rf $(HYPERV_OUTPUT)
 	mkdir -p $(HYPERV_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) --only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-ssh.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1)-ssh.json
 
-$(VIRTUALBOX_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+$(VIRTUALBOX_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX): $(PREFIX)$(1)-cygwin.json
 	rm -rf $(VIRTUALBOX_OUTPUT)
 	mkdir -p $(VIRTUALBOX_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) --only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(VIRTUALBOX_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1)-cygwin.json
 
-$(VMWARE_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+$(VMWARE_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX): $(PREFIX)$(1)-cygwin.json
 	rm -rf $(VMWARE_OUTPUT)
 	mkdir -p $(VMWARE_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) --only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(VMWARE_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1)-cygwin.json
 
-$(PARALLELS_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+$(PARALLELS_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX): $(PREFIX)$(1)-cygwin.json
 	rm -rf $(PARALLELS_OUTPUT)
 	mkdir -p $(PARALLELS_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) --only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(PARALLELS_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1)-cygwin.json
 
-$(HYPERV_BOX_DIR)/$(1)-cygwin$(BOX_SUFFIX): $(1)-cygwin.json
+$(HYPERV_BOX_DIR)/$(PREFIX)$(1)-cygwin$(BOX_SUFFIX): $(PREFIX)$(1)-cygwin.json
 	rm -rf $(HYPERV_OUTPUT)
 	mkdir -p $(HYPERV_BOX_DIR)
-	$(PACKER) build -on-error=$(ON_ERROR) --only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(1)-cygwin.json
+	$(PACKER) build -on-error=$(ON_ERROR) --only=$(HYPERV_BUILDER) $(PACKER_VARS) -var "iso_url=$(2)" -var "iso_checksum=$(3)" $(PREFIX)$(1)-cygwin.json
 endef
 
 $(eval $(call BUILDBOX,win2008r2-datacenter,$(WIN2008R2_X64),$(WIN2008R2_X64_CHECKSUM)))

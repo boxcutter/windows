@@ -12,3 +12,10 @@ Makefile.local
 rspec_html_reports
 
 .DS_Store
+*.*.json
+floppy/*.*.cmd
+floppy/*.*.bat
+floppy/*.*.ps1
+floppy/*.*.cfg
+floppy/*.*.zip
+floppy/*.*.vbs
