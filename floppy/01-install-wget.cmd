@@ -24,7 +24,9 @@ call _packer_config.cmd ps1_download "%WGET_URL%" "%filename%"
 
 if exist "%filename%" goto exit0
 
-set bitsadmin=
+if defined USE_BITS (
+    if "%USE_BITS%" == "false" if not exist "%filename%" goto exit1
+)set bitsadmin=
 
 for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
 
