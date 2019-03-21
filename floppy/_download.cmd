@@ -59,7 +59,7 @@ call _packer_config.cmd ps1_download "%filename%" "%url%"
 if not errorlevel 1 if exist "%filename%" goto exit0
 
 if defined USE_BITS (
-    if "%USE_BITS%" == "false" if not exist "%filename%" goto exit1
+    if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto exit1
 )
 
 :bitsadmin
