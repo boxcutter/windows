@@ -1,5 +1,6 @@
 @echo off
 
+:: Calls functions with args from this file below.
 if not "%~1" == "" (
    call :%*
 )
