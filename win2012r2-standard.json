@@ -66,7 +66,6 @@
         [
           "setextradata",
           "{{.Name}}",
-          "VBoxInternal/CPUM/CMPXCHG16B",
           "1"
         ]
       ],
