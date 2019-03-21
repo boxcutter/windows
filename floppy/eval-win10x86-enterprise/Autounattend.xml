@@ -92,6 +92,8 @@
                 <HideEULAPage>true</HideEULAPage>
                 <NetworkLocation>Work</NetworkLocation>
                 <ProtectYourPC>3</ProtectYourPC>
+                <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+                <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
             </OOBE>
             <UserAccounts>
                 <LocalAccounts>
