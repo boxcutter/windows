@@ -54,8 +54,7 @@ cd /d "%SEVENZIP_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
 ) else (
-  echo ==^> Downloading "%SEVENZIP_URL%" to "%SEVENZIP_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SEVENZIP_URL%', '%SEVENZIP_PATH%')" <NUL
+  call _packer_config.cmd ps1_download "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
 )
 if not exist "%SEVENZIP_PATH%" goto return1
 
@@ -132,8 +131,7 @@ pushd "%ULTRADEFRAG_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%ULTRADEFRAG_URL%" "%ULTRADEFRAG_PATH%"
 ) else (
-  echo ==^> Downloading "%ULTRADEFRAG_URL%" to "%ULTRADEFRAG_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%ULTRADEFRAG_URL%', '%ULTRADEFRAG_PATH%')" <NUL
+  call _packer_config.cmd ps1_download "%ULTRADEFRAG_URL%" "%ULTRADEFRAG_PATH%"
 )
 if not exist "%ULTRADEFRAG_PATH%" goto exit1
 

@@ -30,9 +30,9 @@ pushd "%HOTFIX_2842230_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%HOTFIX_2842230_URL%" "%HOTFIX_2842230_PATH%"
 ) else (
-  echo ==^> Downloading "%HOTFIX_2842230_URL%" to "%HOTFIX_2842230_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%HOTFIX_2842230_URL%', '%HOTFIX_2842230_PATH%')" <NUL
+  call _packer_config.cmd ps1_download "%HOTFIX_2842230_URL%" "%HOTFIX_2842230_PATH%"
 )
+
 if errorlevel 1 goto exit1
 
 echo ==^> Extracting Hotfix KB2842230

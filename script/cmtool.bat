@@ -42,8 +42,7 @@ pushd "%CHEF_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
 ) else (
-  echo ==^> Downloading %CHEF_URL% to %CHEF_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEF_URL%\", '%CHEF_PATH%')" <NUL
+  call _packer_config.cmd ps1_download "%CHEF_URL%" "%CHEF_PATH%"
 )
 if not exist "%CHEF_PATH%" goto exit1
 
@@ -81,8 +80,7 @@ echo ==^> Downloading Chef DK to %CHEFDK_PATH%
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEFDK_URL%" "%CHEFDK_PATH%"
 ) else (
-  echo ==^> Downloading %CHEFDK_URL% to %CHEFDK_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEFDK_URL%\", '%CHEFDK_PATH%')" <NUL
+  call _packer_config.cmd ps1_download "%CHEFDK_URL%" "%CHEFDK_PATH%"
 )
 if not exist "%CHEFDK_PATH%" goto exit1
 
@@ -122,7 +120,7 @@ if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%PUPPET_URL%" "%PUPPET_PATH%"
 ) else (
   echo ==^> Downloading %PUPPET_URL% to %PUPPET_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%PUPPET_URL%', '%PUPPET_PATH%')" <NUL
+  call _packer_config.cmd ps1_download "%PUPPET_URL%" "%PUPPET_PATH%"
 )
 if not exist "%PUPPET_PATH%" goto exit1
 
@@ -161,8 +159,7 @@ pushd "%SALT_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SALT_URL%" "%SALT_PATH%"
 ) else (
-  echo ==^> Downloading %SALT_URL% to %SALT_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_PATH%')" <NUL
+  call _packer_config.cmd ps1_download "%SALT_URL%" "%SALT_PATH%"
 )
 if not exist "%SALT_PATH%" goto exit1
 

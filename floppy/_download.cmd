@@ -54,7 +54,7 @@ if not errorlevel 1 if exist "%filename%" goto exit0
 
 :powershell
 
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
+call _packer_config.cmd ps1_download "%filename%" "%url%"
 
 if not errorlevel 1 if exist "%filename%" goto exit0
 

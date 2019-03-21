@@ -34,8 +34,7 @@ pushd "%CYGWIN_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CYGWIN_URL%" "%CYGWIN_PATH%"
 ) else (
-  echo ==^> Downloading "%CYGWIN_URL%" to "%CYGWIN_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CYGWIN_URL%', '%CYGWIN_PATH%')" <NUL
+  call _packer_config.cmd ps1_download "%CYGWIN_URL%" "%CYGWIN_PATH%"
 )
 if errorlevel 1 goto exit1
 
