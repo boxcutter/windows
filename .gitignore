@@ -13,15 +13,5 @@ rspec_html_reports
 
 .DS_Store
 *.*.json
-floppy/*.*.cmd
-floppy/*.*.bat
-floppy/*.*.ps1
-floppy/*.*.cfg
-floppy/*.*.zip
-floppy/*.*.vbs
-script/*.*.cmd
-script/*.*.bat
-script/*.*.ps1
-script/*.*.cfg
-script/*.*.zip
-script/*.*.vbs
+floppy/*.*.*
+script/*.*.*
