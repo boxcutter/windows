@@ -77,8 +77,8 @@ Possible values for the CM variable are:
 * `puppet` - Install Puppet
 * `salt`  - Install Salt
 
-You can also specify a variable `CM_VERSION`, if supported by the
-configuration management tool, to override the default of `latest`.
+You can also specify a variable `CM_VERSION` for all configuration management
+tools except Salt, to override the default of `latest`.
 The value of `CM_VERSION` should have the form `x.y` or `x.y.z`,
 such as `CM_VERSION := 11.12.4`
 
@@ -86,6 +86,10 @@ It is also possible to specify a `HW_VERSION` if a specific hardware
 version is to be used for build. This is commonly used to provide
 compatibility with newer versions of VMware Workstation. For example,
 you may indicate version 14 of Workstation: `HW_VERSION := 14`.
+
+For Salt you can specify a variable `CM_OPTIONS`. This variable will be passed
+to Salt bootstrap script. For information on possible values please read:
+https://github.com/saltstack/salt-bootstrap/blob/stable/bootstrap-salt.ps1
 
 Another use for `Makefile.local` is to override the default locations
 for the Windows install ISO files.
