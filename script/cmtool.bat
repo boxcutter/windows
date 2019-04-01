@@ -139,39 +139,20 @@ goto exit0
 :salt
 ::::::::::::
 
-if "%CM_VERSION%" == "latest" set CM_VERSION=2015.8.8-2
-
-if not defined SALT_64_URL set SALT_64_URL=https://repo.saltstack.com/windows/Salt-Minion-%CM_VERSION%-AMD64-Setup.exe
-if not defined SALT_32_URL set SALT_32_URL=https://repo.saltstack.com/windows/Salt-Minion-%CM_VERSION%-x86-Setup.exe
-
-if defined ProgramFiles(x86) (
-  set SALT_URL=%SALT_64_URL%
-) else (
-  set SALT_URL=%SALT_32_URL%
-)
-
-for %%i in ("%SALT_URL%") do set SALT_EXE=%%~nxi
 set SALT_DIR=%TEMP%\salt
-set SALT_PATH=%SALT_DIR%\%SALT_EXE%
-
 echo ==^> Creating "%SALT_DIR%"
 mkdir "%SALT_DIR%"
 pushd "%SALT_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%SALT_URL%" "%SALT_PATH%"
-) else (
-  echo ==^> Downloading %SALT_URL% to %SALT_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_PATH%')" <NUL
-)
+set SALT_URL=https://raw.githubusercontent.com/saltstack/salt-bootstrap/stable/bootstrap-salt.ps1
+set SALT_PATH=%SALT_DIR%\bootstrap-salt.ps1
+echo ==^> Downloading %SALT_URL% to %SALT_PATH%
+powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_PATH%')" <NUL
+
 if not exist "%SALT_PATH%" goto exit1
 
 echo ==^> Installing Salt minion
-:: see http://docs.saltstack.com/en/latest/topics/installation/windows.html
-"%SALT_PATH%" /S %SALT_OPTIONS%
-
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%SALT_PATH%" /S %SALT_OPTIONS%
-ver>nul
+powershell "%SALT_PATH%" %CM_OPTIONS%
 
 goto exit0
 

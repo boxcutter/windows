@@ -144,6 +144,7 @@
     {
       "environment_vars": [
         "CM={{user `cm`}}",
+        "CM_OPTIONS={{user `cm_options`}}",
         "CM_VERSION={{user `cm_version`}}",
         "UPDATE={{user `update`}}"
       ],
