@@ -24,7 +24,7 @@ call _packer_config.cmd ps1_download "%WGET_URL%" "%filename%"
 
 if exist "%filename%" goto exit0
 
-if defined USE_BITS (
+if defined DISABLE_BITS (
     if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto exit1
 )
 
