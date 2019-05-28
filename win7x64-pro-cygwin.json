@@ -29,6 +29,7 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "win7x64-pro-cygwin",
+      "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "vmx_data": {
@@ -175,6 +176,7 @@
     "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
+    "hw_version": "7",
     "disk_size": "40960",
     "headless": "false",
     "iso_checksum": "708e0338d4e2f094dfeb860347c84a6ed9e91d0c",

@@ -26,6 +26,7 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "win2012-datacenter",
+      "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "vmx_data": {
@@ -174,6 +175,7 @@
     "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
+    "hw_version": "7",
     "disk_size": "40960",
     "headless": "false",
     "iso_checksum": "d09e752b1ee480bc7e93dfa7d5c3a9b8aac477ba",
