@@ -28,6 +28,7 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "eval-win2008r2-datacenter-cygwin",
+      "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "vmx_data": {
@@ -171,6 +172,7 @@
     "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
+    "hw_version": "7",
     "disk_size": "40960",
     "headless": "false",
     "iso_checksum": "beed231a34e90e1dd9a04b3afabec31d62ce3889",

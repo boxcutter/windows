@@ -27,6 +27,7 @@
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
       "vm_name": "win2008r2-enterprise-ssh",
+      "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "vmx_data": {
@@ -167,6 +168,7 @@
     "guest_additions_url": "",
     "cm": "chef",
     "cm_version": "",
+    "hw_version": "7",
     "disk_size": "40960",
     "headless": "false",
     "iso_checksum": "7e7e9425041b3328ccf723a0855c2bc4f462ec57",
