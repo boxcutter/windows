@@ -154,13 +154,13 @@
         "UPDATE={{user `update`}}"
       ],
       "scripts": [
-        "script/vagrant.bat",
-        "script/cmtool.bat",
-        "script/vmtool.bat",
-        "script/clean.bat",
-        "script/ultradefrag.bat",
-        "script/uninstall-7zip.bat",
-        "script/sdelete.bat"
+        "{{template_dir}}/script/vagrant.bat",
+        "{{template_dir}}/script/cmtool.bat",
+        "{{template_dir}}/script/vmtool.bat",
+        "{{template_dir}}/script/clean.bat",
+        "{{template_dir}}/script/ultradefrag.bat",
+        "{{template_dir}}/script/uninstall-7zip.bat",
+        "{{template_dir}}/script/sdelete.bat"
       ],
       "type": "windows-shell"
     }
