@@ -29,7 +29,7 @@
       "memory": "{{ user `memory` }}",
       "disk_adapter_type": "lsisas1068",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
+        "cpuid.coresPerSocket": "1"
       },
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",

@@ -30,7 +30,7 @@
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
+        "cpuid.coresPerSocket": "1"
       }
     },
     {
