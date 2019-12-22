@@ -122,7 +122,7 @@
     },
     {
       "communicator": "winrm",
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/slim_win10.bat",
@@ -145,7 +145,7 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
-      "ram_size": "{{ user `memory` }}",
+      "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "hyperv-iso",
       "vm_name": "eval-win10x64-enterprise",
