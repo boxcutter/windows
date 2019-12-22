@@ -4,16 +4,16 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/powerconfig.bat",
-        "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/fixnetwork.ps1",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/win2012r2-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows8srv-64",
       "headless": "{{ user `headless` }}",
@@ -38,17 +38,17 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
-        "floppy/oracle-cert.cer",
-        "floppy/passwordchange.bat",
-        "floppy/powerconfig.bat",
-        "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/fixnetwork.ps1",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/oracle-cert.cer",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/win2012r2-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "guest_additions_mode": "attach",
       "guest_additions_url": "{{user `guest_additions_url`}}",
@@ -79,16 +79,16 @@
       "communicator": "winrm",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/powerconfig.bat",
-        "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/fixnetwork.ps1",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/win2012r2-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-2012",
       "headless": "{{ user `headless` }}",
@@ -118,16 +118,16 @@
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/install-winrm.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/powerconfig.bat",
-        "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/fixnetwork.ps1",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/win2012r2-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -148,7 +148,7 @@
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win2012r2-standard-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-win2012r2-standard.tpl"
+      "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-win2012r2-standard.tpl"
     }
   ],
   "provisioners": [
@@ -159,13 +159,13 @@
         "UPDATE={{user `update`}}"
       ],
       "scripts": [
-        "script/vagrant.bat",
-        "script/cmtool.bat",
-        "script/vmtool.bat",
-        "script/clean.bat",
-        "script/ultradefrag.bat",
-        "script/uninstall-7zip.bat",
-        "script/sdelete.bat"
+        "{{template_dir}}/script/vagrant.bat",
+        "{{template_dir}}/script/cmtool.bat",
+        "{{template_dir}}/script/vmtool.bat",
+        "{{template_dir}}/script/clean.bat",
+        "{{template_dir}}/script/ultradefrag.bat",
+        "{{template_dir}}/script/uninstall-7zip.bat",
+        "{{template_dir}}/script/sdelete.bat"
       ],
       "type": "windows-shell"
     }

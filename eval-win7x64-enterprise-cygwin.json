@@ -3,20 +3,20 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/networkprompt.bat",
-        "floppy/disablewinupdate.bat",
-        "floppy/cygwin.bat",
-        "floppy/cygwin.sh",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/win7x64-enterprise/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/fixnetwork.ps1",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/networkprompt.bat",
+        "{{template_dir}}/floppy/disablewinupdate.bat",
+        "{{template_dir}}/floppy/cygwin.bat",
+        "{{template_dir}}/floppy/cygwin.sh",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows7-64",
       "headless": "{{ user `headless` }}",
@@ -39,21 +39,21 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/networkprompt.bat",
-        "floppy/disablewinupdate.bat",
-        "floppy/cygwin.bat",
-        "floppy/cygwin.sh",
-        "floppy/zz-start-transports.cmd",
-        "floppy/oracle-cert.cer"
+        "{{template_dir}}/floppy/win7x64-enterprise/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/fixnetwork.ps1",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/networkprompt.bat",
+        "{{template_dir}}/floppy/disablewinupdate.bat",
+        "{{template_dir}}/floppy/cygwin.bat",
+        "{{template_dir}}/floppy/cygwin.sh",
+        "{{template_dir}}/floppy/zz-start-transports.cmd",
+        "{{template_dir}}/floppy/oracle-cert.cer"
       ],
       "guest_additions_mode": "attach",
       "guest_additions_url": "{{user `guest_additions_url`}}",
@@ -76,20 +76,20 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win7x64-enterprise/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/fixnetwork.ps1",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/networkprompt.bat",
-        "floppy/disablewinupdate.bat",
-        "floppy/cygwin.bat",
-        "floppy/cygwin.sh",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/win7x64-enterprise/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/fixnetwork.ps1",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/networkprompt.bat",
+        "{{template_dir}}/floppy/disablewinupdate.bat",
+        "{{template_dir}}/floppy/cygwin.bat",
+        "{{template_dir}}/floppy/cygwin.sh",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-7",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -112,7 +112,7 @@
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/eval-win7x64-enterprise-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-eval-win7x64-enterprise-cygwin.tpl"
+      "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win7x64-enterprise-cygwin.tpl"
     },
     {
       "cpus": "{{ user `cpus` }}",
@@ -143,7 +143,8 @@
       "ssh_username": "vagrant",
       "ssh_timeout": "10000s",
       "type": "hyperv-iso",
-      "vm_name": "eval-win7x64-enterprise-cygwin"
+      "vm_name": "eval-win7x64-enterprise-cygwin",
+      "vagrantfile_template": "{{template_dir}}/"
     }
   ],
   "provisioners": [
@@ -156,13 +157,13 @@
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "remote_path": "C:/Windows/Temp/script.bat",
       "scripts": [
-        "script/vagrant.bat",
-        "script/cmtool.bat",
-        "script/vmtool.bat",
-        "script/clean.bat",
-        "script/ultradefrag.bat",
-        "script/uninstall-7zip.bat",
-        "script/sdelete.bat"
+        "{{template_dir}}/script/vagrant.bat",
+        "{{template_dir}}/script/cmtool.bat",
+        "{{template_dir}}/script/vmtool.bat",
+        "{{template_dir}}/script/clean.bat",
+        "{{template_dir}}/script/ultradefrag.bat",
+        "{{template_dir}}/script/uninstall-7zip.bat",
+        "{{template_dir}}/script/sdelete.bat"
       ],
       "type": "shell"
     },
@@ -188,4 +189,3 @@
     "version": "0.1.0"
   }
 }
-
