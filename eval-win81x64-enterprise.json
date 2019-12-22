@@ -118,7 +118,7 @@
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/eval-win81x64-enterprise-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-eval-win81x64-enterprise.tpl"
+      "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win81x64-enterprise.tpl"
     },
     {
       "communicator": "winrm",
@@ -148,7 +148,8 @@
       "vm_name": "eval-win81x64-enterprise",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
-      "winrm_username": "vagrant"
+      "winrm_username": "vagrant",
+      "vagrantfile_template": "{{template_dir}}/"
     }
   ],
   "provisioners": [
