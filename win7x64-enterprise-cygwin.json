@@ -103,7 +103,7 @@
       "vm_name": "win7x64-enterprise-cygwin"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x64-enterprise/Autounattend.xml",
@@ -124,7 +124,7 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
-      "ram_size": "{{ user `memory` }}",
+      "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "hyperv-iso",
       "vm_name": "win7x64-enterprise-cygwin"

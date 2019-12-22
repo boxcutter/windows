@@ -117,7 +117,7 @@
       "vm_name": "eval-win2016-standard-cygwin"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/eval-win2016-standard/Autounattend.xml",
@@ -137,7 +137,7 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
-      "ram_size": "{{ user `memory` }}",
+      "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
