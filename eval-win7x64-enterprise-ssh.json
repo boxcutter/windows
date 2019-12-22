@@ -143,7 +143,7 @@
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/eval-win7x64-enterprise-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-eval-win7x64-enterprise-ssh.tpl"
+      "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win7x64-enterprise-ssh.tpl"
     }
   ],
   "provisioners": [

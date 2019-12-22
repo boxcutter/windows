@@ -136,7 +136,7 @@
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win81x64-enterprise-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-win81x64-enterprise-ssh.tpl"
+      "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-win81x64-enterprise-ssh.tpl"
     }
   ],
   "provisioners": [

@@ -149,7 +149,7 @@
       "keep_input_artifact": false,
       "output": "box/{{.Provider}}/win2012-standard-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-win2012-standard-cygwin.tpl"
+      "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-win2012-standard-cygwin.tpl"
     }
   ],
   "provisioners": [
