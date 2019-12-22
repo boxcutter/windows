@@ -117,7 +117,7 @@
       "vm_name": "win2016-standard-cygwin"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2016-standard/Autounattend.xml",

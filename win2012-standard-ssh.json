@@ -108,7 +108,7 @@
       "vm_name": "win2012-standard-ssh"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2012-standard/Autounattend.xml",

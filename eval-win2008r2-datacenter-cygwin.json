@@ -100,7 +100,7 @@
       "vm_name": "eval-win2008r2-datacenter-cygwin"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2008r2-datacenter/Autounattend.xml",

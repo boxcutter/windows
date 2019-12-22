@@ -110,7 +110,7 @@
     },
     {
       "communicator": "winrm",
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/00-run-all-scripts.cmd",

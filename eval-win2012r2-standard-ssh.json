@@ -114,7 +114,7 @@
       "vm_name": "eval-win2012r2-standard-ssh"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/eval-win2012r2-standard/Autounattend.xml",

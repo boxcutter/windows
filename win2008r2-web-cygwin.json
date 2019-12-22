@@ -100,7 +100,7 @@
       "vm_name": "win2008r2-web-cygwin"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2008r2-web/Autounattend.xml",

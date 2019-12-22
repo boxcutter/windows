@@ -115,7 +115,7 @@
       "vagrantfile_template": "tpl/vagrantfile-eval-win7x64-enterprise-cygwin.tpl"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x64-enterprise/Autounattend.xml",
