@@ -106,7 +106,7 @@
       "vm_name": "win81x64-pro-cygwin"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win81x64-pro/Autounattend.xml",

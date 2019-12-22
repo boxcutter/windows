@@ -98,7 +98,7 @@
       "vm_name": "win81x86-enterprise-cygwin"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win81x86-enterprise/Autounattend.xml",

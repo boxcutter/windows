@@ -100,7 +100,7 @@
       "vm_name": "win7x86-enterprise-ssh"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win7x86-enterprise/Autounattend.xml",

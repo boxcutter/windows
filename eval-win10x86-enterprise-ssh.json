@@ -121,7 +121,7 @@
       "vm_name": "eval-win10x86-enterprise-ssh"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/slim_win10.bat",

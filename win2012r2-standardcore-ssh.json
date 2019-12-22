@@ -111,7 +111,7 @@
       "vm_name": "win2012r2-standardcore"
     },
     {
-      "cpu": "{{ user `cpus` }}",
+      "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
         "floppy/win2012r2-standardcore/Autounattend.xml",
