@@ -3,16 +3,16 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/win2012r2-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/openssh.bat",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "windows8srv-64",
       "headless": "{{ user `headless` }}",
@@ -36,17 +36,17 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/zz-start-transports.cmd",
-        "floppy/oracle-cert.cer"
+        "{{template_dir}}/floppy/win2012r2-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/openssh.bat",
+        "{{template_dir}}/floppy/zz-start-transports.cmd",
+        "{{template_dir}}/floppy/oracle-cert.cer"
       ],
       "guest_additions_mode": "attach",
       "guest_additions_url": "{{user `guest_additions_url`}}",
@@ -77,16 +77,16 @@
     {
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/win2012r2-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/openssh.bat",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-2012",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -114,16 +114,16 @@
       "cpu": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
-        "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/win2012r2-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config.cmd",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/openssh.bat",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
@@ -189,4 +189,3 @@
     "version": "0.1.0"
   }
 }
-
