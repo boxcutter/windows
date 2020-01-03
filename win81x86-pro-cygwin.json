@@ -99,7 +99,6 @@
       "vm_name": "win81x86-pro-cygwin"
     },
     {
-      "communicator": "winrm",
       "cpus": "{{ user `cpus` }}",
       "disk_size": "{{user `disk_size`}}",
       "floppy_files": [
