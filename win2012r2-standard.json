@@ -92,7 +92,6 @@
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "guest_os_type": "win-2012",
-      "headless": "{{ user `headless` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
