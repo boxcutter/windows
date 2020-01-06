@@ -12,3 +12,7 @@ Makefile.local
 rspec_html_reports
 
 .DS_Store
+
+*.*.json
+floppy/*.*.*
+script/*.*.*
