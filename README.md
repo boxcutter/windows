@@ -78,9 +78,8 @@ Possible values for the CM variable are:
 * `salt`  - Install Salt
 
 You can also specify a variable `CM_VERSION` for all configuration management
-tools except Salt, to override the default of `latest`.
-The value of `CM_VERSION` should have the form `x.y` or `x.y.z`,
-such as `CM_VERSION := 11.12.4`
+tools to override the default of `latest`. The value of `CM_VERSION` should
+have the form `x.y` or `x.y.z`, such as `CM_VERSION := 11.12.4`
 
 It is also possible to specify a `HW_VERSION` if a specific hardware
 version is to be used for build. This is commonly used to provide
