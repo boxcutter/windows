@@ -94,6 +94,9 @@ PACKER_VARS := -var 'cm=$(CM)' -var 'version=$(BOX_VERSION)' -var 'update=$(UPDA
 ifdef HW_VERSION
 	PACKER_VARS += -var 'hw_version=$(HW_VERSION)'
 endif
+ifdef CM_OPTIONS
+	PACKER_VARS += -var 'cm_options=$(CM_OPTIONS)'
+endif
 ifdef CM_VERSION
 	PACKER_VARS += -var 'cm_version=$(CM_VERSION)'
 endif

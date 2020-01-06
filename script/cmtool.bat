@@ -44,8 +44,15 @@ if "%CM%" == "chef" (
 
 :: Deterine the other desired parameters here
 if not defined OMNITRUCK_PLATFORM set OMNITRUCK_PLATFORM=windows
-if not defined OMNITRUCK_MACHINE_ARCH set OMNITRUCK_MACHINE_ARCH=%PROCESSOR_ARCHITECTURE%
 if not defined OMNITRUCK_VERSION set OMNITRUCK_VERSION=%CM_VERSION%
+
+if not defined OMNITRUCK_MACHINE_ARCH (
+  if "%PROCESSOR_ARCHITECTURE%" == "x86" (
+    set OMNITRUCK_MACHINE_ARCH=x86
+  ) else (
+    set OMNITRUCK_MACHINE_ARCH=x64
+  )
+)
 
 :: We exclude the platform version as the Omnitruck API doesn't seem to use this
 :: set OMNITRUCK_PLATFORM_VERSION=
