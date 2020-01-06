@@ -2,14 +2,17 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+if not defined TEMP set TEMP=%LOCALAPPDATA%\Temp
+
 if not defined CM echo ==^> ERROR: The "CM" variable was not found in the environment & goto exit1
 
 if "%CM%" == "nocm"   goto nocm
 
 if not defined CM_VERSION echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment & set CM_VERSION=latest
 
-if "%CM%" == "chef"   goto chef
-if "%CM%" == "chefdk" goto chefdk
+if "%CM%" == "chef" goto chef
+if "%CM%" == "chefdk" goto chef
+if "%CM%" == "chef-workstation" goto chef
 if "%CM%" == "puppet" goto puppet
 if "%CM%" == "salt"   goto salt
 
@@ -20,15 +23,64 @@ goto exit1
 ::::::::::::
 :chef
 ::::::::::::
+if "%CM%" == "chef" (
+  set "CHEF_PRODUCT_NAME=Chef Client"
+) else if "%CM%" == "chefdk" (
+  set "CHEF_PRODUCT_NAME=Chef DK"
+) else if "%CM%" == "chef-workstation" (
+  set "CHEF_PRODUCT_NAME=Chef Workstation"
+)
 
-if not defined CHEF_URL if "%CM_VERSION%" == "latest" set CM_VERSION=13.6.4
-if not defined CHEF_URL set CHEF_64_URL=https://packages.chef.io/files/stable/chef/%CM_VERSION%/windows/2008r2/chef-client-%CM_VERSION%-1-x64.msi
-if not defined CHEF_URL set CHEF_32_URL=https://packages.chef.io/files/stable/chef/%CM_VERSION%/windows/2008r2/chef-client-%CM_VERSION%-1-x86.msi
+set CHEF_PRODUCT_VER=%CM_VERSION%
 
-if defined ProgramFiles(x86) (
-  SET CHEF_URL=%CHEF_64_URL%
+if not defined CHEF_URL if "%CHEF_PRODUCT_VER%" == "latest" (
+    if "%CM%" == "chef-workstation" (
+        set CHEF_PRODUCT_VER=0.2.48
+    ) else if "%CM%" == "chefdk" (
+        set CHEF_PRODUCT_VER=2.3.4
+    ) else if "%CM%" == "chef" (
+        set CHEF_PRODUCT_VER=13.6.4
+    )
+)
+
+:: strip -1 if %CHEF_PRODUCT_VER% ends in -1
+set CHEF_PRODUCT_VER=%CHEF_PRODUCT_VER:-1=%
+
+if "%PROCESSOR_ARCHITECTURE%" == "x86" (
+  set CHEF_ARCH=x86
 ) else (
-  SET CHEF_URL=%CHEF_32_URL%
+  set CHEF_ARCH=x64
+)
+
+if not defined CHEF_URL (
+    echo ==^> Getting %CHEF_PRODUCT_NAME% %CHEF_PRODUCT_VER% %CHEF_ARCH% download URL
+    set url="https://omnitruck.chef.io/stable/%CM%/metadata?p=windows&pv=2012r2&m=%CHEF_ARCH%&v=%CHEF_PRODUCT_VER%"
+    set filename="%TEMP%\omnitruck.txt"
+
+    echo "==^> Using Chef Omitruck API URL: !url!"
+    if defined http_proxy (
+        if defined no_proxy (
+            powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.proxy.BypassList = (('%no_proxy%').split(',')) ; $wc.DownloadFile('!url!', '!filename!')"
+        ) else (
+            powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.DownloadFile('!url!', '!filename!')"
+        )
+    ) else (
+        powershell -command "(New-Object System.Net.WebClient).DownloadFile('!url!', '!filename!')"
+    )
+
+    if not exist "%TEMP%\omnitruck.txt" (
+        echo Could not get %CHEF_PRODUCT_NAME% %CHEF_PRODUCT_VER% %CHEF_ARCH% download url...
+    ) else (
+      for /f "tokens=2 usebackq" %%a in (`findstr "url" "%TEMP%\omnitruck.txt"`) do (
+          set CHEF_URL=%%a
+      )
+    )
+
+    if not defined CHEF_URL (
+      echo Could not get %CHEF_PRODUCT_NAME% %CHEF_PRODUCT_VER% %CHEF_ARCH% download url...
+      goto exit1
+    )
+    echo "==^> Got %CHEF_PRODUCT_NAME% download URL: !CHEF_URL!"
 )
 
 for %%i in ("%CHEF_URL%") do set CHEF_MSI=%%~nxi
@@ -42,54 +94,15 @@ pushd "%CHEF_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
 ) else (
-  echo ==^> Downloading %CHEF_URL% to %CHEF_PATH%
+  echo ==^> Downloading %CHEF_PRODUCT_NAME% to %CHEF_PATH%
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEF_URL%\", '%CHEF_PATH%')" <NUL
 )
 if not exist "%CHEF_PATH%" goto exit1
 
-echo ==^> Installing Chef client %CM_VERSION%
+echo ==^> Installing %CHEF_PRODUCT_NAME% %CHEF_PRODUCT_VER% %CHEF_ARCH%
 msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
-ver>nul
-
-goto exit0
-
-::::::::::::
-:chefdk
-::::::::::::
-
-if not defined CHEFDK_URL if "%CM_VERSION%" == "latest" set CM_VERSION=2.3.4
-if not defined CHEFDK_URL set CHEFDK_64_URL=https://packages.chef.io/files/stable/chefdk/%CM_VERSION%/windows/2008r2/chefdk-%CM_VERSION%-1-x86.msi
-if not defined CHEFDK_URL set CHEFDK_32_URL=https://packages.chef.io/files/stable/chefdk/%CM_VERSION%/windows/2008r2/chefdk-%CM_VERSION%-1-x86.msi
-
-if defined ProgramFiles(x86) (
-  SET CHEFDK_URL=%CHEFDK_64_URL%
-) else (
-  SET CHEFDK_URL=%CHEFDK_32_URL%
-)
-
-for %%i in ("%CHEFDK_URL%") do set CHEFDK_MSI=%%~nxi
-set CHEFDK_DIR=%TEMP%\chefdk
-set CHEFDK_PATH=%CHEFDK_DIR%\%CHEFDK_MSI%
-
-echo ==^> Creating "%CHEFDK_DIR%"
-mkdir "%CHEFDK_DIR%"
-pushd "%CHEFDK_DIR%"
-
-echo ==^> Downloading Chef DK to %CHEFDK_PATH%
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%CHEFDK_URL%" "%CHEFDK_PATH%"
-) else (
-  echo ==^> Downloading %CHEFDK_URL% to %CHEFDK_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEFDK_URL%\", '%CHEFDK_PATH%')" <NUL
-)
-if not exist "%CHEFDK_PATH%" goto exit1
-
-echo ==^> Installing Chef Development Kit %CM_VERSION%
-msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log" %CHEFDK_OPTIONS%
-
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEFDK_PATH%" /l*v "%CHEFDK_DIR%\chef.log" %CHEFDK_OPTIONS%
 ver>nul
 
 goto exit0
