@@ -86,9 +86,11 @@ version is to be used for build. This is commonly used to provide
 compatibility with newer versions of VMware Workstation. For example,
 you may indicate version 14 of Workstation: `HW_VERSION := 14`.
 
-For Salt you can specify a variable `CM_OPTIONS`. This variable will be passed
-to Salt bootstrap script. For information on possible values please read:
-https://github.com/saltstack/salt-bootstrap/blob/stable/bootstrap-salt.ps1
+For configuration management tools (such as Salt), you can specify a
+variable `CM_OPTIONS`. This variable will be passed to the installer for
+the configuration management tool. For information on possible values
+please read the documentation for the respective configuration management
+tool.
 
 Another use for `Makefile.local` is to override the default locations
 for the Windows install ISO files.
