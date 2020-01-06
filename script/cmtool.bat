@@ -174,7 +174,11 @@ powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%'
 if not exist "%SALT_PATH%" goto exit1
 
 echo ==^> Installing Salt minion
-powershell "%SALT_PATH%" %CM_OPTIONS%
+if "%CM_VERSION%" == "latest" (
+  powershell "%SALT_PATH%" %SALT_OPTIONS%
+) else (
+  powershell "%SALT_PATH%" -version "%CM_VERSION%" %SALT_OPTIONS%
+)
 
 goto exit0
 
