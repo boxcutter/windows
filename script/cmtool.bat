@@ -10,9 +10,9 @@ if "%CM%" == "nocm"   goto nocm
 
 if not defined CM_VERSION echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment & set CM_VERSION=latest
 
-if "%CM%" == "chef" goto chef
-if "%CM%" == "chefdk" goto chef
-if "%CM%" == "chef-workstation" goto chef
+if "%CM%" == "chef" goto omnitruck
+if "%CM%" == "chefdk" goto omnitruck
+if "%CM%" == "chef-workstation" goto omnitruck
 if "%CM%" == "puppet" goto puppet
 if "%CM%" == "salt"   goto salt
 
@@ -21,67 +21,66 @@ echo ==^> ERROR: Unknown value for environment variable CM: "%CM%"
 goto exit1
 
 ::::::::::::
-:chef
+:omnitruck
 ::::::::::::
+
+:: If we already have the CHEF_URL, then we don't need to use Omnitruck and we can move on
+if defined CHEF_URL goto chef
+
+:: Determine each component for using the Omnitruck API to get the desired Chef component
+if not defined OMNITRUCK_CHANNEL set OMNITRUCK_CHANNEL=stable
+
+:: Figure out the Omnitruck product
 if "%CM%" == "chef" (
-  set "CHEF_PRODUCT_NAME=Chef Client"
+  set "OMNITRUCK_PRODUCT=chef"
 ) else if "%CM%" == "chefdk" (
-  set "CHEF_PRODUCT_NAME=Chef DK"
+  set "OMNITRUCK_PRODUCT=chefdk"
 ) else if "%CM%" == "chef-workstation" (
-  set "CHEF_PRODUCT_NAME=Chef Workstation"
-)
-
-set CHEF_PRODUCT_VER=%CM_VERSION%
-
-if not defined CHEF_URL if "%CHEF_PRODUCT_VER%" == "latest" (
-    if "%CM%" == "chef-workstation" (
-        set CHEF_PRODUCT_VER=0.2.48
-    ) else if "%CM%" == "chefdk" (
-        set CHEF_PRODUCT_VER=2.3.4
-    ) else if "%CM%" == "chef" (
-        set CHEF_PRODUCT_VER=13.6.4
-    )
-)
-
-:: strip -1 if %CHEF_PRODUCT_VER% ends in -1
-set CHEF_PRODUCT_VER=%CHEF_PRODUCT_VER:-1=%
-
-if "%PROCESSOR_ARCHITECTURE%" == "x86" (
-  set CHEF_ARCH=x86
+  set "OMNITRUCK_PRODUCT=chef-workstation"
 ) else (
-  set CHEF_ARCH=x64
+  echo Unknown Chef Product: %CM%
+  goto exit1
+)
+
+:: Deterine the other desired parameters here
+if not defined OMNITRUCK_PLATFORM set OMNITRUCK_PLATFORM=windows
+if not defined OMNITRUCK_MACHINE_ARCH set OMNITRUCK_MACHINE_ARCH=%PROCESSOR_ARCHITECTURE%
+if not defined OMNITRUCK_VERSION set OMNITRUCK_VERSION=%CM_VERSION%
+
+:: We exclude the platform version as the Omnitruck API doesn't seem to use this
+:: set OMNITRUCK_PLATFORM_VERSION=
+
+:: strip -1 if %OMNITRUCK_VERSION% ends in -1
+set OMNITRUCK_VERSION=%OMNITRUCK_VERSION:-1=%
+
+:: Use the Omnitruck API to determine the CHEF_URL
+echo ==^> Getting %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% %OMNITRUCK_MACHINE_ARCH% download URL
+set url="https://omnitruck.chef.io/%OMNITRUCK_CHANNEL%/%OMNITRUCK_PRODUCT%/metadata?p=%OMNITRUCK_PLATFORM%&m=%OMNITRUCK_MACHINE_ARCH%&v=%OMNITRUCK_VERSION%"
+set filename="%TEMP%\omnitruck.txt"
+
+echo "==^> Using Chef Omnitruck API URL: !url!"
+powershell -command "(New-Object System.Net.WebClient).DownloadFile('!url!', '!filename!')"
+
+if not exist "%TEMP%\omnitruck.txt" (
+  echo Unable to download metadata for %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% on the %OMNITRUCK_CHANNEL% channel for %OMNITRUCK_PLATFORM% %OMNITRUCK_MACHINE_ARCH%
+
+) else (
+  for /f "tokens=2 usebackq" %%a in (`findstr "url" "%TEMP%\omnitruck.txt"`) do (
+      set CHEF_URL=%%a
+  )
 )
 
 if not defined CHEF_URL (
-    echo ==^> Getting %CHEF_PRODUCT_NAME% %CHEF_PRODUCT_VER% %CHEF_ARCH% download URL
-    set url="https://omnitruck.chef.io/stable/%CM%/metadata?p=windows&pv=2012r2&m=%CHEF_ARCH%&v=%CHEF_PRODUCT_VER%"
-    set filename="%TEMP%\omnitruck.txt"
-
-    echo "==^> Using Chef Omitruck API URL: !url!"
-    if defined http_proxy (
-        if defined no_proxy (
-            powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.proxy.BypassList = (('%no_proxy%').split(',')) ; $wc.DownloadFile('!url!', '!filename!')"
-        ) else (
-            powershell -Command "$wc = (New-Object System.Net.WebClient); $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.DownloadFile('!url!', '!filename!')"
-        )
-    ) else (
-        powershell -command "(New-Object System.Net.WebClient).DownloadFile('!url!', '!filename!')"
-    )
-
-    if not exist "%TEMP%\omnitruck.txt" (
-        echo Could not get %CHEF_PRODUCT_NAME% %CHEF_PRODUCT_VER% %CHEF_ARCH% download url...
-    ) else (
-      for /f "tokens=2 usebackq" %%a in (`findstr "url" "%TEMP%\omnitruck.txt"`) do (
-          set CHEF_URL=%%a
-      )
-    )
-
-    if not defined CHEF_URL (
-      echo Could not get %CHEF_PRODUCT_NAME% %CHEF_PRODUCT_VER% %CHEF_ARCH% download url...
-      goto exit1
-    )
-    echo "==^> Got %CHEF_PRODUCT_NAME% download URL: !CHEF_URL!"
+  echo Could not determine the %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% download url...
+  goto exit1
 )
+echo "==^> Got %OMNITRUCK_PRODUCT% download URL: !CHEF_URL!"
+
+goto chef
+
+::::::::::::
+:chef
+::::::::::::
 
 for %%i in ("%CHEF_URL%") do set CHEF_MSI=%%~nxi
 set CHEF_DIR=%TEMP%\chef
@@ -94,12 +93,12 @@ pushd "%CHEF_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
 ) else (
-  echo ==^> Downloading %CHEF_PRODUCT_NAME% to %CHEF_PATH%
+  echo ==^> Downloading %CHEF_URL% to %CHEF_PATH%
   powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEF_URL%\", '%CHEF_PATH%')" <NUL
 )
 if not exist "%CHEF_PATH%" goto exit1
 
-echo ==^> Installing %CHEF_PRODUCT_NAME% %CHEF_PRODUCT_VER% %CHEF_ARCH%
+echo ==^> Installing %CM% %CM_VERSION%
 msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
 
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%CHEF_PATH%" /l*v "%CHEF_DIR%\chef.log" %CHEF_OPTIONS%
