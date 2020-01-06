@@ -71,7 +71,9 @@ the output of `make list` accordingly.
 Possible values for the CM variable are:
 
 * `nocm` - No configuration management tool
-* `chef` - Install Chef
+* `chef` - Install Chef Client
+* `chefdk` - Install Chef Development Kit
+* `chef-workstation` - Install Chef Workstation
 * `puppet` - Install Puppet
 * `salt`  - Install Salt
 
