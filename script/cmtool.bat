@@ -44,6 +44,19 @@ if "%CM%" == "chef" (
 
 :: Deterine the other desired parameters here
 if not defined OMNITRUCK_PLATFORM set OMNITRUCK_PLATFORM=windows
+if not defined CM_LICENSED set CM_LICENSED=false
+
+if "%CM_VERSION%" == "latest" if "%CM_LICENSED%" == "false" (
+    echo ==^> Overriding 'CM_VERSION=latest' to the latest supported free version because CM_LICENSED=false
+    if "%OMNITRUCK_PRODUCT%" == "chef-workstation" (
+        set CM_VERSION=0.3.2
+    ) else if "%OMNITRUCK_PRODUCT%" == "chefdk" (
+        set CM_VERSION=3.12.10
+    ) else if "%OMNITRUCK_PRODUCT%" == "chef" (
+        set CM_VERSION=14.14.29
+    )
+)
+
 if not defined OMNITRUCK_VERSION set OMNITRUCK_VERSION=%CM_VERSION%
 
 if not defined OMNITRUCK_MACHINE_ARCH (

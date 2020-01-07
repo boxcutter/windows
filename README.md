@@ -82,6 +82,11 @@ configuration management tool, to override the default of `latest`.
 The value of `CM_VERSION` should have the form `x.y` or `x.y.z`,
 such as `CM_VERSION := 11.12.4`
 
+The latest Chef products are governed by a non-free license and require license
+acceptance.  To support using both free and licensed Chef products a new
+variable `CM_LICENSED` defaults to `'false'`.  If `CM_VERSION=latest` and
+`CM_LICENSED=false` then the latest free version of the `CM` will be used.
+
 It is also possible to specify a `HW_VERSION` if a specific hardware
 version is to be used for build. This is commonly used to provide
 compatibility with newer versions of VMware Workstation. For example,

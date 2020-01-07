@@ -73,6 +73,21 @@ ifndef CM_VERSION
 		CM_VERSION = latest
 	endif
 endif
+
+CM_LICENSED ?=
+ifndef CM_LICENSED
+	ifeq ($(CM),chef)
+		CM_LICENSED = false
+	endif
+
+	ifeq ($(CM),chefdk)
+	  CM_LICENSED = false
+	endif
+
+	ifeq ($(CM),chef-workstation)
+		CM_LICENSED = false
+	endif
+endif
 BOX_VERSION ?= $(shell cat VERSION)
 UPDATE ?= false
 GENERALIZE ?= false
@@ -96,6 +111,9 @@ ifdef HW_VERSION
 endif
 ifdef CM_VERSION
 	PACKER_VARS += -var 'cm_version=$(CM_VERSION)'
+endif
+ifdef CM_LICENSED
+	PACKER_VARS += -var 'cm_licensed=$(CM_LICENSED)'
 endif
 ON_ERROR ?= cleanup
 PACKER ?= packer

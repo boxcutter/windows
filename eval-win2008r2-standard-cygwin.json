@@ -143,6 +143,7 @@
     {
       "environment_vars": [
         "CM={{user `cm`}}",
+        "CM_LICENSED={{user `cm_licensed`}}",
         "CM_VERSION={{user `cm_version`}}",
         "UPDATE={{user `update`}}"
       ],
@@ -171,6 +172,7 @@
     "memory": "2048",
     "guest_additions_url": "",
     "cm": "chef",
+    "cm_licensed": "",
     "cm_version": "",
     "hw_version": "7",
     "disk_size": "40960",
