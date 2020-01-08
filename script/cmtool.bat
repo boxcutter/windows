@@ -8,7 +8,10 @@ if not defined CM echo ==^> ERROR: The "CM" variable was not found in the enviro
 
 if "%CM%" == "nocm"   goto nocm
 
-if not defined CM_VERSION echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment & set CM_VERSION=latest
+if not defined CM_VERSION (
+  echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment
+  set CM_VERSION=latest
+)
 
 if "%CM%" == "chef" goto omnitruck
 if "%CM%" == "chefdk" goto omnitruck
@@ -161,19 +164,27 @@ goto exit0
 ::::::::::::
 if not defined SALT_OPTIONS set SALT_OPTIONS=%CM_OPTIONS%
 
+if "%CM_VERSION%" == "latest" set CM_VERSION=2019.2.2
+if not defined SALT_REVISION set SALT_REVISION=stable
+
 set SALT_DIR=%TEMP%\salt
 echo ==^> Creating "%SALT_DIR%"
 mkdir "%SALT_DIR%"
 pushd "%SALT_DIR%"
 
-set SALT_URL=https://raw.githubusercontent.com/saltstack/salt-bootstrap/stable/bootstrap-salt.ps1
+set SALT_URL=http://raw.githubusercontent.com/saltstack/salt-bootstrap/%SALT_REVISION%/bootstrap-salt.ps1
+
 set SALT_PATH=%SALT_DIR%\bootstrap-salt.ps1
-echo ==^> Downloading %SALT_URL% to %SALT_PATH%
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_PATH%')" <NUL
+set SALT_DOWNLOAD=%SALT_DIR%\bootstrap-salt.download.ps1
 
-if not exist "%SALT_PATH%" goto exit1
+echo ==^> Downloading %SALT_URL% to %SALT_DOWNLOAD%
+powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_DOWNLOAD%')" <NUL
 
-echo ==^> Installing Salt minion
+if not exist "%SALT_DOWNLOAD%" goto exit1
+echo ==^> Patching bootstrap-salt.ps1 at %SALT_DOWNLOAD%
+powershell -command "(get-content \"%SALT_DOWNLOAD%\") -replace \"'Tls,Tls11,Tls12'\", \"0xc0,0x300,0xc00\" | set-content \"%SALT_PATH%\""
+
+echo ==^> Installing Salt minion with %SALT_PATH%
 if "%CM_VERSION%" == "latest" (
   powershell "%SALT_PATH%" %SALT_OPTIONS%
 ) else (
