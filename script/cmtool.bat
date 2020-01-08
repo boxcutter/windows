@@ -88,6 +88,7 @@ goto chef
 ::::::::::::
 :chef
 ::::::::::::
+if not defined CHEF_OPTIONS set CHEF_OPTIONS=%CM_OPTIONS%
 
 for %%i in ("%CHEF_URL%") do set CHEF_MSI=%%~nxi
 set CHEF_DIR=%TEMP%\chef
@@ -116,6 +117,7 @@ goto exit0
 ::::::::::::
 :puppet
 ::::::::::::
+if not defined PUPPET_OPTIONS set PUPPET_OPTIONS=%CM_OPTIONS%
 
 :: if "%CM_VERSION%" == "latest" set CM_VERSION=3.8.7
 
@@ -157,6 +159,7 @@ goto exit0
 ::::::::::::
 :salt
 ::::::::::::
+if not defined SALT_OPTIONS set SALT_OPTIONS=%CM_OPTIONS%
 
 if "%CM_VERSION%" == "latest" set CM_VERSION=2015.8.8-2
 
