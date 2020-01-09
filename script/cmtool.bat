@@ -13,6 +13,8 @@ for /f "delims=.; tokens=1,2" %%a in ("%PlatformVersionRow%") do (
   for /f "tokens=*" %%v in ("%%b") do set PlatformVersionMinor=%%v
 )
 
+echo ==^> Detected Windows Platform Version: %PlatformVersionMajor%.%PlatformVersionMinor%
+
 :: Set some reasonable defaults
 if not defined TEMP set TEMP=%LOCALAPPDATA%\Temp
 
@@ -184,7 +186,8 @@ pushd "%SALT_DIR%"
 
 :: If we're on a platform where salt-bootstrap is buggy, then fall back to just
 :: using the regular salt-repository method.
-if "%PlatformVersionMajor%" == "6" goto saltrepository
+if "%PlatformVersionMajor%" == "6" if "%PlatformVersionMinor%" == "0" goto saltrepository
+if "%PlatformVersionMajor%" == "6" if "%PlatformVersionMinor%" == "1" goto saltrepository
 
 ::::::::::::
 :saltbootstrap
