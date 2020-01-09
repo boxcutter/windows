@@ -184,6 +184,14 @@ echo ==^> Creating "%SALT_DIR%"
 mkdir "%SALT_DIR%"
 pushd "%SALT_DIR%"
 
+:: If we're on a platform where salt-bootstrap is buggy, then fall back to just
+:: using the regular salt-repository method.
+if "%PlatformVersionMajor%" == "6" goto saltrepository
+
+::::::::::::
+:saltbootstrap
+::::::::::::
+
 set SALT_URL=http://raw.githubusercontent.com/saltstack/salt-bootstrap/%SALT_REVISION%/bootstrap-salt.ps1
 
 set SALT_PATH=%SALT_DIR%\bootstrap-salt.ps1
@@ -202,6 +210,40 @@ if "%CM_VERSION%" == "latest" (
 ) else (
   powershell "%SALT_PATH%" -version "%CM_VERSION%" %SALT_OPTIONS%
 )
+
+goto exit0
+
+::::::::::::
+:saltrepository
+::::::::::::
+
+if not defined SALT_PYTHONVERSION set SALT_PYTHONVERSION=Py3
+
+if not defined SALT_ARCH (
+  if "%PROCESSOR_ARCHITECTURE%" == "x86" (
+    set SALT_ARCH=x86
+  ) else (
+    set SALT_ARCH=AMD64
+  )
+)
+
+if "%CM_VERSION%" == "latest" (
+  set SALT_URL=https://repo.saltstack.com/windows/Salt-Minion-Latest-%SALT_PYTHONVERSION%-%SALT_ARCH%-Setup.exe
+) else (
+  set SALT_URL=https://repo.saltstack.com/windows/Salt-Minion-%CM_VERSION%-%SALT_PYTHONVERSION%-%SALT_ARCH%-Setup.exe
+)
+
+set SALT_PATH=%SALT_DIR%\Salt-Minion-Setup.exe
+
+echo ==^> Downloading %SALT_URL% to %SALT_PATH%
+powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_PATH%')" <NUL
+
+echo ==^> Installing Salt minion %CM_VERSION%-%SALT_PYTHONVERSION% with %SALT_PATH%
+
+"%SALT_PATH%" /S %SALT_OPTIONS%
+
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%SALT_PATH%" /S %SALT_OPTIONS%
+ver>nul
 
 goto exit0
 
