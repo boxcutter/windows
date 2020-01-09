@@ -3,16 +3,14 @@
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
 :: Get the PlatformVersion from SystemInfo
-for /f "delims=:; tokens=1,2" %a in ('systeminfo') do (
-  if "%a" == "OS Version" (
-    for /f %v in ("%b") do set PlatformVersionRow=%v
-  )
+for /f "delims=:; tokens=1,2" %%a in ('systeminfo') do (
+  if "%%a" == "OS Version" set PlatformVersionRow=%%b
 )
 
 :: Extract the major/minor version
-for /f "delims=.; tokens=1,2" %a in ("%PlatformVersionRow%") do (
-  set PlatformVersionMajor=%a
-  set PlatformVersionMinor=%b
+for /f "delims=.; tokens=1,2" %%a in ("%PlatformVersionRow%") do (
+  set PlatformVersionMajor=%%a
+  set PlatformVersionMinor=%%b
 )
 
 :: Set some reasonable defaults
