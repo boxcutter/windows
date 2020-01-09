@@ -211,6 +211,9 @@ if "%CM_VERSION%" == "latest" (
   powershell "%SALT_PATH%" -version "%CM_VERSION%" %SALT_OPTIONS%
 )
 
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%SALT_PATH%" -version "%CM_VERSION%" %SALT_OPTIONS%
+ver>nul
+
 goto exit0
 
 ::::::::::::
