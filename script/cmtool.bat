@@ -175,8 +175,6 @@ goto exit0
 :salt
 ::::::::::::
 if not defined SALT_OPTIONS set SALT_OPTIONS=%CM_OPTIONS%
-
-if "%CM_VERSION%" == "latest" set CM_VERSION=2019.2.2
 if not defined SALT_REVISION set SALT_REVISION=stable
 
 set SALT_DIR=%TEMP%\salt
@@ -191,6 +189,9 @@ if "%PlatformVersionMajor%" == "6" goto saltrepository
 ::::::::::::
 :saltbootstrap
 ::::::::::::
+
+:: We hardcode the CM_VERSION here to workaround saltstack/salt-bootstrap#1394
+if "%CM_VERSION%" == "latest" set CM_VERSION=2019.2.2
 
 set SALT_URL=http://raw.githubusercontent.com/saltstack/salt-bootstrap/%SALT_REVISION%/bootstrap-salt.ps1
 
@@ -231,9 +232,9 @@ if not defined SALT_ARCH (
 )
 
 if "%CM_VERSION%" == "latest" (
-  set SALT_URL=https://repo.saltstack.com/windows/Salt-Minion-Latest-%SALT_PYTHONVERSION%-%SALT_ARCH%-Setup.exe
+  set SALT_URL=http://repo.saltstack.com/windows/Salt-Minion-Latest-%SALT_PYTHONVERSION%-%SALT_ARCH%-Setup.exe
 ) else (
-  set SALT_URL=https://repo.saltstack.com/windows/Salt-Minion-%CM_VERSION%-%SALT_PYTHONVERSION%-%SALT_ARCH%-Setup.exe
+  set SALT_URL=http://repo.saltstack.com/windows/Salt-Minion-%CM_VERSION%-%SALT_PYTHONVERSION%-%SALT_ARCH%-Setup.exe
 )
 
 set SALT_PATH=%SALT_DIR%\Salt-Minion-Setup.exe
