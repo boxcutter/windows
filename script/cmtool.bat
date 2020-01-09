@@ -7,10 +7,10 @@ for /f "delims=:; tokens=1,2" %%a in ('systeminfo') do (
   if "%%a" == "OS Version" set PlatformVersionRow=%%b
 )
 
-:: Extract the major/minor version
+:: Extract the major/minor version (stripped)
 for /f "delims=.; tokens=1,2" %%a in ("%PlatformVersionRow%") do (
-  set PlatformVersionMajor=%%a
-  set PlatformVersionMinor=%%b
+  for /f "tokens=*" %%v in ("%%a") do set PlatformVersionMajor=%%v
+  for /f "tokens=*" %%v in ("%%b") do set PlatformVersionMinor=%%v
 )
 
 :: Set some reasonable defaults
