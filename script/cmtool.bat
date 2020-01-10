@@ -178,10 +178,10 @@ goto puppetinstall
 :puppetinstall
 ::::::::::::
 if not defined PUPPET_URL (
-  if defined ProgramFiles(x86) (
-    set PUPPET_URL=%PUPPET_64_URL%
-  ) else (
+  if "%PROCESSOR_ARCHITECTURE%" == "x86" (
     set PUPPET_URL=%PUPPET_32_URL%
+  ) else (
+    set PUPPET_URL=%PUPPET_64_URL%
   )
 )
 
