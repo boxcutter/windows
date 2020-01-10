@@ -163,7 +163,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/eval-win10x64-enterprise-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{ user `output_directory` }}/eval-win10x64-enterprise-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win10x64-enterprise-cygwin.tpl"
     }
@@ -209,6 +209,7 @@
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "output_directory": "box/{{.Provider}}"
   }
 }

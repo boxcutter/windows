@@ -137,7 +137,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win7x86-pro-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{ user `output_directory` }}/win7x86-pro-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-win7x86-pro-cygwin.tpl"
     }
@@ -183,6 +183,7 @@
     "iso_url": "iso/en_windows_7_professional_with_sp1_vl_build_x86_dvd_u_677896.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "output_directory": "box/{{.Provider}}"
   }
 }

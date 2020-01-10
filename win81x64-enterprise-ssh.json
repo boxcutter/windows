@@ -134,7 +134,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win81x64-enterprise-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{ user `output_directory` }}/win81x64-enterprise-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-win81x64-enterprise-ssh.tpl"
     }
@@ -180,6 +180,7 @@
     "iso_url": "iso/en_windows_8.1_enterprise_with_update_x64_dvd_4065178.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "output_directory": "box/{{.Provider}}"
   }
 }
