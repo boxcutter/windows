@@ -186,6 +186,7 @@ pushd "%SALT_DIR%"
 
 :: If we're on a platform where salt-bootstrap is buggy, then fall back to just
 :: using the regular salt-repository method.
+if "%PlatformVersionMajor%" == "5" goto saltrepository
 if "%PlatformVersionMajor%" == "6" if "%PlatformVersionMinor%" == "0" goto saltrepository
 if "%PlatformVersionMajor%" == "6" if "%PlatformVersionMinor%" == "1" goto saltrepository
 
