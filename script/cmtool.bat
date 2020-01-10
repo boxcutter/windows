@@ -136,15 +136,53 @@ goto exit0
 ::::::::::::
 if not defined PUPPET_OPTIONS set PUPPET_OPTIONS=%CM_OPTIONS%
 
-:: if "%CM_VERSION%" == "latest" set CM_VERSION=3.8.7
+if defined PUPPET_URL goto puppetinstall
 
-if not defined PUPPET_URL set PUPPET_64_URL=https://downloads.puppetlabs.com/windows/puppet-x64-%CM_VERSION%.msi
-if not defined PUPPET_URL set PUPPET_64_URL=https://downloads.puppetlabs.com/windows/puppet-%CM_VERSION%.msi
+:: If we're using the latest, then hardcode the 32-bit/64-bit urls and install
+if "%CM_VERSION%" == "latest" (
+    set PUPPET_32_URL=https://downloads.puppetlabs.com/windows/puppet/puppet-agent-x86-latest.msi
+    set PUPPET_64_URL=https://downloads.puppetlabs.com/windows/puppet/puppet-agent-x64-latest.msi
+    goto puppetinstall
+)
 
-if defined ProgramFiles(x86) (
-  set PUPPET_URL=%PUPPET_64_URL%
-) else (
-  set PUPPET_URL=%PUPPET_32_URL%
+:: Figure out the major version requested by the user
+for /f "delims=." %%v in ("%CM_VERSION%") do set PUPPET_MAJOR_VERSION=%%v
+
+:: Now we can use it to figure out the correct url format for that version
+if "%PUPPET_MAJOR_VERSION%" == "1" goto puppet1
+if "%PUPPET_MAJOR_VERSION%" == "5" goto puppet5
+goto puppetlatest
+
+::::::::::::
+:puppet1
+::::::::::::
+if not defined PUPPET_URL set PUPPET_64_URL=https://downloads.puppetlabs.com/windows/puppet-agent-%CM_VERSION%-x64.msi
+if not defined PUPPET_URL set PUPPET_32_URL=https://downloads.puppetlabs.com/windows/puppet-agent-%CM_VERSION%-x86.msi
+goto puppetinstall
+
+::::::::::::
+:puppet5
+::::::::::::
+if not defined PUPPET_URL set PUPPET_64_URL=https://downloads.puppetlabs.com/windows/puppet5/puppet-agent-%CM_VERSION%-x64.msi
+if not defined PUPPET_URL set PUPPET_32_URL=https://downloads.puppetlabs.com/windows/puppet5/puppet-agent-%CM_VERSION%-x86.msi
+goto puppetinstall
+
+::::::::::::
+:puppetlatest
+::::::::::::
+if not defined PUPPET_URL set PUPPET_64_URL=https://downloads.puppetlabs.com/windows/puppet/puppet-agent-%CM_VERSION%-x64.msi
+if not defined PUPPET_URL set PUPPET_32_URL=https://downloads.puppetlabs.com/windows/puppet/puppet-agent-%CM_VERSION%-x86.msi
+goto puppetinstall
+
+::::::::::::
+:puppetinstall
+::::::::::::
+if not defined PUPPET_URL (
+  if "%PROCESSOR_ARCHITECTURE%" == "x86" (
+    set PUPPET_URL=%PUPPET_32_URL%
+  ) else (
+    set PUPPET_URL=%PUPPET_64_URL%
+  )
 )
 
 for %%i in ("%PUPPET_URL%") do set PUPPET_MSI=%%~nxi
