@@ -190,6 +190,6 @@
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
     "version": "0.1.0",
-    "output_directory": "box/{{.Provider}}"
+    "box_prefix": "box/"
   }
 }
