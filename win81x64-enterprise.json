@@ -138,7 +138,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "{{ user `output_directory` }}/win81x64-enterprise-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{ user `box_prefix` }}{{.Provider}}/win81x64-enterprise-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-win81x64-enterprise.tpl"
     }

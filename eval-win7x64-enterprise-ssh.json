@@ -142,7 +142,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "{{ user `output_directory` }}/eval-win7x64-enterprise-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{ user `box_prefix` }}{{.Provider}}/eval-win7x64-enterprise-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win7x64-enterprise-ssh.tpl"
     }
