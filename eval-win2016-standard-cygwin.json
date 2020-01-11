@@ -151,7 +151,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": true,
-      "output": "{{ user `output_directory` }}/eval-win2016-standard-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{ user `box_prefix` }}{{.Provider}}/eval-win2016-standard-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win2016-standard-cygwin.tpl"
     }
