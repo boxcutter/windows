@@ -181,8 +181,8 @@
     }
   ],
   "variables": {
-    "vm_name": "eval-win2016-standard-ssh",
-    "vm_suffix": "",
+    "vm_name": "eval-win2016-standard",
+    "vm_suffix": "-ssh",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",

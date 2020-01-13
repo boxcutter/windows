@@ -165,8 +165,8 @@
     }
   ],
   "variables": {
-    "vm_name": "win81x86-pro-cygwin",
-    "vm_suffix": "",
+    "vm_name": "win81x86-pro",
+    "vm_suffix": "-cygwin",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",

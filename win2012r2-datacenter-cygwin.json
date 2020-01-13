@@ -181,8 +181,8 @@
     }
   ],
   "variables": {
-    "vm_name": "win2012r2-datacenter-cygwin",
-    "vm_suffix": "",
+    "vm_name": "win2012r2-datacenter",
+    "vm_suffix": "-cygwin",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",

@@ -164,8 +164,8 @@
     }
   ],
   "variables": {
-    "vm_name": "win2008r2-enterprise-ssh",
-    "vm_suffix": "",
+    "vm_name": "win2008r2-enterprise",
+    "vm_suffix": "-ssh",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",

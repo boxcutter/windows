@@ -168,8 +168,8 @@
     }
   ],
   "variables": {
-    "vm_name": "eval-win2008r2-standard-cygwin",
-    "vm_suffix": "",
+    "vm_name": "eval-win2008r2-standard",
+    "vm_suffix": "-cygwin",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",

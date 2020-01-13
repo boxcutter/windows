@@ -161,8 +161,8 @@
     }
   ],
   "variables": {
-    "vm_name": "win81x86-enterprise-ssh",
-    "vm_suffix": "",
+    "vm_name": "win81x86-enterprise",
+    "vm_suffix": "-ssh",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",

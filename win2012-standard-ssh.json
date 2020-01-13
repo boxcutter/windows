@@ -176,8 +176,8 @@
     }
   ],
   "variables": {
-    "vm_name": "win2012-standard-ssh",
-    "vm_suffix": "",
+    "vm_name": "win2012-standard",
+    "vm_suffix": "-ssh",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",

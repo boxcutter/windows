@@ -171,8 +171,8 @@
     }
   ],
   "variables": {
-    "vm_name": "win7x86-enterprise-cygwin",
-    "vm_suffix": "",
+    "vm_name": "win7x86-enterprise",
+    "vm_suffix": "-cygwin",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",
