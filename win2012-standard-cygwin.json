@@ -33,9 +33,7 @@
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "vmx_data": {
-        "cpuid.coresPerSocket": "1",
-        "memsize": "{{ user `memory` }}",
-        "numvcpus": "{{ user `cpus` }}"
+        "cpuid.coresPerSocket": "1"
       }
     },
     {
