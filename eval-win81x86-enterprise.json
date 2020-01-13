@@ -24,7 +24,6 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
-      "vm_name": "{{user `vm_name`}}",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
@@ -32,9 +31,10 @@
       "vmx_data": {
         "cpuid.coresPerSocket": "1"
       },
+      "vm_name": "{{user `vm_name`}}",
+      "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_timeout": "10000s",
-      "winrm_username": "vagrant"
+      "winrm_timeout": "10000s"
     },
     {
       "communicator": "winrm",
@@ -75,9 +75,9 @@
         ]
       ],
       "vm_name": "{{user `vm_name`}}",
+      "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_timeout": "10000s",
-      "winrm_username": "vagrant"
+      "winrm_timeout": "10000s"
     },
     {
       "communicator": "winrm",
@@ -105,9 +105,9 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
       "vm_name": "{{user `vm_name`}}",
+      "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_timeout": "10000s",
-      "winrm_username": "vagrant"
+      "winrm_timeout": "10000s"
     },
     {
       "communicator": "winrm",
@@ -134,9 +134,9 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "hyperv-iso",
       "vm_name": "{{user `vm_name`}}",
+      "winrm_username": "vagrant",
       "winrm_password": "vagrant",
-      "winrm_timeout": "10000s",
-      "winrm_username": "vagrant"
+      "winrm_timeout": "10000s"
     }
   ],
   "post-processors": [
