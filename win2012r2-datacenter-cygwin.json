@@ -26,7 +26,7 @@
       "ssh_wait_timeout": "10000s",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
-      "vm_name": "win2012r2-datacenter-cygwin",
+      "vm_name": "{{user `vm_name`}}",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
@@ -75,7 +75,7 @@
           "1"
         ]
       ],
-      "vm_name": "win2012r2-datacenter-cygwin"
+      "vm_name": "{{user `vm_name`}}"
     },
     {
       "disk_size": "{{user `disk_size`}}",
@@ -112,7 +112,7 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
-      "vm_name": "win2012r2-datacenter-cygwin"
+      "vm_name": "{{user `vm_name`}}"
     },
     {
       "cpus": "{{ user `cpus` }}",
@@ -140,14 +140,14 @@
       "ssh_username": "vagrant",
       "ssh_timeout": "10000s",
       "type": "hyperv-iso",
-      "vm_name": "win2012r2-datacenter-cygwin"
+      "vm_name": "{{user `vm_name`}}"
     }
   ],
   "post-processors": [
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "{{ user `box_prefix` }}{{.Provider}}/win2012r2-datacenter-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{user `box_directory`}}{{.Provider}}/{{user `vm_name`}}{{user `vm_suffix`}}-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-win2012r2-datacenter-cygwin.tpl"
     }
@@ -181,19 +181,21 @@
     }
   ],
   "variables": {
-    "cpus": "2",
-    "memory": "2048",
-    "guest_additions_url": "",
+    "vm_name": "win2012r2-datacenter",
+    "vm_suffix": "-cygwin",
     "cm": "chef",
     "cm_version": "",
-    "hw_version": "7",
+    "cpus": "2",
+    "memory": "2048",
     "disk_size": "40960",
-    "headless": "false",
-    "iso_checksum": "af9ef225a510d6d51c5520396452d4f1c1e06935",
+    "hw_version": "7",
     "iso_url": "iso/en_windows_server_2012_r2_with_update_x64_dvd_4065220.iso",
+    "iso_checksum": "af9ef225a510d6d51c5520396452d4f1c1e06935",
+    "guest_additions_url": "",
+    "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+    "headless": "false",
     "update": "true",
-    "version": "0.1.0",
-    "box_prefix": "box/"
+    "version": "0.1.0"
   }
 }
