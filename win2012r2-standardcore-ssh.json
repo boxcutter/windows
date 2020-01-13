@@ -25,7 +25,7 @@
       "ssh_wait_timeout": "10000s",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
-      "vm_name": "win2012r2-standardcore",
+      "vm_name": "win2012r2-standardcore-ssh",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
@@ -73,7 +73,7 @@
           "1"
         ]
       ],
-      "vm_name": "win2012r2-standardcore"
+      "vm_name": "win2012r2-standardcore-ssh"
     },
     {
       "disk_size": "{{user `disk_size`}}",
@@ -109,7 +109,7 @@
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
-      "vm_name": "win2012r2-standardcore"
+      "vm_name": "win2012r2-standardcore-ssh"
     },
     {
       "cpus": "{{ user `cpus` }}",
