@@ -176,11 +176,12 @@
     "hw_version": "7",
     "disk_size": "40960",
     "headless": "false",
+    "box_prefix": "box/",
+    "vm_name": "win2008r2-standard-cygwin",
     "iso_checksum": "7e7e9425041b3328ccf723a0855c2bc4f462ec57",
     "iso_url": "iso/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
-    "version": "0.1.0",
-    "box_prefix": "box/"
+    "version": "0.1.0"
   }
 }
