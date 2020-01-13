@@ -182,8 +182,8 @@
     }
   ],
   "variables": {
-    "vm_name": "win2012-standard-cygwin",
-    "vm_suffix": "",
+    "vm_name": "win2012-standard",
+    "vm_suffix": "-cygwin",
     "cm": "chef",
     "cm_version": "",
     "cpus": "2",
