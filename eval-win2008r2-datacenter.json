@@ -25,7 +25,7 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
-      "vm_name": "eval-win2008r2-datacenter",
+      "vm_name": "{{user `vm_name`}}",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
@@ -67,7 +67,7 @@
       "type": "virtualbox-iso",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
-      "vm_name": "eval-win2008r2-datacenter",
+      "vm_name": "{{user `vm_name`}}",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
@@ -98,7 +98,7 @@
       "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "parallels-iso",
-      "vm_name": "eval-win2008r2-datacenter",
+      "vm_name": "{{user `vm_name`}}",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
@@ -128,7 +128,7 @@
       "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "type": "hyperv-iso",
-      "vm_name": "eval-win2008r2-datacenter",
+      "vm_name": "{{user `vm_name`}}",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s",
       "winrm_username": "vagrant"
@@ -138,7 +138,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "{{ user `box_directory` }}{{.Provider}}/eval-win2008r2-datacenter-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{user `box_directory`}}{{.Provider}}/{{user `vm_name`}}{{user `vm_suffix`}}-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win2008r2-datacenter.tpl"
     }
