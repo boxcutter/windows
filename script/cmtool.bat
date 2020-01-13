@@ -20,7 +20,7 @@ if not defined TEMP set TEMP=%LOCALAPPDATA%\Temp
 
 :: Figure out which configuration management tool to use
 if not defined CM echo ==^> ERROR: The "CM" variable was not found in the environment & goto exit1
-if "%CM%" == "nocm"   goto nocm
+if "%CM%" == "nocm" goto nocm
 
 if not defined CM_VERSION (
   echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment
@@ -31,7 +31,7 @@ if "%CM%" == "chef" goto omnitruck
 if "%CM%" == "chefdk" goto omnitruck
 if "%CM%" == "chef-workstation" goto omnitruck
 if "%CM%" == "puppet" goto puppet
-if "%CM%" == "salt"   goto salt
+if "%CM%" == "salt" goto salt
 
 echo ==^> ERROR: Unknown value for environment variable CM: "%CM%"
 
