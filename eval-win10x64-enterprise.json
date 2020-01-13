@@ -159,7 +159,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "{{ user `box_prefix` }}{{.Provider}}/eval-win10x64-enterprise-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{ user `box_directory` }}{{.Provider}}/eval-win10x64-enterprise-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win10x64-enterprise.tpl"
     }
@@ -185,19 +185,20 @@
     }
   ],
   "variables": {
-    "cpus": "2",
-    "memory": "2048",
-    "guest_additions_url": "",
+    "vm_name": "eval-win10x64-enterprise",
+    "vm_suffix": "",
     "cm": "chef",
     "cm_version": "",
-    "hw_version": "7",
+    "cpus": "2",
+    "memory": "2048",
     "disk_size": "40960",
-    "headless": "false",
-    "box_prefix": "box/",
-    "vm_name": "eval-win10x64-enterprise",
-    "iso_checksum": "3b5f9494d870726d6d8a833aaf6169a964b8a9be",
+    "hw_version": "7",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/6/5/D/65D18931-F626-4A35-AD5B-F5DA41FE6B76/16299.15.170928-1534.rs3_release_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
+    "iso_checksum": "3b5f9494d870726d6d8a833aaf6169a964b8a9be",
+    "guest_additions_url": "",
+    "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+    "headless": "false",
     "update": "true",
     "version": "0.1.0"
   }
