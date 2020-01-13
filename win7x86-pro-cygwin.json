@@ -179,11 +179,12 @@
     "hw_version": "7",
     "disk_size": "40960",
     "headless": "false",
+    "box_prefix": "box/",
+    "vm_name": "win7x86-pro-cygwin",
     "iso_checksum": "d5bd65e1b326d728f4fd146878ee0d9a3da85075",
     "iso_url": "iso/en_windows_7_professional_with_sp1_vl_build_x86_dvd_u_677896.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
-    "version": "0.1.0",
-    "box_prefix": "box/"
+    "version": "0.1.0"
   }
 }

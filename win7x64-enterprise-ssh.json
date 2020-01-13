@@ -175,11 +175,12 @@
     "hw_version": "7",
     "disk_size": "40960",
     "headless": "false",
+    "box_prefix": "box/",
+    "vm_name": "win7x64-enterprise-ssh",
     "iso_checksum": "15ddabafa72071a06d5213b486a02d5b55cb7070",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
-    "version": "0.1.0",
-    "box_prefix": "box/"
+    "version": "0.1.0"
   }
 }

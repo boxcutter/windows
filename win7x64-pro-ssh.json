@@ -175,11 +175,12 @@
     "hw_version": "7",
     "disk_size": "40960",
     "headless": "false",
+    "box_prefix": "box/",
+    "vm_name": "win7x64-pro-ssh",
     "iso_checksum": "708e0338d4e2f094dfeb860347c84a6ed9e91d0c",
     "iso_url": "iso/en_windows_7_professional_with_sp1_vl_build_x64_dvd_u_677791.iso",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
     "update": "true",
-    "version": "0.1.0",
-    "box_prefix": "box/"
+    "version": "0.1.0"
   }
 }
