@@ -147,7 +147,7 @@
     {
       "compression_level": 1,
       "keep_input_artifact": false,
-      "output": "{{ user `box_prefix` }}{{.Provider}}/eval-win81x64-enterprise-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{ user `box_directory` }}{{.Provider}}/eval-win81x64-enterprise-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win81x64-enterprise.tpl"
     }
@@ -173,19 +173,20 @@
     }
   ],
   "variables": {
-    "cpus": "2",
-    "memory": "2048",
-    "guest_additions_url": "",
+    "vm_name": "eval-win81x64-enterprise",
+    "vm_suffix": "",
     "cm": "chef",
     "cm_version": "",
-    "hw_version": "7",
+    "cpus": "2",
+    "memory": "2048",
     "disk_size": "40960",
-    "headless": "false",
-    "box_prefix": "box/",
-    "vm_name": "eval-win81x64-enterprise",
-    "iso_checksum": "7c7d99546077c805faae40a8864882c46f0ca141",
+    "hw_version": "7",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO",
+    "iso_checksum": "7c7d99546077c805faae40a8864882c46f0ca141",
+    "guest_additions_url": "",
+    "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "headless": "false",
     "update": "true",
     "version": "0.1.0"
   }
