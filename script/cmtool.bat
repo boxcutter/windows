@@ -71,6 +71,10 @@ if "%CM_VERSION%" == "latest" (
 ) else if "%CM_VERSION%" == "licensed" (
     echo ==^> User has chosen the most recent licensed version of %OMNITRUCK_PRODUCT%
     set OMNITRUCK_VERSION=latest
+
+:: ...or an explicit version if they explicitly set the environment variable in their own patch
+) else if defined OMNITRUCK_VERSION (
+    echo ==^> User has explicitly chosen the version %OMNITRUCK_VERSION% for %OMNITRUCK_PRODUCT%
 )
 
 :: Deterine the other desired parameters here
