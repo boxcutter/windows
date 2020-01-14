@@ -32,9 +32,7 @@
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "disk_adapter_type": "lsisas1068",
-      "vmx_data": {
-        "cpuid.coresPerSocket": "1"
-      }
+      "vmx_data": {}
     },
     {
       "disk_size": "{{user `disk_size`}}",
