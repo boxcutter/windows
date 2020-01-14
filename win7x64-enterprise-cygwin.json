@@ -127,6 +127,7 @@
       "shutdown_command": "{{ user `shutdown_command`}}",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
+      "ssh_timeout": "10000s",
       "type": "hyperv-iso",
       "vm_name": "{{user `vm_name`}}"
     }
