@@ -32,8 +32,7 @@
       "vm_name": "{{user `vm_name`}}",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
-      "memory": "{{ user `memory` }}",
-      "vmx_data": {}
+      "memory": "{{ user `memory` }}"
     },
     {
       "disk_size": "{{user `disk_size`}}",
