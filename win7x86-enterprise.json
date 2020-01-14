@@ -27,9 +27,7 @@
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
-      "vmx_data": {
-        "cpuid.coresPerSocket": "1"
-      },
+      "vmx_data": {},
       "vm_name": "{{user `vm_name`}}",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",

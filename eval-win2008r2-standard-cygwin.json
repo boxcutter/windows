@@ -31,9 +31,7 @@
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
-      "vmx_data": {
-        "cpuid.coresPerSocket": "1"
-      }
+      "vmx_data": {}
     },
     {
       "disk_size": "{{user `disk_size`}}",

@@ -42,9 +42,7 @@
       "disk_size": "{{ user `disk_size` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
-      "vmx_data": {
-        "cpuid.coresPerSocket": "1"
-      }
+      "vmx_data": {}
     },
     {
       "vm_name": "win2008r2-standardcore-cygwin",
@@ -100,14 +98,18 @@
     },
     {
       "type": "shell",
-      "inline": ["rm -f /tmp/script.bat"]
+      "inline": [
+        "rm -f /tmp/script.bat"
+      ]
     }
   ],
-  "post-processors": [{
-    "type": "vagrant",
-    "keep_input_artifact": false,
-    "compression_level": 1,
-    "vagrantfile_template": "tpl/vagrantfile-win2008r2-standardcore-cygwin.tpl",
-    "output": "box/{{.Provider}}/win2008r2-standardcore-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
-  }]
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "compression_level": 1,
+      "vagrantfile_template": "tpl/vagrantfile-win2008r2-standardcore-cygwin.tpl",
+      "output": "box/{{.Provider}}/win2008r2-standardcore-cygwin-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
+    }
+  ]
 }
