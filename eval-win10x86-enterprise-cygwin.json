@@ -36,8 +36,7 @@
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
-      "disk_adapter_type": "lsisas1068",
-      "vmx_data": {}
+      "disk_adapter_type": "lsisas1068"
     },
     {
       "disk_size": "{{user `disk_size`}}",
