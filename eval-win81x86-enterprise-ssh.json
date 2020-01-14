@@ -21,19 +21,17 @@
       "iso_checksum_type": "sha1",
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
       "tools_upload_flavor": "windows",
       "type": "vmware-iso",
-      "vm_name": "{{user `vm_name`}}",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
+      "cores": 1,
       "memory": "{{ user `memory` }}",
       "disk_adapter_type": "lsisas1068",
-      "vmx_data": {
-        "cpuid.coresPerSocket": "1"
-      }
+      "vm_name": "{{user `vm_name`}}",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     },
     {
       "disk_size": "{{user `disk_size`}}",
@@ -61,9 +59,6 @@
       "iso_url": "{{ user `iso_url` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
       "post_shutdown_delay": "30s",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
@@ -75,7 +70,10 @@
           "1"
         ]
       ],
-      "vm_name": "{{user `vm_name`}}"
+      "vm_name": "{{user `vm_name`}}",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     },
     {
       "disk_size": "{{user `disk_size`}}",
@@ -100,11 +98,11 @@
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
       "type": "parallels-iso",
-      "vm_name": "{{user `vm_name`}}"
+      "vm_name": "{{user `vm_name`}}",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     },
     {
       "cpus": "{{ user `cpus` }}",
@@ -128,11 +126,11 @@
       "iso_url": "{{ user `iso_url` }}",
       "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_timeout": "10000s",
       "type": "hyperv-iso",
-      "vm_name": "{{user `vm_name`}}"
+      "vm_name": "{{user `vm_name`}}",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     }
   ],
   "post-processors": [
