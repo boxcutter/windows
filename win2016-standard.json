@@ -26,11 +26,9 @@
       "type": "vmware-iso",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
+      "cores": 1,
       "memory": "{{ user `memory` }}",
       "disk_adapter_type": "lsisas1068",
-      "vmx_data": {
-        "cpuid.coresPerSocket": "1"
-      },
       "vm_name": "{{user `vm_name`}}",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
