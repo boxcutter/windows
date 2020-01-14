@@ -13,15 +13,11 @@
   },
   "builders": [
     {
-      "vm_name": "win2008r2-standardcore",
       "type": "vmware-iso",
       "guest_os_type": "windows7srv-64",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_timeout": "10000s",
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -41,18 +37,18 @@
       "disk_size": "{{ user `disk_size` }}",
       "cpus": "{{ user `cpus` }}",
       "cores": 1,
-      "memory": "{{ user `memory` }}"
+      "memory": "{{ user `memory` }}",
+      "vm_name": "win2008r2-standardcore",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     },
     {
-      "vm_name": "win2008r2-standardcore",
       "type": "virtualbox-iso",
       "guest_os_type": "Windows2008_64",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_timeout": "10000s",
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
         "floppy/00-run-all-scripts.cmd",
@@ -71,7 +67,11 @@
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
       "disk_size": "{{ user `disk_size` }}",
       "cpus": "{{ user `cpus` }}",
-      "memory": "{{ user `memory` }}"
+      "memory": "{{ user `memory` }}",
+      "vm_name": "win2008r2-standardcore",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     }
   ],
   "provisioners": [
