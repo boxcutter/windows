@@ -27,6 +27,7 @@
       "type": "vmware-iso",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
+      "cores": 1,
       "memory": "{{ user `memory` }}",
       "disk_adapter_type": "lsisas1068",
       "vm_name": "{{user `vm_name`}}",

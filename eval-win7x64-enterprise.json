@@ -28,6 +28,7 @@
       "type": "vmware-iso",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
+      "cores": 1,
       "memory": "{{ user `memory` }}",
       "vm_name": "{{user `vm_name`}}",
       "winrm_username": "vagrant",
