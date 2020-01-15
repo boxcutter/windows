@@ -101,7 +101,7 @@ echo ==^> Getting %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% %OMNITRUCK_MACHINE_ARC
 set url="https://omnitruck.chef.io/%OMNITRUCK_CHANNEL%/%OMNITRUCK_PRODUCT%/metadata?p=%OMNITRUCK_PLATFORM%&m=%OMNITRUCK_MACHINE_ARCH%&v=%OMNITRUCK_VERSION%"
 set filename="%TEMP%\omnitruck.txt"
 
-echo "==^> Using Chef Omnitruck API URL: !url!"
+echo ==^> Using Chef Omnitruck API URL: !url!
 powershell -command "(New-Object System.Net.WebClient).DownloadFile('!url!', '!filename!')"
 
 if not exist "%TEMP%\omnitruck.txt" (
@@ -117,7 +117,7 @@ if not defined CHEF_URL (
   echo Could not determine the %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% download url...
   goto exit1
 )
-echo "==^> Got %OMNITRUCK_PRODUCT% download URL: !CHEF_URL!"
+echo ==^> Got %OMNITRUCK_PRODUCT% download URL: !CHEF_URL!
 
 goto chef
 
