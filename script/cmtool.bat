@@ -62,18 +62,19 @@ if "%CM%" == "chef" (
   goto exit1
 )
 
-:: Check if the user has chosen the most recent free version..
+:: Check the CM_VERSION that the user specified..
 if "%CM_VERSION%" == "latest" (
+    :: ...and let them know if they chose the most recent free version.
     echo ==^> User has chosen the most recent free version of %OMNITRUCK_PRODUCT%
     set OMNITRUCK_VERSION=%OMNITRUCK_FREE_VERSION%
 
-:: ...or the most recent licensed version.
 ) else if "%CM_VERSION%" == "licensed" (
+    :: ...or the most recent licensed version.
     echo ==^> User has chosen the most recent licensed version of %OMNITRUCK_PRODUCT%
     set OMNITRUCK_VERSION=latest
 
-:: ...or an explicit version if they explicitly set the environment variable in their own patch
 ) else if defined OMNITRUCK_VERSION (
+    :: ...or their own version if they explicitly set an environment variable
     echo ==^> User has explicitly chosen the version %OMNITRUCK_VERSION% for %OMNITRUCK_PRODUCT%
 )
 
