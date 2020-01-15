@@ -50,13 +50,32 @@ if not defined OMNITRUCK_CHANNEL set OMNITRUCK_CHANNEL=stable
 :: Figure out the Omnitruck product
 if "%CM%" == "chef" (
   set "OMNITRUCK_PRODUCT=chef"
+  set "OMNITRUCK_FREE_VERSION=14.14.29"
 ) else if "%CM%" == "chefdk" (
   set "OMNITRUCK_PRODUCT=chefdk"
+  set "OMNITRUCK_FREE_VERSION=3.12.10"
 ) else if "%CM%" == "chef-workstation" (
   set "OMNITRUCK_PRODUCT=chef-workstation"
+  set "OMNITRUCK_FREE_VERSION=0.3.2"
 ) else (
   echo Unknown Chef Product: %CM%
   goto exit1
+)
+
+:: Check the CM_VERSION that the user specified..
+if "%CM_VERSION%" == "latest" (
+    :: ...and let them know if they chose the most recent free version.
+    echo ==^> User has chosen the most recent free version of %OMNITRUCK_PRODUCT%
+    set OMNITRUCK_VERSION=%OMNITRUCK_FREE_VERSION%
+
+) else if "%CM_VERSION%" == "licensed" (
+    :: ...or the most recent licensed version.
+    echo ==^> User has chosen the most recent licensed version of %OMNITRUCK_PRODUCT%
+    set OMNITRUCK_VERSION=latest
+
+) else if defined OMNITRUCK_VERSION (
+    :: ...or their own version if they explicitly set an environment variable
+    echo ==^> User has explicitly chosen the version %OMNITRUCK_VERSION% for %OMNITRUCK_PRODUCT%
 )
 
 :: Deterine the other desired parameters here
@@ -82,7 +101,7 @@ echo ==^> Getting %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% %OMNITRUCK_MACHINE_ARC
 set url="https://omnitruck.chef.io/%OMNITRUCK_CHANNEL%/%OMNITRUCK_PRODUCT%/metadata?p=%OMNITRUCK_PLATFORM%&m=%OMNITRUCK_MACHINE_ARCH%&v=%OMNITRUCK_VERSION%"
 set filename="%TEMP%\omnitruck.txt"
 
-echo "==^> Using Chef Omnitruck API URL: !url!"
+echo ==^> Using Chef Omnitruck API URL: !url!
 powershell -command "(New-Object System.Net.WebClient).DownloadFile('!url!', '!filename!')"
 
 if not exist "%TEMP%\omnitruck.txt" (
@@ -98,7 +117,7 @@ if not defined CHEF_URL (
   echo Could not determine the %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% download url...
   goto exit1
 )
-echo "==^> Got %OMNITRUCK_PRODUCT% download URL: !CHEF_URL!"
+echo ==^> Got %OMNITRUCK_PRODUCT% download URL: !CHEF_URL!
 
 goto chef
 
