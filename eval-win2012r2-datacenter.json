@@ -1,8 +1,10 @@
 {
   "builders": [
     {
-      "communicator": "winrm",
-      "disk_size": "{{user `disk_size`}}",
+      "type": "vmware-iso",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
       "floppy_files": [
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
@@ -16,18 +18,16 @@
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "communicator": "winrm",
       "guest_os_type": "windows8srv-64",
       "headless": "{{ user `headless` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "iso_url": "{{ user `iso_url` }}",
-      "shutdown_command": "{{ user `shutdown_command`}}",
       "tools_upload_flavor": "windows",
-      "type": "vmware-iso",
       "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
       "cores": 1,
       "memory": "{{ user `memory` }}",
+      "disk_size": "{{user `disk_size`}}",
       "disk_adapter_type": "lsisas1068",
       "vm_name": "{{user `vm_name`}}",
       "winrm_username": "vagrant",
@@ -35,8 +35,10 @@
       "winrm_timeout": "10000s"
     },
     {
-      "communicator": "winrm",
-      "disk_size": "{{user `disk_size`}}",
+      "type": "virtualbox-iso",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
       "floppy_files": [
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
@@ -51,19 +53,13 @@
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "post_shutdown_delay": "30s",
+      "communicator": "winrm",
       "guest_additions_mode": "attach",
       "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows2012_64",
-      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "iso_url": "{{ user `iso_url` }}",
-      "shutdown_command": "{{ user `shutdown_command`}}",
-      "post_shutdown_delay": "30s",
-      "type": "virtualbox-iso",
-      "cpus": "{{ user `cpus` }}",
-      "memory": "{{ user `memory` }}",
       "vboxmanage": [
         [
           "setextradata",
@@ -72,14 +68,20 @@
           "1"
         ]
       ],
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "hard_drive_interface": "sata",
       "vm_name": "{{user `vm_name`}}",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s"
     },
     {
-      "communicator": "winrm",
-      "disk_size": "{{user `disk_size`}}",
+      "type": "parallels-iso",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
       "floppy_files": [
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
@@ -93,13 +95,13 @@
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "communicator": "winrm",
       "guest_os_type": "win-2008",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "iso_url": "{{ user `iso_url` }}",
       "parallels_tools_flavor": "win",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
+      "disk_size": "{{user `disk_size`}}",
       "prlctl": [
         [
           "set",
@@ -108,17 +110,16 @@
           "off"
         ]
       ],
-      "shutdown_command": "{{ user `shutdown_command`}}",
-      "type": "parallels-iso",
       "vm_name": "{{user `vm_name`}}",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_timeout": "10000s"
     },
     {
-      "communicator": "winrm",
-      "cpus": "{{ user `cpus` }}",
-      "disk_size": "{{user `disk_size`}}",
+      "type": "hyperv-iso",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
       "floppy_files": [
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
@@ -132,13 +133,12 @@
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
-      "headless": "{{ user `headless` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "iso_url": "{{ user `iso_url` }}",
-      "memory": "{{ user `memory` }}",
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "type": "hyperv-iso",
+      "communicator": "winrm",
+      "headless": "{{ user `headless` }}",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
+      "disk_size": "{{user `disk_size`}}",
       "vm_name": "{{user `vm_name`}}",
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
