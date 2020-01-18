@@ -7,7 +7,6 @@
       "iso_checksum_type": "sha1",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win10x64-enterprise/Autounattend.xml",
-        "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
         "{{template_dir}}/floppy/_download.cmd",
@@ -20,6 +19,7 @@
         "{{template_dir}}/floppy/openssh.bat",
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/update.bat",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
@@ -45,7 +45,6 @@
       "iso_checksum_type": "sha1",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win10x64-enterprise/Autounattend.xml",
-        "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
         "{{template_dir}}/floppy/_download.cmd",
@@ -59,6 +58,7 @@
         "{{template_dir}}/floppy/oracle-cert.cer",
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/update.bat",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
@@ -92,7 +92,6 @@
       "iso_checksum_type": "sha1",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win10x64-enterprise/Autounattend.xml",
-        "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
         "{{template_dir}}/floppy/_download.cmd",
@@ -105,6 +104,7 @@
         "{{template_dir}}/floppy/openssh.bat",
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/update.bat",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
@@ -126,7 +126,6 @@
       "iso_checksum_type": "sha1",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win10x64-enterprise/Autounattend.xml",
-        "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
         "{{template_dir}}/floppy/_download.cmd",
@@ -139,6 +138,7 @@
         "{{template_dir}}/floppy/openssh.bat",
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/update.bat",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
