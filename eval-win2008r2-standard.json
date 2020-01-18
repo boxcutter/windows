@@ -6,6 +6,7 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "floppy_files": [
+        "{{template_dir}}/floppy/win2008r2-standard/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
         "{{template_dir}}/floppy/_download.cmd",
@@ -15,7 +16,6 @@
         "{{template_dir}}/floppy/install-winrm.cmd",
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
-        "{{template_dir}}/floppy/win2008r2-standard/Autounattend.xml",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -39,6 +39,7 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "floppy_files": [
+        "{{template_dir}}/floppy/win2008r2-standard/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
         "{{template_dir}}/floppy/_download.cmd",
@@ -49,7 +50,6 @@
         "{{template_dir}}/floppy/oracle-cert.cer",
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
-        "{{template_dir}}/floppy/win2008r2-standard/Autounattend.xml",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -74,6 +74,7 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "floppy_files": [
+        "{{template_dir}}/floppy/win2008r2-standard/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
         "{{template_dir}}/floppy/_download.cmd",
@@ -83,7 +84,6 @@
         "{{template_dir}}/floppy/install-winrm.cmd",
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
-        "{{template_dir}}/floppy/win2008r2-standard/Autounattend.xml",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
@@ -104,6 +104,7 @@
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
       "floppy_files": [
+        "{{template_dir}}/floppy/win2008r2-standard/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
         "{{template_dir}}/floppy/01-install-wget.cmd",
         "{{template_dir}}/floppy/_download.cmd",
@@ -113,7 +114,6 @@
         "{{template_dir}}/floppy/install-winrm.cmd",
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
-        "{{template_dir}}/floppy/win2008r2-standard/Autounattend.xml",
         "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
