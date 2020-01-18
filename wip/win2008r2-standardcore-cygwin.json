@@ -60,7 +60,6 @@
         "floppy/cygwin.bat",
         "floppy/cygwin.sh",
         "floppy/install-winrm.cmd",
-        "floppy/oracle-cert.cer",
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/zz-start-transports.cmd"
