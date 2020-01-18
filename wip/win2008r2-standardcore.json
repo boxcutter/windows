@@ -14,7 +14,6 @@
   "builders": [
     {
       "type": "vmware-iso",
-      "guest_os_type": "windows7srv-64",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -32,12 +31,13 @@
         "floppy/01-install-powershell.cmd",
         ".windows/provisions/wget.exe"
       ],
-      "tools_upload_flavor": "windows",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-      "disk_size": "{{ user `disk_size` }}",
+      "guest_os_type": "windows7srv-64",
+      "tools_upload_flavor": "windows",
       "cpus": "{{ user `cpus` }}",
       "cores": 1,
       "memory": "{{ user `memory` }}",
+      "disk_size": "{{ user `disk_size` }}",
       "vm_name": "win2008r2-standardcore",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
@@ -45,7 +45,6 @@
     },
     {
       "type": "virtualbox-iso",
-      "guest_os_type": "Windows2008_64",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
@@ -65,9 +64,10 @@
         ".windows/provisions/wget.exe"
       ],
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-      "disk_size": "{{ user `disk_size` }}",
+      "guest_os_type": "Windows2008_64",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
+      "disk_size": "{{ user `disk_size` }}",
       "vm_name": "win2008r2-standardcore",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
