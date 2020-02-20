@@ -73,6 +73,8 @@ ifndef CM_VERSION
 		CM_VERSION = latest
 	endif
 endif
+
+
 BOX_VERSION ?= $(shell cat VERSION)
 UPDATE ?= false
 GENERALIZE ?= false
