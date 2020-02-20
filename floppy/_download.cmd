@@ -58,6 +58,10 @@ powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%f
 
 if not errorlevel 1 if exist "%filename%" goto exit0
 
+if defined DISABLE_BITS (
+    if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto exit1
+)
+
 :bitsadmin
 
 set bitsadmin=
