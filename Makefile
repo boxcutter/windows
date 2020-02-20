@@ -74,11 +74,6 @@ ifndef CM_VERSION
 	endif
 endif
 
-DISABLE_BITS ?=
-ifndef DISABLE_BITS
-	DISABLE_BITS = false
-endif
-
 BOX_VERSION ?= $(shell cat VERSION)
 UPDATE ?= false
 GENERALIZE ?= false
@@ -105,9 +100,6 @@ ifdef CM_OPTIONS
 endif
 ifdef CM_VERSION
 	PACKER_VARS += -var 'cm_version=$(CM_VERSION)'
-endif
-ifdef DISABLE_BITS
-	PACKER_VARS += -var 'disable_bits=$(DISABLE_BITS)'
 endif
 ON_ERROR ?= cleanup
 PACKER ?= packer
