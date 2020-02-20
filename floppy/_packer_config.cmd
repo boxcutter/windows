@@ -13,7 +13,7 @@
 :: Default: z:\c\packer_logs
 :: set PACKER_LOG_DIR=z:\c\packer_logs
 
-:: Uncomment to disable BITS so scripts can fail instead of hanging when
+:: Uncomment the following to disable BITS so scripts can fail instead of hanging when
 :: BITS doesn't work right.
 :: Default: (unset)
 :: set DISABLE_BITS=1
