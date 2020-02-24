@@ -1,9 +1,9 @@
 @echo off
 
-:: Calls functions with args from this file below.
-if not "%~1" == "" (
-   call :%*
-)
+REM :: Calls functions with args from this file below.
+REM if not "%~1" == "" (
+REM    call :%*
+REM )
 
 :: Uncomment the following to set a different Cygwin mirror
 :: Default: http://mirrors.kernel.org/sourceware/cygwin
@@ -58,23 +58,23 @@ set PACKER_SERVICES=opensshd sshd BvSshServer winrm
 
 exit /b
 
-:ps1_download
-  set url=%~1
-  set filename=%~2
-
-  echo ==^> Downloading "%url%" to "%filename%"
-
-  if defined http_proxy (
-      if defined no_proxy (
-          set ps1_script="$wc = (New-Object System.Net.WebClient) ; $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.proxy.BypassList = (('%no_proxy%').split(',')) ; $wc.DownloadFile('%url%', '%filename%')"
-      ) else (
-          set ps1_script="$wc = (New-Object System.Net.WebClient) ; $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.DownloadFile('%url%', '%filename%')"
-      )
-  ) else (
-      set ps1_script="(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')"
-  )
-
-  powershell -command %ps1_script% >nul
-  exit /b
+REM :ps1_download
+REM   set url=%~1
+REM   set filename=%~2
+REM 
+REM   echo ==^> Downloading "%url%" to "%filename%"
+REM 
+REM   if defined http_proxy (
+REM       if defined no_proxy (
+REM           set ps1_script="$wc = (New-Object System.Net.WebClient) ; $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.proxy.BypassList = (('%no_proxy%').split(',')) ; $wc.DownloadFile('%url%', '%filename%')"
+REM       ) else (
+REM           set ps1_script="$wc = (New-Object System.Net.WebClient) ; $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.DownloadFile('%url%', '%filename%')"
+REM       )
+REM   ) else (
+REM       set ps1_script="(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')"
+REM   )
+REM 
+REM   powershell -command %ps1_script% >nul
+REM   exit /b
 
 

@@ -2,9 +2,9 @@
 @for %%i in (%~dp0\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
-if exist %~dp0\_packer_config.cmd (
-    copy %~dp0\_packer_config.cmd "%SystemRoot%\"
-)
+REM if exist %~dp0\_packer_config.cmd (
+REM     copy %~dp0\_packer_config.cmd "%SystemRoot%\"
+REM )
 
 goto main
 
