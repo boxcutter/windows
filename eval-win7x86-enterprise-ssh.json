@@ -176,7 +176,7 @@
     "vm_suffix": "-ssh",
     "cm": "chef",
     "cm_version": "",
-    "cpus": "2",,
+    "cpus": "2",
     "http_proxy": "{{env `http_proxy`}}",
     "https_proxy": "{{env `https_proxy`}}",
     "no_proxy": "{{env `no_proxy`}}",
