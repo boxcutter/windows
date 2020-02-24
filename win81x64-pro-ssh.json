@@ -142,7 +142,7 @@
       "environment_vars": [
         "CM={{user `cm`}}",
         "CM_OPTIONS={{user `cm_options`}}",
-        "CM_VERSION={{user `cm_version`}}",,
+        "CM_VERSION={{user `cm_version`}}",
         "http_proxy={{user `http_proxy`}}",
         "https_proxy={{user `https_proxy`}}",
         "no_proxy={{user `no_proxy`}}",
