@@ -67,7 +67,6 @@ if defined http_proxy (
 
 powershell -command %ps1_script% >nul
 
-
 if not errorlevel 1 if exist "%filename%" goto exit0
 
 if defined DISABLE_BITS (

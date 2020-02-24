@@ -131,6 +131,7 @@ pushd "%ULTRADEFRAG_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%ULTRADEFRAG_URL%" "%ULTRADEFRAG_PATH%"
 )
+
 if not exist "%ULTRADEFRAG_PATH%" goto exit1
 
 call :install_sevenzip
