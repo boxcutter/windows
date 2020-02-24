@@ -14,9 +14,6 @@ pushd "%HANDLE_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%HANDLE_URL%" "%HANDLE_PATH%"
-) else (
-  echo ==^> Downloading "%HANDLE_URL%" to "%HANDLE_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%HANDLE_URL%', '%HANDLE_PATH%')" <NUL
 )
 if not exist "%HANDLE_PATH%" goto exit1
 

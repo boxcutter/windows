@@ -15,9 +15,6 @@ pushd "%VAGRANT_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%VAGRANT_PUB_URL%" "%VAGRANT_PATH%"
-) else (
-  echo ==^> Downloading "%VAGRANT_PUB_URL%" to "%VAGRANT_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%VAGRANT_PUB_URL%', '%VAGRANT_PATH%')" <NUL
 )
 if not exist "%VAGRANT_PATH%" goto exit1
 
