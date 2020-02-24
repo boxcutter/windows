@@ -34,7 +34,7 @@ pushd "%CYGWIN_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CYGWIN_URL%" "%CYGWIN_PATH%"
 ) else (
-  call _packer_config.cmd ps1_download "%CYGWIN_URL%" "%CYGWIN_PATH%"
+  call %SystemRoot%\_download_ps1.cmd "%CYGWIN_URL%" "%CYGWIN_PATH%
 )
 if errorlevel 1 goto exit1
 

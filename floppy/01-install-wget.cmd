@@ -13,6 +13,7 @@ for %%i in ("%WGET_URL%") do set filename=%SystemRoot%\%%~nxi
 if not exist "%~dp0\_download.cmd" goto _download_cmd_not_found
 
 copy /y "%~dp0\_download.cmd" "%SystemRoot%\"
+copy /y "%~dp0\_download_ps1.cmd" "%SystemRoot%\"
 
 call "%~dp0\_download.cmd" "%WGET_URL%" "%filename%"
 
@@ -20,7 +21,7 @@ if exist "%filename%" goto exit0
 
 :_download_cmd_not_found
 
-call _packer_config.cmd ps1_download "%WGET_URL%" "%filename%"
+call %SystemRoot%\_download_ps1.cmd "%WGET_URL%" "%filename%"
 
 if exist "%filename%" goto exit0
 

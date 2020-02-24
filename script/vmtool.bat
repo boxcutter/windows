@@ -41,7 +41,7 @@ cd /d "%SEVENZIP_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
 ) else (
-  call _packer_config.cmd ps1_download "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
+  call %SystemRoot%\_download_ps1.cmd "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
 )
 if not exist "%SEVENZIP_PATH%" goto return1
 echo ==^> Installing "%SEVENZIP_PATH%"
@@ -126,7 +126,7 @@ if defined VMWARE_TOOLS_ISO_PATH goto install_vmware_tools_from_iso
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%VMWARE_TOOLS_TAR_URL%" "%VMWARE_TOOLS_TAR_PATH%"
 ) else (
-  call _packer_config.cmd ps1_download "%VMWARE_TOOLS_TAR_URL%" "%VMWARE_TOOLS_TAR_PATH%"
+  call %SystemRoot%\_download_ps1.cmd "%VMWARE_TOOLS_TAR_URL%" "%VMWARE_TOOLS_TAR_PATH%"
 )
 if not exist "%VMWARE_TOOLS_TAR_PATH%" goto exit1
 call :install_sevenzip
@@ -201,7 +201,7 @@ if %_VBOX_ISO_SIZE% GTR 0 goto install_vbox_guest_additions_from_iso
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%VBOX_ISO_URL%" "%VBOX_ISO_PATH%"
 ) else (
-  call _packer_config.cmd ps1_download "%VBOX_ISO_URL%" "%VBOX_ISO_PATH%"
+  call %SystemRoot%\_download_ps1.cmd "%VBOX_ISO_URL%" "%VBOX_ISO_PATH%"
 )
 if not exist "%VBOX_ISO_PATH%" goto exit1
 

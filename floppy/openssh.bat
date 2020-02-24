@@ -18,7 +18,7 @@ pushd "%OPENSSH_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%OPENSSH_URL%" "%OPENSSH_PATH%"
 ) else (
-  call _packer_config.cmd ps1_download "%OPENSSH_URL%" "%OPENSSH_PATH%"
+  call %SystemRoot%\_download_ps1.cmd "%OPENSSH_URL%" "%OPENSSH_PATH%"
 )
 if not exist "%OPENSSH_PATH%" goto exit1
 
