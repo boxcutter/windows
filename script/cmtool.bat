@@ -41,8 +41,6 @@ pushd "%CHEF_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
-) else (
-  call %SystemRoot%\_download_ps1.cmd "%CHEF_URL%" "%CHEF_PATH%"
 )
 if not exist "%CHEF_PATH%" goto exit1
 
@@ -79,8 +77,6 @@ pushd "%CHEFDK_DIR%"
 echo ==^> Downloading Chef DK to %CHEFDK_PATH%
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEFDK_URL%" "%CHEFDK_PATH%"
-) else (
-  call %SystemRoot%\_download_ps1.cmd "%CHEFDK_URL%" "%CHEFDK_PATH%"
 )
 if not exist "%CHEFDK_PATH%" goto exit1
 
@@ -118,9 +114,6 @@ pushd "%PUPPET_DIR%"
 :: todo support CM_VERSION variable
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%PUPPET_URL%" "%PUPPET_PATH%"
-) else (
-  echo ==^> Downloading %PUPPET_URL% to %PUPPET_PATH%
-  call %SystemRoot%\_download_ps1.cmd "%PUPPET_URL%" "%PUPPET_PATH%"
 )
 if not exist "%PUPPET_PATH%" goto exit1
 
@@ -158,8 +151,6 @@ pushd "%SALT_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SALT_URL%" "%SALT_PATH%"
-) else (
-  call %SystemRoot%\_download_ps1.cmd "%SALT_URL%" "%SALT_PATH%"
 )
 if not exist "%SALT_PATH%" goto exit1
 

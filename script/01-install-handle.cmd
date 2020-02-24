@@ -14,8 +14,6 @@ pushd "%HANDLE_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%HANDLE_URL%" "%HANDLE_PATH%"
-) else (
-  call %SystemRoot%\_download_ps1.cmd "%HANDLE_URL%" "%HANDLE_PATH%"
 )
 if not exist "%HANDLE_PATH%" goto exit1
 

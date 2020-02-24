@@ -29,8 +29,6 @@ pushd "%HOTFIX_2842230_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%HOTFIX_2842230_URL%" "%HOTFIX_2842230_PATH%"
-) else (
-  call %SystemRoot%\_download_ps1.cmd "%HOTFIX_2842230_URL%" "%HOTFIX_2842230_PATH%"
 )
 
 if errorlevel 1 goto exit1

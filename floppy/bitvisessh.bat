@@ -17,9 +17,6 @@ pushd "%BITVISE_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%BITVISE_URL%" "%BITVISE_PATH%"
-) else (
-  echo ==^> Downloading "%BITVISE_URL%" to "%BITVISE_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%BITVISE_URL%', '%BITVISE_PATH%')" <NUL
 )
 if not exist "%BITVISE_PATH%" goto exit1
 

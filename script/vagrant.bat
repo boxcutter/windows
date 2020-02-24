@@ -15,8 +15,6 @@ pushd "%VAGRANT_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%VAGRANT_PUB_URL%" "%VAGRANT_PATH%"
-) else (
-  call ps1_downoad "%VAGRANT_PUB_URL%" "%VAGRANT_PATH%"
 )
 if not exist "%VAGRANT_PATH%" goto exit1
 
