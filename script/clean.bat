@@ -35,9 +35,6 @@ echo ==^> Cleaning "%SystemRoot%\TEMP" files >&2
 
 for %%i in ("%SystemRoot%\TEMP\*.*") do if /i not "%%~nxi" equ "%~nx0" echo del /f /q /s "%%~i"
 
-REM echo ==^> Cleaning "%SystemRoot%\_packer_config.cmd" file >&2
-REM del /f /q /s "%SystemRoot%\_packer_config.cmd"
-
 echo ==^> Removing potentially corrupt recycle bin
 :: see http://www.winhelponline.com/blog/fix-corrupted-recycle-bin-windows-7-vista/
 rmdir /q /s %SystemDrive%\$Recycle.bin
