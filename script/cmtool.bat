@@ -102,7 +102,7 @@ set url="https://omnitruck.chef.io/%OMNITRUCK_CHANNEL%/%OMNITRUCK_PRODUCT%/metad
 set filename="%TEMP%\omnitruck.txt"
 
 echo ==^> Using Chef Omnitruck API URL: !url!
-powershell -command "(New-Object System.Net.WebClient).DownloadFile('!url!', '!filename!')"
+call "%SystemRoot%\_download.cmd" !url! !filename!
 
 if not exist "%TEMP%\omnitruck.txt" (
   echo Unable to download metadata for %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% on the %OMNITRUCK_CHANNEL% channel for %OMNITRUCK_PLATFORM% %OMNITRUCK_MACHINE_ARCH%
@@ -296,7 +296,7 @@ if "%CM_VERSION%" == "latest" (
 set SALT_PATH=%SALT_DIR%\Salt-Minion-Setup.exe
 
 echo ==^> Downloading %SALT_URL% to %SALT_PATH%
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" %SALT_URL% %SALT_PATH%
 
 echo ==^> Installing Salt minion %CM_VERSION%-%SALT_PYTHONVERSION% with %SALT_PATH%
 
