@@ -31,6 +31,8 @@ echo ==^> Copying "%found%" to "%filename%", skipping download.
 copy /y "%found%" "%filename%" && goto exit0
 
 :download
+REM IT IS JUST CLEANER WITH THIS WGET IS REALLY PICKY.  POWERSHELL - NOT SO MUCH
+if defined http_proxy goto powershell
 
 set wget=
 
