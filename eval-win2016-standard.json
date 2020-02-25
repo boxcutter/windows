@@ -166,6 +166,7 @@
         "{{template_dir}}/script/cmtool.bat",
         "{{template_dir}}/script/vmtool.bat",
         "{{template_dir}}/script/clean.bat",
+        "{{template_dir}}/script/ultradefrag.bat",
         "{{template_dir}}/script/uninstall-7zip.bat",
         "{{template_dir}}/script/sdelete.bat"
       ],
