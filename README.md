@@ -152,7 +152,6 @@ You can add additional `floppy/_packer_config_*.cmd` files.  Thes files will be 
 Create a file called `floppy/_packer_config_proxy.cmd` with the below contents:
 
 ```
-
 set http_proxy_user=[proxy_user]
 set http_proxy_password=[proxy_password]
 set ftp_proxy=http://[proxy_host]:[proxy_port]
