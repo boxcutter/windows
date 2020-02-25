@@ -53,18 +53,22 @@ if not defined PACKER_DEBUG set WGET_OPTS=--no-verbose
 if not errorlevel 1 if exist "%filename%" goto exit0
 
 :powershell
-echo ==^> Downloading "%url%" to "%filename%"
+echo ==^> Downloading "%url%" to "%filename%" using Powershell...
 
 if defined http_proxy (
-    if defined no_proxy (
-        set ps1_script="$wc = (New-Object System.Net.WebClient) ; $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.proxy.BypassList = (('%no_proxy%').split(',')) ; $wc.DownloadFile('%url%', '%filename%')"
-    ) else (
-        set ps1_script="$wc = (New-Object System.Net.WebClient) ; $wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ; $wc.DownloadFile('%url%', '%filename%')"
+    set "ps1_proxy=$wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ;"
+    if defined http_proxy_user if defined http_proxy_password (
+        set "ps1_proxy_auth=$wc.proxy.Credentials = (New-Object System.Net.NetworkCredential('%http_proxy_user%', '%http_proxy_password%')) ;"
     )
-) else (
-    set ps1_script="(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')"
+
+    if defined no_proxy (
+        set "ps1_no_proxy=$wc.proxy.BypassList = (('%no_proxy%').split(',')) ;"
+    )
 )
 
+set ps1_script="$wc = (New-Object System.Net.WebClient) ; %ps1_proxy% %ps1_proxy_auth% %ps1_no_proxy% $wc.DownloadFile('%url%', '%filename%')"
+
+REM echo ==^> powershell -command %ps1_script%
 powershell -command %ps1_script% >nul
 
 if not errorlevel 1 if exist "%filename%" goto exit0
@@ -85,7 +89,7 @@ for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
 
 if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
 
-if not exist "%bitsadmin%" goto powershell
+if not exist "%bitsadmin%" goto exit 1
 
 for %%i in ("%filename%") do set jobname=%%~nxi
 

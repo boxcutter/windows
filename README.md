@@ -1,3 +1,4 @@
+
 # Packer templates for Windows
 
 ### Overview
@@ -142,9 +143,23 @@ You can also override these setting, such as with
 
 `floppy/_packer_config.cmd` can set configuration globally for initial install and each shell provisioner. See [floppy/_packer_config.cmd](./floppy/_packer_config.cmd) for additional details.
 
-You can add additional `floppy/_packer_config_*.cmd` files.  These files will be ignored by Git.
+You can add additional `floppy/_packer_config_*.cmd` files.  Thes files will be ignored by Git.
 
 `floppy/_packer_config*.cmd` will be executed in alpabetical order during initial install and at the beginning of each shell provisioner script if the script supports loading them.
+
+#### Proxy Configuration using `floppy/_packer_config_proxy.cmd`
+
+Create a file called `floppy/_packer_config_proxy.cmd` with the below contents:
+
+```
+
+set http_proxy_user=[proxy_user]
+set http_proxy_password=[proxy_password]
+set ftp_proxy=http://[proxy_host]:[proxy_port]
+set http_proxy=http://[proxy_host]:[proxy_port]
+set https_proxy=http://[proxy_host]:[proxy_port]
+set no_proxy=127.0.0.1,localhost,[no_proxy_hosts]
+```
 
 ### Acknowledgments
 
