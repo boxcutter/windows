@@ -8,10 +8,6 @@
 :: Default: (unset)
 :: set PACKER_DEBUG=1
 
-:: Uncomment to disable BITS so scripts can fail instead of hanging.
-:: Default: (unset)
-:: set DISABLE_BITS=1
-
 :: Uncomment the following to define the directory where scripts/save-logs.cmd
 :: will save the installation logs
 :: Default: z:\c\packer_logs
