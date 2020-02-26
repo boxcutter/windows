@@ -9,71 +9,68 @@
     "cm_version": "",
     "iso_url": "iso/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso",
     "iso_checksum": "7e7e9425041b3328ccf723a0855c2bc4f462ec57",
-    "update": true
+    "update": "true"
   },
   "builders": [
     {
-      "vm_name": "win2008r2-standardcore",
       "type": "vmware-iso",
-      "guest_os_type": "windows7srv-64",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "10000s",
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
+        ".windows/provisions/wget.exe",
         "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
+        "floppy/01-install-powershell.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
+        "floppy/install-winrm.cmd",
         "floppy/openssh.bat",
-        "floppy/zz-start-transports.cmd",
-        "floppy/01-install-powershell.cmd",
-        ".windows/provisions/wget.exe"
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/zz-start-transports.cmd"
       ],
-      "tools_upload_flavor": "windows",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-      "disk_size": "{{ user `disk_size` }}",
+      "guest_os_type": "windows7srv-64",
+      "tools_upload_flavor": "windows",
       "cpus": "{{ user `cpus` }}",
+      "cores": 1,
       "memory": "{{ user `memory` }}",
-      "vmx_data": {
-        "cpuid.coresPerSocket": "1"
-      }
+      "disk_size": "{{ user `disk_size` }}",
+      "vm_name": "win2008r2-standardcore",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     },
     {
-      "vm_name": "win2008r2-standardcore",
       "type": "virtualbox-iso",
-      "guest_os_type": "Windows2008_64",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_wait_timeout": "10000s",
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
+        ".windows/provisions/wget.exe",
         "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
+        "floppy/01-install-powershell.cmd",
         "floppy/01-install-wget.cmd",
         "floppy/_download.cmd",
         "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
+        "floppy/install-winrm.cmd",
         "floppy/openssh.bat",
-        "floppy/zz-start-transports.cmd",
-        "floppy/oracle-cert.cer",
-        "floppy/01-install-powershell.cmd",
-        ".windows/provisions/wget.exe"
+        "floppy/passwordchange.bat",
+        "floppy/powerconfig.bat",
+        "floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
-      "disk_size": "{{ user `disk_size` }}",
+      "guest_os_type": "Windows2008_64",
       "cpus": "{{ user `cpus` }}",
-      "memory": "{{ user `memory` }}"
+      "memory": "{{ user `memory` }}",
+      "disk_size": "{{ user `disk_size` }}",
+      "vm_name": "win2008r2-standardcore",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     }
   ],
   "provisioners": [
@@ -98,14 +95,18 @@
     },
     {
       "type": "shell",
-      "inline": ["rm -f /tmp/script.bat"]
+      "inline": [
+        "rm -f /tmp/script.bat"
+      ]
     }
   ],
-  "post-processors": [{
-    "type": "vagrant",
-    "keep_input_artifact": false,
-    "compression_level": 1,
-    "vagrantfile_template": "tpl/vagrantfile-win2008r2-standardcore.tpl",
-    "output": "box/{{.Provider}}/win2008r2-standardcore-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
-  }]
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "compression_level": 1,
+      "vagrantfile_template": "tpl/vagrantfile-win2008r2-standardcore.tpl",
+      "output": "box/{{.Provider}}/win2008r2-standardcore-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box"
+    }
+  ]
 }

@@ -71,14 +71,38 @@ the output of `make list` accordingly.
 Possible values for the CM variable are:
 
 * `nocm` - No configuration management tool
-* `chef` - Install Chef
+* `chef` - Install Chef Client
+* `chefdk` - Install Chef Development Kit
+* `chef-workstation` - Install Chef Workstation
 * `puppet` - Install Puppet
 * `salt`  - Install Salt
 
-You can also specify a variable `CM_VERSION`, if supported by the
-configuration management tool, to override the default of `latest`.
-The value of `CM_VERSION` should have the form `x.y` or `x.y.z`,
-such as `CM_VERSION := 11.12.4`
+You can also specify a variable `CM_VERSION` for all configuration management
+tools to override the default of `latest`. The value of `CM_VERSION` should
+have the form `x.y` or `x.y.z`, such as `CM_VERSION := 11.12.4`
+
+When changing the value of the `CM` variable to one of the chef-based
+configuration management tools, it is relevant to note that recent versions of
+chef require a license in order to use. Due to this, specifying the default
+version of "latest" for the `CM_VERSION` field will result in using the most
+recent "free" version that doesn't require a license. If the user wishes to use
+the most recent version that DOES requires licensing, however, the user will
+need to explicitly specify "licensed" for `CM_VERSION`. Specifying "licensed"
+for `CM_VERSION` will then result in using the most recently available licensed
+version. More information on how to accept the chef-client license via
+configuration after building a template can be found at
+[Accepting the Chef License](https://docs.chef.io/chef_license_accept.html).
+
+It is also possible to specify a `HW_VERSION` if a specific hardware
+version is to be used for a build. This is commonly used to provide
+compatibility with newer versions of VMware Workstation. For example,
+you may indicate version 14 of Workstation: `HW_VERSION := 14`.
+
+For configuration management tools (such as Salt), you can specify a
+variable `CM_OPTIONS`. This variable will be passed to the installer for
+the configuration management tool. For information on possible values
+please read the documentation for the respective configuration management
+tool.
 
 Another use for `Makefile.local` is to override the default locations
 for the Windows install ISO files.
