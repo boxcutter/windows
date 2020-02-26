@@ -9,7 +9,7 @@ REM want to run scripts following all updates/reboots.
 title Running post update scripts. Please wait...
 
 @for %%i in (%~dp0\zz*.cmd) do (
-  echo ==^> Running "%%~i"
+  echo ==^> Running "%%~i"  
   @call "%%~i"
 )
 

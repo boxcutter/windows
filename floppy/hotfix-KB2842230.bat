@@ -30,7 +30,6 @@ pushd "%HOTFIX_2842230_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%HOTFIX_2842230_URL%" "%HOTFIX_2842230_PATH%"
 )
-
 if errorlevel 1 goto exit1
 
 echo ==^> Extracting Hotfix KB2842230
