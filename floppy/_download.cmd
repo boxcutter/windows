@@ -46,7 +46,7 @@ if defined wget goto wget
 
 if not exist "%wget%" goto powershell
 
-echo ==^> Downloading "%url%" to "%filename%" with "wget.exe"...
+echo ==^> Downloading "%url%" to "%filename%" using "%wget%"...
 
 if not defined PACKER_DEBUG set WGET_OPTS=--no-verbose
 
@@ -61,7 +61,7 @@ if defined http_proxy (
 if not errorlevel 1 if exist "%filename%" goto exit0
 
 :powershell
-echo ==^> Downloading "%url%" to "%filename%" using Powershell...
+echo ==^> Downloading "%url%" to "%filename%" using "Powershell"...
 
 if defined http_proxy (
     set "ps1_proxy=$wc.proxy = (new-object System.Net.WebProxy('%http_proxy%')) ;"
@@ -90,7 +90,7 @@ if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
 
 if not exist "%bitsadmin%" goto exit 1
 
-echo ==^> Downloading "%url%" to "%filename%" with "BITS"...
+echo ==^> Downloading "%url%" to "%filename%" using "BITS"...
 
 for %%i in ("%filename%") do set jobname=%%~nxi
 
