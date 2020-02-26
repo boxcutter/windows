@@ -13,6 +13,11 @@
 :: Default: z:\c\packer_logs
 :: set PACKER_LOG_DIR=z:\c\packer_logs
 
+:: Uncomment the following to disable BITS so scripts can fail instead of hanging when
+:: BITS doesn't work right.
+:: Default: (unset)
+:: set DISABLE_BITS=1
+
 :: Uncomment the following to change the pagefile size in MB as set by
 :: floppy/pagefile.bat
 :: Default: 512
