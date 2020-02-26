@@ -13,5 +13,9 @@ rspec_html_reports
 
 .DS_Store
 
+*.*.json
+floppy/*.*.*
+script/*.*.*
 floppy/_packer_config_*.cmd
+
 
