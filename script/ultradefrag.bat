@@ -53,8 +53,6 @@ cd /d "%SEVENZIP_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
-) else (
-  call %SystemRoot%\_download_ps1.cmd "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
 )
 if not exist "%SEVENZIP_PATH%" goto return1
 
@@ -131,7 +129,6 @@ pushd "%ULTRADEFRAG_DIR%"
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%ULTRADEFRAG_URL%" "%ULTRADEFRAG_PATH%"
 )
-
 if not exist "%ULTRADEFRAG_PATH%" goto exit1
 
 call :install_sevenzip

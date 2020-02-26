@@ -1,103 +1,103 @@
 {
   "builders": [
     {
-      "disk_size": "{{user `disk_size`}}",
-      "floppy_files": [
-        "floppy/eval-win2016-standard/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/disablewinupdate.bat",
-        "floppy/zz-start-transports.cmd"
-      ],
-      "guest_os_type": "windows8srv-64",
-      "headless": "{{ user `headless` }}",
+      "type": "vmware-iso",
+      "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "iso_url": "{{ user `iso_url` }}",
+      "floppy_files": [
+        "{{template_dir}}/floppy/eval-win2016-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config*.cmd",
+        "{{template_dir}}/floppy/disablewinupdate.bat",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/openssh.bat",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
+      ],
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
+      "guest_os_type": "windows8srv-64",
+      "headless": "{{ user `headless` }}",
       "tools_upload_flavor": "windows",
-      "type": "vmware-iso",
-      "vm_name": "eval-win2016-standard-ssh",
+      "version": "{{ user `hw_version` }}",
       "cpus": "{{ user `cpus` }}",
+      "cores": 1,
       "memory": "{{ user `memory` }}",
+      "disk_size": "{{user `disk_size`}}",
       "disk_adapter_type": "lsisas1068",
-      "vmx_data": {
-        "cpuid.coresPerSocket": "1"
-      }
+      "vm_name": "{{user `vm_name`}}",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     },
     {
-      "disk_size": "{{user `disk_size`}}",
+      "type": "virtualbox-iso",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
       "floppy_files": [
-        "floppy/eval-win2016-standard/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/disablewinupdate.bat",
-        "floppy/zz-start-transports.cmd",
-        "floppy/oracle-cert.cer"
+        "{{template_dir}}/floppy/eval-win2016-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config*.cmd",
+        "{{template_dir}}/floppy/disablewinupdate.bat",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/openssh.bat",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "post_shutdown_delay": "30s",
       "guest_additions_mode": "attach",
       "guest_additions_url": "{{user `guest_additions_url`}}",
       "guest_os_type": "Windows2016_64",
-      "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "iso_url": "{{ user `iso_url` }}",
-      "shutdown_command": "{{ user `shutdown_command`}}",
-      "post_shutdown_delay": "30s",
-      "ssh_password": "vagrant",
-      "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
-      "type": "virtualbox-iso",
-      "cpus": "{{ user `cpus` }}",
-      "memory": "{{ user `memory` }}",
       "vboxmanage": [
         [
           "setextradata",
           "{{.Name}}",
-          "VBoxInternal/CPUM/CMPXCHG16B",
+          "VBoxInternal/CPUM/IsaExts/CMPXCHG16B",
           "1"
         ]
       ],
-      "vm_name": "eval-win2016-standard-ssh"
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "hard_drive_interface": "sata",
+      "vm_name": "{{user `vm_name`}}",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     },
     {
-      "disk_size": "{{user `disk_size`}}",
-      "floppy_files": [
-        "floppy/eval-win2016-standard/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/disablewinupdate.bat",
-        "floppy/zz-start-transports.cmd"
-      ],
-      "guest_os_type": "win-2016",
+      "type": "parallels-iso",
+      "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "iso_url": "{{ user `iso_url` }}",
+      "floppy_files": [
+        "{{template_dir}}/floppy/eval-win2016-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config*.cmd",
+        "{{template_dir}}/floppy/disablewinupdate.bat",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/openssh.bat",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
+      ],
+      "shutdown_command": "{{ user `shutdown_command`}}",
+      "guest_os_type": "win-2016",
       "parallels_tools_flavor": "win",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
+      "disk_size": "{{user `disk_size`}}",
       "prlctl": [
         [
           "set",
@@ -106,68 +106,67 @@
           "off"
         ]
       ],
-      "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
+      "vm_name": "{{user `vm_name`}}",
       "ssh_username": "vagrant",
-      "ssh_wait_timeout": "10000s",
-      "type": "parallels-iso",
-      "vm_name": "eval-win2016-standard-ssh"
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     },
     {
-      "cpu": "{{ user `cpus` }}",
-      "disk_size": "{{user `disk_size`}}",
-      "floppy_files": [
-        "floppy/eval-win2016-standard/Autounattend.xml",
-        "floppy/00-run-all-scripts.cmd",
-        "floppy/install-winrm.cmd",
-        "floppy/powerconfig.bat",
-        "floppy/01-install-wget.cmd",
-        "floppy/_download.cmd",
-        "floppy/_packer_config.cmd",
-        "floppy/passwordchange.bat",
-        "floppy/openssh.bat",
-        "floppy/disablewinupdate.bat",
-        "floppy/zz-start-transports.cmd"
-      ],
-      "headless": "{{ user `headless` }}",
+      "type": "hyperv-iso",
+      "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "iso_url": "{{ user `iso_url` }}",
-      "ram_size": "{{ user `memory` }}",
+      "floppy_files": [
+        "{{template_dir}}/floppy/eval-win2016-standard/Autounattend.xml",
+        "{{template_dir}}/floppy/00-run-all-scripts.cmd",
+        "{{template_dir}}/floppy/01-install-wget.cmd",
+        "{{template_dir}}/floppy/_download.cmd",
+        "{{template_dir}}/floppy/_packer_config*.cmd",
+        "{{template_dir}}/floppy/disablewinupdate.bat",
+        "{{template_dir}}/floppy/install-winrm.cmd",
+        "{{template_dir}}/floppy/openssh.bat",
+        "{{template_dir}}/floppy/passwordchange.bat",
+        "{{template_dir}}/floppy/powerconfig.bat",
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
+      ],
       "shutdown_command": "{{ user `shutdown_command`}}",
-      "ssh_password": "vagrant",
+      "headless": "{{ user `headless` }}",
+      "cpus": "{{ user `cpus` }}",
+      "memory": "{{ user `memory` }}",
+      "disk_size": "{{user `disk_size`}}",
+      "vm_name": "{{user `vm_name`}}",
       "ssh_username": "vagrant",
-      "ssh_timeout": "10000s",
-      "type": "hyperv-iso",
-      "vm_name": "eval-win2016-standard-ssh"
+      "ssh_password": "vagrant",
+      "ssh_timeout": "10000s"
     }
   ],
   "post-processors": [
     {
       "compression_level": 1,
       "keep_input_artifact": true,
-      "output": "box/{{.Provider}}/eval-win2016-standard-ssh-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+      "output": "{{user `box_directory`}}{{.Provider}}/{{user `vm_name`}}{{user `vm_suffix`}}-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-eval-win2016-standard-ssh.tpl"
+      "vagrantfile_template": "{{template_dir}}/tpl/vagrantfile-eval-win2016-standard-ssh.tpl"
     }
   ],
   "provisioners": [
     {
       "environment_vars": [
         "CM={{user `cm`}}",
+        "CM_OPTIONS={{user `cm_options`}}",
         "CM_VERSION={{user `cm_version`}}",
         "UPDATE={{user `update`}}"
       ],
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "remote_path": "/tmp/script.bat",
       "scripts": [
-        "script/vagrant.bat",
-        "script/cmtool.bat",
-        "script/vmtool.bat",
-        "script/clean.bat",
-        "script/ultradefrag.bat",
-        "script/uninstall-7zip.bat",
-        "script/sdelete.bat"
+        "{{template_dir}}/script/vagrant.bat",
+        "{{template_dir}}/script/cmtool.bat",
+        "{{template_dir}}/script/vmtool.bat",
+        "{{template_dir}}/script/clean.bat",
+        "{{template_dir}}/script/ultradefrag.bat",
+        "{{template_dir}}/script/uninstall-7zip.bat",
+        "{{template_dir}}/script/sdelete.bat"
       ],
       "type": "shell"
     },
@@ -179,16 +178,20 @@
     }
   ],
   "variables": {
-    "cpus": "2",
-    "memory": "2048",
-    "guest_additions_url": "",
+    "vm_name": "eval-win2016-standard",
+    "vm_suffix": "-ssh",
     "cm": "chef",
     "cm_version": "",
+    "cpus": "2",
+    "memory": "2048",
     "disk_size": "40960",
-    "headless": "false",
-    "iso_checksum": "772700802951b36c8cb26a61c040b9a8dc3816a3",
+    "hw_version": "7",
     "iso_url": "https://software-download.microsoft.com/download/pr/Windows_Server_2016_Datacenter_EVAL_en-us_14393_refresh.ISO",
+    "iso_checksum": "772700802951b36c8cb26a61c040b9a8dc3816a3",
+    "guest_additions_url": "",
+    "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+    "headless": "false",
     "update": "true",
     "version": "0.1.0"
   }
