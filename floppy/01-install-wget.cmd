@@ -18,7 +18,9 @@ if exist "%filename%" goto exit0
 
 if defined DISABLE_BITS (
     if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto exit1
-)set bitsadmin=
+)
+
+`set bitsadmin=
 
 for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
 
