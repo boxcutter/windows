@@ -85,6 +85,8 @@ goto :eof
 ::::::::::::
 echo "%PACKER_BUILDER_TYPE%" | findstr /i "vmware" >nul
 if not errorlevel 1 goto vmware
+echo "%PACKER_BUILDER_TYPE%" | findstr /i "vsphere" >nul
+if not errorlevel 1 goto vmware
 echo "%PACKER_BUILDER_TYPE%" | findstr /i "virtualbox" >nul
 if not errorlevel 1 goto virtualbox
 echo "%PACKER_BUILDER_TYPE%" | findstr /i "parallels" >nul
