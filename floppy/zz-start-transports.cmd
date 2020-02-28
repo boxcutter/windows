@@ -15,7 +15,7 @@ for %%i in (%PACKER_SERVICES%) do (
   sc query %%i >nul 2>nul && (
     echo ==^> Configuring %%i service to autostart
     sc config %%i start= auto
-  
+
     echo ==^> Starting the %%i service
     sc start %%i
   )
