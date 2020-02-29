@@ -78,6 +78,11 @@ BOX_VERSION ?= $(shell cat VERSION)
 UPDATE ?= false
 GENERALIZE ?= false
 HEADLESS ?= false
+
+# Set 'make PREFIX=[prefix]' argument to prefix targets to use a user provided
+# custom Packer template named with a matching '[prefix].[os_name].json'.
+PREFIX ?=
+
 ifndef SHUTDOWN_COMMAND
 ifeq ($(GENERALIZE),true)
 	SHUTDOWN_COMMAND ?= C:/Windows/System32/Sysprep/sysprep.exe /generalize /shutdown /oobe /unattend:A:/Autounattend.xml
