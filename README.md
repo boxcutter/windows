@@ -138,6 +138,14 @@ You can also override these setting, such as with
 
     WIN81_X64_PRO := file:///Volumes/MSDN/en_windows_8.1_professional_vl_with_update_x64_dvd_4065194.iso
 
+### Packer Global Configuration
+
+`floppy/_packer_config.cmd` can set configuration globally for initial install and each shell provisioner. See [floppy/_packer_config.cmd](./floppy/_packer_config.cmd) for additional details.
+
+You can add additional `floppy/_packer_config_*.cmd` files.  These files will be ignored by Git.
+
+`floppy/_packer_config*.cmd` will be executed in alpabetical order during initial install and at the beginning of each shell provisioner script if the script supports loading them.
+
 ### Acknowledgments
 
 [Parallels](http://www.parallels.com/) provides a Business Edition license of
