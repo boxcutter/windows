@@ -29,9 +29,6 @@ pushd "%HOTFIX_2842230_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%HOTFIX_2842230_URL%" "%HOTFIX_2842230_PATH%"
-) else (
-  echo ==^> Downloading "%HOTFIX_2842230_URL%" to "%HOTFIX_2842230_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%HOTFIX_2842230_URL%', '%HOTFIX_2842230_PATH%')" <NUL
 )
 if errorlevel 1 goto exit1
 

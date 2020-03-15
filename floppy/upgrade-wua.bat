@@ -22,9 +22,6 @@ mkdir "%WUA_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
     call "%SystemRoot%\_download.cmd" "%WUA_URL%" "%WUA_PATH%"
-) else (
-    echo ==^> Downloading "%WUA_URL%" to "%WUA_PATH%"
-    powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WUA_URL%', '%WUA_PATH%')" <NUL
 )
 if not exist "%WUA_PATH%" goto exit1
 

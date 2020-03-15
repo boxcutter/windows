@@ -102,7 +102,7 @@ set url="https://omnitruck.chef.io/%OMNITRUCK_CHANNEL%/%OMNITRUCK_PRODUCT%/metad
 set filename="%TEMP%\omnitruck.txt"
 
 echo ==^> Using Chef Omnitruck API URL: !url!
-powershell -command "(New-Object System.Net.WebClient).DownloadFile('!url!', '!filename!')"
+call "%SystemRoot%\_download.cmd" !url! !filename!
 
 if not exist "%TEMP%\omnitruck.txt" (
   echo Unable to download metadata for %OMNITRUCK_PRODUCT% %OMNITRUCK_VERSION% on the %OMNITRUCK_CHANNEL% channel for %OMNITRUCK_PLATFORM% %OMNITRUCK_MACHINE_ARCH%
@@ -136,9 +136,6 @@ pushd "%CHEF_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
-) else (
-  echo ==^> Downloading %CHEF_URL% to %CHEF_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEF_URL%\", '%CHEF_PATH%')" <NUL
 )
 if not exist "%CHEF_PATH%" goto exit1
 
@@ -215,9 +212,6 @@ pushd "%PUPPET_DIR%"
 :: todo support CM_VERSION variable
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%PUPPET_URL%" "%PUPPET_PATH%"
-) else (
-  echo ==^> Downloading %PUPPET_URL% to %PUPPET_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%PUPPET_URL%', '%PUPPET_PATH%')" <NUL
 )
 if not exist "%PUPPET_PATH%" goto exit1
 
@@ -259,8 +253,9 @@ set SALT_URL=http://raw.githubusercontent.com/saltstack/salt-bootstrap/%SALT_REV
 set SALT_PATH=%SALT_DIR%\bootstrap-salt.ps1
 set SALT_DOWNLOAD=%SALT_DIR%\bootstrap-salt.download.ps1
 
-echo ==^> Downloading %SALT_URL% to %SALT_DOWNLOAD%
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_DOWNLOAD%')" <NUL
+if exist "%SystemRoot%\_download.cmd" (
+  call "%SystemRoot%\_download.cmd" "%SALT_URL%" "%SALT_DOWNLOAD%"
+)
 
 if not exist "%SALT_DOWNLOAD%" goto exit1
 echo ==^> Patching bootstrap-salt.ps1 at %SALT_DOWNLOAD%
@@ -301,7 +296,7 @@ if "%CM_VERSION%" == "latest" (
 set SALT_PATH=%SALT_DIR%\Salt-Minion-Setup.exe
 
 echo ==^> Downloading %SALT_URL% to %SALT_PATH%
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" %SALT_URL% %SALT_PATH%
 
 echo ==^> Installing Salt minion %CM_VERSION%-%SALT_PYTHONVERSION% with %SALT_PATH%
 

@@ -17,9 +17,6 @@ pushd "%OPENSSH_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%OPENSSH_URL%" "%OPENSSH_PATH%"
-) else (
-  echo ==^> Downloading "%OPENSSH_URL%" to "%OPENSSH_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%OPENSSH_URL%', '%OPENSSH_PATH%')" <NUL
 )
 if not exist "%OPENSSH_PATH%" goto exit1
 

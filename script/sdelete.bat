@@ -14,9 +14,6 @@ pushd "%SDELETE_DIR%"
 
 if exist "%SystemRoot%\_download.cmd" (
   call "%SystemRoot%\_download.cmd" "%SDELETE_URL%" "%SDELETE_PATH%"
-) else (
-  echo ==^> Downloading "%SDELETE_URL%" to "%SDELETE_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SDELETE_URL%', '%SDELETE_PATH%')" <NUL
 )
 if not exist "%SDELETE_PATH%" goto exit1
 
