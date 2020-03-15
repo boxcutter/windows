@@ -143,7 +143,7 @@ You can also override these setting, such as with
 
 `floppy/_packer_config.cmd` can set configuration globally for initial install and each shell provisioner. See [floppy/_packer_config.cmd](./floppy/_packer_config.cmd) for additional details.
 
-You can add additional `floppy/_packer_config_*.cmd` files.  Thes files will be ignored by Git.
+You can add additional `floppy/_packer_config_*.cmd` files.  These files will be ignored by Git.
 
 `floppy/_packer_config*.cmd` will be executed in alpabetical order during initial install and at the beginning of each shell provisioner script if the script supports loading them.
 
