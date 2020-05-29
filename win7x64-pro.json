@@ -4,7 +4,7 @@
       "type": "vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/win7x64-pro/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -37,7 +37,7 @@
       "type": "virtualbox-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/win7x64-pro/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -70,7 +70,7 @@
       "type": "parallels-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/win7x64-pro/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -100,7 +100,7 @@
       "type": "hyperv-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/win7x64-pro/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
