@@ -4,7 +4,7 @@
       "type": "vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win81x86-enterprise/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -37,7 +37,7 @@
       "type": "virtualbox-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win81x86-enterprise/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -78,7 +78,7 @@
       "type": "parallels-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win81x86-enterprise/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -107,7 +107,7 @@
       "type": "hyperv-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win81x86-enterprise/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -180,6 +180,7 @@
     "hw_version": "7",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X86FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X86FREE_EN-US_DV9.ISO",
     "iso_checksum": "4ddd0881779e89d197cb12c684adf47fd5d9e540",
+    "iso_checksum_type": "sha1",
     "guest_additions_url": "",
     "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",

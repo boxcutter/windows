@@ -4,7 +4,7 @@
       "type": "vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win2012r2-datacenter/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -38,7 +38,7 @@
       "type": "virtualbox-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win2012r2-datacenter/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -80,7 +80,7 @@
       "type": "parallels-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win2012r2-datacenter/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -118,7 +118,7 @@
       "type": "hyperv-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win2012r2-datacenter/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -184,6 +184,7 @@
     "hw_version": "7",
     "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO",
     "iso_checksum": "849734f37346385dac2c101e4aacba4626bb141c",
+    "iso_checksum_type": "sha1",
     "guest_additions_url": "",
     "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
