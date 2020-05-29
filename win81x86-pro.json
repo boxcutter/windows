@@ -163,6 +163,7 @@
     "hw_version": "7",
     "iso_url": "iso/en_windows_8.1_professional_vl_with_update_x86_dvd_4065201.iso",
     "iso_checksum": "c2d6f5d06362b7cb17dfdaadfb848c760963b254",
+    "iso_checksum_type": "sha1",
     "guest_additions_url": "",
     "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",

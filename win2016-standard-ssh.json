@@ -188,6 +188,7 @@
     "hw_version": "7",
     "iso_url": "iso/en_windows_server_2016_x64_dvd_9718492.iso",
     "iso_checksum": "f185197af68fae4f0e06510a4579fc511ba27616",
+    "iso_checksum_type": "sha1",
     "guest_additions_url": "",
     "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",

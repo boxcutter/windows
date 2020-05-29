@@ -166,6 +166,7 @@
     "hw_version": "7",
     "iso_url": "iso/en_windows_7_enterprise_with_sp1_x86_dvd_u_677710.iso",
     "iso_checksum": "4e0450ac73ab6f9f755eb422990cd9c7a1f3509c",
+    "iso_checksum_type": "sha1",
     "guest_additions_url": "",
     "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
