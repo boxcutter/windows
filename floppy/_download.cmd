@@ -4,9 +4,9 @@
 
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
-set url=%~1
+set "url=%~1"
 
-set filename=%~2
+set "filename=%~2"
 
 if not defined url echo ==^> ERROR: _download.cmd called without URL parameter. & goto exit1
 
