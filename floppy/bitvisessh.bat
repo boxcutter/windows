@@ -5,6 +5,11 @@ SET PACKER_DEBUG=true
 
 title Installing Bitvise SSH Server.  Please wait...
 
+if not exist "%SystemRoot%\_download.cmd" (
+  echo ==^> ERROR: Unable to install the Bitvise SSH Server due to missing download tool
+  goto :exit1
+)
+
 if not defined BITVISE_URL set BITVISE_URL=http://dl.bitvise.com/BvSshServer-Inst.exe
 
 for %%i in (%BITVISE_URL%) do set BITVISE_EXE=%%~nxi
@@ -15,12 +20,12 @@ echo ==^> Creating "%BITVISE_DIR%"
 mkdir "%BITVISE_DIR%"
 pushd "%BITVISE_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%BITVISE_URL%" "%BITVISE_PATH%"
-) else (
-  echo ==^> Downloading "%BITVISE_URL%" to "%BITVISE_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%BITVISE_URL%', '%BITVISE_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%BITVISE_URL%" "%BITVISE_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %BITVISE_URL%
+  goto exit1
 )
+
 if not exist "%BITVISE_PATH%" goto exit1
 
 echo ==^> Blocking SSH port 22 on the firewall

@@ -17,6 +17,11 @@ if %_minor% gtr 3 goto :exit
 
 title Installing Hotfix KB2842230. Please wait...
 
+if not exist "%SystemRoot%\_download.cmd" (
+  echo ==^> ERROR: Unable to install Hotfix KB2842230 due to missing download tool
+  goto :exit1
+)
+
 if not defined HOTFIX_2842230_URL set HOTFIX_2842230_URL=https://chocolateypackages.s3.amazonaws.com/KB2842230.1.0.2.nupkg
 
 for %%i in (%HOTFIX_2842230_URL%) do set HOTFIX_2842230_EXE=%%~nxi
@@ -27,13 +32,13 @@ echo ==^> Creating "%HOTFIX_2842230_DIR%"
 mkdir "%HOTFIX_2842230_DIR%"
 pushd "%HOTFIX_2842230_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%HOTFIX_2842230_URL%" "%HOTFIX_2842230_PATH%"
-) else (
-  echo ==^> Downloading "%HOTFIX_2842230_URL%" to "%HOTFIX_2842230_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%HOTFIX_2842230_URL%', '%HOTFIX_2842230_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%HOTFIX_2842230_URL%" "%HOTFIX_2842230_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %HOTFIX_2842230_URL%
+  goto exit1
 )
-if errorlevel 1 goto exit1
+
+if not exist "%HOTFIX_2842230_PATH%" goto exit1
 
 echo ==^> Extracting Hotfix KB2842230
 @for %%i in (%~dp0\unzip.vbs) do @cscript //nologo "%%~i" "%HOTFIX_2842230_PATH%" "%HOTFIX_2842230_DIR%"
