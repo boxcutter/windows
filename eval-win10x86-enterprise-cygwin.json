@@ -22,7 +22,8 @@
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/update.bat",
-        "{{template_dir}}/floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/zz-start-transports.cmd",
+        "{{template_dir}}/3rdparty/wget.exe"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "guest_os_type": "windows9",
@@ -61,7 +62,8 @@
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/update.bat",
-        "{{template_dir}}/floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/zz-start-transports.cmd",
+        "{{template_dir}}/3rdparty/wget.exe"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "post_shutdown_delay": "30s",
@@ -108,7 +110,8 @@
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/update.bat",
-        "{{template_dir}}/floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/zz-start-transports.cmd",
+        "{{template_dir}}/3rdparty/wget.exe"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "guest_os_type": "win-8.1",
@@ -143,7 +146,8 @@
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/slim_win10.bat",
         "{{template_dir}}/floppy/update.bat",
-        "{{template_dir}}/floppy/zz-start-transports.cmd"
+        "{{template_dir}}/floppy/zz-start-transports.cmd",
+        "{{template_dir}}/3rdparty/wget.exe"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "headless": "{{ user `headless` }}",
