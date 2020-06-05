@@ -2,6 +2,13 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+title Downloading and deploying vagrant public key.  Please wait...
+
+if not exist "%SystemRoot%\_download.cmd" (
+  echo ==^> ERROR: Unable to download and deploy vagrant public key due to missing download tool
+  goto :exit1
+)
+
 if not defined VAGRANT_PUB_URL set VAGRANT_PUB_URL=https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
 
 for %%i in ("%VAGRANT_PUB_URL%") do set VAGRANT_PUB=%%~nxi
@@ -13,12 +20,12 @@ echo ==^> Creating "%VAGRANT_DIR%"
 mkdir "%VAGRANT_DIR%"
 pushd "%VAGRANT_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%VAGRANT_PUB_URL%" "%VAGRANT_PATH%"
-) else (
-  echo ==^> Downloading "%VAGRANT_PUB_URL%" to "%VAGRANT_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%VAGRANT_PUB_URL%', '%VAGRANT_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%VAGRANT_PUB_URL%" "%VAGRANT_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file %VAGRANT_PUB_URL%
+  goto exit1
 )
+
 if not exist "%VAGRANT_PATH%" goto exit1
 
 echo ==^> Creating "%USERPROFILE%\.ssh"

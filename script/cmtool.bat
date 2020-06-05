@@ -2,6 +2,13 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+title Downloading and deploying configuration management tool.  Please wait...
+
+if not exist "%SystemRoot%\_download.cmd" (
+    echo ==^> ERROR: Unable to download configuration management tool due to missing download tool
+    goto :exit1
+)
+
 :: Get the PlatformVersion from SystemInfo
 for /f "delims=:; tokens=1,2" %%a in ('systeminfo') do (
   if "%%a" == "OS Version" set PlatformVersionRow=%%b
@@ -134,12 +141,12 @@ echo ==^> Creating "%CHEF_DIR%"
 mkdir "%CHEF_DIR%"
 pushd "%CHEF_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
-) else (
-  echo ==^> Downloading %CHEF_URL% to %CHEF_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile(\"%CHEF_URL%\", '%CHEF_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%CHEF_URL%" "%CHEF_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %CHEF_URL%
+  goto exit1
 )
+
 if not exist "%CHEF_PATH%" goto exit1
 
 echo ==^> Installing %CM% %CM_VERSION%
@@ -213,12 +220,12 @@ mkdir "%PUPPET_DIR%"
 pushd "%PUPPET_DIR%"
 
 :: todo support CM_VERSION variable
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%PUPPET_URL%" "%PUPPET_PATH%"
-) else (
-  echo ==^> Downloading %PUPPET_URL% to %PUPPET_PATH%
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%PUPPET_URL%', '%PUPPET_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%PUPPET_URL%" "%PUPPET_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %PUPPET_URL%
+  goto exit1
 )
+
 if not exist "%PUPPET_PATH%" goto exit1
 
 echo ==^> Installing Puppet client %CM_VERSION%

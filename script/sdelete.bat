@@ -2,6 +2,13 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+title Downloading and running SysInternals' SDelete to optimize the empty space of the image.  Please wait...
+
+if not exist "%SystemRoot%\_download.cmd" (
+    echo ==^> ERROR: Unable to download SysInternals' SDelete due to missing download tool
+    goto :exit1
+)
+
 if not defined SDELETE_URL set SDELETE_URL=http://web.archive.org/web/20160404120859if_/http://live.sysinternals.com/sdelete.exe
 
 for %%i in ("%SDELETE_URL%") do set SDELETE_EXE=%%~nxi
@@ -12,12 +19,12 @@ echo ==^> Creating "%SDELETE_DIR%"
 mkdir "%SDELETE_DIR%"
 pushd "%SDELETE_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%SDELETE_URL%" "%SDELETE_PATH%"
-) else (
-  echo ==^> Downloading "%SDELETE_URL%" to "%SDELETE_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SDELETE_URL%', '%SDELETE_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%SDELETE_URL%" "%SDELETE_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %SDELETE_URL%
+  goto exit1
 )
+
 if not exist "%SDELETE_PATH%" goto exit1
 
 reg add HKCU\Software\Sysinternals\SDelete /v EulaAccepted /t REG_DWORD /d 1 /f

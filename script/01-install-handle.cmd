@@ -2,6 +2,13 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+title Downloading and installing SysInternals' Handle. Please wait...
+
+if not exist "%SystemRoot%\_download.cmd" (
+  echo ==^> ERROR: Unable to download and install SysInternals' Handle due to missing download tool
+  goto :exit1
+)
+
 if not defined HANDLE_URL set HANDLE_URL=http://live.sysinternals.com/handle.exe
 
 for %%i in ("%HANDLE_URL%") do set HANDLE_EXE=%%~nxi
@@ -12,12 +19,12 @@ echo ==^> Creating "%HANDLE_DIR%"
 mkdir "%HANDLE_DIR%"
 pushd "%HANDLE_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%HANDLE_URL%" "%HANDLE_PATH%"
-) else (
-  echo ==^> Downloading "%HANDLE_URL%" to "%HANDLE_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%HANDLE_URL%', '%HANDLE_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%HANDLE_URL%" "%HANDLE_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %HANDLE_URL%
+  goto exit1
 )
+
 if not exist "%HANDLE_PATH%" goto exit1
 
 reg add HKCU\Software\Sysinternals\Handle /v EulaAccepted /t REG_DWORD /d 1 /f
