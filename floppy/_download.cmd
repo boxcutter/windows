@@ -95,6 +95,9 @@ if defined wget goto wget
 if not defined wget goto check_bitadmin
 if not exist "%wget%" goto check_bitsadmin
 
+"%wget%" 2>NUL
+if errorlevel 1 goto check_bitsadmin
+
 if not defined PACKER_DEBUG set WGET_OPTS=--no-verbose
 
 REM Use wget to download the file to the path that was specified
