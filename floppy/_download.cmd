@@ -61,9 +61,23 @@ if errorlevel 1 goto check_wget
 powershell -Command "(New-Object System.Net.WebClient)" >NUL
 if errorlevel 1 goto check_wget
 
+REM Check to see if our instance of Powershell supports at least TLS v1.2 (.NET
+REM Framework 4.5). This is because most of the internet is now enforcing that
+REM particular version of TLS. So if we can't use it, we're forced to deal and
+REM will have to use wget.exe instead.
+
+REM [Net.SecurityProtocolType]::Ssl3 - 48
+REM [Net.SecurityProtocolType]::Tls - 192
+REM [Net.SecurityProtocolType]::Tls11 - 768
+REM [Net.SecurityProtocolType]::Tls12 - 3072
+REM [Net.SecurityProtocolType]::Tls13 - 12288
+
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 4080"
+if errorlevel 1 goto check_wget
+
 REM Use powershell to actually download the file (best case)
 :powershell
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 4080; (New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
 goto check_file_downloaded
 
 REM So we weren't able to use Powershell, which means we need to figure out the
