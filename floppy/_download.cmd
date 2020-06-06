@@ -58,7 +58,7 @@ REM we should be fairly concerned about...
 where powershell 1>NUL 2>NUL
 if errorlevel 1 goto check_wget
 
-powershell -Command "(New-Object System.Net.WebClient)" >NUL
+powershell -Command "(New-Object System.Net.WebClient)" >NUL 2>NUL
 if errorlevel 1 goto check_wget
 
 REM Check to see if our instance of Powershell supports at least TLS v1.2 (.NET
@@ -72,7 +72,7 @@ REM [Net.SecurityProtocolType]::Tls11 - 768
 REM [Net.SecurityProtocolType]::Tls12 - 3072
 REM [Net.SecurityProtocolType]::Tls13 - 12288
 
-powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 4080"
+powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 4080" >NUL 2>NUL
 if errorlevel 1 goto check_wget
 
 REM Use powershell to actually download the file (best case)
@@ -98,11 +98,11 @@ if not exist "%wget%" goto check_bitsadmin
 "%wget%" --version >NUL 2>NUL
 if errorlevel 1 goto check_bitsadmin
 
-if not defined PACKER_DEBUG set WGET_OPTS=--no-verbose
+if not defined PACKER_DEBUG set WGET_OPTS=-nv
 
 REM Use wget to download the file to the path that was specified
 :wget
-"%wget%" --no-check-certificate %WGET_OPTS% -O "%filename%" "%url%"
+"%wget%" %WGET_OPTS% -O "%filename%" "%url%"
 goto check_file_downloaded
 
 REM Check to see if we can legitimately use bitsadmin, and then verify that the
