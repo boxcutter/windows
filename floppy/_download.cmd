@@ -119,23 +119,48 @@ REM but we need to keep trying anyways as a lot of the tools that we use are
 REM hosted remotely.
 :check_bitsadmin
 if defined DISABLE_BITS (
-    if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto exit1
+    if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto check_curl
 )
 
 set bitsadmin=
 for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
 
 if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
-if not exist "%bitsadmin%" goto exit1
+if not exist "%bitsadmin%" goto check_curl
 
 REM Use bitsadmin to "transfer" the file by creating a jobname for the specified
 REM filename, and then initiating the transfer. If we fail doing this, then we
-REM implicitly abort by not doing anything.
+REM fall back to curl.exe.
 :bitsadmin
 for %%i in ("%filename%") do set jobname=%%~nxi
 
 "%bitsadmin%" /transfer "%jobname%" "%url%" "%filename%"
 
+if errorlevel 1 goto check_curl
+
+goto check_file_downloaded
+
+REM Every other method so far has failed entirely, so at this point there's
+REM nothing left to try but curl.exe which came for free with the build. We
+REM first need to locate it and make sure that it actually works.
+:check_curl
+set curl=
+for %%i in (curl.exe) do set curl=%%~$PATH:i
+if defined curl goto curl
+
+@for %%i in (%SystemRoot% %PACKER_SEARCH_PATHS%) do @if not defined curl @if exist "%%~i\curl.exe" set curl=%%~i\curl.exe
+
+if not defined curl goto exit1
+if not exist "%curl%" goto exit1
+
+"%curl%" --version >NUL 2>NUL
+if errorlevel 1 goto exit1
+
+REM It seems that curl works. We're pretty fortunate since it was pretty much
+REM our very last shot. So let's try and download the url that the caller
+REM requested we fetch for them.
+:curl
+"%curl%" -o "%filename%" "%url%"
 goto check_file_downloaded
 
 REM We were able to use a download tool, but now we need to double check if it

@@ -20,19 +20,23 @@ REM we can to snag it.
 if not exist "%~dp0\_download.cmd" goto _download_cmd_not_found
 copy /y "%~dp0\_download.cmd" "%SystemRoot%\_download.cmd"
 
-REM Now that we have setup our download tool script, try and use
-REM it to download wget.exe into our SystemRoot. If this fails,
-REM then we fall back to using the wget.exe from the floppy.
+REM Now that we have setup our download script, try and use it to
+REM download wget.exe into our SystemRoot. If this fails, then we've
+REM already tried every available download method in an attempt to
+REM bootstrap wget.exe. In this case (since there's no point in
+REM repeating ourselves) we fall back to using the curl binary that
+REM came on the floppy disk mounted by packer.
 call "%~dp0\_download.cmd" "%WGET_URL%" "%filename%"
 
 if errorlevel 1 (
   echo ==^> ERROR: Unable to bootstrap wget from %WGET_URL%
-  goto floppy_wget
+  goto floppy_curl
 )
 goto check_wget_bootsrapped
 
-REM We don't have a script to use for downloading, so we need to try
-REM all of the things it would do to try and bootstrap wget.exe.
+REM It was determined that our download script doesn't exist, so we
+REM need to try all of things things the download script would
+REM normally do in order to try and bootstrap wget.exe.
 :_download_cmd_not_found
 echo ==^> Downloading "%WGET_URL%" to "%filename%"
 
@@ -53,17 +57,17 @@ goto check_wget_bootstrapped
 REM Next we'll try using bitsadmin.exe if the user hasn't disabled
 REM it. To do this, we first have to search through our path for it.
 REM If anything fails, then we fall back to using the instance of
-REM wget.exe that was included in the floppy during boot.
+REM curl.exe that was included in the floppy during boot.
 :check_bitsadmin
 if defined DISABLE_BITS (
-    if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto floppy_wget
+    if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto floppy_curl
 )
 
 set bitsadmin=
 for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
 
 if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
-if not exist "%bitsadmin%" goto floppy_wget
+if not exist "%bitsadmin%" goto floppy_curl
 
 REM Use the filename to create a job for bitsadmin to begin its transfer.
 :bitsadmin
@@ -72,40 +76,45 @@ for %%i in ("%filename%") do set jobname=%%~nxi
 
 if errorlevel 1 (
   echo ==^> ERROR: Unable to download file using bitsadmin from %WGET_URL%
-  goto floppy_wget
+  goto floppy_curl
 )
 
-if not exist "%filename%" goto floppy_wget
+if not exist "%filename%" goto floppy_curl
 
 goto check_wget_bootstrapped
 
-REM Check to see if we can actually run it on this platform.. If
+REM Check to see if we can actually run wget on this platform.. If
 REM so, then we're done and can exit. If we're unable to, then
-REM we'll have to use the 3rdparty wget.exe that was included on
+REM we'll have to use the 3rdparty curl.exe that was included on
 REM our floppy disk.
 :check_wget_bootstrapped
 
 "%filename%" --version >NUL 2>NUL
-if errorlevel 1 goto floppy_wget
+if errorlevel 1 goto floppy_curl
 
 goto exit0
 
 REM We absolutely could not bootstrap wget.exe from the internet,
-REM so we have no choice but to fall back to deploying the one
-REM that came on the floppy that was mounted by packer. Copy it
-REM to %filename% and then check it.
-:floppy_wget
-set wget=
-@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined wget @if exist "%%~i\wget.exe" set wget=%%~i\wget.exe
+REM using all of our available methods. This means that we have
+REM no choice but to fall back to using the curl.exe that came
+REM on the floppy disk that packer has mounted. First we search
+REM the path or it, and then copy it into SystemRoot. This way
+REM the _download.cmd script will be able to find it as a sort
+REM of last resort.
+:floppy_curl
+set curl=
+@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined curl @if exist "%%~i\curl.exe" set curl=%%~i\curl.exe
 
-if not defined wget (
-  echo ==^> FATAL: Unable to find wget.exe anywhere. Giving up.
+for %%i in ("%curl%") do set curl_path=%SystemRoot%\%%~nxi
+
+if not defined curl (
+  echo ==^> FATAL: Unable to find curl.exe anywhere. Giving up.
   goto exit1
 )
 
-copy /y "%wget%" "%filename%"
+copy /y "%curl%" "%curl_path%"
 if errorlevel 1 (
-  echo ==^> FATAL: Unable to copy file from "%wget%" to "%filename%". Giving up.
+  echo ==^> FATAL: Unable to copy file from "%curl%" to "%curl_path%". Giving up.
   goto exit1
 )
 
