@@ -17,8 +17,7 @@
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/update.bat",
-        "{{template_dir}}/floppy/zz-start-transports.cmd",
-        "{{template_dir}}/3rdparty/wget.exe"
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "communicator": "winrm",
@@ -53,8 +52,7 @@
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/update.bat",
-        "{{template_dir}}/floppy/zz-start-transports.cmd",
-        "{{template_dir}}/3rdparty/wget.exe"
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "post_shutdown_delay": "30s",
@@ -97,8 +95,7 @@
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/update.bat",
-        "{{template_dir}}/floppy/zz-start-transports.cmd",
-        "{{template_dir}}/3rdparty/wget.exe"
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "communicator": "winrm",
@@ -129,8 +126,7 @@
         "{{template_dir}}/floppy/passwordchange.bat",
         "{{template_dir}}/floppy/powerconfig.bat",
         "{{template_dir}}/floppy/update.bat",
-        "{{template_dir}}/floppy/zz-start-transports.cmd",
-        "{{template_dir}}/3rdparty/wget.exe"
+        "{{template_dir}}/floppy/zz-start-transports.cmd"
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "communicator": "winrm",
