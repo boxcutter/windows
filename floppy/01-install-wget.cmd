@@ -69,17 +69,18 @@ for %%i in (bitsadmin.exe) do set bitsadmin=%%~$PATH:i
 if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
 if not exist "%bitsadmin%" goto floppy_curl
 
-REM Use the filename to create a job for bitsadmin to begin its transfer.
+REM Use the filename to create a job for bitsadmin to begin its transfer. There
+REM is unfortunately no good way to check if bitsadmin has failed other than
+REM checking if the file exists or not. So we do this to verify if we were
+REM actually successful.
 :bitsadmin
 for %%i in ("%filename%") do set jobname=%%~nxi
 "%bitsadmin%" /transfer "%jobname%" "%WGET_URL%" "%filename%"
 
-if errorlevel 1 (
+if not exist "%filename%" (
   echo ==^> ERROR: Unable to download file using bitsadmin from %WGET_URL%
   goto floppy_curl
 )
-
-if not exist "%filename%" goto floppy_curl
 
 goto check_wget_bootstrapped
 

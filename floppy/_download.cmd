@@ -129,14 +129,15 @@ if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
 if not exist "%bitsadmin%" goto check_curl
 
 REM Use bitsadmin to "transfer" the file by creating a jobname for the specified
-REM filename, and then initiating the transfer. If we fail doing this, then we
-REM fall back to curl.exe.
+REM filename, and then initiating the transfer. Bits doesn't have a good way of
+REM detecting whether it failed or not, so the only thing we can do is check to
+REM see if the file exists...or not.
 :bitsadmin
 for %%i in ("%filename%") do set jobname=%%~nxi
 
 "%bitsadmin%" /transfer "%jobname%" "%url%" "%filename%"
 
-if errorlevel 1 goto check_curl
+if not exist "%filename%" goto check_curl
 
 goto check_file_downloaded
 
