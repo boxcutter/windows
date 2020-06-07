@@ -102,7 +102,8 @@ if not exist "%wget%" goto check_bitsadmin
 "%wget%" --version >NUL 2>NUL
 if errorlevel 1 goto check_bitsadmin
 
-if not defined PACKER_DEBUG set WGET_OPTS=-nv
+if not defined WGET_OPTS ( set "WGET_OPTS=-nc" ) else if defined WGET_OPTS ( set "WGET_OPTS=%WGET_OPTS% -nc" )
+if not defined PACKER_DEBUG ( set "WGET_OPTS=%WGET_OPTS% -nv" ) else if defined PACKER_DEBUG if "%PACKER_DEBUG%" == "0" set "WGET_OPTS=%WGET_OPTS% -nv"
 
 REM Use wget to download the file to the path that was specified. If we don't
 REM succeed, then we just try again with bitsadmin.
@@ -119,7 +120,7 @@ REM but we need to keep trying anyways as a lot of the tools that we use are
 REM hosted remotely.
 :check_bitsadmin
 if defined DISABLE_BITS (
-    if "%DISABLE_BITS%" == "1" if not exist "%filename%" goto check_curl
+    if not "%DISABLE_BITS%" == "0" if not exist "%filename%" goto check_curl
 )
 
 set bitsadmin=
@@ -157,11 +158,14 @@ if not exist "%curl%" goto exit1
 "%curl%" --version >NUL 2>NUL
 if errorlevel 1 goto exit1
 
+if not defined CURL_OPTS ( set "CURL_OPTS=-L" ) else if defined CURL_OPTS ( set "CURL_OPTS=%CURL_OPTS% -L" )
+if defined PACKER_DEBUG if not "%PACKER_DEBUG%" == "0" set "CURL_OPTS=%CURL_OPTS% --verbose"
+
 REM It seems that curl works. We're pretty fortunate since it was pretty much
 REM our very last shot. So let's try and download the url that the caller
 REM requested we fetch for them.
 :curl
-"%curl%" -o "%filename%" "%url%"
+"%curl%" %CURL_OPTS% -o "%filename%" "%url%"
 goto check_file_downloaded
 
 REM We were able to use a download tool, but now we need to double check if it
