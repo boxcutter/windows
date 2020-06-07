@@ -13,10 +13,22 @@
 :: Default: z:\c\packer_logs
 :: set PACKER_LOG_DIR=z:\c\packer_logs
 
-:: Uncomment the following to disable BITS so scripts can fail instead of hanging when
-:: BITS doesn't work right.
+:: Uncomment the following to disable BITS so scripts can fail instead of hanging
+:: when BITS doesn't work right. By default we disable BITS due to being unable to
+:: distinguish whether a BITS download was successful or failed in some way.
 :: Default: (unset)
-:: set DISABLE_BITS=1
+set DISABLE_BITS=1
+
+:: Use the following to set defaults for the wget.exe downloader when fetching
+:: files used to provision the template. By default we try and download the
+:: requested file up to 64 times.
+set WGET_OPTS=-t 64
+
+:: Use the following to set defaults for the curl.exe fallback downloader when
+:: fetching files required for provisioning the template. This is a backup method,
+:: so by default we retry if the connection is refused and we try to download
+:: the requested file up to 64 times.
+set CURL_OPTS=--retry-connrefused --retry 64
 
 :: Uncomment the following to change the pagefile size in MB as set by
 :: floppy/pagefile.bat
