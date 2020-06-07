@@ -92,7 +92,7 @@ if defined wget goto wget
 
 @for %%i in (%SystemRoot% %PACKER_SEARCH_PATHS%) do @if not defined wget @if exist "%%~i\wget.exe" set wget=%%~i\wget.exe
 
-if not defined wget goto check_bitadmin
+if not defined wget goto check_bitsadmin
 if not exist "%wget%" goto check_bitsadmin
 
 "%wget%" --version >NUL 2>NUL
