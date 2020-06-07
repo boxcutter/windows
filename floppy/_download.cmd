@@ -75,9 +75,13 @@ REM [Net.SecurityProtocolType]::Tls13 - 12288
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 4080" >NUL 2>NUL
 if errorlevel 1 goto check_wget
 
-REM Use powershell to actually download the file (best case)
+REM Use powershell to actually download the file (best case). If it doesn't
+REM work, then try using wget next.
 :powershell
 powershell -Command "[Net.ServicePointManager]::SecurityProtocol = 4080; (New-Object System.Net.WebClient).DownloadFile('%url%', '%filename%')" <NUL
+
+if errorlevel 1 goto check_wget
+
 goto check_file_downloaded
 
 REM So we weren't able to use Powershell, which means we need to figure out the
@@ -100,9 +104,13 @@ if errorlevel 1 goto check_bitsadmin
 
 if not defined PACKER_DEBUG set WGET_OPTS=-nv
 
-REM Use wget to download the file to the path that was specified
+REM Use wget to download the file to the path that was specified. If we don't
+REM succeed, then we just try again with bitsadmin.
 :wget
 "%wget%" %WGET_OPTS% -O "%filename%" "%url%"
+
+if errorlevel 1 goto check_bitsadmin
+
 goto check_file_downloaded
 
 REM Check to see if we can legitimately use bitsadmin, and then verify that the
@@ -121,11 +129,13 @@ if not defined bitsadmin set bitsadmin=%SystemRoot%\System32\bitsadmin.exe
 if not exist "%bitsadmin%" goto exit1
 
 REM Use bitsadmin to "transfer" the file by creating a jobname for the specified
-REM filename, and then initiating the transfer.
+REM filename, and then initiating the transfer. If we fail doing this, then we
+REM implicitly abort by not doing anything.
 :bitsadmin
 for %%i in ("%filename%") do set jobname=%%~nxi
 
 "%bitsadmin%" /transfer "%jobname%" "%url%" "%filename%"
+
 goto check_file_downloaded
 
 REM We were able to use a download tool, so now we need to double check if it
