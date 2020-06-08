@@ -169,7 +169,7 @@ url. Once downloaded, 7-zip will be used to extract the relevant files and then 
 this URL, they can specify an alternative location by assigning it to the variable
 `VBOX_ISO_URL`.
 
-The other major set of tools comes along with the VMWare platform and is simply
+The other major set of tools comes along with the VMware platform and is simply
 named "VMware Tools". These tools allow for features such as hardware acceleration,
 mapping folders into the VM, file transfers, and copy/paste operations. These
 tools are served as a .tar file from the [https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar](https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar)
