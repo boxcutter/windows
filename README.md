@@ -92,12 +92,22 @@ script will then try a number of methods in order to bootstrap the tool.
 Once `wget.exe` has been bootstrapped, this script can be used to download
 arbitrary files from the internet in order to provision each box. This script
 has a similar redundancy to the `floppy/01-install-wget.cmd` script in that
-first it will attempt to download a file with Powershell. If it is unable
-to perform such as task with Powershell, it will fall back to the bootstrapped
-`wget.exe` that was prior mentioned, and then fall back to `BitsAdmin.exe`. If
-`BitsAdmin.exe` was unable to be used to download the requested file, the script
-will then fall back to using the `curl.exe` that was bundled on the floppy disk
-by Packer.
+first it will attempt to download the requested file with Powershell. If it is
+unable to perform this task with Powershell, it will fall back to the copy of
+`wget.exe` that was bootstrapped. Afterwards, the `BitsAdmin.exe` tool will be
+attempted depending on the value of the configuration variable `DISABLE_BITS`.
+If `BitsAdmin.exe` fails to download the requested file or is disabled due to
+the variable, the script will then fall back to using the `curl.exe` binary
+which was bundled on the floppy disk by Packer.
+
+Each of the available download methods can be influenced by changing the value
+of their respective variables within the configuration. The primary `wget.exe`
+downloader uses the contents of the `WGET_OPTS` variable for its parameters when
+it is called. Similarly, the `curl.exe` fall-back downloader use the contents
+of the `CURL_OPTS` variable as its parameters. The default parameters that are
+defined in the project's configuration specify to retry a download up to 64 times,
+and to repeatedly retry the download even if the connection has been refused. To
+change these options, please refer to the Packer Global Configuration.
 
 ### Provisioning
 
@@ -160,7 +170,7 @@ The other major set of tools comes along with the VMWare platform and is simply
 named "VMware Tools". These tools allow for features such as hardware acceleration,
 mapping folders into the VM, file transfers, and copy/paste operations. These
 tools are served as a .tar file from the https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar
-url.  If the user wishes to use a different URL, this path can be changed by
+url. If the user wishes to use a different URL, this path can be changed by
 setting the VMWARE_TOOLS_TAR_URL variable.
 
 ##### Defragmentation (UltraDefrag)
@@ -217,7 +227,7 @@ The `Makefile` has individual targets for each box type with the prefix
 
 Similarly there are targets with the prefix `ssh-*` for registering a
 newly-built box with vagrant and for logging in using just one command to
-do exploratory testing.  For example, to do exploratory testing
+do exploratory testing. For example, to do exploratory testing
 on the VirtualBox training environmnet, run the following command:
 
     make ssh-box/virtualbox/win2008r2-standard-nocm.box
@@ -227,7 +237,7 @@ Upon logout `make ssh-*` will automatically de-register the box as well.
 ### Makefile.local override
 
 You can create a `Makefile.local` file alongside the `Makefile` to override
-some of the default settings.  It is most commonly used to override the
+some of the default settings. It is most commonly used to override the
 default configuration management tool, for example with Chef:
 
     # Makefile.local
@@ -310,7 +320,7 @@ You can also override these setting, such as with
 
 `floppy/_packer_config.cmd` can set configuration globally for initial install and each shell provisioner. See [floppy/_packer_config.cmd](./floppy/_packer_config.cmd) for additional details.
 
-You can add additional `floppy/_packer_config_*.cmd` files.  These files will be ignored by Git.
+You can add additional `floppy/_packer_config_*.cmd` files. These files will be ignored by Git.
 
 `floppy/_packer_config*.cmd` will be executed in alpabetical order during initial install and at the beginning of each shell provisioner script if the script supports loading them.
 
