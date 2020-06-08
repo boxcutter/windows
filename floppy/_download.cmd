@@ -138,10 +138,10 @@ for %%i in ("%filename%") do set jobname=%%~nxi
 
 goto check_file_downloaded
 
-REM We were able to use a download tool, so now we need to double check if it
-REM either failed, or if our file still doesn't exist yet. If it set an
-REM our download tool set an ERRORLEVEL or the file doesn't exist then we've
-REM failed pretty hard and we need to let the calling script know.
+REM We were able to use a download tool, but now we need to double check if it
+REM either failed, or if our file still doesn't exist yet. If either of these
+REM cases have happened, then we've failed pretty hard and we need to let our
+REM calling script know what's up.
 :check_file_downloaded
 if not errorlevel 1 if exist "%filename%" goto exit0
 
