@@ -3,6 +3,13 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+title Downloading and installing virtual machine tools.  Please wait...
+
+if not exist "%SystemRoot%\_download.cmd" (
+  echo ==^> ERROR: Unable to download virtual machine tools due to missing download tool
+  goto :exit1
+)
+
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://7-zip.org/a/7z1604.msi
 if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://7-zip.org/a/7z1604-x64.msi
@@ -38,13 +45,15 @@ set SEVENZIP_PATH=%SEVENZIP_DIR%\%SEVENZIP_MSI%
 echo ==^> Creating "%SEVENZIP_DIR%"
 mkdir "%SEVENZIP_DIR%"
 cd /d "%SEVENZIP_DIR%"
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
-) else (
-  echo ==^> Downloading "%SEVENZIP_URL%" to "%SEVENZIP_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SEVENZIP_URL%', '%SEVENZIP_PATH%')" <NUL
+
+call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %SEVENZIP_URL%
+  goto exit1
 )
+
 if not exist "%SEVENZIP_PATH%" goto return1
+
 echo ==^> Installing "%SEVENZIP_PATH%"
 msiexec /qb /i "%SEVENZIP_PATH%"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%SEVENZIP_PATH%"
@@ -126,13 +135,15 @@ if defined VMWARE_TOOLS_ISO_PATH for %%i in (%VMWARE_TOOLS_ISO_PATH%) do set _VM
 if %_VMWARE_TOOLS_SIZE% EQU 0 set VMWARE_TOOLS_ISO_PATH=
 
 if defined VMWARE_TOOLS_ISO_PATH goto install_vmware_tools_from_iso
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%VMWARE_TOOLS_TAR_URL%" "%VMWARE_TOOLS_TAR_PATH%"
-) else (
-  echo ==^> Downloading "%VMWARE_TOOLS_TAR_URL%" to "%VMWARE_TOOLS_TAR_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%VMWARE_TOOLS_TAR_URL%', '%VMWARE_TOOLS_TAR_PATH%')" <NUL
+
+call "%SystemRoot%\_download.cmd" "%VMWARE_TOOLS_TAR_URL%" "%VMWARE_TOOLS_TAR_PATH%"
+if errorlevel 1 (
+  echo ==^> ERRROR: Unable to download file from %VMWARE_TOOLS_TAR_URL%
+  goto exit1
 )
+
 if not exist "%VMWARE_TOOLS_TAR_PATH%" goto exit1
+
 call :install_sevenzip
 if errorlevel 1 goto exit1
 7z e -y -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_TAR_PATH%" *tools-windows*
@@ -202,12 +213,12 @@ set _VBOX_ISO_SIZE=0
 if exist "%VBOX_ISO_PATH%" for %%i in (%VBOX_ISO_PATH%) do set _VBOX_ISO_SIZE=%%~zi
 if %_VBOX_ISO_SIZE% GTR 0 goto install_vbox_guest_additions_from_iso
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%VBOX_ISO_URL%" "%VBOX_ISO_PATH%"
-) else (
-  echo ==^> Downloading "%VBOX_ISO_URL%" to "%VBOX_ISO_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%VBOX_ISO_URL%', '%VBOX_ISO_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%VBOX_ISO_URL%" "%VBOX_ISO_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %VBOX_ISO_URL%
+  goto exit1
 )
+
 if not exist "%VBOX_ISO_PATH%" goto exit1
 
 :install_vbox_guest_additions_from_iso

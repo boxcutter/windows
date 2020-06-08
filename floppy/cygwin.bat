@@ -4,6 +4,11 @@
 
 title Installing Cygwin. Please wait...
 
+if not exist "%SystemRoot%\_download.cmd" (
+  echo ==^> ERROR: Unable to install Cygwin due to missing download tool
+  goto :exit1
+)
+
 if not defined CYGWIN_ARCH (
   :: Force CYGWIN_ARCH to 32-bit - 64-bit seems to crash a lot
   set CYGWIN_ARCH=x86
@@ -31,13 +36,13 @@ echo ==^> Creating "%CYGWIN_DIR%"
 mkdir "%CYGWIN_DIR%"
 pushd "%CYGWIN_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%CYGWIN_URL%" "%CYGWIN_PATH%"
-) else (
-  echo ==^> Downloading "%CYGWIN_URL%" to "%CYGWIN_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%CYGWIN_URL%', '%CYGWIN_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%CYGWIN_URL%" "%CYGWIN_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %CYGWIN_URL%
+  goto exit1
 )
-if errorlevel 1 goto exit1
+
+if not exist "%CYGWIN_PATH%" goto exit1
 
 echo ==^> Blocking SSH port 22 on the firewall
 netsh advfirewall firewall add rule name="SSHD" dir=in action=block program="%CYGWIN_HOME%\usr\sbin\sshd.exe" enable=yes

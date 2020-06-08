@@ -4,6 +4,11 @@
 
 title Installing Openssh. Please wait...
 
+if not exist "%SystemRoot%\_download.cmd" (
+  echo ==^> ERROR: Unable to install Openssh due to missing download tool
+  goto :exit1
+)
+
 if not defined OPENSSH_URL set OPENSSH_URL=http://www.mls-software.com/files/setupssh-7.2p2-1-v1.exe
 if not defined SSHD_PASSWORD  set SSHD_PASSWORD=D@rj33l1ng
 
@@ -15,12 +20,12 @@ echo ==^> Creating "%OPENSSH_DIR%"
 mkdir "%OPENSSH_DIR%"
 pushd "%OPENSSH_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%OPENSSH_URL%" "%OPENSSH_PATH%"
-) else (
-  echo ==^> Downloading "%OPENSSH_URL%" to "%OPENSSH_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%OPENSSH_URL%', '%OPENSSH_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%OPENSSH_URL%" "%OPENSSH_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %OPENSSH_URL%
+  goto exit1
 )
+
 if not exist "%OPENSSH_PATH%" goto exit1
 
 echo ==^> Blocking SSH port 22 on the firewall

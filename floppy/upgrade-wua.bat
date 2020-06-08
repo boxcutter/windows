@@ -4,6 +4,11 @@
 
 title Upgrading Windows Update Agent.  Please wait...
 
+if not exist "%SystemRoot%\_download.cmd" (
+    echo ==^> ERROR: Unable to upgrade the Windows Update Agent due to missing download tool
+    goto :exit1
+)
+
 if not defined WUA_64_URL set WUA_64_URL=http://download.windowsupdate.com/windowsupdate/redist/standalone/7.6.7600.320/WindowsUpdateAgent-7.6-x64.exe
 if not defined WUA_32_URL set WUA_32_URL=http://download.windowsupdate.com/windowsupdate/redist/standalone/7.6.7600.320/WindowsUpdateAgent-7.6-x86.exe
 
@@ -20,12 +25,12 @@ set WUA_PATH=%WUA_DIR%\%WUA_EXE%
 echo ==^> Creating "%WUA_DIR%"
 mkdir "%WUA_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-    call "%SystemRoot%\_download.cmd" "%WUA_URL%" "%WUA_PATH%"
-) else (
-    echo ==^> Downloading "%WUA_URL%" to "%WUA_PATH%"
-    powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%WUA_URL%', '%WUA_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%WUA_URL%" "%WUA_PATH%"
+if errorlevel 1 (
+    echo ==^> ERROR: Unable to download file from %WUA_URL%
+    goto exit1
 )
+
 if not exist "%WUA_PATH%" goto exit1
 
 echo ==^> Upgrading Windows Update Agent

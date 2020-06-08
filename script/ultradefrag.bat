@@ -2,6 +2,13 @@
 @for %%i in (a:\_packer_config*.cmd) do @call "%%~i"
 @if defined PACKER_DEBUG (@echo on) else (@echo off)
 
+title Downloading and running UltraDefrag to optimize the disk space usage of the image.  Please wait...
+
+if not exist "%SystemRoot%\_download.cmd" (
+  echo ==^> ERROR: Unable to download UltraDefrag due to missing download tool
+  goto :exit1
+)
+
 if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b: c: d: e: f: g: h: i: j: k: l: m: n: o: p: q: r: s: t: u: v: w: x: y: z:
 
 if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://7-zip.org/a/7z1604.msi
@@ -51,12 +58,12 @@ echo ==^> Creating "%SEVENZIP_DIR%"
 mkdir "%SEVENZIP_DIR%"
 cd /d "%SEVENZIP_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
-) else (
-  echo ==^> Downloading "%SEVENZIP_URL%" to "%SEVENZIP_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SEVENZIP_URL%', '%SEVENZIP_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%SEVENZIP_URL%" "%SEVENZIP_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %SEVENZIP_URL%
+  goto exit1
 )
+
 if not exist "%SEVENZIP_PATH%" goto return1
 
 echo ==^> Installing "%SEVENZIP_PATH%"
@@ -129,12 +136,12 @@ echo ==^> Creating "%ULTRADEFRAG_DIR%"
 mkdir "%ULTRADEFRAG_DIR%"
 pushd "%ULTRADEFRAG_DIR%"
 
-if exist "%SystemRoot%\_download.cmd" (
-  call "%SystemRoot%\_download.cmd" "%ULTRADEFRAG_URL%" "%ULTRADEFRAG_PATH%"
-) else (
-  echo ==^> Downloading "%ULTRADEFRAG_URL%" to "%ULTRADEFRAG_PATH%"
-  powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%ULTRADEFRAG_URL%', '%ULTRADEFRAG_PATH%')" <NUL
+call "%SystemRoot%\_download.cmd" "%ULTRADEFRAG_URL%" "%ULTRADEFRAG_PATH%"
+if errorlevel 1 (
+  echo ==^> ERROR: Unable to download file from %ULTRADEFRAG_URL%
+  goto exit1
 )
+
 if not exist "%ULTRADEFRAG_PATH%" goto exit1
 
 call :install_sevenzip
