@@ -127,8 +127,8 @@ key and install them into the template. This projects is used for producing
 vagrant boxes and thus the installation of the vagrant public key is required in
 order for Vagrant to be able to connect to them.
 
-The vagrant public key is downloaded directly from @mitchellh's repository for
-vagrant at the [https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub](https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub)
+The vagrant public key is downloaded directly from [@mitchellh](https://github.com/mitchellh)'s
+repository for vagrant at the [https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub](https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub)
 url. If the user wishes to change this url or specify their own public key, this
 can be accomplished by changing the `VAGRANT_PUB_URL` variable.
 
@@ -212,13 +212,14 @@ space is included whilst compressing the hard disk belonging to the image. This
 should greatly assist with reducing its size.
 
 The process of zeroing out the empty space of the template's hard disk is done
-entirely by the "SDelete" tool that was developed by SysInternals. Although this
-tool is not maintained anymore, it is still valuable and fortunately is hosted
-on [http://web.archive.org](http://web.archive.org). This provisioning step will
-download the "SDelete" tool from the [http://web.archive.org/web/20160404120859if_/http://live.sysinternals.com/sdelete.exe](http://web.archive.org/web/20160404120859if_/http://live.sysinternals.com/sdelete.exe)
-url, and then run it with the purpose of clearing out any empty space. If one
-wishes to change the URL that this tool is downloaded from, they may do this by
-modifying the `SDELETE_URL` variable.
+entirely by the "SDelete" tool that was developed by [SysInternals](https://docs.microsoft.com/en-us/sysinternals/).
+Although this tool is not maintained anymore, it is still valuable and
+fortunately is hosted on [http://web.archive.org](http://web.archive.org). This
+provisioning step will download the "SDelete" tool from the [http://web.archive.org/web/20160404120859if_/http://live.sysinternals.com/sdelete.exe](http://web.archive.org/web/20160404120859if_/http://live.sysinternals.com/sdelete.exe)
+url, and then run it with the purpose of clearing out any empty space on the
+template. If one wishes to change the URL that this tool is downloaded from,
+they may do so by modifying the `SDELETE_URL` variable in the Packer Global
+Configuration.
 
 ### Tests
 
