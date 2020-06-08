@@ -90,6 +90,9 @@ REM during the build process. So, we start in the SystemRoot and continue
 REM through all of the search paths to try and find it. If that fails, then we
 REM continue onto the next downloader tool.
 :check_wget
+if not defined WGET_OPTS ( set "WGET_OPTS=-nc" ) else if defined WGET_OPTS ( set "WGET_OPTS=%WGET_OPTS% -nc" )
+if not defined PACKER_DEBUG ( set "WGET_OPTS=%WGET_OPTS% -nv" ) else if defined PACKER_DEBUG if "%PACKER_DEBUG%" == "0" set "WGET_OPTS=%WGET_OPTS% -nv"
+
 set wget=
 for %%i in (wget.exe) do set wget=%%~$PATH:i
 if defined wget goto wget
@@ -101,9 +104,6 @@ if not exist "%wget%" goto check_bitsadmin
 
 "%wget%" --version >NUL 2>NUL
 if errorlevel 1 goto check_bitsadmin
-
-if not defined WGET_OPTS ( set "WGET_OPTS=-nc" ) else if defined WGET_OPTS ( set "WGET_OPTS=%WGET_OPTS% -nc" )
-if not defined PACKER_DEBUG ( set "WGET_OPTS=%WGET_OPTS% -nv" ) else if defined PACKER_DEBUG if "%PACKER_DEBUG%" == "0" set "WGET_OPTS=%WGET_OPTS% -nv"
 
 REM Use wget to download the file to the path that was specified. If we don't
 REM succeed, then we just try again with bitsadmin.
@@ -146,6 +146,9 @@ REM Every other method so far has failed entirely, so at this point there's
 REM nothing left to try but curl.exe which came for free with the build. We
 REM first need to locate it and make sure that it actually works.
 :check_curl
+if not defined CURL_OPTS ( set "CURL_OPTS=-L" ) else if defined CURL_OPTS ( set "CURL_OPTS=%CURL_OPTS% -L" )
+if defined PACKER_DEBUG if not "%PACKER_DEBUG%" == "0" set "CURL_OPTS=%CURL_OPTS% --verbose"
+
 set curl=
 for %%i in (curl.exe) do set curl=%%~$PATH:i
 if defined curl goto curl
@@ -157,9 +160,6 @@ if not exist "%curl%" goto exit1
 
 "%curl%" --version >NUL 2>NUL
 if errorlevel 1 goto exit1
-
-if not defined CURL_OPTS ( set "CURL_OPTS=-L" ) else if defined CURL_OPTS ( set "CURL_OPTS=%CURL_OPTS% -L" )
-if defined PACKER_DEBUG if not "%PACKER_DEBUG%" == "0" set "CURL_OPTS=%CURL_OPTS% --verbose"
 
 REM It seems that curl works. We're pretty fortunate since it was pretty much
 REM our very last shot. So let's try and download the url that the caller
