@@ -54,7 +54,7 @@ the template prior to completing its build.
 The job of this script is strictly to bootstrap `wget.exe` on the box and is one
 of the first things done after the operating system has been installed in the
 image. The bootstrapping procedure is an attempt to download the most recent
-version of `wget.exe` from the host https://eternallybored.org/misc/wget/current/wget.exe.
+version of `wget.exe` from the host [https://eternallybored.org/misc/wget/current/wget.exe](https://eternallybored.org/misc/wget/current/wget.exe).
 This way the `floppy/_download.cmd` script can use it during the provisioning
 stage to download other necessary tools.
 
@@ -85,7 +85,7 @@ script will then try a number of methods in order to bootstrap the tool.
      is a minimalistic compile of "curl.exe" that is 32-bits and has been
      configured with minimal features in order to fall back on if all else fails.
      This binary is located at `3rdparty/curl.exe` and is built from the fork of
-     curl that is found at https://github.com/arizvisa/curl-windows-nodeps/.
+     curl that can be found on github at [arizvisa/curl-windows-nodeps](https://github.com/arizvisa/curl-windows-nodeps).
 
 #### floppy/_download.cmd
 
@@ -128,7 +128,7 @@ vagrant boxes and thus the installation of the vagrant public key is required in
 order for Vagrant to be able to connect to them.
 
 The vagrant public key is downloaded directly from @mitchellh's repository for
-vagrant at the https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub
+vagrant at the [https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub](https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub)
 url. If the user wishes to change this url or specify their own public key, this
 can be accomplished by changing the `VAGRANT_PUB_URL` variable.
 
@@ -148,20 +148,23 @@ features to the template when it is deployed. In some cases these tools can
 add significant performance or very powerful features to the virtual machine
 that is built.
 
-To install these tools, the first thing that is installed is 7-zip. 7-zip
-(http://7-zip.org) is specifically used as a general tool to extract the
-contents of any of the formats that any tools might be archived in. By default
-7-zip is downloaded from either the http://7-zip.org/a/7z1604.msi url for
-32-bit templates, or the http://7-zip.org/a/7z1604-x64.msi url when installing
-a 64-bit box. This URL is configurable via either the `SEVENZIP_32_URL` variable,
-or the `SEVENZIP_64_URL` variable. When a template is done with its build, the
-7-zip application will then be uninstalled automatically.
+To install these tools, the first thing that is installed is 7-zip which is
+hosted at [http://7-zip.org](http://7-zip.org). The 7-zip archiver is used as a
+general utility for extracting the contents of archives that compose any of the
+tools that are required by the build of the template. By default 7-zip is
+installed from either the [http://7-zip.org/a/7z1604.msi](http://7-zip.org/a/7z1604.msi)
+url for a 32-bit template, or the [http://7-zip.org/a/7z1604-x64.msi](http://7-zip.org/a/7z1604-x64.msi)
+url for a 64-bit template. These urls can be configured in the `Packer Global Configuration`
+by using the `SEVENZIP_32_URL` variable for 32-bit templates, and likewise the
+`SEVENZIP_64_URL` variable for 64-bit templates. When a template is done being
+provisioned, the 7-zip application will then be uninstalled prior to completion
+of the build.
 
 One such set of tools comes with VirtualBox and is known as the VirtualBox Guest
 Additions ISO. This ISO allows one to manage some of the features that a VirtualBox
 guest exposes to the user. The VirtualBox Guest Additions ISO is downloaded from
-the http://download.virtualbox.org/virtualbox/5.1.30/VBoxGuestAdditions_5.1.30.iso url.
-Once downloaded, 7-zip will be used to extract the relevant files and then the
+the [http://download.virtualbox.org/virtualbox/5.1.30/VBoxGuestAdditions_5.1.30.iso](http://download.virtualbox.org/virtualbox/5.1.30/VBoxGuestAdditions_5.1.30.iso)
+url. Once downloaded, 7-zip will be used to extract the relevant files and then the
 "Guest Additions" will be installed into the image. If the user wishes to change
 this URL, they can specify an alternative location by assigning it to the variable
 `VBOX_ISO_URL`.
@@ -169,9 +172,9 @@ this URL, they can specify an alternative location by assigning it to the variab
 The other major set of tools comes along with the VMWare platform and is simply
 named "VMware Tools". These tools allow for features such as hardware acceleration,
 mapping folders into the VM, file transfers, and copy/paste operations. These
-tools are served as a .tar file from the https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar
+tools are served as a .tar file from the [https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar](https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar)
 url. If the user wishes to use a different URL, this path can be changed by
-setting the VMWARE_TOOLS_TAR_URL variable.
+setting the `VMWARE_TOOLS_TAR_URL` variable.
 
 ##### Defragmentation (UltraDefrag)
 
@@ -183,21 +186,23 @@ hard disk may take.
 
 Before defragmenting the hard disk, 7-Zip is checked to see if it's installed.
 If it isn't, then it is downloaded and installed due to it being necessary for
-extracting the contents of the UltraDefrag software. The default URL that 7-zip
-is fetched from is http://7-zip.org/a/7z1604.msi for 32-bit systems, and then
-http://7-zip.org/a/7z1604-x64.msi for 64-bit. If the user wishes to change the
-path to download 7-zip from, this can be done by modifying the `SEVENZIP_32_URL`
-variable or the `SEVENZIP_64_URL` variable depending on the platform's architecutre.
+extracting the contents of the [UltraDefrag](https://ultradefrag.net) software.
+The default URL that 7-zip is fetched from is [http://7-zip.org/a/7z1604.msi](http://7-zip.org/a/7z1604.msi)
+for 32-bit systems, and then [http://7-zip.org/a/7z1604-x64.msi](http://7-zip.org/a/7z1604-x64.msi)
+for 64-bit. If the user wishes to change the path to download 7-zip from, this
+can be done by modifying the `SEVENZIP_32_URL` variable or the `SEVENZIP_64_URL`
+variable depending on the platform's architecutre.
 
-At this point, the UltraDefrag tool at http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.i386.zip
-is then downloaded. After downloading the zip for UltraDefrag, 7-zip will be
-used to extract its contents, and then the application will be run with the
-task of defragmenting the hard disk. When the hard disk is done being defragmented,
-compression of the hard disk should take up significantly less time. To change
-the URL that UltraDefrag is downloaded from requires changing the value of the
-`ULTRADEFRAG_32_URL` variable for 32-bit platforms, and similarly by changing
-the `ULTRADEFRAG_64_URL` variable for 64-bit platforms.
-
+At this point, an archive for the UltraDefrag tool at [http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.i386.zip](http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.i386.zip)
+is then downloaded for a 32-bit platform, or the archive from the [http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.amd64.zip](http://downloads.sourceforge.net/ultradefrag/ultradefrag-portable-7.0.2.bin.amd64.zip)
+url is downloaded for a 64-bit platform. After downloading the correct archive,
+7-zip will then be used to extract its contents, and then the application will
+be run to perform the task of defragmenting the hard disk. When the hard disk
+is done being defragmented, the natural compression of the hard disk should take
+up significantly less time. To change the URL that is used for downloading
+UltraDefrag requires changing the value of the `ULTRADEFRAG_32_URL` variable for
+32-bit platforms, and similarly by changing the `ULTRADEFRAG_64_URL` variable for
+64-bit platforms.
 
 ##### Zeroing of free space (SysInternals' SDelete)
 
@@ -209,9 +214,9 @@ should greatly assist with reducing its size.
 The process of zeroing out the empty space of the template's hard disk is done
 entirely by the "SDelete" tool that was developed by SysInternals. Although this
 tool is not maintained anymore, it is still valuable and fortunately is hosted
-on http://web.archive.org. This provisioning step will download the "SDelete"
-tool from the http://web.archive.org/web/20160404120859if_/http://live.sysinternals.com/sdelete.exe
-url, and then run it with the task of only clearing out any empty space. If one
+on [http://web.archive.org](http://web.archive.org). This provisioning step will
+download the "SDelete" tool from the [http://web.archive.org/web/20160404120859if_/http://live.sysinternals.com/sdelete.exe](http://web.archive.org/web/20160404120859if_/http://live.sysinternals.com/sdelete.exe)
+url, and then run it with the purpose of clearing out any empty space. If one
 wishes to change the URL that this tool is downloaded from, they may do this by
 modifying the `SDELETE_URL` variable.
 
