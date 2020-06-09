@@ -6,7 +6,7 @@ title Downloading and installing required Windows Update (KB2919355).  Please wa
 
 :: Check for all of our prerequisites needed to install KB2919355
 if not exist "%SystemRoot%\_download.cmd" (
-  echo ==^> ERROR: Unable to download required Windows Update (KB2919355) due to missing download tool
+  echo ==^> ERROR: Unable to download required Windows Update ^(KB2919355^) due to missing download tool
   goto :exit1
 )
 
@@ -46,7 +46,7 @@ if not defined TEMP set TEMP=%LOCALAPPDATA%\Temp
 :: Figure out the platform version in order to determine the correct url
 if "%PlatformVersionMajor%" == "6" if "%PlatformVersionMinor%" == "3" goto Windows81Family
 
-echo ==^> Skipping Windows Update KB2919355 due to irrelevance.
+echo ==^> Skipping Windows Update ^(KB2919355^) due to it being non-applicable to the current platform
 goto exit0
 
 :: We figured out that we're in the correct family. Now we need to figure out the
@@ -105,7 +105,7 @@ if not exist "%KB2919355_PATH%" goto exit1
 :extract_kb2919355
 start "" /wait wusa "%KB2919355_PATH%" "/extract:%KB2919355_DIR%"
 if not exist "%KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab" (
-  echo ==^> ERROR: Unable to extract update (KB2919355) to %KB2919355_DIR%
+  echo ==^> ERROR: Unable to extract Windows Update ^(KB2919355^) to %KB2919355_DIR%
   goto exit1
 )
 
@@ -114,11 +114,11 @@ if not exist "%KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab" (
 :install_kb2919355
 start "" /wait dism /online /add-package "/packagepath:%KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab"
 if errorlevel 1 (
-  echo ==^> ERROR: Unable to install update (KB2919355) from %KB2919355_DIR%\%KB2919355_BASEFILANEM%.cab
+  echo ==^> ERROR: Unable to install Windows Update ^(KB2919355^) from %KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab
   goto exit 1
 )
 
-echo ==^> Successfully installed Windows Update KB2919355
+echo ==^> Successfully installed Windows Update ^(KB2919355^)
 goto exit0
 
 :: These are our exit branches for setting the errorlevel using the exact
