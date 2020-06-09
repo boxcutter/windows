@@ -157,6 +157,7 @@
       "remote_path": "/tmp/script.bat",
       "scripts": [
         "{{template_dir}}/script/vagrant.bat",
+        "{{template_dir}}/script/KB2919355.cmd",
         "{{template_dir}}/script/cmtool.bat",
         "{{template_dir}}/script/vmtool.bat",
         "{{template_dir}}/script/clean.bat",
