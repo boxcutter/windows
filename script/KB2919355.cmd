@@ -64,14 +64,17 @@ goto Windows81x64
 
 :: The following cases simply assign the url depending on the detected platform.
 :Windows81x86
+echo ==^> Detected Platform: Microsoft Windows 8.1 ^(x86^)
 set "KB2919355_URL=%KB2919355_WIN81X86_URL%"
 goto prepare_kb2919355
 
 :Windows81x64
+echo ==^> Detected Platform: Microsoft Windows 8.1 ^(x64^)
 set "KB2919355_URL=%KB2919355_WIN81X64_URL%"
 goto prepare_kb2919355
 
 :Windows2012R2
+echo ==^> Detected Platform: Microsoft Windows Server 2012 ^(x64^)
 set "KB2919355_URL=%KB2919355_WIN2012R2_URL%"
 goto prepare_kb2919355
 
@@ -94,7 +97,10 @@ if errorlevel 1 (
   goto exit1
 )
 
-if not exist "%KB2919355_PATH%" goto exit1
+if not exist "%KB2919355_PATH%" (
+  echo ==^> ERROR: Unable to locate downloaded file at %KB2919355_PATH%
+  goto exit1
+)
 
 :: Next we'll need to use wusa.exe to extract this update. We extract the cab
 :: file directly from the patch in order to manually install it with dism.exe.
@@ -103,6 +109,7 @@ if not exist "%KB2919355_PATH%" goto exit1
 :: or even starting the wuauserv service we do it this way. It's just Microsoft's
 :: Visual C runtime anyways...
 :extract_kb2919355
+echo ==^> Extracting KB2919355 to path %KB2919355_DIR%
 start "" /wait wusa "%KB2919355_PATH%" "/extract:%KB2919355_DIR%"
 if not exist "%KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab" (
   echo ==^> ERROR: Unable to extract Windows Update ^(KB2919355^) to %KB2919355_DIR%
@@ -112,6 +119,7 @@ if not exist "%KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab" (
 :: So, we now should have the cab file for KB2919355. Final thing that we need
 :: to do is to install it with dism, and make sure that it actually worked.
 :install_kb2919355
+echo ==^> Manually installing KB2919355 from file %KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab
 start "" /wait dism /online /add-package "/packagepath:%KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab"
 if errorlevel 1 (
   echo ==^> ERROR: Unable to install Windows Update ^(KB2919355^) from %KB2919355_DIR%\%KB2919355_BASEFILENAME%.cab
