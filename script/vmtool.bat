@@ -20,10 +20,10 @@ goto main
 ::::::::::::
 :install_sevenzip
 ::::::::::::
-if defined ProgramFiles(x86) (
-  set SEVENZIP_URL=%SEVENZIP_64_URL%
-) else (
+if "%PROCESSOR_ARCHITECTURE%" == "x86" (
   set SEVENZIP_URL=%SEVENZIP_32_URL%
+) else (
+  set SEVENZIP_URL=%SEVENZIP_64_URL%
 )
 pushd .
 set SEVENZIP_EXE=
@@ -58,6 +58,7 @@ echo ==^> Installing "%SEVENZIP_PATH%"
 msiexec /qb /i "%SEVENZIP_PATH%"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: msiexec /qb /i "%SEVENZIP_PATH%"
 ver>nul
+
 set SEVENZIP_INSTALL_DIR=
 for %%i in ("%ProgramFiles%" "%ProgramW6432%" "%ProgramFiles(x86)%") do if exist "%%~i\7-Zip" set SEVENZIP_INSTALL_DIR=%%~i\7-Zip
 if exist "%SEVENZIP_INSTALL_DIR%" cd /D "%SEVENZIP_INSTALL_DIR%" & goto find_sevenzip
@@ -68,6 +69,7 @@ goto return1
 set SEVENZIP_EXE=
 for /r %%i in (7z.exe) do if exist "%%~i" set SEVENZIP_EXE=%%~i
 if not exist "%SEVENZIP_EXE%" echo ==^> ERROR: Failed to unzip "%SEVENZIP_PATH%" & goto return1
+
 set SEVENZIP_DLL=
 for /r %%i in (7z.dll) do if exist "%%~i" set SEVENZIP_DLL=%%~i
 if not exist "%SEVENZIP_DLL%" echo ==^> ERROR: Failed to unzip "%SEVENZIP_PATH%" & goto return1
@@ -109,18 +111,26 @@ goto exit1
 ::::::::::::
 :vmware
 ::::::::::::
-if defined ProgramFiles(x86) (
-  set VMWARE_TOOLS_SETUP_EXE=setup64.exe
-) else (
+if "%PROCESSOR_ARCHITECTURE%" == "x86" (
   set VMWARE_TOOLS_SETUP_EXE=setup.exe
+  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles(x86)%\VMware
+  echo ==^> Detected virtualization platform ^(x86^): VMware
+) else (
+  set VMWARE_TOOLS_SETUP_EXE=setup64.exe
+  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles%\VMware
+  echo ==^> Detected virtualization platform ^(x64^): VMware
 )
+
 for %%i in ("%VMWARE_TOOLS_TAR_URL%") do set VMWARE_TOOLS_TAR=%%~nxi
 set VMWARE_TOOLS_DIR=%TEMP%\vmware
 set VMWARE_TOOLS_TAR_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_TAR%
 set VMWARE_TOOLS_ISO=windows.iso
+echo ==^> Installing the VMware tools with directory %VMWARE_TOOLS_DIR%
+
 mkdir "%VMWARE_TOOLS_DIR%"
 pushd "%VMWARE_TOOLS_DIR%"
 set VMWARE_TOOLS_SETUP_PATH=
+
 :vmware_tools_setup_path_search
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VMWARE_TOOLS_SETUP_PATH @if exist "%%~i\VMwareToolsUpgrader.exe" set VMWARE_TOOLS_SETUP_PATH=%%~i\%VMWARE_TOOLS_SETUP_EXE%
 if defined VMWARE_TOOLS_SETUP_PATH goto install_vmware_tools
@@ -152,28 +162,33 @@ if exist  "%VMWARE_TOOLS_DIR%\*.iso" (
 	set VMWARE_TOOLS_ISO_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_ISO%
 )
 if defined VMWARE_TOOLS_ISO_PATH goto install_vmware_tools_from_iso
+
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e "%VMWARE_TOOLS_TAR_PATH%"
 ver>nul
 set VMWARE_TOOLS_INSTALLER_PATH=
 for %%i in ("%VMWARE_TOOLS_DIR%\tools-windows-*.exe") do set VMWARE_TOOLS_INSTALLER_PATH=%%~i
 if not exist "%VMWARE_TOOLS_INSTALLER_PATH%" echo ==^> ERROR: Failed to unzip "%VMWARE_TOOLS_TAR_PATH%" & goto exit1
+
+echo ==^> Installing VMware tools with %VMWARE_TOOLS_INSTALLER_PATH%
 "%VMWARE_TOOLS_INSTALLER_PATH%" /s
-set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles%\VMware
-if defined ProgramFiles(x86) set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles(x86)%\VMware
-if not exist "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" echo ==^> ERROR: Directory not found: "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" & goto exit1
+
 set VMWARE_TOOLS_PROGRAM_FILES_ISO=
+if not exist "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" echo ==^> ERROR: Directory not found: "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" & goto exit1
 for /r "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" %%i in (%VMWARE_TOOLS_ISO%) do if exist "%%~i" set VMWARE_TOOLS_PROGRAM_FILES_ISO=%%~i
 if not exist "%VMWARE_TOOLS_PROGRAM_FILES_ISO%" echo ==^> ERROR: File not found: "%VMWARE_TOOLS_ISO%" in "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" & goto exit1
+
 set VMWARE_TOOLS_ISO_PATH="%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_ISO%"
 copy /y "%VMWARE_TOOLS_PROGRAM_FILES_ISO%" "%VMWARE_TOOLS_ISO_PATH%"
 if not exist "%VMWARE_TOOLS_ISO_PATH%" echo ==^> ERROR: File not found: "%VMWARE_TOOLS_ISO_PATH%" & goto exit1
+
 rmdir /q /s "%VMWARE_TOOLS_PROGRAM_FILES_DIR%\tools-windows" || ver>nul
 rmdir "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" || ver>nul
 
 :install_vmware_tools_from_iso
 call :install_sevenzip
 if errorlevel 1 goto exit1
-echo ==^> Extracting the VMWare Tools installer
+
+echo ==^> Extracting the VMware Tools installer to %VMWARE_TOOLS_DIR% from %VMWARE_TOOLS_ISO_PATH%
 7z e -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_ISO_PATH%" "%VMWARE_TOOLS_SETUP_EXE%"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_ISO_PATH%" "%VMWARE_TOOLS_SETUP_EXE%"
 ver>nul
@@ -181,35 +196,40 @@ set VMWARE_TOOLS_SETUP_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_SETUP_EXE%
 if not exist "%VMWARE_TOOLS_SETUP_PATH%" echo ==^> Unable to unzip "%VMWARE_TOOLS_ISO_PATH%" & goto exit1
 
 :install_vmware_tools
-echo ==^> Installing VMware tools
+echo ==^> Installing VMware tools with %VMWARE_TOOLS_SETUP_PATH%
 "%VMWARE_TOOLS_SETUP_PATH%" /S /v "/qn REBOOT=R ADDLOCAL=ALL"
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%VMWARE_TOOLS_SETUP_PATH%" /S /v "/qn REBOOT=R ADDLOCAL=ALL"
+@if not errorlevel 3010 if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: "%VMWARE_TOOLS_SETUP_PATH%" /S /v "/qn REBOOT=R ADDLOCAL=ALL"
+@if errorlevel 3010 echo ==^> Successfully installed VMware tools ^(reboot required^)
 ver>nul
 goto exit0
 
 ::::::::::::
 :virtualbox
 ::::::::::::
-if exist "%SystemDrive%\Program Files (x86)" (
-  set VBOX_SETUP_EXE=VBoxWindowsAdditions-amd64.exe
-) else (
+if "%PROCESSOR_ARCHITECTURE%" == "x86" (
   set VBOX_SETUP_EXE=VBoxWindowsAdditions-x86.exe
+  echo ==^> Detected virtualization platform ^(x86^): VirtualBox
+) else (
+  set VBOX_SETUP_EXE=VBoxWindowsAdditions-amd64.exe
+  echo ==^> Detected virtualization platform ^(x64^): VirtualBox
 )
 for %%i in ("%VBOX_ISO_URL%") do set VBOX_ISO=%%~nxi
 set VBOX_ISO_DIR=%TEMP%\virtualbox
 set VBOX_ISO_PATH=%VBOX_ISO_DIR%\%VBOX_ISO%
 set VBOX_ISO=VBoxGuestAdditions.iso
+echo ==^> Installing the VirtualBox Guest Additions with directory %VBOX_ISO_DIR%
+
 mkdir "%VBOX_ISO_DIR%"
 pushd "%VBOX_ISO_DIR%"
 set VBOX_SETUP_PATH=
 set VBOX_SETUP_DIR=
+
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VBOX_SETUP_PATH @if exist "%%~i\%VBOX_SETUP_EXE%" (set VBOX_SETUP_PATH=%%~i\%VBOX_SETUP_EXE% & set VBOX_SETUP_DIR=%%~i)
 if defined VBOX_SETUP_PATH goto install_vbox_guest_additions
 
-@for %%i in (%PACKER_SEARCH_PATHS%) do @if exist "%%~i\%VBOX_ISO%" set VBOX_ISO_PATH=%%~i\%VBOX_ISO%
-
 :: if VBoxGuestAdditions.iso is zero bytes, then download it
 set _VBOX_ISO_SIZE=0
+@for %%i in (%PACKER_SEARCH_PATHS%) do @if exist "%%~i\%VBOX_ISO%" set VBOX_ISO_PATH=%%~i\%VBOX_ISO%
 if exist "%VBOX_ISO_PATH%" for %%i in (%VBOX_ISO_PATH%) do set _VBOX_ISO_SIZE=%%~zi
 if %_VBOX_ISO_SIZE% GTR 0 goto install_vbox_guest_additions_from_iso
 
@@ -224,6 +244,7 @@ if not exist "%VBOX_ISO_PATH%" goto exit1
 :install_vbox_guest_additions_from_iso
 call :install_sevenzip
 if errorlevel 1 goto exit1
+
 echo ==^> Extracting the VirtualBox Guest Additions installer
 7z x -o"%VBOX_ISO_DIR%" "%VBOX_ISO_PATH%" "%VBOX_SETUP_EXE%" cert
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e -o"%VBOX_ISO_DIR%" "%VBOX_ISO_PATH%" "%VBOX_SETUP_EXE%"
@@ -244,31 +265,39 @@ goto :exit0
 :parallels
 ::::::::::::
 set PARALLELS_INSTALL=PTAgent.exe
+echo ==^> Detected virtualization platform: Parallels
 
 set PARALLELS_DIR=%TEMP%\parallels
 set PARALLELS_PATH=%PARALLELS_DIR%\%PARALLELS_INSTALL%
 set PARALLELS_ISO=prl-tools-win.iso
+echo ==^> Installing the Parallels Tools with directory %PARALLELS_DIR%
+
 mkdir "%PARALLELS_DIR%"
 pushd "%PARALLELS_DIR%"
 set PARALLELS_ISO_PATH=
+
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined PARALLELS_ISO_PATH @if exist "%%~i\%PARALLELS_ISO%" set PARALLELS_ISO_PATH=%%~i\%PARALLELS_ISO%
 REM parallels tools don't have a download :(
 call :install_sevenzip
 if errorlevel 1 goto exit1
+
 echo ==^> Extracting the Parallels Tools installer
 echo ==^>   to %PARALLELS_DIR%\*
 7z x -o"%PARALLELS_DIR%" "%PARALLELS_ISO_PATH%"
 ping 127.0.0.1
-echo ==^> Installing Parallels Tools
-echo ==^>   from %PARALLELS_PATH%
+
+echo ==^> Installing Parallels Tools from %PARALLELS_PATH%
 "%PARALLELS_PATH%" /install_silent
+
 REM parallels tools installer tends to exit while the install agent
 REM is still running, need to sleep while it's running so we don't
 REM delete the tools.
 @if errorlevel 1 echo=^> WARNING: Error %ERRORLEVEL% was returned by: "%PARALLELS_PATH%" /install_silent
 ver>nul
+
 echo ==^> Cleaning up Parallels Tools install
 del /F /S /Q "%PARALLELS_DIR"
+
 echo ==^> Removing "%PARALLELS_ISO_PATH"
 del /F "%PARALLELS_ISO_PATH"
 goto :exit0
@@ -276,6 +305,8 @@ goto :exit0
 ::::::::::::
 :hyperv
 ::::::::::::
+echo ==^> Detected virtualization platform: HyperV
+
 for /F "usebackq tokens=3,4,5" %%i in (`REG query "hklm\software\microsoft\windows NT\CurrentVersion" /v ProductName`) do set GUEST_OS=%%i %%j %%k
 
 set GUEST_OS
