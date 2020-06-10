@@ -22,13 +22,13 @@ set DISABLE_BITS=1
 :: Use the following to set defaults for the wget.exe downloader when fetching
 :: files used to provision the template. By default we try and download the
 :: requested file up to 64 times.
-set WGET_OPTS=-t 64
+set WGET_OPTS=-t 64 --no-check-certificate
 
 :: Use the following to set defaults for the curl.exe fallback downloader when
 :: fetching files required for provisioning the template. This is a backup method,
 :: so by default we retry if the connection is refused and we try to download
 :: the requested file up to 64 times.
-set CURL_OPTS=--retry-connrefused --retry 64
+set CURL_OPTS=--retry-connrefused --retry 64 -k
 
 :: Uncomment the following to change the pagefile size in MB as set by
 :: floppy/pagefile.bat
