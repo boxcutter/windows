@@ -187,10 +187,10 @@ set VMWARE_TOOLS_SETUP_PATH=
 :: to the correct place.
 set _VMWARE_TOOLS_SIZE=0
 if defined VMWARE_TOOLS_ISO_PATH for %%i in (%VMWARE_TOOLS_ISO_PATH%) do set _VMWARE_TOOLS_SIZE=%%~zi
-if not "%_VMWARE_TOOLS_SIZE%" == "0" set VMWARE_TOOLS_ISO_URL=
+if defined _VMWARE_TOOLS_SIZE if not "%_VMWARE_TOOLS_SIZE%" == "0" set VMWARE_TOOLS_ISO_URL=
 if not defined VMWARE_TOOLS_ISO_URL goto install_vmware_tools_from_iso
 
-echo ==^> Installing the VMware tools using directory %VMWARE_TOOLS_DIR%
+echo ==^> Downloading the VMware tools from %VMWARE_TOOLS_ISO_UrL%
 
 call "%SystemRoot%\_download.cmd" "%VMWARE_TOOLS_ISO_URL%" "%VMWARE_TOOLS_ISO_PATH%"
 if errorlevel 1 (
@@ -207,7 +207,10 @@ if not exist "%VMWARE_TOOLS_ISO_PATH%" (
 :: can extract the iso we just downloaded and run its setup.
 :install_vmware_tools_from_iso
 call :install_sevenzip
-if errorlevel 1 goto exit1
+if errorlevel 1 (
+  echo ==^> ERROR: Failure trying to install 7-zip archiver
+  goto exit1
+)
 
 :: Now that we have the iso, we can extract it with 7-zip and make sure its got
 :: everything that we're looking for.
@@ -268,7 +271,10 @@ if not exist "%VBOX_ISO_PATH%" goto exit1
 
 :install_vbox_guest_additions_from_iso
 call :install_sevenzip
-if errorlevel 1 goto exit1
+if errorlevel 1 (
+  echo ==^> ERROR: Failure trying to install 7-zip archiver
+  goto exit1
+)
 
 echo ==^> Extracting the VirtualBox Guest Additions installer
 7z x -o"%VBOX_ISO_DIR%" "%VBOX_ISO_PATH%" "%VBOX_SETUP_EXE%" cert
@@ -304,7 +310,10 @@ set PARALLELS_ISO_PATH=
 @for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined PARALLELS_ISO_PATH @if exist "%%~i\%PARALLELS_ISO%" set PARALLELS_ISO_PATH=%%~i\%PARALLELS_ISO%
 REM parallels tools don't have a download :(
 call :install_sevenzip
-if errorlevel 1 goto exit1
+if errorlevel 1 (
+  echo ==^> ERROR: Failure trying to install 7-zip archiver
+  goto exit1
+)
 
 echo ==^> Extracting the Parallels Tools installer
 echo ==^>   to %PARALLELS_DIR%\*
