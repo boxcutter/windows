@@ -47,12 +47,16 @@ for /f "delims=.; tokens=1,2" %%a in ("%PlatformVersionRow%") do (
   for /f "tokens=*" %%v in ("%%b") do set "PlatformVersionMinor=%%v"
 )
 
+:: Get the PlatformFlavor from SystemInfo
+for /f "delims=:; tokens=1,2" %%a in ('systeminfo') do (
+  if "%%a" == "OS Name" set "PlatformFlavorRow=%%b"
+)
+
 :: Detect whether we're using a server or client flavor
-systeminfo | find "OS Name:" | find /c "Microsoft Windows Server" >NUL
-if errorlevel 1 (
-    set "PlatformFlavor=Client"
+for /f "tokens=1,2,3" %%a in ("%PlatformFlavorRow%") do if "%%a" == "Microsoft" if "%%b" == "Windows" if "%%c" == "Server" (
+  set "PlatformFlavor=Server"
 ) else (
-    set "PlatformFlavor=Server"
+  set "PlatformFlavor=Client"
 )
 
 echo ==^> Detected Windows Platform Version ^(%PlatformFlavor%^): %PlatformVersionMajor%.%PlatformVersionMinor%
