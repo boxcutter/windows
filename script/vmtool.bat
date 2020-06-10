@@ -15,9 +15,9 @@ if not defined SEVENZIP_32_URL set "SEVENZIP_32_URL=http://7-zip.org/a/7z1604.ms
 if not defined SEVENZIP_64_URL set "SEVENZIP_64_URL=http://7-zip.org/a/7z1604-x64.msi"
 if not defined VBOX_ISO_URL set "VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/5.1.30/VBoxGuestAdditions_5.1.30.iso"
 if not defined VMWARE_TOOLS_OLD_BASEURL set "VMWARE_TOOLS_OLD_BASEURL=https://packages.vmware.com/tools/releases/10.2.5/windows"
-if not defined VMWARE_TOOLS_OLD_BASENAME set "VMWARE_TOOLS_OLD_BASENAME=VMware-tools-windows-10.2.5-8068406"
+if not defined VMWARE_TOOLS_OLD_BASENAME set "VMWARE_TOOLS_OLD_BASENAME=VMware-tools-10.2.5-8068406"
 if not defined VMWARE_TOOLS_LATEST_BASEURL set "VMWARE_TOOLS_LATEST_BASEURL=https://packages.vmware.com/tools/releases/11.1.0/windows"
-if not defined VMWARE_TOOLS_LATEST_BASENAME set "VMWARE_TOOLS_LATEST_BASENAME=VMware-tools-windows-11.1.0-16036546"
+if not defined VMWARE_TOOLS_LATEST_BASENAME set "VMWARE_TOOLS_LATEST_BASENAME=VMware-tools-11.1.0-16036546"
 goto main
 
 ::::::::::::
