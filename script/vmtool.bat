@@ -14,7 +14,8 @@ if not defined PACKER_SEARCH_PATHS set PACKER_SEARCH_PATHS="%USERPROFILE%" a: b:
 if not defined SEVENZIP_32_URL set SEVENZIP_32_URL=http://7-zip.org/a/7z1604.msi
 if not defined SEVENZIP_64_URL set SEVENZIP_64_URL=http://7-zip.org/a/7z1604-x64.msi
 if not defined VBOX_ISO_URL set VBOX_ISO_URL=http://download.virtualbox.org/virtualbox/5.1.30/VBoxGuestAdditions_5.1.30.iso
-if not defined VMWARE_TOOLS_TAR_URL set VMWARE_TOOLS_TAR_URL=https://softwareupdate.vmware.com/cds/vmw-desktop/ws/12.5.5/5234757/windows/packages/tools-windows.tar
+if not defined VMWARE_TOOLS_LATEST_ISOURL set VMWARE_TOOLS_LATEST_ISOURL=https://packages.vmware.com/tools/releases/11.1.0/windows/VMware-tools-windows-11.1.0-16036546.iso
+if not defined VMWARE_TOOLS_OLD_ISOURL set VMWARE_TOOLS_OLD_ISOURL=https://packages.vmware.com/tools/releases/10.2.5/windows/VMware-tools-windows-10.2.5-8068406.iso
 goto main
 
 ::::::::::::
@@ -94,6 +95,34 @@ goto :eof
 ::::::::::::
 :main
 ::::::::::::
+
+:: Get the PlatformVersion from SystemInfo
+for /f "delims=:; tokens=1,2" %%a in ('systeminfo') do (
+  if "%%a" == "OS Version" set "PlatformVersionRow=%%b"
+)
+
+:: Extract the major/minor version (stripped)
+for /f "delims=.; tokens=1,2,3" %%a in ("%PlatformVersionRow%") do (
+  for /f "tokens=1" %%v in ("%%a") do set "PlatformVersionMajor=%%v"
+  for /f "tokens=1" %%v in ("%%b") do set "PlatformVersionMinor=%%v"
+  for /f "tokens=1" %%v in ("%%c") do set "PlatformVersionRelease=%%v"
+)
+
+:: Get the PlatformFlavor from SystemInfo
+for /f "delims=:; tokens=1,2" %%a in ('systeminfo') do (
+  if "%%a" == "OS Name" set "PlatformFlavorRow=%%b"
+)
+
+:: Detect whether we're using a server or client flavor
+for /f "tokens=1,2,3" %%a in ("%PlatformFlavorRow%") do if "%%a" == "Microsoft" if "%%b" == "Windows" if "%%c" == "Server" (
+  set "PlatformFlavor=Server"
+) else (
+  set "PlatformFlavor=Client"
+)
+
+echo ==^> Detected Windows Platform Version ^(%PlatformFlavor%^): %PlatformVersionMajor%.%PlatformVersionMinor%.%PlatformVersionRelease%
+
+:: Figure out the build type
 echo "%PACKER_BUILDER_TYPE%" | findstr /i "vmware" >nul
 if not errorlevel 1 goto vmware
 echo "%PACKER_BUILDER_TYPE%" | findstr /i "vsphere" >nul
@@ -121,80 +150,76 @@ if "%PROCESSOR_ARCHITECTURE%" == "x86" (
   echo ==^> Detected virtualization platform ^(x64^): VMware
 )
 
-for %%i in ("%VMWARE_TOOLS_TAR_URL%") do set VMWARE_TOOLS_TAR=%%~nxi
+:: Figure out which iso to use depending on the platform version. The w7 family
+:: only allows us up to tools version 10.2.5 unless we update to SP1.
+if %PlatformVersionMajor% LSS 6 goto vmware_old_isourl
+if %PlatformVersionMajor% EQU 6 if %PlatformVersionMinor% EQU 0 if %PlatformVersionRelease% GTR 7600 goto vmware_new_isourl
+if %PlatformVersionMajor% EQU 6 if %PlatformVersionMinor% EQU 0 goto vmware_old_isourl
+if %PlatformVersionMajor% EQU 6 if %PlatformVersionMinor% EQU 1 if %PlatformVersionRelease% GTR 7600 goto vmware_new_isourl
+if %PlatformVersionMajor% EQU 6 if %PlatformVersionMinor% EQU 1 goto vmware_old_isourl
+goto vmware_new_isourl
+
+:: Otherwise, we need to use an older version to avoid needing to update
+:vmware_old_isourl
+set "VMWARE_TOOLS_ISO_URL=%VMWARE_TOOLS_OLD_ISOURL%"
+goto download_vmware_tools_iso
+
+:: We can use the most recent iso according to our detected platform. This
+:: should only require KB2999226 which should've been installed already.
+:vmware_new_isourl
+set "VMWARE_TOOLS_ISO_URL=%VMWARE_TOOLS_LATEST_ISOURL%"
+goto download_vmware_tools_iso
+
+:: Setup all the paths we're going to need in order to download our iso
+:download_vmware_tools_iso
+for %%i in ("%VMWARE_TOOLS_ISO_URL%") do set VMWARE_TOOLS_ISONAME=%%~nxi
 set "VMWARE_TOOLS_DIR=%TEMP%\vmware"
-set "VMWARE_TOOLS_TAR_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_TAR%"
-set "VMWARE_TOOLS_ISO=windows.iso"
-echo ==^> Installing the VMware tools with directory %VMWARE_TOOLS_DIR%
+set "VMWARE_TOOLS_ISO_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_ISONAME%"
+echo ==^> Installing the VMware tools using directory %VMWARE_TOOLS_DIR%
 
 mkdir "%VMWARE_TOOLS_DIR%"
 pushd "%VMWARE_TOOLS_DIR%"
 set VMWARE_TOOLS_SETUP_PATH=
 
-:vmware_tools_setup_path_search
-@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VMWARE_TOOLS_SETUP_PATH @if exist "%%~i\VMwareToolsUpgrader.exe" set VMWARE_TOOLS_SETUP_PATH=%%~i\%VMWARE_TOOLS_SETUP_EXE%
-if defined VMWARE_TOOLS_SETUP_PATH goto install_vmware_tools
-:: vmware_tools_setup_path_search isn't defined
-:: if not defined VMWARE_TOOLS_SETUP_PATH ( if defined VMWARE_TOOLS_MOUNTED goto vmware_tools_setup_path_search )
-set VMWARE_TOOLS_ISO_PATH=
-@for %%i in (%PACKER_SEARCH_PATHS%) do @if not defined VMWARE_TOOLS_ISO_PATH @if exist "%%~i\%VMWARE_TOOLS_ISO%" set VMWARE_TOOLS_ISO_PATH=%%~i\%VMWARE_TOOLS_ISO%
-
-:: if windows.iso is zero bytes, then download it
+:: First check to see if the iso already exists. If it does and the file is not
+:: zero, then we clear VMWARE_TOOLS_ISO_URL. This will then branch straight to
+:: install_vmware_tools_from_iso process. Otherwise, we need to download the iso
+:: to the correct place.
 set _VMWARE_TOOLS_SIZE=0
 if defined VMWARE_TOOLS_ISO_PATH for %%i in (%VMWARE_TOOLS_ISO_PATH%) do set _VMWARE_TOOLS_SIZE=%%~zi
-if %_VMWARE_TOOLS_SIZE% EQU 0 set VMWARE_TOOLS_ISO_PATH=
+if not "%_VMWARE_TOOLS_SIZE%" == "0" set VMWARE_TOOLS_ISO_URL=
+if not defined VMWARE_TOOLS_ISO_URL goto install_vmware_tools_from_iso
 
-if defined VMWARE_TOOLS_ISO_PATH goto install_vmware_tools_from_iso
+echo ==^> Installing the VMware tools using directory %VMWARE_TOOLS_DIR%
 
-call "%SystemRoot%\_download.cmd" "%VMWARE_TOOLS_TAR_URL%" "%VMWARE_TOOLS_TAR_PATH%"
+call "%SystemRoot%\_download.cmd" "%VMWARE_TOOLS_ISO_URL%" "%VMWARE_TOOLS_ISO_PATH%"
 if errorlevel 1 (
-  echo ==^> ERRROR: Unable to download file from %VMWARE_TOOLS_TAR_URL%
+  echo ==^> ERRROR: Unable to download file from %VMWARE_TOOLS_ISO_URL%
   goto exit1
 )
 
-if not exist "%VMWARE_TOOLS_TAR_PATH%" goto exit1
-
-call :install_sevenzip
-if errorlevel 1 goto exit1
-7z e -y -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_TAR_PATH%" *tools-windows*
-if exist  "%VMWARE_TOOLS_DIR%\*.iso" (
-	ren  "%VMWARE_TOOLS_DIR%\*.iso" "windows.iso"
-	set VMWARE_TOOLS_ISO_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_ISO%
+if not exist "%VMWARE_TOOLS_ISO_PATH%" (
+  echo ==^> ERROR: Unable to locate downloaded file at %VMWARE_TOOLS_ISO_PATH%
+  goto exit1
 )
-if defined VMWARE_TOOLS_ISO_PATH goto install_vmware_tools_from_iso
 
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e "%VMWARE_TOOLS_TAR_PATH%"
-ver>nul
-set VMWARE_TOOLS_INSTALLER_PATH=
-for %%i in ("%VMWARE_TOOLS_DIR%\tools-windows-*.exe") do set VMWARE_TOOLS_INSTALLER_PATH=%%~i
-if not exist "%VMWARE_TOOLS_INSTALLER_PATH%" echo ==^> ERROR: Failed to unzip "%VMWARE_TOOLS_TAR_PATH%" & goto exit1
-
-echo ==^> Installing VMware tools with %VMWARE_TOOLS_INSTALLER_PATH%
-"%VMWARE_TOOLS_INSTALLER_PATH%" /s
-
-set VMWARE_TOOLS_PROGRAM_FILES_ISO=
-if not exist "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" echo ==^> ERROR: Directory not found: "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" & goto exit1
-for /r "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" %%i in (%VMWARE_TOOLS_ISO%) do if exist "%%~i" set VMWARE_TOOLS_PROGRAM_FILES_ISO=%%~i
-if not exist "%VMWARE_TOOLS_PROGRAM_FILES_ISO%" echo ==^> ERROR: File not found: "%VMWARE_TOOLS_ISO%" in "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" & goto exit1
-
-set "VMWARE_TOOLS_ISO_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_ISO%"
-copy /y "%VMWARE_TOOLS_PROGRAM_FILES_ISO%" "%VMWARE_TOOLS_ISO_PATH%"
-if not exist "%VMWARE_TOOLS_ISO_PATH%" echo ==^> ERROR: File not found: "%VMWARE_TOOLS_ISO_PATH%" & goto exit1
-
-rmdir /q /s "%VMWARE_TOOLS_PROGRAM_FILES_DIR%\tools-windows" || ver>nul
-rmdir "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" || ver>nul
-
+:: Now we need to install 7-zip in case it isn't already installed. This way we
+:: can extract the iso we just downloaded and run its setup.
 :install_vmware_tools_from_iso
 call :install_sevenzip
 if errorlevel 1 goto exit1
 
+:: Now that we have the iso, we can extract it with 7-zip and make sure its got
+:: everything that we're looking for.
+:extract_vmware_tools_from_iso
 echo ==^> Extracting the VMware Tools installer to %VMWARE_TOOLS_DIR% from %VMWARE_TOOLS_ISO_PATH%
 7z e -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_ISO_PATH%" "%VMWARE_TOOLS_SETUP_EXE%"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_ISO_PATH%" "%VMWARE_TOOLS_SETUP_EXE%"
 ver>nul
 set "VMWARE_TOOLS_SETUP_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_SETUP_EXE%"
-if not exist "%VMWARE_TOOLS_SETUP_PATH%" echo ==^> Unable to unzip "%VMWARE_TOOLS_ISO_PATH%" & goto exit1
+if not exist "%VMWARE_TOOLS_SETUP_PATH%" echo ==^> Unable to extract "%VMWARE_TOOLS_ISO_PATH%" & goto exit1
 
+:: Our iso has been validated so all we need to do is to run the correct exe
 :install_vmware_tools
 echo ==^> Installing VMware tools with %VMWARE_TOOLS_SETUP_PATH%
 "%VMWARE_TOOLS_SETUP_PATH%" /S /v "/qn REBOOT=R ADDLOCAL=ALL"
