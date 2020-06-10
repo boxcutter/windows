@@ -216,11 +216,15 @@ if errorlevel 1 (
   goto exit 1
 )
 
-:: If our errorlevel is signed, then errorlevel1 won't catch all error codes. InIf our errorlevel is signed, then errorlevel1 won't catch all error codes. In
-:: this case, we'll do an explicit check here just to make sure.
-:: this case, we'll do an explicit check here just to make sure.
+:: If our errorlevel is signed, then errorlevel1 won't catch all error codes. In
+:: this case, we'll do explicit checks here just to make sure.
 if "%ERRORLEVEL%" == "-2146498530" (
-  echo ==^> ERROR: Unable to install Windows Update ^(KB2999226^) with %KB2999226_URL% on current platform (%PlatformFlavor% %PlatformVersionMajor%.%PlatformVersionMinor%)
+  echo ==^> Installation of Windows Update ^(KB2999226^) from %KB2999226_URL% is not necessary on current platform ^(%PlatformFlavor% %PlatformVersionMajor%.%PlatformVersionMinor%^)
+  goto exit0
+)
+
+if not "%ERRORLEVEL%" == "0" (
+  echo ==^> ERROR: Unable to install Windows Update ^(KB2999226^) due to error %ERRORLEVEL%
   goto exit1
 )
 
