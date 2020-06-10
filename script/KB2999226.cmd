@@ -38,27 +38,27 @@ set "KB2999226_WIN2012R2_URL=https://download.microsoft.com/download/D/1/3/D13E3
 
 :: Get the PlatformVersion from SystemInfo
 for /f "delims=:; tokens=1,2" %%a in ('systeminfo') do (
-  if "%%a" == "OS Version" set PlatformVersionRow=%%b
+  if "%%a" == "OS Version" set "PlatformVersionRow=%%b"
 )
 
 :: Extract the major/minor version (stripped)
 for /f "delims=.; tokens=1,2" %%a in ("%PlatformVersionRow%") do (
-  for /f "tokens=*" %%v in ("%%a") do set PlatformVersionMajor=%%v
-  for /f "tokens=*" %%v in ("%%b") do set PlatformVersionMinor=%%v
+  for /f "tokens=*" %%v in ("%%a") do set "PlatformVersionMajor=%%v"
+  for /f "tokens=*" %%v in ("%%b") do set "PlatformVersionMinor=%%v"
 )
 
 :: Detect whether we're using a server or client flavor
 systeminfo | find "OS Name:" | find /c "Microsoft Windows Server" >NUL
 if errorlevel 1 (
-    set PlatformFlavor="Client"
+    set "PlatformFlavor=Client"
 ) else (
-    set PlatformFlavor="Server"
+    set "PlatformFlavor=Server"
 )
 
 echo ==^> Detected Windows Platform Version ^(%PlatformFlavor%^): %PlatformVersionMajor%.%PlatformVersionMinor%
 
 :: Set some reasonable defaults for where to put the downloaded update.
-if not defined TEMP set TEMP=%LOCALAPPDATA%\Temp
+if not defined TEMP set "TEMP=%LOCALAPPDATA%\Temp"
 
 :: Figure out the platform version in order to determine the correct url
 if "%PlatformVersionMajor%" == "6" if "%PlatformVersionMinor%" == "0" goto Windows2008

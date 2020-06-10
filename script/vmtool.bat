@@ -40,8 +40,8 @@ if not errorlevel 1 goto return0
 
 :get_sevenzip
 for %%i in ("%SEVENZIP_URL%") do set SEVENZIP_MSI=%%~nxi
-set SEVENZIP_DIR=%TEMP%\sevenzip
-set SEVENZIP_PATH=%SEVENZIP_DIR%\%SEVENZIP_MSI%
+set "SEVENZIP_DIR=%TEMP%\sevenzip"
+set "SEVENZIP_PATH=%SEVENZIP_DIR%\%SEVENZIP_MSI%"
 echo ==^> Creating "%SEVENZIP_DIR%"
 mkdir "%SEVENZIP_DIR%"
 cd /d "%SEVENZIP_DIR%"
@@ -112,19 +112,19 @@ goto exit1
 :vmware
 ::::::::::::
 if "%PROCESSOR_ARCHITECTURE%" == "x86" (
-  set VMWARE_TOOLS_SETUP_EXE=setup.exe
-  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles%\VMware
+  set "VMWARE_TOOLS_SETUP_EXE=setup.exe"
+  set "VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles%\VMware"
   echo ==^> Detected virtualization platform ^(x86^): VMware
 ) else (
-  set VMWARE_TOOLS_SETUP_EXE=setup64.exe
-  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles(x86)%\VMware
+  set "VMWARE_TOOLS_SETUP_EXE=setup64.exe"
+  set "VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles(x86)%\VMware"
   echo ==^> Detected virtualization platform ^(x64^): VMware
 )
 
 for %%i in ("%VMWARE_TOOLS_TAR_URL%") do set VMWARE_TOOLS_TAR=%%~nxi
-set VMWARE_TOOLS_DIR=%TEMP%\vmware
-set VMWARE_TOOLS_TAR_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_TAR%
-set VMWARE_TOOLS_ISO=windows.iso
+set "VMWARE_TOOLS_DIR=%TEMP%\vmware"
+set "VMWARE_TOOLS_TAR_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_TAR%"
+set "VMWARE_TOOLS_ISO=windows.iso"
 echo ==^> Installing the VMware tools with directory %VMWARE_TOOLS_DIR%
 
 mkdir "%VMWARE_TOOLS_DIR%"
@@ -177,7 +177,7 @@ if not exist "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" echo ==^> ERROR: Directory not f
 for /r "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" %%i in (%VMWARE_TOOLS_ISO%) do if exist "%%~i" set VMWARE_TOOLS_PROGRAM_FILES_ISO=%%~i
 if not exist "%VMWARE_TOOLS_PROGRAM_FILES_ISO%" echo ==^> ERROR: File not found: "%VMWARE_TOOLS_ISO%" in "%VMWARE_TOOLS_PROGRAM_FILES_DIR%" & goto exit1
 
-set VMWARE_TOOLS_ISO_PATH="%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_ISO%"
+set "VMWARE_TOOLS_ISO_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_ISO%"
 copy /y "%VMWARE_TOOLS_PROGRAM_FILES_ISO%" "%VMWARE_TOOLS_ISO_PATH%"
 if not exist "%VMWARE_TOOLS_ISO_PATH%" echo ==^> ERROR: File not found: "%VMWARE_TOOLS_ISO_PATH%" & goto exit1
 
@@ -192,7 +192,7 @@ echo ==^> Extracting the VMware Tools installer to %VMWARE_TOOLS_DIR% from %VMWA
 7z e -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_ISO_PATH%" "%VMWARE_TOOLS_SETUP_EXE%"
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e -o"%VMWARE_TOOLS_DIR%" "%VMWARE_TOOLS_ISO_PATH%" "%VMWARE_TOOLS_SETUP_EXE%"
 ver>nul
-set VMWARE_TOOLS_SETUP_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_SETUP_EXE%
+set "VMWARE_TOOLS_SETUP_PATH=%VMWARE_TOOLS_DIR%\%VMWARE_TOOLS_SETUP_EXE%"
 if not exist "%VMWARE_TOOLS_SETUP_PATH%" echo ==^> Unable to unzip "%VMWARE_TOOLS_ISO_PATH%" & goto exit1
 
 :install_vmware_tools
@@ -214,9 +214,9 @@ if "%PROCESSOR_ARCHITECTURE%" == "x86" (
   echo ==^> Detected virtualization platform ^(x64^): VirtualBox
 )
 for %%i in ("%VBOX_ISO_URL%") do set VBOX_ISO=%%~nxi
-set VBOX_ISO_DIR=%TEMP%\virtualbox
-set VBOX_ISO_PATH=%VBOX_ISO_DIR%\%VBOX_ISO%
-set VBOX_ISO=VBoxGuestAdditions.iso
+set "VBOX_ISO_DIR=%TEMP%\virtualbox"
+set "VBOX_ISO_PATH=%VBOX_ISO_DIR%\%VBOX_ISO%"
+set "VBOX_ISO=VBoxGuestAdditions.iso"
 echo ==^> Installing the VirtualBox Guest Additions with directory %VBOX_ISO_DIR%
 
 mkdir "%VBOX_ISO_DIR%"
@@ -249,7 +249,7 @@ echo ==^> Extracting the VirtualBox Guest Additions installer
 7z x -o"%VBOX_ISO_DIR%" "%VBOX_ISO_PATH%" "%VBOX_SETUP_EXE%" cert
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: 7z e -o"%VBOX_ISO_DIR%" "%VBOX_ISO_PATH%" "%VBOX_SETUP_EXE%"
 ver>nul
-set VBOX_SETUP_PATH=%VBOX_ISO_DIR%\%VBOX_SETUP_EXE%
+set "VBOX_SETUP_PATH=%VBOX_ISO_DIR%\%VBOX_SETUP_EXE%"
 if not exist "%VBOX_SETUP_PATH%" echo ==^> Unable to unzip "%VBOX_ISO_PATH%" & goto exit1
 
 :install_vbox_guest_additions
@@ -264,12 +264,12 @@ goto :exit0
 ::::::::::::
 :parallels
 ::::::::::::
-set PARALLELS_INSTALL=PTAgent.exe
+set "PARALLELS_INSTALL=PTAgent.exe"
 echo ==^> Detected virtualization platform: Parallels
 
-set PARALLELS_DIR=%TEMP%\parallels
-set PARALLELS_PATH=%PARALLELS_DIR%\%PARALLELS_INSTALL%
-set PARALLELS_ISO=prl-tools-win.iso
+set "PARALLELS_DIR=%TEMP%\parallels"
+set "PARALLELS_PATH=%PARALLELS_DIR%\%PARALLELS_INSTALL%"
+set "PARALLELS_ISO=prl-tools-win.iso"
 echo ==^> Installing the Parallels Tools with directory %PARALLELS_DIR%
 
 mkdir "%PARALLELS_DIR%"
