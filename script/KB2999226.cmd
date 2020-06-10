@@ -47,7 +47,15 @@ for /f "delims=.; tokens=1,2" %%a in ("%PlatformVersionRow%") do (
   for /f "tokens=*" %%v in ("%%b") do set PlatformVersionMinor=%%v
 )
 
-echo ==^> Detected Windows Platform Version: %PlatformVersionMajor%.%PlatformVersionMinor%
+:: Detect whether we're using a server or client flavor
+systeminfo | find "OS Name:" | find /c "Microsoft Windows Server" >NUL
+if errorlevel 1 (
+    set PlatformFlavor="Client"
+) else (
+    set PlatformFlavor="Server"
+)
+
+echo ==^> Detected Windows Platform Version ^(%PlatformFlavor%^): %PlatformVersionMajor%.%PlatformVersionMinor%
 
 :: Set some reasonable defaults for where to put the downloaded update.
 if not defined TEMP set TEMP=%LOCALAPPDATA%\Temp
@@ -64,19 +72,22 @@ goto exit0
 :: We figured out that we're in the correct family. Now we need to figure out the
 :: architecture and whether it's the Windows server or client.
 :Windows7Family
-systeminfo | find "OS Name:" | find /c "Microsoft Windows Server" >NUL
-if errorlevel 1 goto Windows7
-goto Windows2008R2
+if "%PlatformFlavor%" == "Client" goto Windows7
+if "%PlatformFlavor%" == "Server" goto Windows2008R2
+echo ==^> Unable to determine platform flavor: %PlatformFlavor%
+goto exit1
 
 :Windows80Family
-systeminfo | find "OS Name:" | find /c "Microsoft Windows Server" >NUL
-if errorlevel 1 goto Windows2012
-goto Windows80
+if "%PlatformFlavor%" == "Client" goto Windows80
+if "%PlatformFlavor%" == "Server" goto Windows2012
+echo ==^> Unable to determine platform flavor: %PlatformFlavor%
+goto exit1
 
 :Windows81Family
-systeminfo | find "OS Name:" | find /c "Microsoft Windows Server" >NUL
-if errorlevel 1 goto Windows81
-goto Windows2012R2
+if "%PlatformFlavor%" == "Client" goto Windows81
+if "%PlatformFlavor%" == "Server" goto Windows2012R2
+echo ==^> Unable to determine platform flavor: %PlatformFlavor%
+goto exit1
 
 :: If it wasn't a server class operating system, then we must be a client.. In
 :: this case, we need to distinguish which architecture we actually are and then
@@ -199,6 +210,14 @@ start "" /wait dism /online /add-package "/packagepath:%KB2999226_DIR%\%KB299922
 if errorlevel 1 (
   echo ==^> ERROR: Unable to install Windows Update ^(KB2999226^) from %KB2999226_DIR%\%KB2999226_BASEFILENAME%.cab
   goto exit 1
+)
+
+:: If our errorlevel is signed, then errorlevel1 won't catch all error codes. InIf our errorlevel is signed, then errorlevel1 won't catch all error codes. In
+:: this case, we'll do an explicit check here just to make sure.
+:: this case, we'll do an explicit check here just to make sure.
+if "%ERRORLEVEL%" == "-2146498530" (
+  echo ==^> ERROR: Unable to install Windows Update ^(KB2999226^) with %KB2999226_URL% on current platform (%PlatformFlavor% %PlatformVersionMajor%.%PlatformVersionMinor%)
+  goto exit1
 )
 
 echo ==^> Successfully installed Windows Update ^(KB2999226^)
