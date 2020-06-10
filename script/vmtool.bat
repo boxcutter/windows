@@ -113,11 +113,11 @@ goto exit1
 ::::::::::::
 if "%PROCESSOR_ARCHITECTURE%" == "x86" (
   set VMWARE_TOOLS_SETUP_EXE=setup.exe
-  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles(x86)%\VMware
+  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles%\VMware
   echo ==^> Detected virtualization platform ^(x86^): VMware
 ) else (
   set VMWARE_TOOLS_SETUP_EXE=setup64.exe
-  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles%\VMware
+  set VMWARE_TOOLS_PROGRAM_FILES_DIR=%ProgramFiles(x86)%\VMware
   echo ==^> Detected virtualization platform ^(x64^): VMware
 )
 
