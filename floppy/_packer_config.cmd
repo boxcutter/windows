@@ -28,7 +28,7 @@ set WGET_OPTS=-t 64 --no-check-certificate
 :: fetching files required for provisioning the template. This is a backup method,
 :: so by default we retry if the connection is refused and we try to download
 :: the requested file up to 64 times.
-set CURL_OPTS=--retry-connrefused --retry 64 -k
+set CURL_OPTS=--retry-connrefused --retry 64 --retry-max-time 0 -k
 
 :: Uncomment the following to change the pagefile size in MB as set by
 :: floppy/pagefile.bat
