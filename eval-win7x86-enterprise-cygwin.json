@@ -160,6 +160,7 @@
       "remote_path": "C:/Windows/Temp/script.bat",
       "scripts": [
         "{{template_dir}}/script/vagrant.bat",
+        "{{template_dir}}/script/KB2999226.cmd",
         "{{template_dir}}/script/cmtool.bat",
         "{{template_dir}}/script/vmtool.bat",
         "{{template_dir}}/script/clean.bat",

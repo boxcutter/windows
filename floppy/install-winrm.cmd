@@ -4,7 +4,7 @@
 
 title Enabling Windows Remote Management. Please wait...
 
-echo ==^> Turning off User Account Control (UAC)
+echo ==^> Turning off User Account Control ^(UAC^)
 :: see http://www.howtogeek.com/howto/windows-vista/enable-or-disable-uac-from-the-windows-vista-command-line/
 reg ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: reg ADD HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 0 /f
@@ -37,11 +37,14 @@ echo ==^> Changing remote UAC account policy
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system /v LocalAccountTokenFilterPolicy /t REG_DWORD /d 1 /f
 
-echo ==^> Blocking WinRM port 5985 on the firewall
-netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=block protocol=TCP localport=5985
+:: Disable the Windows Remote Management firewall group while we quickconfig winrm.
+:: This group includes the rules WINRM-HTTP-In-TCP-NoScope, WINRM-HTTP-In-TCP-PUBLIC,
+:: and WINRM-HTTP-In-TCP.
+echo ==^> Blocking Windows Remote Management ^(WINRM-HTTP-In-TCP^) on the firewall
+netsh advfirewall firewall set rule group="Windows Remote Management" new enable=no
+@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall set rule group="Windows Remote Management" new enable=no
 
-echo ==^> Configuring Windows Remote Management (WinRM) service
+echo ==^> Configuring Windows Remote Management ^(WinRM^) service
 
 call winrm quickconfig -q
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: winrm quickconfig -q
@@ -82,27 +85,16 @@ sc stop winrm
 
 :is_winrm_running
 
-timeout 1
+timeout 5
 
 sc query winrm | findstr "STOPPED" >nul
 if errorlevel 1 goto is_winrm_running
 
 :winrm_not_running
 
-echo ==^> Unblocking WinRM port 5985 on the firewall
-netsh advfirewall firewall delete rule name="winrm"
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall delete rule name="winrm"
-
-netsh advfirewall firewall set rule group="remote administration" new enable=yes
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall set rule group="remote administration" new enable=yes
-
-echo ==^> Opening WinRM port 5985 on the firewall
-:: see http://social.technet.microsoft.com/Forums/windowsserver/en-US/a1e65f0f-2550-49ae-aee2-56a9bdcfb8fb/windows-7-remote-administration-firewall-group?forum=winserverManagement
+echo ==^> Restoring Windows Remote Management ^(WINRM-HTTP-In-TCP^) on the firewall
 netsh advfirewall firewall set rule group="Windows Remote Management" new enable=yes
 @if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall set rule group="Windows Remote Management" new enable=yes
-
-netsh advfirewall firewall add rule name="winrm"  dir=in action=allow protocol=TCP localport=5985
-@if errorlevel 1 echo ==^> WARNING: Error %ERRORLEVEL% was returned by: netsh advfirewall firewall add rule name="winrm"  dir=in action=allow protocol=TCP localport=5985
 
 :exit0
 
