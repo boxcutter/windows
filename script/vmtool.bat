@@ -199,6 +199,8 @@ if defined _VMWARE_TOOLS_SIZE if not "%_VMWARE_TOOLS_SIZE%" == "0" goto install_
 :download_vmware_tools
 echo ==^> Downloading the VMware tools from %VMWARE_TOOLS_URL%/%VMWARE_TOOLS_FILE%
 
+del /F "%VMARE_TOOLS_SETUP_PATH%"
+
 call "%SystemRoot%\_download.cmd" "%VMWARE_TOOLS_URL%/%VMWARE_TOOLS_FILE%" "%VMWARE_TOOLS_SETUP_PATH%"
 if errorlevel 1 (
   echo ==^> ERROR: Unable to download file from %VMWARE_TOOLS_URL%/%VMWARE_TOOLS_FILE%
