@@ -4,7 +4,6 @@
       "type": "vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/win2012r2-datacenter/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -38,7 +37,6 @@
       "type": "virtualbox-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/win2012r2-datacenter/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -80,7 +78,6 @@
       "type": "parallels-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/win2012r2-datacenter/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -118,7 +115,6 @@
       "type": "hyperv-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/win2012r2-datacenter/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -193,7 +189,6 @@
     "hw_version": "7",
     "iso_url": "iso/en_windows_server_2012_r2_with_update_x64_dvd_4065220.iso",
     "iso_checksum": "af9ef225a510d6d51c5520396452d4f1c1e06935",
-    "iso_checksum_type": "sha1",
     "guest_additions_url": "",
     "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
