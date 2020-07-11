@@ -16,7 +16,6 @@
       "type": "vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
         ".windows/provisions/wget.exe",
@@ -48,7 +47,6 @@
       "type": "virtualbox-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
       "floppy_files": [
         "floppy/win2008r2-standardcore/Autounattend.xml",
         ".windows/provisions/wget.exe",

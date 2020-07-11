@@ -4,7 +4,6 @@
       "type": "vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win81x64-enterprise/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -39,7 +38,6 @@
       "type": "virtualbox-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win81x64-enterprise/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -82,7 +80,6 @@
       "type": "parallels-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win81x64-enterprise/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -113,7 +110,6 @@
       "type": "hyperv-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "floppy_files": [
         "{{template_dir}}/floppy/eval-win81x64-enterprise/Autounattend.xml",
         "{{template_dir}}/floppy/00-run-all-scripts.cmd",
@@ -189,7 +185,6 @@
     "hw_version": "7",
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/B/9/9/B999286E-0A47-406D-8B3D-5B5AD7373A4A/9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_ENTERPRISE_EVAL_EN-US-IR3_CENA_X64FREE_EN-US_DV9.ISO",
     "iso_checksum": "7c7d99546077c805faae40a8864882c46f0ca141",
-    "iso_checksum_type": "sha1",
     "guest_additions_url": "",
     "box_directory": "box/",
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
