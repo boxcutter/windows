@@ -111,8 +111,16 @@
       ],
       "shutdown_command": "{{ user `shutdown_command`}}",
       "communicator": "winrm",
-      "guest_os_type": "win-8.1",
+      "guest_os_type": "win-10",
       "parallels_tools_flavor": "win",
+      "prlctl": [
+        [
+          "set",
+          "{{.Name}}",
+          "--efi-boot",
+          "off"
+        ]
+      ],
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
       "disk_size": "{{user `disk_size`}}",
