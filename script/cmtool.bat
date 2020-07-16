@@ -26,12 +26,19 @@ echo ==^> Detected Windows Platform Version: %PlatformVersionMajor%.%PlatformVer
 if not defined TEMP set TEMP=%LOCALAPPDATA%\Temp
 
 :: Figure out which configuration management tool to use
-if not defined CM echo ==^> ERROR: The "CM" variable was not found in the environment & goto exit1
+if not defined CM (
+  echo ==^> ERROR: The "CM" variable was not found in the environment
+  goto exit1
+)
+
 if "%CM%" == "nocm" goto nocm
 
 if not defined CM_VERSION (
-  echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment
+  echo ==^> Using default value of "latest" for the "CM_VERSION" environment variable
   set CM_VERSION=latest
+
+) else (
+  echo ==^> Found the value "%CM_VERSION%" in the "CM_VERSION" environment variable
 )
 
 if "%CM%" == "chef" goto omnitruck
