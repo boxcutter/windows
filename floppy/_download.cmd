@@ -146,7 +146,7 @@ REM Every other method so far has failed entirely, so at this point there's
 REM nothing left to try but curl.exe which came for free with the build. We
 REM first need to locate it and make sure that it actually works.
 :check_curl
-if not defined CURL_OPTS ( set "CURL_OPTS=-L" ) else if defined CURL_OPTS ( set "CURL_OPTS=%CURL_OPTS% -L" )
+if not defined CURL_OPTS ( set "CURL_OPTS=-A '' -L" ) else if defined CURL_OPTS ( set "CURL_OPTS=%CURL_OPTS% -A '' -L" )
 if defined PACKER_DEBUG if not "%PACKER_DEBUG%" == "0" set "CURL_OPTS=%CURL_OPTS% --verbose"
 
 set curl=
