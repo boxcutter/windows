@@ -174,7 +174,7 @@
     "iso_checksum": "beed231a34e90e1dd9a04b3afabec31d62ce3889",
     "guest_additions_url": "",
     "box_directory": "box/",
-    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c Packer_Shutdown",
     "headless": "false",
     "update": "true",
     "version": "0.1.0"
