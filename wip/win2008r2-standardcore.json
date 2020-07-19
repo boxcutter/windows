@@ -30,7 +30,7 @@
         "floppy/powerconfig.bat",
         "floppy/zz-start-transports.cmd"
       ],
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c Packer_Shutdown",
       "guest_os_type": "windows7srv-64",
       "tools_upload_flavor": "windows",
       "cpus": "{{ user `cpus` }}",
@@ -60,7 +60,7 @@
         "floppy/powerconfig.bat",
         "floppy/zz-start-transports.cmd"
       ],
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c 'Packer Shutdown'",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c Packer_Shutdown",
       "guest_os_type": "Windows2008_64",
       "cpus": "{{ user `cpus` }}",
       "memory": "{{ user `memory` }}",
