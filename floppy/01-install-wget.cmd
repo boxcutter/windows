@@ -32,7 +32,7 @@ if errorlevel 1 (
   echo ==^> ERROR: Unable to bootstrap wget from %WGET_URL%
   goto floppy_curl
 )
-goto check_wget_bootsrapped
+goto check_wget_bootstrapped
 
 REM It was determined that our download script doesn't exist, so we
 REM need to try all of things things the download script would
