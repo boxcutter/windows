@@ -1,8 +1,8 @@
-# Packer templates for Windows
+# Packer templates for Windows written in legacy JSON
 
 ### Overview
 
-This repository contains templates for Windows that can create
+This repository contains templates for Windows written in legacy JSON that can create
 Vagrant boxes using Packer.
 
 ## Core Boxes
