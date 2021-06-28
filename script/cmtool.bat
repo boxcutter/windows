@@ -26,12 +26,19 @@ echo ==^> Detected Windows Platform Version: %PlatformVersionMajor%.%PlatformVer
 if not defined TEMP set TEMP=%LOCALAPPDATA%\Temp
 
 :: Figure out which configuration management tool to use
-if not defined CM echo ==^> ERROR: The "CM" variable was not found in the environment & goto exit1
+if not defined CM (
+  echo ==^> ERROR: The "CM" variable was not found in the environment
+  goto exit1
+)
+
 if "%CM%" == "nocm" goto nocm
 
 if not defined CM_VERSION (
-  echo ==^> ERROR: The "CM_VERSION" variable was not found in the environment
+  echo ==^> Using default value of "latest" for the "CM_VERSION" environment variable
   set CM_VERSION=latest
+
+) else (
+  echo ==^> Found the value "%CM_VERSION%" in the "CM_VERSION" environment variable
 )
 
 if "%CM%" == "chef" goto omnitruck
@@ -258,20 +265,13 @@ if "%PlatformVersionMajor%" == "6" if "%PlatformVersionMinor%" == "1" goto saltr
 :saltbootstrap
 ::::::::::::
 
-:: We hardcode the CM_VERSION here to workaround saltstack/salt-bootstrap#1394
-if "%CM_VERSION%" == "latest" set CM_VERSION=2019.2.2
-
 set SALT_URL=http://raw.githubusercontent.com/saltstack/salt-bootstrap/%SALT_REVISION%/bootstrap-salt.ps1
-
 set SALT_PATH=%SALT_DIR%\bootstrap-salt.ps1
-set SALT_DOWNLOAD=%SALT_DIR%\bootstrap-salt.download.ps1
 
-echo ==^> Downloading %SALT_URL% to %SALT_DOWNLOAD%
-powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_DOWNLOAD%')" <NUL
+echo ==^> Downloading %SALT_URL% to %SALT_PATH%
+powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%SALT_URL%', '%SALT_PATH%')" <NUL
 
-if not exist "%SALT_DOWNLOAD%" goto exit1
-echo ==^> Patching bootstrap-salt.ps1 at %SALT_DOWNLOAD%
-powershell -command "(get-content \"%SALT_DOWNLOAD%\") -replace \"'Tls,Tls11,Tls12'\", \"0xc0,0x300,0xc00\" | set-content \"%SALT_PATH%\""
+if not exist "%SALT_PATH%" goto exit1
 
 echo ==^> Installing Salt minion with %SALT_PATH%
 if "%CM_VERSION%" == "latest" (
