@@ -2,6 +2,7 @@
   "builders": [
     {
       "type": "vmware-iso",
+      "output_directory": "{{ user `build_directory` }}output-vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "floppy_files": [
@@ -35,6 +36,7 @@
     },
     {
       "type": "virtualbox-iso",
+      "output_directory": "{{ user `build_directory` }}output-virtualbox-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "floppy_files": [
@@ -75,6 +77,7 @@
     },
     {
       "type": "parallels-iso",
+      "output_directory": "{{ user `build_directory` }}output-parallels-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "floppy_files": [
@@ -112,6 +115,7 @@
     },
     {
       "type": "hyperv-iso",
+      "output_directory": "{{ user `build_directory` }}output-hyperv-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "floppy_files": [
@@ -185,6 +189,7 @@
     "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c Packer_Shutdown",
     "headless": "false",
     "update": "true",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "build_directory": ""
   }
 }

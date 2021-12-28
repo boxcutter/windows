@@ -106,6 +106,9 @@ endif
 ifdef CM_VERSION
 	PACKER_VARS += -var 'cm_version=$(CM_VERSION)'
 endif
+ifdef CUSTOM_PACKER_VARS
+	PACKER_VARS += $(CUSTOM_PACKER_VARS)
+endif
 ON_ERROR ?= cleanup
 PACKER ?= packer
 ifdef PACKER_DEBUG

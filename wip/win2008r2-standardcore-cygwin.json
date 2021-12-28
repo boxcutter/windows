@@ -9,11 +9,13 @@
     "cm_version": "",
     "iso_url": "iso/en_windows_server_2008_r2_with_sp1_vl_build_x64_dvd_617403.iso",
     "iso_checksum": "7e7e9425041b3328ccf723a0855c2bc4f462ec57",
-    "update": "true"
+    "update": "true",
+    "build_directory": ""
   },
   "builders": [
     {
       "type": "vmware-iso",
+      "output_directory": "{{ user `build_directory` }}output-vmware-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "floppy_files": [
@@ -45,6 +47,7 @@
     },
     {
       "type": "virtualbox-iso",
+      "output_directory": "{{ user `build_directory` }}output-virtualbox-iso",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "floppy_files": [
